@@ -1,0 +1,9 @@
+User-agent: *
+Disallow: /administrator/
+Disallow: /admin/
+Disallow: /config/
+Disallow: /core/
+Disallow: /libs/
+Disallow: /app/controller/
+Disallow: /bdd_backup/
+Disallow: /vendor/
