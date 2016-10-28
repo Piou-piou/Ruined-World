@@ -1,0 +1,142 @@
+/*pour la nav tout en haut de la page ou il y a aide déconnexion...*/
+$bg-top-nav: #000;
+$clr-top-nav: #fff;
+
+/*pour la nav principaleou il y a le logo de la map...*/
+$bg-nav: #212122;
+$bg-img-nav: #414142;
+
+/*pour le logo et les ressources + les panneaux lattéraux avec les unités*/
+$bg-nom-base: #F24237;
+$clr-nom-base: #fff;
+$bg-ressource: #303031;
+$clr-ressource: #fff;
+
+/*pour le body et le bg de la map*/
+$bg-body: #414142;
+$bg-map: #2C626A;
+
+body {
+	background-color: $bg-body;
+}
+
+.bataille {
+	/*-------------------------------------- CLASS GENERALES --------------------------------------*/
+	.rouge {
+		color: #FF0000;;
+	}
+
+	/*-------------------------------------- HEADER --------------------------------------*/
+	header {
+		nav.top {
+			background-color: $bg-top-nav;
+			color: $clr-top-nav;
+
+			ul {
+				margin: 0;
+
+				li {
+					display: inline-block;
+					padding: 0.5rem 1rem;
+				}
+			}
+		}
+	}
+
+
+	nav.middle {
+		background-color: $bg-nav;
+		height: 100px;
+		width: 100%;
+
+		ul {
+			li {
+				list-style: none;
+				display: inline-block;
+			}
+		}
+
+		a {
+			display: block;
+		}
+	}
+
+	/*partie qui gere l'affichage des ressources + du nom du village*/
+	.ressources {
+		.gauche, .droite {
+			background-color: $bg-ressource;
+			height: 50px;
+			color: $clr-ressource;
+			padding-top: 1rem;
+		}
+
+		.gauche::before {
+			background-color: $bg-ressource;
+			width: 20px;
+			height: 50px;
+			position: absolute;
+			top: 0;
+			left: -15px;
+			transform: skewX(10deg);
+			content: ' ';
+		}
+
+		.droite::after {
+			background-color: $bg-ressource;
+			width: 20px;
+			height: 50px;
+			position: absolute;
+			top: 0;
+			right: -15px;
+			transform: skewX(-10deg);
+			content: ' ';
+		}
+
+		.nom-base{
+			height: 60px;
+			background-color: $bg-nom-base;
+			color: $clr-nom-base;
+			vertical-align: middle;
+
+			&::before {
+				background-color: $bg-nom-base;
+				width: 20px;
+				height: 60px;
+				position: absolute;
+				top: 0;
+				left: -15px;
+				transform: skewX(10deg);
+				content: ' ';
+			}
+
+			&::after {
+				background-color: $bg-nom-base;
+				width: 20px;
+				height: 60px;
+				position: absolute;
+				top: 0;
+				right: -15px;
+				transform: skewX(-10deg);
+				content: ' ';
+				z-index: 1;
+			}
+		}
+	}
+
+
+
+	/*-------------------------------------- SIDE BAR --------------------------------------*/
+	.side-bar {
+		background-color: $bg-ressource;
+	}
+}
+
+p.rouge {
+	color: red;
+}
+
+.popup {
+	.rouge {
+		color: red;
+	}
+}

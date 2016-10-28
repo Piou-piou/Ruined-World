@@ -1,0 +1,25 @@
+<?php require_once("nav.php");?>
+
+<h1>Bienvenue sur la page d'aide</h1>
+
+<p>Retrouve tous les éléments concernant la construction des batiments : </p>
+
+<ul>
+	<li>- Le/les batiments qu'il faut pour le construire</li>
+	<li>- Le/les fonctions qu'il apporte à la base</li>
+	<li>- Le/les ressource nécéssaire à sa construction</li>
+</ul>
+
+<p>Retrouvez égalements toutes les informations sur la création d'unités militaires</p>
+
+<nav>
+	<ul>
+		<li>Batiments
+			<ul>
+				<li><a href="<?=WEBROOT?>bataille/aide-detail/batiment-ressource">Ressource</a></li>
+				<li><a href="<?=WEBROOT?>bataille/aide-detail/batiment-militaire">Militaire</a></li>
+				<li><a href="<?=WEBROOT?>bataille/aide-detail/batiment-administration">Administration</a></li>
+			</ul>
+		</li>
+	</ul>
+</nav>
