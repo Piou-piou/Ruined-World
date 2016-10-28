@@ -1,0 +1,9 @@
+{{ include("nav.html") }}
+
+
+{% for i in message %}
+	<a href="{{WEBROOT}}messagerie/message/{{i.url}}">
+		<p>{{i.date_message}} | {{i.pseudo_receveur}} | {{i.objet}}</p>
+	</a>
+
+{% endfor %}a

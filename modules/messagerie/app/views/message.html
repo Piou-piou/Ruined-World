@@ -1,0 +1,11 @@
+<?php require_once("nav.php");?>
+
+
+<h3><?=$messagerie->getObjet()?></h3>
+<h5>Envoyé le <?=$messagerie->getDateMessage()?> par : <?=$messagerie->getPseudoExpediteur()?></h5>
+
+<article>
+	<?=$messagerie->getMessage()?>
+</article>
+
+<a href="<?=WEBROOT?>controller/modules/messagerie/message/archiver?id_message=<?=$messagerie->getIdMessage()?>">Archiver ce message</a>
