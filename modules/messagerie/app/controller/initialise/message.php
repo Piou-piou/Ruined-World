@@ -5,3 +5,5 @@
 		\core\HTML\flashmessage\FlashMessage::setFlash("Message inexistant");
 		header("location:".WEBROOT."messagerie");
 	}
+
+	$arr = $messagerie->getValues();

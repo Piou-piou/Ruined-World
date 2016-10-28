@@ -17,6 +17,8 @@
 
 		private $pseudo_receveur;
 		private $id_receveur;
+
+		private $values = [];
 		
 		
 		//-------------------------- BUILDER ----------------------------------------------------------------------------//
@@ -39,7 +41,9 @@
 				}
 
 				//on check les messages supprimes d'il y a plus de 15 jours et on les delete de la bdd
-				$today = new \DateTime();
+				//a changer fonction qui se lancera une fois par jour et qui degagera tous les messages
+				//supprimes de plus vieux que 15 jours
+				/*$today = new \DateTime();
 				$date_del =  $today->sub(new \DateInterval("P15D"))->format("Y-m-d H:i:s");
 
 				$query = $dbc->select("_messagerie_message.ID_message")
@@ -54,7 +58,7 @@
 					foreach ($query as $obj) {
 						$this->setDeleteMessageBySystem($obj->ID_message);
 					}
-				}
+				}*/
 			}
 		}
 		//-------------------------- END BUILDER ----------------------------------------------------------------------------//
@@ -89,6 +93,9 @@
 		public function getPseudoReceveur() {
 			return $this->pseudo_receveur;
 		}
+		public function getValues(){
+		    return ["messagerie" => $this->values];
+		}
 
 		/**
 		 * fonction qui permet de récupérer tous les messages dans la boite de récéption
@@ -108,15 +115,17 @@
 
 			if ((is_array($query)) && (count($query) > 0)) {
 				foreach ($query as $obj) {
-					$id_message[] = $obj->ID_message;
-					$objet[] = $obj->objet;
-					$date_message[] = $obj->date;
-					$id_expediteur[] = $obj->ID_expediteur;
-					$pseudo_expediteur[] = $obj->pseudo;
-					$url[] = $obj->url;
-				}
+					$arr = [
+						"id_message" => $obj->ID_message,
+						"objet" => $obj->objet,
+						"date_message" => $obj->date,
+						"id_expediteur" => $obj->ID_expediteur,
+						"pseudo_expediteur" => $obj->pseudo,
+						"url" => $obj->url
+					];
 
-				$this->setListeMessage($id_message, $objet, $date_message, $id_expediteur, $pseudo_expediteur, $url);
+					$this->values[] = $arr;
+				}
 			}
 		}
 
@@ -137,15 +146,17 @@
 
 			if ((is_array($query)) && (count($query) > 0)) {
 				foreach ($query as $obj) {
-					$id_message[] = $obj->ID_message;
-					$objet[] = $obj->objet;
-					$date_message[] = $obj->date;
-					$id_receveur[] = $obj->ID_identite;
-					$pseudo_receveur[] = $obj->pseudo;
-					$url[] = $obj->url;
-				}
+					$arr = [
+						"id_message" => $obj->ID_message,
+						"objet" => $obj->objet,
+						"date_message" => $obj->date,
+						"id_expediteur" => $obj->ID_expediteur,
+						"pseudo_receveur" => $obj->pseudo,
+						"url" => $obj->url
+					];
 
-				$this->setListeMessage($id_message, $objet, $date_message, $id_receveur, $pseudo_receveur, $url, true);
+					$this->values[] = $arr;
+				}
 			}
 		}
 
@@ -175,7 +186,18 @@
 					$url[] = $obj->url;
 				}
 
-				$this->setListeMessage($id_message, $objet, $date_message, $id_expediteur, $pseudo_expediteur, $url);
+				foreach ($query as $obj) {
+					$arr = [
+						"id_message" => $obj->ID_message,
+						"objet" => $obj->objet,
+						"date_message" => $obj->date,
+						"id_expediteur" => $obj->ID_expediteur,
+						"pseudo_expediteur" => $obj->pseudo,
+						"url" => $obj->url
+					];
+
+					$this->values[] = $arr;
+				}
 			}
 		}
 
@@ -197,11 +219,14 @@
 
 			if ((is_array($query)) && (count($query) > 0)) {
 				foreach ($query as $obj) {
-					$this->id_message = $obj->ID_message;
-					$this->objet = $obj->objet;
-					$this->date_message = $obj->date;
-					$this->message = $obj->message;
-					$this->pseudo_expediteur = $obj->pseudo;
+					$this->values = [
+						"id_message" => $obj->ID_message,
+						"objet" => $obj->objet,
+						"date_message" => $obj->date,
+						"id_expediteur" => $obj->ID_expediteur,
+						"pseudo_expediteur" => $obj->pseudo,
+						"url" => $obj->url
+					];
 				}
 			}
 			else {
@@ -213,39 +238,6 @@
 		
 		
 		//-------------------------- SETTER ----------------------------------------------------------------------------//
-		private function setListeMessage($id_message, $objet, $date_message, $id_expediteur, $pseudo_expediteur, $url, $envoi = null) {
-			$this->id_message = $id_message;
-			$this->objet = $objet;
-			$this->date_message = $date_message;
-			$this->url = $url;
-
-			if ($envoi === null) {
-				$this->id_expediteur = $id_expediteur;
-				$this->pseudo_expediteur = $pseudo_expediteur;
-			}
-			else {
-				$this->id_receveur = $id_expediteur;
-				$this->pseudo_receveur = $pseudo_expediteur;
-			}
-		}
-
-		/**
-		 * @param $id_message
-		 * fonction qui supprime un message en fonction de l'ID de celui-ci
-		 * fonction utilisée pour supprimer uniquement des messages plus veiux de 14 jours
-		 */
-		private function setDeleteMessageBySystem($id_message) {
-			$dbc = App::getDb();
-
-			$dbc->delete()->from("_messagerie_boite_reception")->where("ID_message", "=", $id_message)->del();
-
-			$query = $dbc->select("ID_message")->from("_messagerie_boite_reception")->where("ID_message", "=", $id_message)->get();
-
-			if (count($query) == 0) {
-				$dbc->delete()->from("_messagerie_message")->where("ID_message", "=", $id_message)->del();
-			}
-		}
-
 		/**
 		 * @param $id_message
 		 * pour passer le message en supprimé, il sera alors consultable dans la table messages supprimés
@@ -271,5 +263,4 @@
 				->del();
 		}
 		//-------------------------- END SETTER ----------------------------------------------------------------------------//
-		
 	}

@@ -1,11 +1,11 @@
-<?php require_once("nav.php");?>
+{{ include("nav.html") }}
 
 
-<h3><?=$messagerie->getObjet()?></h3>
-<h5>Envoyé le <?=$messagerie->getDateMessage()?> par : <?=$messagerie->getPseudoExpediteur()?></h5>
+<h3>{{messagerie.objet}}</h3>
+<h5>Envoyé le {{messagerie.date_message}} par : {{messagerie.pseudo_expediteur}}</h5>
 
 <article>
-	<?=$messagerie->getMessage()?>
+	{{messagerie.message}}
 </article>
 
-<a href="<?=WEBROOT?>controller/modules/messagerie/message/archiver?id_message=<?=$messagerie->getIdMessage()?>">Archiver ce message</a>
+<a href="{{WEBROOT}}controller/modules/messagerie/message/archiver?id_message={{messagerie.id_message}}">Archiver ce message</a>
