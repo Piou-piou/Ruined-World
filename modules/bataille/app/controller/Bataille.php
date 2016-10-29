@@ -11,6 +11,8 @@
 
 		private static $id_base;
 
+		public static $values = [];
+
 		
 		//-------------------------- BUILDER ----------------------------------------------------------------------------//
 		public function __construct() {
@@ -21,6 +23,10 @@
 		
 		
 		//-------------------------- GETTER ----------------------------------------------------------------------------//
+		public static function getValues() {
+		    return ["bataille" => self::$values];
+		}
+
 		//initilisation of all classes of battle
 		//initialisation of Ressource class
 		public static function getRessource() {

@@ -7,3 +7,5 @@
 	Bataille::getBatiment()->getConstruction();
 
 	Bataille::getBase()->getMaBase();
+
+	$arr = Bataille::getValues();

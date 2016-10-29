@@ -9,12 +9,6 @@
 		private $fer;
 		private $nourriture;
 
-		private $max_eau;
-		private $max_electricite;
-		private $max_fuel;
-		private $max_fer;
-		private $max_nourriture;
-
 		//-------------------------- BUILDER ----------------------------------------------------------------------------//
 		public function __construct() {
 			$dbc = App::getDb();
@@ -28,15 +22,21 @@
 					$this->fuel = $obj->fuel;
 					$this->fer = $obj->fer;
 					$this->nourriture = $obj->nourriture;
+
+					Bataille::$values = array_merge(Bataille::$values, ["eau" => $obj->eau]);
+					Bataille::$values = array_merge(Bataille::$values, ["electricite" => $obj->electricite]);
+					Bataille::$values = array_merge(Bataille::$values, ["fuel" => $obj->fuel]);
+					Bataille::$values = array_merge(Bataille::$values, ["fer" => $obj->fer]);
+					Bataille::$values = array_merge(Bataille::$values, ["nourriture" => $obj->nourriture]);
 				}
 
 				$this->setActualiserRessource();
 
-				$this->getStockageMax("eau");
-				$this->getStockageMax("electricite");
-				$this->getStockageMax("fuel");
-				$this->getStockageMax("fer");
-				$this->getStockageMax("nourriture");
+				Bataille::$values = array_merge(Bataille::$values, ["max_eau" => $this->getStockageMax("eau")]);
+				Bataille::$values = array_merge(Bataille::$values, ["max_electricite" => $this->getStockageMax("electricite")]);
+				Bataille::$values = array_merge(Bataille::$values, ["max_fuel" => $this->getStockageMax("fuel")]);
+				Bataille::$values = array_merge(Bataille::$values, ["max_fer" => $this->getStockageMax("fer")]);
+				Bataille::$values = array_merge(Bataille::$values, ["max_nourriture" => $this->getStockageMax("nourriture")]);
 			}
 		}
 		//-------------------------- END BUILDER ----------------------------------------------------------------------------//
@@ -60,28 +60,11 @@
 			return $this->nourriture;
 		}
 
-		public function getMaxEau() {
-			return $this->max_eau;
-		}
-		public function getMaxElectricite() {
-			return $this->max_electricite;
-		}
-		public function getMaxFuel() {
-			return $this->max_fuel;
-		}
-		public function getMaxFer() {
-			return $this->max_fer;
-		}
-		public function getMaxNourriture() {
-			return $this->max_nourriture;
-		}
-
 		private function getStockageMax($ressource) {
 			$stockage_max = Bataille::getBatiment()->getStockageEntrepot();
-			$max_ressource = "max_".$ressource;
 
 			if ($this->$ressource == $stockage_max) {
-				$this->$max_ressource = "rouge";
+				return "rouge";
 			}
 		}
 		//-------------------------- END GETTER ----------------------------------------------------------------------------//

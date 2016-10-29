@@ -3,8 +3,6 @@
 	use core\App;
 
 	class Base {
-		private $nom_base;
-		private $points;
 		private $batiments;
 
 		//-------------------------- BUILDER ----------------------------------------------------------------------------//
@@ -16,12 +14,6 @@
 
 
 		//-------------------------- GETTER ----------------------------------------------------------------------------//
-		public function getNomBase() {
-			return $this->nom_base;
-		}
-		public function getPoints() {
-			return $this->points;
-		}
 		public function getBatiments(){
 		    return $this->batiments;
 		}
@@ -35,6 +27,12 @@
 			Bataille::getRessource();
 
 			$this->getBatimentsBase();
+
+			Bataille::$values = array_merge(Bataille::$values, ["production_eau" => Bataille::getBatiment()->getProduction("eau")]);
+			Bataille::$values = array_merge(Bataille::$values, ["production_electricite" => Bataille::getBatiment()->getProduction("electricite")]);
+			Bataille::$values = array_merge(Bataille::$values, ["production_fer" => Bataille::getBatiment()->getProduction("fer")]);
+			Bataille::$values = array_merge(Bataille::$values, ["production_fuel" => Bataille::getBatiment()->getProduction("fuel")]);
+			//Bataille::$values = array_merge(Bataille::$values, ["production_nourriture" => Bataille::getBatiment()->getProduction("nourriture")]);
 		}
 
 		/**
@@ -52,8 +50,10 @@
 
 			if ((is_array($query)) && (count($query) > 0)) {
 				foreach ($query as $obj) {
-					$this->nom_base = $obj->nom_base;
-					$this->points = $obj->points;
+					Bataille::$values = array_merge(Bataille::$values, [
+						"nom_base" => $obj->nom_base,
+						"points" => $obj->points,
+					]);
 				}
 			}
 		}
@@ -75,17 +75,34 @@
 				if (count($query) == 1) {
 					foreach ($query as $obj) {
 						if ($obj->construction) {
-							$batiments[] = [$obj->nom_batiment." en construction", $obj->nom_batiment_sql, $obj->niveau, $i];
+							$batiments[] = [
+								"nom_batiment" => $obj->nom_batiment." en construction",
+								"nom_batiment_sql" => $obj->nom_batiment_sql,
+								"niveau" => $obj->niveau,
+								"emplacement" => $i
+							];
 						}
 						else {
-							$batiments[] = [$obj->nom_batiment, $obj->nom_batiment_sql, $obj->niveau, $i];
+							$batiments[] = [
+								"nom_batiment" => $obj->nom_batiment,
+								"nom_batiment_sql" => $obj->nom_batiment_sql,
+								"niveau" => $obj->niveau,
+								"emplacement" => $i
+							];
 						}
 					}
 				}
 				else {
-					$batiments[] = ["A construire", "a_construire", 0, $i];
+					$batiments[] = [
+						"nom_batiment" => "A construire",
+						"nom_batiment_sql" => "a_construire",
+						"niveau" => 0,
+						"emplacement" => $i
+					];
 				}
 			}
+
+			Bataille::$values = array_merge(Bataille::$values, ["batiments" => $batiments]);
 
 			$this->setBatimentsBase($batiments);
 		}

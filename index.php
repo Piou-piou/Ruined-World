@@ -95,6 +95,9 @@
 				$twig = new Twig_Environment($loader);
 
 				$page = $router_module->getPage();
+				echo("<pre>");
+				print_r($arr);
+				echo("</pre>");
 			}
 			else {
 				$contenu->getContenuPage();
