@@ -122,10 +122,16 @@
 
 			if ($ressource >  Bataille::getRessource()->$f()) {
 				/*echo("$nom_ressource $ressource ".Bataille::getRessource()->getEau()." ---");*/
-				return [$ressource, "rouge"];
+				return [
+					"ressource" => $ressource,
+					"class" => "rouge"
+				];
 			}
 
-			return [$ressource, ""];
+			return [
+				"ressource" => $ressource,
+				"class" => ""
+			];
 		}
 		//-------------------------- END GETTER ----------------------------------------------------------------------------//
 		

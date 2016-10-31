@@ -339,10 +339,10 @@
 								$ressource = $this->getRessourceConstruireBatiment($all_batiment[$i], 0);
 
 								$batiment_construire[] = [
-									$all_batiment[$i],
-									$all_batiment_nom[$i],
-									$ressource,
-									$temps_construction
+									"nom_batiument_sql" => $all_batiment[$i],
+									"nom_batiment" => $all_batiment_nom[$i],
+									"ressource" => $ressource,
+									"temps_construction" => $temps_construction
 								];
 							}
 						}
@@ -354,16 +354,16 @@
 						$ressource = $this->getRessourceConstruireBatiment($all_batiment[$i], 0);
 
 						$batiment_construire[] = [
-							$all_batiment[$i],
-							$all_batiment_nom[$i],
-							$ressource,
-							$temps_construction
+							"nom_batiument_sql" => $all_batiment[$i],
+							"nom_batiment" => $all_batiment_nom[$i],
+							"ressource" => $ressource,
+							"temps_construction" => $temps_construction
 						];
 					}
 				}
 			}
 
-			return $batiment_construire;
+			Bataille::$values = array_merge(Bataille::$values, ["batiments" => $batiment_construire]);
 		}
 
 		/**
@@ -381,19 +381,19 @@
 
 			if ((is_array($query)) && (count($query) > 0)) {
 				foreach ($query as $obj) {
-					$ressource = $obj->ressource_construire;
+					$ressource_tmp = $obj->ressource_construire;
 				}
-				$ressource = explode(", ", $ressource);
+				$ressource_tmp = explode(", ", $ressource_tmp);
 
 				//on test si assez de ressources dans la base
 				//fer
-				$ressource[0] = Bataille::getTestAssezRessourceBase("fer", $ressource[0]);
+				$ressource["fer"] = Bataille::getTestAssezRessourceBase("fer", $ressource_tmp[0]);
 				//fuel
-				$ressource[1] = Bataille::getTestAssezRessourceBase("fuel", $ressource[1]);
+				$ressource["fuel"] = Bataille::getTestAssezRessourceBase("fuel", $ressource_tmp[1]);
 				//eau
-				$ressource[2] = Bataille::getTestAssezRessourceBase("eau", $ressource[2]);
+				$ressource["eau"] = Bataille::getTestAssezRessourceBase("eau", $ressource_tmp[2]);
 				//electricite
-				$ressource[3] = Bataille::getTestAssezRessourceBase("electricite", $ressource[3]);
+				$ressource["electricite"] = Bataille::getTestAssezRessourceBase("electricite", $ressource_tmp[3]);
 
 				return $ressource;
 			}

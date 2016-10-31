@@ -1,0 +1,22 @@
+<h2>Liste des btiments à construire</h2>
+<!--<p>Si vous supprimez ce module, tous les contenus, images qui y sont associés seront supprimés<br/></p>
+<p class="attention">Cette action est irréverssible !</p>-->
+
+{% for i in bataille.batiments %}
+	<div>
+		<p>{{i.nom_batiment}}</p>
+		<ul>
+			<li class="{{i.ressource.fer.class}}">fer : {{i.ressource.fer.ressource}}</li>
+			<li class="{{i.ressource.fuel.class}}">fuel : {{i.ressource.fuel.ressource}}</li>
+			<li class="{{i.ressource.eau.class}}">eau : {{i.ressource.eau.ressource}}</li>
+			<li class="{{i.ressource.electricite.class}}">électricité : {{i.ressource.electricite.ressource}}</li>
+			<li>Temps de construction : {{i.temps_construction}}</li>
+		</ul>
+
+		<a nom_batiment="{{i.nom_batiment}}" emplacement="{{emplacement}}" nom_batiment_sql="{{i.nom_batiment_sql}}" class="construire {{i.ressource.fer.class}} {{i.ressource.fuel.class}} {{i.ressource.eau.class}} {{i.ressource.electricite.class}}" href="">Construire le batiment</a>
+		<hr>
+	</div>
+{% endfor %}
+
+
+<?php require_once(MODULEROOT."bataille/app/views/js/construire_batiment.php");?>

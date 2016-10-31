@@ -136,6 +136,14 @@ p.rouge {
 }
 
 .popup {
+	overflow-y: visible;
+
+	.content {
+		min-height: 200px;
+		max-height: 500px;
+		overflow-y: scroll;
+	}
+
 	.rouge {
 		color: red;
 	}
