@@ -4,7 +4,7 @@
 		function setRafraichirRessource() {
 			$.ajax({
 				type:"POST",
-				url:"<?=WEBROOT?>controller/modules/bataille/ressource/rafraichir",
+				url:"{{WEBROOT}}controller/modules/bataille/ressource/rafraichir",
 				success: function(data){
 					$(".ressource").html(data);
 				}, error: function(){
