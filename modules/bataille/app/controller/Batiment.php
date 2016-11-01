@@ -263,7 +263,7 @@
 				}
 				else {
 					$this->date_fin_construction = $this->date_fin_construction-$today;
-					Bataille::$values = ["date_fin_construction" => $this->date_fin_construction-$today];
+					Bataille::$values = array_merge(Bataille::$values, ["date_fin_construction" => $this->date_fin_construction-$today]);
 				}
 
 				return 1;
