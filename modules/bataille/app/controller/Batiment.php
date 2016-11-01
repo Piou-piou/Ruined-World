@@ -339,7 +339,7 @@
 								$ressource = $this->getRessourceConstruireBatiment($all_batiment[$i], 0);
 
 								$batiment_construire[] = [
-									"nom_batiument_sql" => $all_batiment[$i],
+									"nom_batiment_sql" => $all_batiment[$i],
 									"nom_batiment" => $all_batiment_nom[$i],
 									"ressource" => $ressource,
 									"temps_construction" => $temps_construction
@@ -354,7 +354,7 @@
 						$ressource = $this->getRessourceConstruireBatiment($all_batiment[$i], 0);
 
 						$batiment_construire[] = [
-							"nom_batiument_sql" => $all_batiment[$i],
+							"nom_batiment_sql" => $all_batiment[$i],
 							"nom_batiment" => $all_batiment_nom[$i],
 							"ressource" => $ressource,
 							"temps_construction" => $temps_construction
