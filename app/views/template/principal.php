@@ -22,6 +22,10 @@
 		<?php //require_once(ROOT."app/views/template/navigation.php");?>
 		<?php //if ($config->getResponsive() == 1) require_once(ROOT."app/views/template/nav_responsive.php");?>
 
+		<pre>
+			<?php print_r(array_merge(array_merge($arr, $constant), $_REQUEST));?>
+		</pre>
+
 		<?php echo $twig->render($page.".html", array_merge(array_merge($arr, $constant), $_REQUEST)); ?>
 
 
