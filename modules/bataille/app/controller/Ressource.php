@@ -23,20 +23,24 @@
 					$this->fer = $obj->fer;
 					$this->nourriture = $obj->nourriture;
 
-					Bataille::$values = array_merge(Bataille::$values, ["eau" => $obj->eau]);
-					Bataille::$values = array_merge(Bataille::$values, ["electricite" => $obj->electricite]);
-					Bataille::$values = array_merge(Bataille::$values, ["fuel" => $obj->fuel]);
-					Bataille::$values = array_merge(Bataille::$values, ["fer" => $obj->fer]);
-					Bataille::$values = array_merge(Bataille::$values, ["nourriture" => $obj->nourriture]);
+					Bataille::setValues([
+						"eau" => $obj->eau,
+						"electricite" => $obj->electricite,
+						"fer" => $obj->fer,
+						"fuel" => $obj->fuel,
+						"nourriture" => $obj->nourriture
+					]);
 				}
 
 				$this->setActualiserRessource();
 
-				Bataille::$values = array_merge(Bataille::$values, ["max_eau" => $this->getStockageMax("eau")]);
-				Bataille::$values = array_merge(Bataille::$values, ["max_electricite" => $this->getStockageMax("electricite")]);
-				Bataille::$values = array_merge(Bataille::$values, ["max_fuel" => $this->getStockageMax("fuel")]);
-				Bataille::$values = array_merge(Bataille::$values, ["max_fer" => $this->getStockageMax("fer")]);
-				Bataille::$values = array_merge(Bataille::$values, ["max_nourriture" => $this->getStockageMax("nourriture")]);
+				Bataille::setValues([
+					"max_eau" => $this->getStockageMax("eau"),
+					"max_electricite" => $this->getStockageMax("electricite"),
+					"max_fer" => $this->getStockageMax("fer"),
+					"max_fuel" => $this->getStockageMax("fuel"),
+					"max_nourriture" => $this->getStockageMax("nourriture")
+				]);
 			}
 		}
 		//-------------------------- END BUILDER ----------------------------------------------------------------------------//

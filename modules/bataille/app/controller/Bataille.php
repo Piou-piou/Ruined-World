@@ -149,5 +149,9 @@
 				->where("ID_identite", "=", self::getIdIdentite())
 				->set();
 		}
+
+		public static function setValues($values) {
+			Bataille::$values = array_merge(Bataille::$values, $values);
+		}
 		//-------------------------- END SETTER ----------------------------------------------------------------------------//
 	}

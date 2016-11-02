@@ -28,11 +28,12 @@
 
 			$this->getBatimentsBase();
 
-			Bataille::$values = array_merge(Bataille::$values, ["production_eau" => Bataille::getBatiment()->getProduction("eau")]);
-			Bataille::$values = array_merge(Bataille::$values, ["production_electricite" => Bataille::getBatiment()->getProduction("electricite")]);
-			Bataille::$values = array_merge(Bataille::$values, ["production_fer" => Bataille::getBatiment()->getProduction("fer")]);
-			Bataille::$values = array_merge(Bataille::$values, ["production_fuel" => Bataille::getBatiment()->getProduction("fuel")]);
-			//Bataille::$values = array_merge(Bataille::$values, ["production_nourriture" => Bataille::getBatiment()->getProduction("nourriture")]);
+			Bataille::setValues([
+				"production_eau" => Bataille::getBatiment()->getProduction("eau"),
+				"production_electricite" => Bataille::getBatiment()->getProduction("electricite"),
+				"production_fer" => Bataille::getBatiment()->getProduction("fer"),
+				"production_fuel" => Bataille::getBatiment()->getProduction("fuel"),
+			]);
 		}
 
 		/**
@@ -50,7 +51,7 @@
 
 			if ((is_array($query)) && (count($query) > 0)) {
 				foreach ($query as $obj) {
-					Bataille::$values = array_merge(Bataille::$values, [
+					Bataille::setValues([
 						"nom_base" => $obj->nom_base,
 						"points" => $obj->points,
 					]);
@@ -102,7 +103,8 @@
 				}
 			}
 
-			Bataille::$values = array_merge(Bataille::$values, ["batiments" => $batiments]);
+			//Bataille::$values = array_merge(Bataille::$values, ["batiments" => $batiments]);
+			Bataille::setValues(["batiments" => $batiments]);
 
 			$this->setBatimentsBase($batiments);
 		}

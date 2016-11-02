@@ -263,7 +263,7 @@
 				}
 				else {
 					$this->date_fin_construction = $this->date_fin_construction-$today;
-					Bataille::$values = array_merge(Bataille::$values, ["date_fin_construction" => $this->date_fin_construction-$today]);
+					Bataille::setValues(["date_fin_construction" => $this->date_fin_construction-$today]);
 				}
 
 				return 1;
@@ -362,8 +362,7 @@
 					}
 				}
 			}
-
-			Bataille::$values = array_merge(Bataille::$values, ["batiments" => $batiment_construire]);
+			Bataille::setValues(["batiments" => $batiment_construire]);
 		}
 
 		/**
