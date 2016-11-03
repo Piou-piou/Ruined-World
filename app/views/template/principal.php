@@ -17,8 +17,8 @@
 		<?php } ?>
 		<link rel="stylesheet" type="text/css" href="<?=TPLWEBROOT?>css/style.css">
 	</head>
-	<?=\core\HTML\flashmessage\FlashMessage::getFlash();?>
 	<body>
+		<?=\core\HTML\flashmessage\FlashMessage::getFlash();?>
 		<?php //require_once(ROOT."app/views/template/navigation.php");?>
 		<?php //if ($config->getResponsive() == 1) require_once(ROOT."app/views/template/nav_responsive.php");?>
 
