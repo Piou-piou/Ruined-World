@@ -262,5 +262,9 @@
 				->where("ID_identite", "=", $_SESSION['idlongin'])
 				->del();
 		}
+
+		public function setEnvoyerMessage($objet, $destinataires, $message) {
+
+		}
 		//-------------------------- END SETTER ----------------------------------------------------------------------------//
 	}
