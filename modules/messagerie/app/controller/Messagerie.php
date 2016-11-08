@@ -178,15 +178,6 @@
 
 			if ((is_array($query)) && (count($query) > 0)) {
 				foreach ($query as $obj) {
-					$id_message[] = $obj->ID_message;
-					$objet[] = $obj->objet;
-					$date_message[] = $obj->date;
-					$id_expediteur[] = $obj->ID_expediteur;
-					$pseudo_expediteur[] = $obj->pseudo;
-					$url[] = $obj->url;
-				}
-
-				foreach ($query as $obj) {
 					$arr = [
 						"id_message" => $obj->ID_message,
 						"objet" => $obj->objet,
@@ -225,7 +216,8 @@
 						"date_message" => $obj->date,
 						"id_expediteur" => $obj->ID_expediteur,
 						"pseudo_expediteur" => $obj->pseudo,
-						"url" => $obj->url
+						"url" => $obj->url,
+						"supprimer" => $obj->supprimer
 					];
 				}
 			}

@@ -8,4 +8,6 @@
 	{{messagerie.message}}
 </article>
 
-<a href="{{WEBROOT}}controller/modules/messagerie/message/archiver?id_message={{messagerie.id_message}}">Archiver ce message</a>
+{% if messagerie.supprimer != 1 %}
+	<a href="{{WEBROOT}}controller/modules/messagerie/message/archiver?id_message={{messagerie.id_message}}">Archiver ce message</a>
+{% endif %}
