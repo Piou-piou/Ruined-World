@@ -58,7 +58,7 @@
 		//initialisation of Database Core connexion
 		public static function getDb() {
 			if (self::$database == null) {
-				self::$database = new Database("mysql", "bataille_core", "root", "gerto8!", "127.0.0.1");
+				self::$database = new Database("mysql", "bataille_core", "root", "Gerto80", "127.0.0.1");
 			}
 			return self::$database;
 		}
