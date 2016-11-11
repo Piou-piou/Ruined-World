@@ -2,6 +2,7 @@
 	namespace modules\messagerie\app\controller;
 
 	use core\App;
+	use core\functions\ChaineCaractere;
 
 	class Messagerie {
 		public static $url_message;
@@ -192,6 +193,25 @@
 			}
 		}
 
+		/*
+		 * fonction qui permetlors de l'envoit d'un message d'être sur que le membre existe
+		 */
+		private function getIdIdentiteExist($pseudo) {
+			$dbc = App::getDb();
+
+			$pseudo = trim($pseudo);
+
+			$query = $dbc->select("ID_identite")->from("identite")->where("pseudo", "=", $pseudo)->get();
+
+			if ((count($query) == 1) && (is_array($query))) {
+				foreach ($query as $obj) {
+					return $obj->ID_identite;
+				}
+			}
+
+			return false;
+		}
+
 		/**
 		 * @param $url_message
 		 * fonction qui récupère un message suivant une url
@@ -255,8 +275,63 @@
 				->del();
 		}
 
-		public function setEnvoyerMessage($objet, $destinataires, $message) {
+		/**
+		 * @param $objet
+		 * @param $destinataire
+		 * @param $message
+		 * @return bool
+		 *
+		 * fonction qui sert à envoyer un message à un ou plusieurs destinataires
+		 */
+		public function setEnvoyerMessage($objet, $destinataire, $message) {
+			$dbc = App::getDb();
 
+			//on test si un ou plusieurs destinataires ++ si ils existent
+			if (ChaineCaractere::FindInString($destinataire, ",")) {
+				$destinataires = explode(",", $destinataire);
+				$c = count($destinataires);
+
+				for ($i=0 ; $i<$c ; $i++) {
+					if ($this->getIdIdentiteExist($destinataires[$i]) !== false) {
+						$destinataires[] = $this->getIdIdentiteExist($destinataires[$i]);
+					}
+					else {
+						return false;
+					}
+				}
+			}
+			else {
+				if ($this->getIdIdentiteExist($destinataire) !== false) {
+					$destinataires[] = $this->getIdIdentiteExist($destinataire);
+				}
+				else {
+					return false;
+				}
+			}
+
+			//cela veut dire qu'on a au moin 1 membre à qui envoyer le message
+			if (count($destinataires) > 0) {
+				$dbc->insert("message", $message)
+					->insert("objet", $objet)
+					->insert("url", ChaineCaractere::setUrl($objet))
+					->insert("date", date("Y-m-d H:i:s"))
+					->insert("ID_expediteur", 1)
+					->into("_messagerie_message")
+					->set();
+
+				$id_message = $dbc->lastInsertId();
+
+				foreach ($destinataires as $destinataire) {echo("gddg $destinataire");
+					$dbc->insert("ID_identite", $destinataire)
+						->insert("ID_message", $id_message)
+						->into("_messagerie_boite_reception")
+						->set();
+				}
+
+				return true;
+			}
+
+			return false;
 		}
 		//-------------------------- END SETTER ----------------------------------------------------------------------------//
 	}

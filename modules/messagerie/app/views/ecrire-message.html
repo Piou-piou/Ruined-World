@@ -1,7 +1,7 @@
 {{ include("nav.html") }}
 
 <div class="row">
-	<form action="{{WEBROOT}}controller/modules/messagerie/message/envoyer" method="post">
+	<form action="{{WEBROOT}}controller/modules/messagerie/message/envoyer" method="POST">
 		<div class="small-6 columns">
 			<input type="text" name="objet" placeholder="objet">
 		</div>
@@ -11,5 +11,7 @@
 		<div class="small-12">
 			<textarea class="columns" name="message" id="" cols="30" rows="10"></textarea>
 		</div>
+
+		<button type="submit">Envoyer</button>
 	</form>
 </div>
