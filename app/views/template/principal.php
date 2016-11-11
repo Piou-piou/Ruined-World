@@ -23,10 +23,10 @@
 		<?php //if ($config->getResponsive() == 1) require_once(ROOT."app/views/template/nav_responsive.php");?>
 
 		<pre>
-			<?php print_r(array_merge(array_merge($arr, $constant), $_REQUEST));?>
+			<?php print_r(array_merge(array_merge(array_merge($arr, $constant), $_REQUEST), $_SESSION));?>
 		</pre>
 
-		<?php echo $twig->render($page.".html", array_merge(array_merge($arr, $constant), $_REQUEST)); ?>
+		<?php echo $twig->render($page.".html", array_merge(array_merge(array_merge($arr, $constant), $_REQUEST), $_SESSION)); ?>
 
 
 		<script>
