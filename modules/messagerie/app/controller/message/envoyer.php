@@ -7,5 +7,10 @@
 	}
 	else {
 		\core\HTML\flashmessage\FlashMessage::setFlash("Votre ou vos destinataire(s) n'existe pas");
+
+		$_SESSION['objet'] = $_POST['objet'];
+		$_SESSION['destinataire'] = $_POST['destinataire'];
+		$_SESSION['message'] = $_POST['message'];
+
 		header("location:".WEBROOT."messagerie/ecrire-message");
 	}
