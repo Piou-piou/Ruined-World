@@ -1,1 +1,97 @@
-body{background-color:#414142}.bataille .rouge{color:#FF0000}.bataille header nav.top{background-color:#000;color:#fff}.bataille header nav.top ul{margin:0}.bataille header nav.top ul li{display:inline-block;padding:0.5rem 1rem}.bataille nav.middle{background-color:#212122;height:100px;width:100%}.bataille nav.middle ul li{list-style:none;display:inline-block}.bataille nav.middle a{display:block}.bataille .ressources .gauche,.bataille .ressources .droite{background-color:#303031;height:50px;color:#fff;padding-top:1rem}.bataille .ressources .gauche::before{background-color:#303031;width:20px;height:50px;position:absolute;top:0;left:-15px;transform:skewX(10deg);content:' '}.bataille .ressources .droite::after{background-color:#303031;width:20px;height:50px;position:absolute;top:0;right:-15px;transform:skewX(-10deg);content:' '}.bataille .ressources .nom-base{height:60px;background-color:#f24237;color:#fff;vertical-align:middle}.bataille .ressources .nom-base::before{background-color:#f24237;width:20px;height:60px;position:absolute;top:0;left:-15px;transform:skewX(10deg);content:' '}.bataille .ressources .nom-base::after{background-color:#f24237;width:20px;height:60px;position:absolute;top:0;right:-15px;transform:skewX(-10deg);content:' ';z-index:1}.bataille .side-bar{background-color:#303031}p.rouge{color:red}.popup{overflow-y:visible}.popup .content{min-height:200px;max-height:500px;overflow-y:scroll}.popup .rouge{color:red}
+@charset "UTF-8";
+/*pour la nav tout en haut de la page ou il y a aide d├®connexion...*/
+/*pour la nav principaleou il y a le logo de la map...*/
+/*pour le logo et les ressources + les panneaux latt├®raux avec les unit├®s*/
+/*pour le body et le bg de la map*/
+body {
+  background-color: #414142; }
+
+.bataille {
+  /*-------------------------------------- CLASS GENERALES --------------------------------------*/
+  /*-------------------------------------- HEADER --------------------------------------*/
+  /*partie qui gere l'affichage des ressources + du nom du village*/
+  /*-------------------------------------- SIDE BAR --------------------------------------*/ }
+  .bataille .rouge {
+    color: #FF0000; }
+  .bataille header nav.top {
+    background-color: #000;
+    color: #fff; }
+    .bataille header nav.top ul {
+      margin: 0; }
+      .bataille header nav.top ul li {
+        display: inline-block;
+        padding: 0.5rem 1rem; }
+  .bataille nav.middle {
+    background-color: #212122;
+    height: 100px;
+    width: 100%; }
+    .bataille nav.middle ul {
+      margin-bottom: 0; }
+      .bataille nav.middle ul li {
+        list-style: none;
+        display: inline-block; }
+    .bataille nav.middle a {
+      display: block; }
+  .bataille .ressources .gauche, .bataille .ressources .droite {
+    background-color: #303031;
+    height: 50px;
+    color: #fff;
+    padding-top: 1rem; }
+  .bataille .ressources .gauche::before {
+    background-color: #303031;
+    width: 20px;
+    height: 50px;
+    position: absolute;
+    top: 0;
+    left: -15px;
+    transform: skewX(10deg);
+    content: ' '; }
+  .bataille .ressources .droite::after {
+    background-color: #303031;
+    width: 20px;
+    height: 50px;
+    position: absolute;
+    top: 0;
+    right: -15px;
+    transform: skewX(-10deg);
+    content: ' '; }
+  .bataille .ressources .nom-base {
+    height: 60px;
+    background-color: #F24237;
+    color: #fff;
+    vertical-align: middle; }
+    .bataille .ressources .nom-base::before {
+      background-color: #F24237;
+      width: 20px;
+      height: 60px;
+      position: absolute;
+      top: 0;
+      left: -15px;
+      transform: skewX(10deg);
+      content: ' '; }
+    .bataille .ressources .nom-base::after {
+      background-color: #F24237;
+      width: 20px;
+      height: 60px;
+      position: absolute;
+      top: 0;
+      right: -15px;
+      transform: skewX(-10deg);
+      content: ' ';
+      z-index: 1; }
+  .bataille .side-bar {
+    background-color: #303031; }
+
+p.rouge {
+  color: red; }
+
+.popup {
+  overflow-y: visible; }
+  .popup .content {
+    min-height: 200px;
+    max-height: 500px;
+    overflow-y: scroll; }
+  .popup .rouge {
+    color: red; }
+
+/*# sourceMappingURL=style.css.map */
