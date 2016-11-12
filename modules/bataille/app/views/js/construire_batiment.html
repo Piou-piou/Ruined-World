@@ -25,7 +25,7 @@
 </script>
 
 
-{% if bataille.date_fin_construction is same as(int) and bataille.date_fin_construction > 0 %}
+{% if bataille.date_fin_construction > 0 %}
 	<script>
 		$(function () {
 			$('#defaultCountdown').countdown({

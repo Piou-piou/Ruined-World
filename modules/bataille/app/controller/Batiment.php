@@ -311,8 +311,10 @@
 					$this->setTerminerConstruction($id_batiment);
 				}
 				else {
-					$this->date_fin_construction = $this->date_fin_construction-$today;
-					Bataille::setValues(["date_fin_construction" => $this->date_fin_construction-$today]);
+					Bataille::setValues([
+						"date_fin_construction" => $this->date_fin_construction-$today,
+						"nom_batiment_construction" => $this->nom_batiment_construction
+					]);
 				}
 
 				return 1;
