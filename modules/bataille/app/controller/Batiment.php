@@ -161,56 +161,6 @@
 		 * @param $nom_batiment
 		 * @param $emplacement
 		 */
-		/*public function getUnBatiment($nom_batiment, $emplacement) {
-			$dbc = App::getDb();
-			$dbc1 = Bataille::getDb();
-
-			$construction = $this->getTestBatimentConstruction($nom_batiment);
-
-			//recuperation des infos du batiment
-			$query = $dbc->select()
-				->from("_bataille_batiment")
-				->where("nom_batiment", "=", $construction[0], "AND")
-				->where("emplacement", "=", $emplacement, "AND")
-				->where("ID_base", "=", Bataille::getIdBase())
-				->get();
-
-			if ((is_array($query)) && (count($query) > 0)) {
-				foreach ($query as $obj) {
-					$this->nom_batiment_sql = $obj->nom_batiment_sql;
-					$this->niveau_batiment = $obj->niveau;
-					$this->id_batiment = $obj->ID_batiment;
-				}
-
-				if (($construction[1] == true) && ($this->niveau_batiment > 1)) {
-					$this->niveau_batiment = $this->niveau_batiment+1;
-				}
-
-				return $this->getInfoUpgradeBatiment();
-			}
-			else {
-				//on test voir si le bat est au niveau max et si il peut avoir un addon
-				if (ChaineCaractere::FindInString($nom_batiment, "addon")) {
-					$query = $dbc1->select("nom_table")->from("liste_batiment")->where("nom", "=", $nom_batiment)->get();
-
-					if ((is_array($query)) && (count($query) > 0)) {
-						foreach ($query as $obj) {
-							$this->nom_batiment_sql = $obj->nom_table;
-						}
-
-						$this->niveau_batiment = 0;
-
-						return $this->getInfoUpgradeBatiment();
-					}
-					else {
-						return 0;
-					}
-				}
-
-
-				return 0;
-			}
-		}*/
 		public function getUnBatiment($nom_batiment, $emplacement) {
 			$dbc = App::getDb();
 			$dbc1 = Bataille::getDb();
@@ -225,7 +175,7 @@
 				->where("ID_base", "=", Bataille::getIdBase())
 				->get();
 
-			if ((is_array($query)) && (count($query) > 0)) {echo($construction[0].$emplacement.Bataille::getIdBase());
+			if ((is_array($query)) && (count($query) > 0)) {
 				foreach ($query as $obj) {
 					$this->nom_batiment_sql = $obj->nom_batiment_sql;
 					$this->niveau_batiment = $obj->niveau;
@@ -619,7 +569,7 @@
 				->del();
 
 			//on termine la construction dans la table batiment
-			$dbc->update("construction", "NULL")
+			$dbc->update("construction", 0)
 				->from("_bataille_batiment")
 				->where("ID_base", "=", Bataille::getIdBase(), "AND")
 				->where("ID_batiment", "=", $id_batiment)
