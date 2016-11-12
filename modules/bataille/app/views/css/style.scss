@@ -70,6 +70,10 @@ body {
 			height: 50px;
 			color: $clr-ressource;
 			padding-top: 1rem;
+
+			.texte {
+				margin-top: 0.2rem;
+			}
 		}
 
 		.gauche::before {
@@ -94,7 +98,7 @@ body {
 			content: ' ';
 		}
 
-		.nom-base{
+		.nom-base {
 			height: 60px;
 			background-color: $bg-nom-base;
 			color: $clr-nom-base;
@@ -122,6 +126,10 @@ body {
 				content: ' ';
 				z-index: 1;
 			}
+		}
+
+		img {
+			margin-top: -0.5rem;
 		}
 	}
 
