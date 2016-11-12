@@ -4,8 +4,7 @@
 	Bataille::getIdBase();
 
 	if (Bataille::getBatiment()->getUnBatiment($_POST['nom_batiment'], $_POST['emplacement']) == 0) {
-		$max_level = true;
+		Bataille::getBatiment()->getUnBatiment($_POST['nom_batiment']." addon", 0);
 	}
-	else {
-		$max_level = false;
-	}
+
+	$arr = \modules\bataille\app\controller\Bataille::getValues();

@@ -161,7 +161,7 @@
 		 * @param $nom_batiment
 		 * @param $emplacement
 		 */
-		public function getUnBatiment($nom_batiment, $emplacement) {
+		/*public function getUnBatiment($nom_batiment, $emplacement) {
 			$dbc = App::getDb();
 			$dbc1 = Bataille::getDb();
 
@@ -210,14 +210,57 @@
 
 				return 0;
 			}
-		}
-
-		/**
-		 * permet de savoir si le batiment produit bien des ressoures
-		 * @return array|bool
-		 */
-		public function getTestBatimentProductionRessource() {
+		}*/
+		public function getUnBatiment($nom_batiment, $emplacement) {
+			$dbc = App::getDb();
 			$dbc1 = Bataille::getDb();
+
+			$construction = $this->getTestBatimentConstruction($nom_batiment);
+
+			//recuperation des infos du batiment
+			$query = $dbc->select()
+				->from("_bataille_batiment")
+				->where("nom_batiment", "=", $construction[0], "AND")
+				->where("emplacement", "=", $emplacement, "AND")
+				->where("ID_base", "=", Bataille::getIdBase())
+				->get();
+
+			if ((is_array($query)) && (count($query) > 0)) {echo($construction[0].$emplacement.Bataille::getIdBase());
+				foreach ($query as $obj) {
+					$this->nom_batiment_sql = $obj->nom_batiment_sql;
+					$this->niveau_batiment = $obj->niveau;
+					$this->id_batiment = $obj->ID_batiment;
+				}
+
+				if (($construction[1] == true) && ($this->niveau_batiment > 1)) {
+					$this->niveau_batiment = $this->niveau_batiment + 1;
+				}
+				$max_level =  $this->getInfoUpgradeBatiment();
+			}
+			else {
+				//on test voir si le bat est au niveau max et si il peut avoir un addon
+				if (ChaineCaractere::FindInString($nom_batiment, "addon")) {
+					$query = $dbc1->select("nom_table")->from("liste_batiment")->where("nom", "=", $nom_batiment)->get();
+
+					if ((is_array($query)) && (count($query) > 0)) {
+						foreach ($query as $obj) {
+							$this->nom_batiment_sql = $obj->nom_table;
+						}
+
+						$this->niveau_batiment = 0;
+
+						$max_level = $this->getInfoUpgradeBatiment();
+					}
+					else {
+						$max_level = 0;
+					}
+				}
+				else {
+					$max_level = 0;
+				}
+			}
+
+			//permet de savoir si le batiment produit bien des ressoures
 			$batiment_production = [];
 
 			$query = $dbc1->select("nom")->from("liste_batiment")->where("type", "=", "ressource")->get();
@@ -226,11 +269,17 @@
 				foreach ($query as $obj) {
 					$batiment_production[] = $obj->nom;
 				}
-
-				return $batiment_production;
 			}
 
-			return $batiment_production;
+			Bataille::setValues([
+				"nom_batiment_sql" => $this->nom_batiment_sql,
+				"niveau_batiment" => $this->niveau_batiment,
+				"id_batiment" => $this->niveau_batiment,
+				"max_level" => $max_level,
+				"batiment_production" => $batiment_production
+			]);
+
+			return $max_level;
 		}
 
 		/**
@@ -441,6 +490,12 @@
 						}
 					}
 				}
+
+				Bataille::setValues([
+					"ressource" => $this->ressource_construire,
+					"temps_construction" => $this->temps_construction,
+					"info_batiment" => $this->info_batiment,
+				]);
 
 				return 1;
 			}
