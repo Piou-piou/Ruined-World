@@ -6,7 +6,14 @@
 				type:"POST",
 				url:"{{WEBROOT}}controller/modules/bataille/ressource/rafraichir",
 				success: function(data){
-					$(".ressource").html(data);
+					var tab = JSON.parse(data);
+
+					console.log(tab.bataille.eau);
+
+					$(".ressource .eau").html(tab.bataille.eau);
+					$(".ressource .electricite").html(tab.bataille.electricite);
+					$(".ressource .fer").html(tab.bataille.fer);
+					$(".ressource .fuel").html(tab.bataille.fuel);
 				}, error: function(){
 
 				}
