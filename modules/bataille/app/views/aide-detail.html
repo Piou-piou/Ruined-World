@@ -1,0 +1,31 @@
+{{ include("nav.html") }}
+
+<h1>Aide sur les {{ bataille.batiments }} de type {{ bataille.type_batiments }}</h1>
+
+{% for i in bataille.liste_batiments %}
+	<div>
+		<h3>{{ i.nom_batiment }}</h3>
+
+		<h4>Ressources nécéssaires pour le premier niveau</h4>
+		<ul>
+			<li>Eau : {{ i.ressource.eau }}</li>
+			<li>Electricité : {{ i.ressource.electricite }}</li>
+			<li>Fer : {{ i.ressource.fer }}</li>
+			<li>Fuel : {{ i.ressource.fuel }}</li>
+			<li>Temps de construction : {{ i.temps_construction }}</li>
+		</ul>
+
+
+		{% if i.pour_construire|length > 0 %}
+			<h4>Batiments nécéssaires pour le premier niveau</h4>
+
+			{% for j in i.pour_construire.batiments %}
+				<ul>
+					<li>Nom du batiment : {{ j.nom_batiment }}</li>
+					<li>Niveau du batiment : {{ j.niveau_batiment }}</li>
+				</ul>
+			{% endfor %}
+		{% endif %}
+	</div>
+	<hr>
+{% endfor %}

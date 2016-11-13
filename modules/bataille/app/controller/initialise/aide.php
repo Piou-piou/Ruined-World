@@ -2,4 +2,4 @@
 
 	$aide = new \modules\bataille\app\controller\Aide();
 
-	$count = count($aide->getNomBatiment());
+	$arr = \modules\bataille\app\controller\Bataille::getValues();
