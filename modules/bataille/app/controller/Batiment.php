@@ -185,6 +185,7 @@
 				if (($construction[1] == true) && ($this->niveau_batiment > 1)) {
 					$this->niveau_batiment = $this->niveau_batiment + 1;
 				}
+				$niveau_batiment_base = $this->niveau_batiment;
 				$max_level =  $this->getInfoUpgradeBatiment();
 			}
 			else {
@@ -200,6 +201,7 @@
 						$this->niveau_batiment = 0;
 
 						$max_level = $this->getInfoUpgradeBatiment();
+						$niveau_batiment_base = 10;
 					}
 					else {
 						$max_level = 0;
@@ -223,6 +225,7 @@
 
 			Bataille::setValues([
 				"nom_batiment_sql" => $this->nom_batiment_sql,
+				"niveau_batiment_base" => $niveau_batiment_base,
 				"niveau_batiment" => $this->niveau_batiment,
 				"id_batiment" => $this->niveau_batiment,
 				"max_level" => $max_level,
