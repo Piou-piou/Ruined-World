@@ -16,6 +16,10 @@ $clr-ressource: #fff;
 $bg-body: #414142;
 $bg-map: #2C626A;
 
+/*pour la map ou on voit tous les players*/
+$border-map-players: #000;
+$map-bg-mabase: green;
+
 body {
 	background-color: $bg-body;
 }
@@ -138,6 +142,35 @@ body {
 	/*-------------------------------------- SIDE BAR --------------------------------------*/
 	.side-bar {
 		background-color: $bg-ressource;
+	}
+
+
+
+	/*-------------------------------------- MAP --------------------------------------*/
+	.map-players {
+		position: relative;
+		width: 1200px;
+		height: 1200px;
+		max-width: 1200px;
+		max-height: 1200px;
+		overflow: hidden;
+		border: 1px solid $border-map-players;
+
+		> div {
+			margin: 10px;
+			position: absolute;
+
+			> div {
+				width: 10px;
+				height: 10px;
+				background-color: #FFF;
+				position: absolute;
+
+				&.ma-base {
+					background-color: $map-bg-mabase;
+				}
+			}
+		}
 	}
 }
 

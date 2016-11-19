@@ -3,6 +3,7 @@
 /*pour la nav principaleou il y a le logo de la map...*/
 /*pour le logo et les ressources + les panneaux latt├®raux avec les unit├®s*/
 /*pour le body et le bg de la map*/
+/*pour la map ou on voit tous les players*/
 body {
   background-color: #414142; }
 
@@ -10,7 +11,8 @@ body {
   /*-------------------------------------- CLASS GENERALES --------------------------------------*/
   /*-------------------------------------- HEADER --------------------------------------*/
   /*partie qui gere l'affichage des ressources + du nom du village*/
-  /*-------------------------------------- SIDE BAR --------------------------------------*/ }
+  /*-------------------------------------- SIDE BAR --------------------------------------*/
+  /*-------------------------------------- MAP --------------------------------------*/ }
   .bataille .rouge {
     color: #FF0000; }
   .bataille header nav.top {
@@ -85,6 +87,24 @@ body {
     margin-top: -0.5rem; }
   .bataille .side-bar {
     background-color: #303031; }
+  .bataille .map-players {
+    position: relative;
+    width: 1200px;
+    height: 1200px;
+    max-width: 1200px;
+    max-height: 1200px;
+    overflow: hidden;
+    border: 1px solid #000; }
+    .bataille .map-players > div {
+      margin: 10px;
+      position: absolute; }
+      .bataille .map-players > div > div {
+        width: 10px;
+        height: 10px;
+        background-color: #FFF;
+        position: absolute; }
+        .bataille .map-players > div > div.ma-base {
+          background-color: green; }
 
 p.rouge {
   color: red; }
