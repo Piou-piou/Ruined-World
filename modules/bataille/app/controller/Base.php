@@ -53,7 +53,7 @@
 				foreach ($query as $obj) {
 					Bataille::setValues([
 						"nom_base" => $obj->nom_base,
-						"points" => $obj->points,
+						"points" => $obj->points
 					]);
 				}
 			}
