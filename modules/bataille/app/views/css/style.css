@@ -110,8 +110,8 @@ body {
         .bataille .map-players > div > div.ma-base {
           background-color: green; }
         .bataille .map-players > div > div > div {
-          min-width: 200px;
           height: 25px;
+          width: 300px;
           background: #FFFFFF;
           position: absolute;
           top: -30px;
