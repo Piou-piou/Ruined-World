@@ -2,8 +2,6 @@
 	$pages_bataille = array("index", "popup_unbatiment", "popup_listebatiments", "aide", "aide-detail", "map");
 	
 	if (\core\modules\GestionModule::getModuleActiver("bataille")) {
-		/*$blog = new \modules\blog\app\controller\Blog();*/
-		
 		if (!in_array($this->page, $pages_bataille)) {
 			\core\HTML\flashmessage\FlashMessage::setFlash("Cette page n'existe pas ou plus");
 			header("location:".WEBROOT);
