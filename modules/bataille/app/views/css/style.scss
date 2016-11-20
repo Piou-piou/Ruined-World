@@ -19,6 +19,7 @@ $bg-map: #2C626A;
 /*pour la map ou on voit tous les players*/
 $border-map-players: #000;
 $map-bg-mabase: green;
+$map-bg-hover-base: #FFFFFF;
 
 body {
 	background-color: $bg-body;
@@ -157,7 +158,7 @@ body {
 		border: 1px solid $border-map-players;
 
 		> div {
-			margin: 10px;
+			margin: 30px;
 			position: absolute;
 
 			> div {
@@ -165,9 +166,26 @@ body {
 				height: 10px;
 				background-color: #FFF;
 				position: absolute;
+				
+				&:hover {
+					cursor: pointer;
+					
+					> div {
+						display: block;
+					}
+				}
 
 				&.ma-base {
 					background-color: $map-bg-mabase;
+				}
+				
+				> div {
+					min-width: 200px;
+					height: 25px;
+					background: $map-bg-hover-base;
+					position: absolute;
+					top: -30px;
+					display: none;
 				}
 			}
 		}

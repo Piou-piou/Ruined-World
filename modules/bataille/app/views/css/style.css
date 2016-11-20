@@ -1,7 +1,7 @@
 @charset "UTF-8";
-/*pour la nav tout en haut de la page ou il y a aide d├®connexion...*/
+/*pour la nav tout en haut de la page ou il y a aide déconnexion...*/
 /*pour la nav principaleou il y a le logo de la map...*/
-/*pour le logo et les ressources + les panneaux latt├®raux avec les unit├®s*/
+/*pour le logo et les ressources + les panneaux lattéraux avec les unités*/
 /*pour le body et le bg de la map*/
 /*pour la map ou on voit tous les players*/
 body {
@@ -96,15 +96,26 @@ body {
     overflow: hidden;
     border: 1px solid #000; }
     .bataille .map-players > div {
-      margin: 10px;
+      margin: 30px;
       position: absolute; }
       .bataille .map-players > div > div {
         width: 10px;
         height: 10px;
         background-color: #FFF;
         position: absolute; }
+        .bataille .map-players > div > div:hover {
+          cursor: pointer; }
+          .bataille .map-players > div > div:hover > div {
+            display: block; }
         .bataille .map-players > div > div.ma-base {
           background-color: green; }
+        .bataille .map-players > div > div > div {
+          min-width: 200px;
+          height: 25px;
+          background: #FFFFFF;
+          position: absolute;
+          top: -30px;
+          display: none; }
 
 p.rouge {
   color: red; }
