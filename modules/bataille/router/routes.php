@@ -1,5 +1,14 @@
 <?php
-	$pages_bataille = array("index", "popup_unbatiment", "popup_listebatiments", "aide", "aide-detail", "map", "popup_map");
+	$pages_bataille = [
+		"index",
+		"popup_unbatiment",
+		"popup_listebatiments",
+		"aide",
+		"aide-detail",
+		"map",
+		"popup_map",
+		"popup_marche"
+	];
 	
 	if (\core\modules\GestionModule::getModuleActiver("bataille")) {
 		if (!in_array($this->page, $pages_bataille)) {

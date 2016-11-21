@@ -63,23 +63,38 @@
 					$this->module = $explode[$i];
 					$debut_url = $explode[$i];
 				}
-				else if ($i == 1) {
-					$centre_url = $explode[$i];
-					$this->page = $explode[$i];
+				else if ($i >= 1) {
+					$centre_url[] = $explode[$i];
+					$this->page[] = $explode[$i];
 				}
-				else {
+				/*else {
 					$this->parametre = $explode[$i];
-				}
+				}*/
 			}
+			
+			$centre_url = implode("/", $centre_url);
+			$this->page = implode("/", $this->page);
 
 			if (!isset($centre_url) || ($centre_url == "")) {
 				$this->page = "index";
-				$centre_url = "index";
 			}
+			else {
+				$file = ROOT."modules/".$debut_url."/app/views/".$this->page;
+				
+				if (!file_exists($file)) {
+					$this->page = explode("/", $file);
+					$this->parametre = array_pop($this->page);
+					
+					$this->page = implode("/", $this->page);
+				}
+			}
+			
+			echo $this->page;
+			echo $this->parametre ;
 
 			$this->setActionPage();
 
-			return ROOT."modules/".$debut_url."/app/views/".$centre_url;
+			return $this->page;
 		}
 
 		/**
