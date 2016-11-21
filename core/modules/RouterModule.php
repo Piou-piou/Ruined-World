@@ -65,36 +65,35 @@
 				}
 				else if ($i >= 1) {
 					$centre_url[] = $explode[$i];
-					$this->page[] = $explode[$i];
+
+					if ($i == 1) {
+						$this->page = $explode[$i];
+					}
 				}
 				/*else {
 					$this->parametre = $explode[$i];
 				}*/
 			}
-			
+
 			$centre_url = implode("/", $centre_url);
-			$this->page = implode("/", $this->page);
 
 			if (!isset($centre_url) || ($centre_url == "")) {
 				$this->page = "index";
 			}
 			else {
-				$file = ROOT."modules/".$debut_url."/app/views/".$this->page;
+				$file = ROOT."modules/".$debut_url."/app/views/".$centre_url;
 				
 				if (!file_exists($file)) {
-					$this->page = explode("/", $file);
-					$this->parametre = array_pop($this->page);
+					$centre_url = explode("/", $file);
+					$this->parametre = array_pop($centre_url);
 					
-					$this->page = implode("/", $this->page);
+					$centre_url = implode("/", $centre_url);
 				}
 			}
-			
-			echo $this->page;
-			echo $this->parametre ;
 
 			$this->setActionPage();
 
-			return $this->page;
+			return $centre_url."/".$this->parametre;
 		}
 
 		/**
