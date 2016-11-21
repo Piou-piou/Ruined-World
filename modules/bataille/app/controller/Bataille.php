@@ -134,15 +134,31 @@
 			];
 		}
 		
-		
+		/**
+		 * @param $id_base
+		 * @return number
+		 * fonction qui renvoi le temps de trajet entre la base du joueur et une autre base
+		 */
 		public static function getDureeTrajet($id_base) {
-			//récupération des positions de la base du joueur
-			$pos_mabase = self::getPosistionBase($_SESSION['id_base']);
-			$pos_base = self::getPosistionBase($id_base);
+			//récupération de la posisiotn de la base du joueur + la base sur laquelle on a cliqué
+			$base_joueur = self::getPosistionBase($_SESSION['id_base']);
+			$base_autre = self::getPosistionBase($id_base);
 			
-			return [$pos_mabase, $pos_base];
+			//calcul des distances séparant les deux bases en x et y
+			//cette dstance sera multipliée par 10 sur x et y puis ajoutée pour avoir le temps du trajte en seconde
+			$calc_x = abs($base_joueur['posx']-$base_autre['posx']);
+			$calc_y = abs($base_joueur['posy']-$base_autre['posy']);
+			
+			$temps_voyage = ($calc_x*15)+($calc_y*15);
+			
+			return $temps_voyage;
 		}
 		
+		/**
+		 * @param $id_base
+		 * @return array
+		 * fonction qui renvoi les posisitons en x et y d'une base
+		 */
 		private static function getPosistionBase($id_base) {
 			$dbc = App::getDb();
 			

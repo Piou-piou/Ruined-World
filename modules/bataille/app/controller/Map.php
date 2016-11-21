@@ -40,20 +40,6 @@
 					->where("_bataille_base.ID_base", "=", $id_base, "AND")
 					->where("_bataille_base.ID_identite", "=", "identite.ID_identite", "", true)
 					->get();
-				
-				//récupération de la posisiotn de la base du joueur + la base sur laquelle on a cliqué
-				$pos_bases = Bataille::getDureeTrajet($id_base);
-				$base_joueur = $pos_bases[0];
-				$base_autre = $pos_bases[1];
-				
-				//calcul des distances séparant les deux bases en x et y
-				//cette dstance sera multipliée par 10 sur x et y puis ajoutée pour avoir le temps du trajte en seconde
-				$calc_x = abs($base_joueur['posx']-$base_autre['posx']);
-				$calc_y = abs($base_joueur['posy']-$base_autre['posy']);
-				
-				$temps_voyage = ($calc_x*15)+($calc_y*15);
-				
-				echo $temps_voyage;
 			}
 			
 			if ((is_array($query)) && (count($query) > 0)) {
@@ -71,7 +57,8 @@
 						"id_base" => $obj->ID_base,
 						"id_identite" => $obj->ID_identite,
 						"pseudo" => $obj->pseudo,
-						"ma_base" => $ma_base
+						"ma_base" => $ma_base,
+						"temps_trajet" => gmdate("H:i:s", Bataille::getDureeTrajet($id_base))
 					];
 				}
 				
