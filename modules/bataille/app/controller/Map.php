@@ -40,6 +40,8 @@
 					->where("_bataille_base.ID_base", "=", $id_base, "AND")
 					->where("_bataille_base.ID_identite", "=", "identite.ID_identite", "", true)
 					->get();
+
+				$temps_trajet = gmdate("H:i:s", Bataille::getDureeTrajet($id_base));
 			}
 			
 			if ((is_array($query)) && (count($query) > 0)) {
@@ -58,7 +60,7 @@
 						"id_identite" => $obj->ID_identite,
 						"pseudo" => $obj->pseudo,
 						"ma_base" => $ma_base,
-						"temps_trajet" => gmdate("H:i:s", Bataille::getDureeTrajet($id_base))
+						"temps_trajet" => $temps_trajet
 					];
 				}
 				
