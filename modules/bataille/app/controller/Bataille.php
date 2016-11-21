@@ -133,6 +133,32 @@
 				"class" => ""
 			];
 		}
+		
+		
+		public static function getDureeTrajet($id_base) {
+			//récupération des positions de la base du joueur
+			$pos_mabase = self::getPosistionBase($_SESSION['id_base']);
+			$pos_base = self::getPosistionBase($id_base);
+			
+			return [$pos_mabase, $pos_base];
+		}
+		
+		private static function getPosistionBase($id_base) {
+			$dbc = App::getDb();
+			
+			$query = $dbc->select("posx")
+				->select("posy")
+				->from("_bataille_base")
+				->where("ID_base", "=", $id_base)
+				->get();
+			
+			foreach ($query as $obj) {
+				$posx = $obj->posx;
+				$posy = $obj->posy;
+			}
+			
+			return ["posx" => $posx, "posy" => $posy];
+		}
 		//-------------------------- END GETTER ----------------------------------------------------------------------------//
 		
 		

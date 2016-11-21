@@ -1,5 +1,5 @@
 <?php
-	$pages_bataille = array("index", "popup_unbatiment", "popup_listebatiments", "aide", "aide-detail", "map");
+	$pages_bataille = array("index", "popup_unbatiment", "popup_listebatiments", "aide", "aide-detail", "map", "popup_map");
 	
 	if (\core\modules\GestionModule::getModuleActiver("bataille")) {
 		if (!in_array($this->page, $pages_bataille)) {
@@ -26,6 +26,9 @@
 
 		if ($this->page == "map") {
 			$this->controller = "bataille/app/controller/initialise/map.php";
+		}
+		if ($this->page == "popup_map") {
+			$this->controller = "bataille/app/controller/initialise/popup_map.php";
 		}
 	}
 	else {

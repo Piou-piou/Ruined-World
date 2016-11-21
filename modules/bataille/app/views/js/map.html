@@ -1,12 +1,11 @@
 <script>
 	$(document).ready(function() {
 		$(".open-popup").click(function() {
-			var id_identite = $(this).attr("player");
-			
+			var id_base = $(this).attr("player");
 			
 			$.ajax({
 				type:"POST",
-				data: "nom_batiment="+id_identite,
+				data: "id_base="+id_base,
 				url:"{{WEBROOT}}bataille/popup_map",
 				success: function(data){
 					$("#popup-base #ajax").append(data);

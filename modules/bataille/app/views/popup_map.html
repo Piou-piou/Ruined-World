@@ -1,0 +1,9 @@
+{% for i in bataille.map %}
+	<h2>{{ i.nom_base }}</h2>
+	
+	<h3>Pos X : {{ i.posx }} || Pos Y : {{ i.posy }}</h3>
+	
+	<h3>Points de cette base : {{ i.points }}</h3>
+	
+	<h3>Nom du joueur : {{ i.pseudo }}</h3>
+{% endfor %}
