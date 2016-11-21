@@ -26,7 +26,7 @@
 				->get();
 
 			foreach ($query as $obj) {
-				$ma_base = 0;
+				$ma_base = "";
 				if ($obj->ID_identite == 1) {
 					$ma_base = "ma-base";
 				}
