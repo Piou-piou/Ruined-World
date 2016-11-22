@@ -8,7 +8,7 @@
 				$.ajax({
 					type:"POST",
 					data: "emplacement="+emplacement,
-					url:"{{WEBROOT}}bataille/popup_listebatiments",
+					url:"{{WEBROOT}}bataille/popup/listebatiments",
 					success: function(data){
 						$("#popup-base #ajax").append(data);
 					}, error: function(){
@@ -20,7 +20,7 @@
 				$.ajax({
 					type:"POST",
 					data: "nom_batiment="+nom_batiment+"&emplacement="+emplacement,
-					url:"{{WEBROOT}}bataille/popup_unbatiment",
+					url:"{{WEBROOT}}bataille/popup/unbatiment",
 					success: function(data){
 						$("#popup-base #ajax").append(data);
 					}, error: function(){

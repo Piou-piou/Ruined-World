@@ -1,13 +1,13 @@
 <?php
 	$pages_bataille = [
 		"index",
-		"popup_unbatiment",
-		"popup_listebatiments",
+		"popup/unbatiment",
+		"popup/listebatiments",
 		"aide",
 		"aide-detail",
 		"map",
-		"popup_map",
-		"popup_marche"
+		"popup/map",
+		"popup/marche"
 	];
 	
 	if (\core\modules\GestionModule::getModuleActiver("bataille")) {
@@ -21,10 +21,10 @@
 			$this->controller = "bataille/app/controller/initialise/index.php";
 		}
 
-		if ($this->page == "popup_unbatiment") {
+		if ($this->page == "popup/unbatiment") {
 			$this->controller = "bataille/app/controller/initialise/popup_unbatiment.php";
 		}
-		if ($this->page == "popup_listebatiments") {
+		if ($this->page == "popup/listebatiments") {
 			$this->controller = "bataille/app/controller/initialise/popup.php";
 		}
 
@@ -36,7 +36,7 @@
 		if ($this->page == "map") {
 			$this->controller = "bataille/app/controller/initialise/map.php";
 		}
-		if ($this->page == "popup_map") {
+		if ($this->page == "popup/map") {
 			$this->controller = "bataille/app/controller/initialise/popup_map.php";
 		}
 	}
