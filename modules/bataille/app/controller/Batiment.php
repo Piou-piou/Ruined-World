@@ -356,7 +356,27 @@
 						}
 					}
 					else if (count($pour_construire) > 1) {
-						//TODO si besoin de plus d'un seul batiment pour etre construit
+						$ok_construction = false;
+						//test si tous les batiments sont construits et on le niveau nécéssaire
+						for ($j=0 ; $j<count($pour_construire) ; $j++) {
+							if (in_array($pour_construire[$j][1], $batiment_construit)) {
+								if ($pour_construire[$j][2] <= $this->getNiveauBatiment($pour_construire[$j][1])) {
+									$ok_construction = true;
+								}
+							}
+						}
+
+						//si ok on affiche le batiment
+						if ($ok_construction === true) {
+							$ressource = $this->getRessourceConstruireBatiment($all_batiment[$i], 0);
+
+							$batiment_construire[] = [
+								"nom_batiment_sql" => $all_batiment[$i],
+								"nom_batiment" => $all_batiment_nom[$i],
+								"ressource" => $ressource,
+								"temps_construction" => $temps_construction
+							];
+						}
 					}
 					else {
 						$ressource = $this->getRessourceConstruireBatiment($all_batiment[$i], 0);
