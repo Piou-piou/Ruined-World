@@ -65,17 +65,11 @@
 				}
 				else if ($i >= 1) {
 					$centre_url[] = $explode[$i];
-
-					if ($i == 1) {
-						$this->page = $explode[$i];
-					}
 				}
-				/*else {
-					$this->parametre = $explode[$i];
-				}*/
 			}
 
 			$centre_url = implode("/", $centre_url);
+			$this->page = $centre_url;
 
 			if (!isset($centre_url) || ($centre_url == "")) {
 				$this->page = "index";
@@ -83,9 +77,10 @@
 			else {
 				$file = ROOT."modules/".$debut_url."/app/views/".$centre_url;
 				
-				if (!file_exists($file)) {
+				if (!file_exists($file.".html")) {
 					$centre_url = explode("/", $file);
 					$this->parametre = array_pop($centre_url);
+					$this->page = end($centre_url);
 					
 					$centre_url = implode("/", $centre_url);
 				}
