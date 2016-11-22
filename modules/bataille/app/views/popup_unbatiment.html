@@ -1,5 +1,6 @@
 <h2>{{ nom_batiment }}</h2>
 <h3>Niveau : {{ bataille.niveau_batiment_base }}</h3>
+<h4>{{ bataille.info_batiment }}</h4>
 
 <hr>
 {% if bataille.max_level == 1 %}
@@ -14,7 +15,7 @@
 		<li>Temps de construction : {{bataille.temps_construction}}</li>
 	</ul>
 
-	<h4>{{ bataille.info_batiment }}</h4>
+	<h4>{{ bataille.info_batiment_next }}</h4>
 
 	<a nom_batiment="{{ nom_batiment }}"
 	   emplacement="{{ emplacement }}"

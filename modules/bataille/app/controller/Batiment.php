@@ -15,6 +15,7 @@
 		private $id_batiment;
 
 		private $info_batiment;
+		private $info_batiment_next;
 
 		//pour les constructions
 		private $nom_batiment_construction;
@@ -47,6 +48,9 @@
 		}
 		public function getInfoBatiment(){
 		    return $this->info_batiment;
+		}
+		public function getInfoBatimentNext(){
+			return $this->info_batiment_next;
 		}
 
 		public function getNomBatimentConstruction() {
@@ -437,11 +441,19 @@
 
 				//récupération des éléments particulier à un batiment
 				if ($this->nom_batiment_sql == "entrepot") {
+					$query = $dbc1->select("stockage")->from("entrepot")->where("ID_entrepot", "=", $this->niveau_batiment)->get();
+					
+					if ((is_array($query)) && (count($query) > 0)){
+						foreach ($query as $obj) {
+							$this->info_batiment = "Capacité de l'entrepôt : ". $obj->stockage;
+						}
+					}
+					
 					$query = $dbc1->select("stockage")->from("entrepot")->where("ID_entrepot", "=", $this->niveau_batiment+1)->get();
 
 					if ((is_array($query)) && (count($query) > 0)){
 						foreach ($query as $obj) {
-							$this->info_batiment = "Capacité de l'entrepôt au prochain niveau : ". $obj->stockage;
+							$this->info_batiment_next = "Capacité de l'entrepôt au prochain niveau : ". $obj->stockage;
 						}
 					}
 				}
@@ -450,6 +462,7 @@
 					"ressource" => $this->ressource_construire,
 					"temps_construction" => $this->temps_construction,
 					"info_batiment" => $this->info_batiment,
+					"info_batiment_next" => $this->info_batiment_next,
 				]);
 
 				return 1;
