@@ -23,6 +23,10 @@
 		
 		
 		//-------------------------- GETTER ----------------------------------------------------------------------------//
+		/**
+		 * @return array
+		 * get array of all values wich will be used in the page
+		 */
 		public static function getValues() {
 		    return ["bataille" => self::$values];
 		}
@@ -217,6 +221,10 @@
 				->set();
 		}
 
+		/**
+		 * @param $values
+		 * can set values while keep older infos
+		 */
 		public static function setValues($values) {
 			Bataille::$values = array_merge(Bataille::$values, $values);
 		}
