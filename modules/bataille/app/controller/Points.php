@@ -37,7 +37,7 @@
 		 * fonction qui renvoi le nombre de points à ajouter à la base lorsqu'on update un batiment
 		 */
 		private static function getPointAjoutBatiment() {
-			$dbc = self::getDb();
+			$dbc = Bataille::getDb();
 			
 			$query = $dbc->select("points_batiment")->from("configuration")->where("ID_configuration", "=", 1)->get();
 			
@@ -57,11 +57,12 @@
 			$dbc = App::getDb();
 			
 			if ($type == "batiment") {
-				$req = $dbc->update("points", self::getPointsBase($id_base)+self::getPointAjoutBatiment());
+				$points = self::getPointsBase($id_base)+self::getPointAjoutBatiment();
 				
 			}
 			
-			$req->from("_bataille_base")
+			$dbc->update("points", $points)
+				->from("_bataille_base")
 				->where("ID_base", $id_base)
 				->where("ID_identite", $_SESSION['id_login'].CLEF_SITE)
 				->set();
