@@ -19,7 +19,7 @@
 			//on récupère les points de la base en cours
 			$query = $dbc->select("points")
 				->from("_bataille_base")
-				->where("ID_base", "=", $id_base)
+				->where("ID_base", "=", $id_base, "AND")
 				->where("ID_identite", "=", $_SESSION['id_login'].CLEF_SITE)
 				->get();
 			
