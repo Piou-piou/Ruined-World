@@ -460,6 +460,7 @@
 				}
 
 				//récupération des éléments particulier à un batiment
+				//TODO to change this
 				if ($this->nom_batiment_sql == "entrepot") {
 					$query = $dbc1->select("stockage")->from("entrepot")->where("ID_entrepot", "=", $this->niveau_batiment)->get();
 					
