@@ -22,14 +22,6 @@
 					$this->fuel = $obj->fuel;
 					$this->fer = $obj->fer;
 					$this->nourriture = $obj->nourriture;
-
-					Bataille::setValues([
-						"eau" => $obj->eau,
-						"electricite" => $obj->electricite,
-						"fer" => $obj->fer,
-						"fuel" => $obj->fuel,
-						"nourriture" => $obj->nourriture
-					]);
 				}
 
 				$this->setActualiserRessource();
@@ -40,6 +32,14 @@
 					"max_fer" => $this->getStockageMax("fer"),
 					"max_fuel" => $this->getStockageMax("fuel"),
 					"max_nourriture" => $this->getStockageMax("nourriture")
+				]);
+
+				Bataille::setValues([
+					"eau" => $this->eau,
+					"electricite" => $this->electricite,
+					"fer" => $this->fer,
+					"fuel" => $this->fuel,
+					"nourriture" => $this->nourriture
 				]);
 			}
 		}
