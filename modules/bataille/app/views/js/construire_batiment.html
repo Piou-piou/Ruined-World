@@ -36,6 +36,7 @@
 
 		function setTerminerConstruction() {
 			$.ajax({
+				type:"POST",
 				url:"{{WEBROOT}}controller/modules/bataille/batiment/terminer_construction",
 				success: function(data){
 					location.reload();
