@@ -1,5 +1,7 @@
 <?php
 	namespace modules\bataille\app\controller;
+
+	use core\App;
 	
 	
 	class Points {
@@ -20,10 +22,10 @@
 			$query = $dbc->select("points")
 				->from("_bataille_base")
 				->where("ID_base", "=", $id_base, "AND")
-				->where("ID_identite", "=", $_SESSION['id_login'].CLEF_SITE)
+				->where("ID_identite", "=", $_SESSION['idlogin'.CLEF_SITE])
 				->get();
 			
-			if ((is_array($query)) && (count($query) > 1)) {
+			if ((is_array($query)) && (count($query) > 0)) {
 				foreach ($query as $obj) {
 					return $obj->points;
 				}
@@ -55,16 +57,15 @@
 		 */
 		public static function setAjouterPoints($id_base, $type) {
 			$dbc = App::getDb();
-			
+
 			if ($type == "batiment") {
 				$points = self::getPointsBase($id_base)+self::getPointAjoutBatiment();
-				
 			}
 			
 			$dbc->update("points", $points)
 				->from("_bataille_base")
-				->where("ID_base", $id_base)
-				->where("ID_identite", $_SESSION['id_login'].CLEF_SITE)
+				->where("ID_base", "=", $id_base, "AND")
+				->where("ID_identite", "=", $_SESSION['idlogin'.CLEF_SITE])
 				->set();
 		}
 		//-------------------------- END SETTER ----------------------------------------------------------------------------//
