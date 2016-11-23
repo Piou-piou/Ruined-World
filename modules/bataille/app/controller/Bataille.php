@@ -175,6 +175,27 @@
 			
 			return ["posx" => $posx, "posy" => $posy];
 		}
+
+		public static function getNationBase($id_identite = null) {
+			$dbc = App::getDb();
+
+			if ($id_identite === null) {
+				$id_identite = $_SESSION['idlogin'.CLEF_SITE];
+			}
+
+			$query = $dbc->select("nation")
+				->from("identite")
+				->from("_bataille_nation")
+				->where("identite.ID_identite", "=", $id_identite, "AND")
+				->where("identite.ID_identite", "=", "_bataille_nation.ID_identite", "", true)
+				->get();
+
+			if ((is_array($query)) && (count($query) > 0)) {
+				foreach ($query as $obj) {
+					self::setValues(["nation" => $obj->nation]);
+				}
+			}
+		}
 		//-------------------------- END GETTER ----------------------------------------------------------------------------//
 		
 		

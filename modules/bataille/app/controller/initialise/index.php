@@ -8,4 +8,6 @@
 
 	Bataille::getBase()->getMaBase();
 
+	Bataille::getNationBase();
+
 	$arr = Bataille::getValues();
