@@ -610,6 +610,9 @@
 				->where("ID_base", "=", Bataille::getIdBase(), "AND")
 				->where("ID_batiment", "=", $id_batiment)
 				->set();
+			
+			//on ajoute les points à la base
+			Points::setAjouterPoints(Bataille::getIdBase(), "batiment");
 		}
 		//-------------------------- END SETTER ----------------------------------------------------------------------------//
 	}
