@@ -176,6 +176,10 @@
 			return ["posx" => $posx, "posy" => $posy];
 		}
 
+		/**
+		 * @param null $id_identite
+		 * get nation of a player
+		 */
 		public static function getNationBase($id_identite = null) {
 			$dbc = App::getDb();
 
