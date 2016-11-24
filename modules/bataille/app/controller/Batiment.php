@@ -460,24 +460,40 @@
 				}
 
 				//récupération des éléments particulier à un batiment
-				//TODO to change this
-				if ($this->nom_batiment_sql == "entrepot") {
-					$query = $dbc1->select("stockage")->from("entrepot")->where("ID_entrepot", "=", $this->niveau_batiment)->get();
-					
-					if ((is_array($query)) && (count($query) > 0)){
-						foreach ($query as $obj) {
-							$this->info_batiment = "Capacité de l'entrepôt : ". $obj->stockage;
-						}
-					}
-					
-					$query = $dbc1->select("stockage")->from("entrepot")->where("ID_entrepot", "=", $this->niveau_batiment+1)->get();
+				$xml = simplexml_load_file(MODULEROOT.'bataille/data/batiment.xml');
+				$nom_batiment_sql = $this->nom_batiment_sql;
+				$champ = $xml->$nom_batiment_sql->champ;
+
+				if (!empty($champ)) {
+					//récupération de la phrase pour le niveau actuel
+					$query = $dbc1->select($xml->$nom_batiment_sql->champ)
+						->from($this->nom_batiment_sql)
+						->where("ID_".$this->nom_batiment_sql, "=", $this->niveau_batiment)
+						->get();
 
 					if ((is_array($query)) && (count($query) > 0)){
 						foreach ($query as $obj) {
-							$this->info_batiment_next = "Capacité de l'entrepôt au prochain niveau : ". $obj->stockage;
+							$this->info_batiment = $xml->$nom_batiment_sql->phrase.$obj->$champ;
+						}
+					}
+
+					//récupération de la phrase pour le niveau suivant
+					$query = $dbc1->select($xml->$nom_batiment_sql->champ)
+						->from($this->nom_batiment_sql)
+						->where("ID_".$this->nom_batiment_sql, "=", $this->niveau_batiment+1)
+						->get();
+
+					if ((is_array($query)) && (count($query) > 0)){
+						foreach ($query as $obj) {
+							$this->info_batiment_next = $xml->$nom_batiment_sql->phrase_suivant.$obj->$champ;
 						}
 					}
 				}
+				else {
+					$this->info_batiment = "";
+					$this->info_batiment_next = "";
+				}
+
 
 				Bataille::setValues([
 					"ressource" => $this->ressource_construire,

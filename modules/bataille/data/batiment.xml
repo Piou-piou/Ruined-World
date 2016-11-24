@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bataille>
+    <entrepot>
+        <phrase>Stockage actuel : </phrase>
+        <phrase_suivant>Stockage au niveau suivant : </phrase_suivant>
+        <champ>stockage</champ>
+    </entrepot>
+
+    <marche>
+        <phrase>Marchand employés : </phrase>
+        <phrase_suivant>Marchand employés au niveau suivant : </phrase_suivant>
+        <champ>ID_marche</champ>
+    </marche>
+</bataille>
