@@ -11,3 +11,4 @@ vendor/*
 *.scssc
 *.ini
 *.lock
+*.map
