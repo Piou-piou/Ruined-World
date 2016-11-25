@@ -32,20 +32,20 @@
 			$this->controller = "bataille/app/controller/initialise/map.php";
 		}
 		if ($this->page == "popup/map") {
-			$this->controller = "bataille/app/controller/initialise/popup_map.php";
+			$this->controller = "bataille/app/controller/initialise/popup/map.php";
 		}
 
 		//------------------------------- POUR LA POPUP POUR CONSTRUIRE BATIMENT ----------------------------------//
 		if ($this->page == "popup/unbatiment") {
-			$this->controller = "bataille/app/controller/initialise/popup_unbatiment.php";
+			$this->controller = "bataille/app/controller/initialise/popup/unbatiment.php";
 		}
 		if ($this->page == "popup/listebatiments") {
-			$this->controller = "bataille/app/controller/initialise/popup.php";
+			$this->controller = "bataille/app/controller/initialise/popup/batiments_construire.php";
 		}
 
 		//------------------------------- POUR LA POPUP POUR LE MARCHE ----------------------------------//
 		if ($this->page == "popup/marche/marche") {
-			$this->controller = "bataille/app/controller/initialise/popup_marche.php";
+			$this->controller = "bataille/app/controller/initialise/popup/unbatiment.php";
 		}
 		/*if ($this->page == "popup/marche/offre-et-demande") {
 			$this->controller = "bataille/app/controller/initialise/popup_marche.php";
