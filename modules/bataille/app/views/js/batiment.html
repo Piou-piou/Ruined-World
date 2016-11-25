@@ -16,6 +16,18 @@
 					}
 				});
 			}
+			else if (nom_batiment == "marche") {
+				$.ajax({
+					type:"POST",
+					data: "nom_batiment="+nom_batiment+"&emplacement="+emplacement,
+					url:"{{WEBROOT}}bataille/popup/marche/marche",
+					success: function(data){
+						$("#popup-base #ajax").append(data);
+					}, error: function(){
+
+					}
+				});
+			}
 			else {
 				$.ajax({
 					type:"POST",

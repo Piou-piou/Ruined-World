@@ -1,0 +1,36 @@
+{{include("popup/marche/nav.html")}}
+
+
+<h2>{{ nom_batiment }}</h2>
+<h3>Niveau : {{ bataille.niveau_batiment_base }}</h3>
+<h4>{{ bataille.info_batiment }}</h4>
+
+<hr>
+{% if bataille.max_level == 1 %}
+	<h2>Cout pour le prochain niveau</h2>
+	<h3>Niveau suivant : {{ bataille.niveau_batiment+1 }}</h3>
+
+	<ul>
+		<li class="{{bataille.ressource.fer.class}}">fer : {{bataille.ressource.fer.ressource}}</li>
+		<li class="{{bataille.ressource.fuel.class}}">fuel : {{bataille.ressource.fuel.ressource}}</li>
+		<li class="{{bataille.ressource.eau.class}}">eau : {{bataille.ressource.eau.ressource}}</li>
+		<li class="{{bataille.ressource.electricite.class}}">électricité : {{bataille.ressource.electricite.ressource}}</li>
+		<li>Temps de construction : {{bataille.temps_construction}}</li>
+	</ul>
+
+	<h4>{{ bataille.info_batiment_next }}</h4>
+
+	<a nom_batiment="{{ nom_batiment }}"
+	   emplacement="{{ emplacement }}"
+	   nom_batiment_sql="{{ bataille.nom_batiment_sql }}"
+	   class="construire {{bataille.ressource.fer.class}} {{bataille.ressource.fuel.class}} {{bataille.ressource.eau.class}}
+	   {{bataille.ressource.electricite.class}}"
+	   href="">Construire le batiment
+	</a>
+{% else %}
+	<!-- partie quand le batiment est au lvl max -->
+	<p>Le batiment a atteint son niveau maxiumum</p>
+{% endif %}
+
+
+{{ include("js/construire_batiment.html") }}
