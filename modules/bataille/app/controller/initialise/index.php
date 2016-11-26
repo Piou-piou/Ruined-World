@@ -10,4 +10,6 @@
 
 	Bataille::getNationBase();
 
+	$marche = new \modules\bataille\app\controller\Marche();
+
 	$arr = Bataille::getValues();

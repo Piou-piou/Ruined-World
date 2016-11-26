@@ -1,0 +1,9 @@
+{% if i.date_arrivee > 0 %}
+	<script>
+		$(function () {
+			$('#transport-{{ i.id_marche_transport }}').countdown({
+				until: {{i.date_arrivee}}
+			});
+		});
+	</script>
+{% endif %}

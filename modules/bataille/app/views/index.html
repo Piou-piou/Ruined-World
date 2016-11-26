@@ -15,8 +15,29 @@
 			</a><br>
 		{% endfor %}
 	</div>
-	<div class="small-12 medium-3 large-3 columns side-bar">
-		<h3>Unités</h3>
+	<div class="small-12 medium-3 large-3 columns">
+		<div class="row">
+			<div class="small-12 side-bar">
+				<h3>Unités</h3>
+			</div>
+		</div>
+
+		<div class="espacement"></div>
+
+		<div class="row">
+			<div class="small-12 side-bar">
+				<h3>Transport marchandises</h3>
+
+				{% for i in bataille.marche.aller %}
+					<div>
+						<div id="transport-{{ i.id_marche_transport }}"></div>
+						<p>{{ i.nom_base_dest }}</p>
+					</div>
+
+					{{ include("js/transport_marche.html") }}
+				{% endfor %}
+			</div>
+		</div>
 	</div>
 </div>
 
