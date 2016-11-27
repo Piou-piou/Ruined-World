@@ -28,7 +28,18 @@
 			<div class="small-12 side-bar">
 				<h3>Transport marchandises</h3>
 
+				<h4>Sur l'allé</h4>
 				{% for i in bataille.marche.aller %}
+					<div>
+						<div id="transport-{{ i.id_marche_transport }}"></div>
+						<p>{{ i.nom_base_dest }}</p>
+					</div>
+
+					{{ include("js/transport_marche.html") }}
+				{% endfor %}
+
+				<h4>Sur le retour</h4>
+				{% for i in bataille.marche.retour %}
 					<div>
 						<div id="transport-{{ i.id_marche_transport }}"></div>
 						<p>{{ i.nom_base_dest }}</p>
