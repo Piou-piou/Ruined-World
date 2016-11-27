@@ -93,12 +93,12 @@
 				$query = $dbc->select()->from("_bataille_last_connexion")->where("ID_identite", "=", self::getIdIdentite())->get();
 			}
 			else {
-				$query = $dbc->select("last_connexion")->from("_bataille_base")
+				$query = $dbc->select("_bataille_last_connexion.last_connexion")->from("_bataille_base")
 					->from("_bataille_last_connexion")
 					->from("identite")
+					->where("_bataille_base.ID_base", "=", $id_base, "AND")
 					->where("_bataille_base.ID_identite", "=", "identite.ID_identite", "AND", true)
-					->where("identite.ID_identite", "=", "_bataille_last_connexion.ID_identite", "AND", true)
-					->where("_bataille.ID_base", "=", $id_base)
+					->where("identite.ID_identite", "=", "_bataille_last_connexion.ID_identite", "", true)
 					->get();
 			}
 
