@@ -9,6 +9,7 @@
 		private $aller;
 		private $ressources;
 		private $date_arrivee;
+		private $nom_base;
 		private $id_marche_transport;
 		private $duree_restante_trajet;
 
@@ -28,26 +29,11 @@
 					$this->id_base_dest = $obj->ID_base_dest;
 					$this->aller = $obj->aller;
 					$this->ressources = $obj->ressources;
+					$this->nom_base = $obj->nom_base;
 					$this->date_arrivee = $obj->date_arrivee;
 					$this->id_marche_transport = $obj->ID_marche_transport;
 
-					$this->getTransportArrive();
-
-					//si c'est sur l'allé
-					if ($this->aller == 1) {
-						$marche["aller"][] = [
-							"id_marche_transport" => $obj->ID_marche_transport,
-							"date_arrivee" => $this->duree_restante_trajet,
-							"nom_base_dest" => $obj->nom_base
-						];
-					}
-					else {
-						$marche["retour"][] = [
-							"id_marche_transport" => $obj->ID_marche_transport,
-							"date_arrivee" => $this->duree_restante_trajet,
-							"nom_base_dest" => $obj->nom_base
-						];
-					}
+					$marche = $this->getTransportArrive();
 				}
 
 				Bataille::setValues(["marche" => $marche]);
@@ -85,6 +71,7 @@
 				else {
 					$this->setTrajetRetour($date_retour);
 					$this->duree_restante_trajet = $date_retour-$today;
+					$set_array = true;
 				}
 			}
 			else if (($this->aller == 0) && (($this->date_arrivee-$today) <= 0)) {
@@ -92,6 +79,26 @@
 			}
 			else {
 				$this->duree_restante_trajet = $this->date_arrivee-$today;
+				$set_array = true;
+			}
+
+			if ($set_array === true) {
+				if ($this->aller == 1) {
+					$marche["aller"][] = [
+						"id_marche_transport" => $this->id_marche_transport,
+						"date_arrivee" => $this->duree_restante_trajet,
+						"nom_base_dest" => $this->nom_base
+					];
+				}
+				else {
+					$marche["retour"][] = [
+						"id_marche_transport" => $this->id_marche_transport,
+						"date_arrivee" => $this->duree_restante_trajet,
+						"nom_base_dest" => $this->nom_base
+					];
+				}
+
+				return $marche;
 			}
 		}
 		//-------------------------- END GETTER ----------------------------------------------------------------------------//
@@ -122,6 +129,8 @@
 				->from("_bataille_marche_transport")
 				->where("ID_marche_transport", "=", $this->id_marche_transport)
 				->set();
+
+			$this->aller = 0;
 		}
 
 		/**
