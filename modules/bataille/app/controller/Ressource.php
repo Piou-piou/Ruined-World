@@ -9,11 +9,20 @@
 		private $fer;
 		private $nourriture;
 
+		private $id_base;
+
 		//-------------------------- BUILDER ----------------------------------------------------------------------------//
-		public function __construct() {
+		public function __construct($id_base = null) {
 			$dbc = App::getDb();
 
-			$query = $dbc->select()->from("_bataille_base")->where("ID_base", "=", Bataille::getIdBase())->get();
+			if ($id_base === null) {
+				$this->id_base = Bataille::getIdBase();
+			}
+			else {
+				$this->id_base = $id_base;
+			}
+
+			$query = $dbc->select()->from("_bataille_base")->where("ID_base", "=", $this->id_base)->get();
 
 			if ((is_array($query)) && (count($query) > 0)) {
 				foreach ($query as $obj) {
@@ -118,7 +127,7 @@
 
 			$dbc->update($nom_ressource, $ressource)
 				->from("_bataille_base")
-				->where("ID_base", "=", Bataille::getIdBase())
+				->where("ID_base", "=", $this->id_base)
 				->set();
 
 			$this->$nom_ressource = $ressource;
@@ -132,16 +141,35 @@
 		 * @param $fer
 		 * @param $fuel
 		 * @param $nourriture
+		 * @param $signe -> contient + ou -
 		 * fonction qui permet de retirer des ressources pour construire des batiment ou creer unités
 		 */
-		public function setRetirerRessource($eau, $electricite, $fer, $fuel, $nourriture) {
+		public function setUpdateRessource($eau, $electricite, $fer, $fuel, $nourriture, $signe) {
 			$dbc = App::getDb();
 
-			$eau = $this->getEau()-$eau;
-			$electricite = $this->getElectricite()-$electricite;
-			$fer = $this->getFer()-$fer;
-			$fuel = $this->getFuel()-$fuel;
-			$nourriture = $this->getNourriture()-$nourriture;
+			//soit on enelve ou on ajoute
+			if ($signe == "-") {
+				$eau = $this->getEau()-$eau;
+				$electricite = $this->getElectricite()-$electricite;
+				$fer = $this->getFer()-$fer;
+				$fuel = $this->getFuel()-$fuel;
+				$nourriture = $this->getNourriture()-$nourriture;
+			}
+			else {
+				$eau = $this->getEau()+$eau;
+				$electricite = $this->getElectricite()+$electricite;
+				$fer = $this->getFer()+$fer;
+				$fuel = $this->getFuel()+$fuel;
+				$nourriture = $this->getNourriture()+$nourriture;
+
+				$stockage_max = Bataille::getBatiment()->getStockageEntrepot();
+
+				if ($eau > $stockage_max) $eau = $stockage_max;
+				if ($electricite > $stockage_max) $electricite = $stockage_max;
+				if ($fer > $stockage_max) $fer = $stockage_max;
+				if ($fuel > $stockage_max) $fuel = $stockage_max;
+				if ($nourriture > $stockage_max) $nourriture = $stockage_max;
+			}
 
 
 			$dbc->update("eau", $eau)
@@ -150,7 +178,7 @@
 				->update("fuel", $fuel)
 				->update("nourriture", $nourriture)
 				->from("_bataille_base")
-				->where("ID_base", "=", Bataille::getIdBase())
+				->where("ID_base", "=", $this->id_base)
 				->set();
 		}
 		//-------------------------- END SETTER ----------------------------------------------------------------------------//
