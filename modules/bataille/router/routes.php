@@ -8,7 +8,8 @@
 		"map",
 		"popup/map",
 		"popup/marche/marche",
-		"popup/marche/offre-et-demande"
+		"popup/marche/offre-et-demande",
+		"popup/marche/envoyer-ressources"
 	];
 	
 	if (\core\modules\GestionModule::getModuleActiver("bataille")) {
