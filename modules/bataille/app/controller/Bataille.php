@@ -82,6 +82,33 @@
 		}
 
 		/**
+		 * @param $id_base
+		 * @return array
+		 * fonction qui renvoi les posisitons en x et y d'une base
+		 */
+		private static function getPosistionBase($id_base) {
+			$dbc = App::getDb();
+
+			$query = $dbc->select("posx")
+				->select("posy")
+				->from("_bataille_base")
+				->where("ID_base", "=", $id_base)
+				->get();
+
+			foreach ($query as $obj) {
+				$posx = $obj->posx;
+				$posy = $obj->posy;
+			}
+
+			return ["posx" => $posx, "posy" => $posy];
+		}
+
+		public static function getToday() {
+			$today = new \DateTime();
+			return $today->getTimestamp();
+		}
+
+		/**
 		 * @param null $id_base -> sert si definit a recuperer l'id identite de la abse en question
 		 * @return mixed
 		 * recupere la date de la derniere connexion
@@ -170,28 +197,6 @@
 			
 			return $temps_voyage;
 		}
-		
-		/**
-		 * @param $id_base
-		 * @return array
-		 * fonction qui renvoi les posisitons en x et y d'une base
-		 */
-		private static function getPosistionBase($id_base) {
-			$dbc = App::getDb();
-			
-			$query = $dbc->select("posx")
-				->select("posy")
-				->from("_bataille_base")
-				->where("ID_base", "=", $id_base)
-				->get();
-			
-			foreach ($query as $obj) {
-				$posx = $obj->posx;
-				$posy = $obj->posy;
-			}
-			
-			return ["posx" => $posx, "posy" => $posy];
-		}
 
 		/**
 		 * @param null $id_identite
@@ -216,6 +221,27 @@
 					self::setValues(["nation" => $obj->nation]);
 				}
 			}
+		}
+
+		/**
+		 * @param $posx
+		 * @param $posy
+		 * @return int
+		 * fonction qui renvoi un ID_base en fonction de sa posx et posy et 0 si base inexistante
+		 */
+		public static function getBaseExistPosition($posx, $posy) {
+			$dbc = App::getDb();
+
+			$query = $dbc->select("ID_base")->from("_bataille_base")
+				->where("posx", "=", $posx, "AND")
+				->where("posy", "=", $posy)
+				->get();
+
+			if ((is_array($query)) && (count($query) == 1)) {
+				foreach ($query as $obj) return $obj->ID_base;
+			}
+
+			return 0;
 		}
 		//-------------------------- END GETTER ----------------------------------------------------------------------------//
 		

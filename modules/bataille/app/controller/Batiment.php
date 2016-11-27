@@ -245,8 +245,7 @@
 		public function getConstruction() {
 			$dbc = App::getDb();
 
-			$today = new DateTime();
-			$today = $today->getTimestamp();
+			$today = Bataille::getToday();
 
 			$query = $dbc->select()
 				->from("_bataille_construction")
@@ -585,8 +584,7 @@
 
 					//on initialise la construction
 					//recuperation de la date en seconde
-					$today = new DateTime();
-					$today = $today->getTimestamp();
+					$today = Bataille::getToday();
 
 					//date de la fin de la construction en seconde
 					$fin_construction = $today+$temps_construction;

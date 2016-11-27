@@ -92,8 +92,7 @@
 		public function setActualiserRessource() {
 			$last_co = Bataille::getLastConnexion($this->id_base);
 
-			$today = new \DateTime();
-			$today = $today->getTimestamp();
+			$today = Bataille::getToday();
 
 			$last_co = new \DateTime($last_co);
 			$last_co = $last_co->getTimestamp();
