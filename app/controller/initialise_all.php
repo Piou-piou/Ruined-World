@@ -17,3 +17,13 @@
 	];
 
 	echo(serialize($tab));*/
+
+	/*$tab_ressource = [
+		"eau" => 0,
+		"electricite" => 1000,
+		"fer" => 0,
+		"fuel" => 0,
+		"nourriture" => 0,
+	];
+
+	echo(serialize($tab_ressource));*/
