@@ -90,7 +90,7 @@
 		 * si elle est supérieur à 30sec on recalculera les ressources des bases du joueur
 		 */
 		public function setActualiserRessource() {
-			$last_co = Bataille::getLastConnexion();
+			$last_co = Bataille::getLastConnexion($this->id_base);
 
 			$today = new \DateTime();
 			$today = $today->getTimestamp();
@@ -132,7 +132,7 @@
 
 			$this->$nom_ressource = $ressource;
 
-			Bataille::setLastConnexion();
+			Bataille::setLastConnexion($this->id_base);
 		}
 
 		/**

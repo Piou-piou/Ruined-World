@@ -82,13 +82,26 @@
 		}
 
 		/**
+		 * @param null $id_base -> sert si definit a recuperer l'id identite de la abse en question
 		 * @return mixed
 		 * recupere la date de la derniere connexion
 		 */
-		public static function getLastConnexion() {
+		public static function getLastConnexion($id_base = null) {
 			$dbc = App::getDb();
 
-			$query = $dbc->select()->from("_bataille_last_connexion")->where("ID_identite", "=", self::getIdIdentite())->get();
+			if ($id_base === null) {
+				$query = $dbc->select()->from("_bataille_last_connexion")->where("ID_identite", "=", self::getIdIdentite())->get();
+			}
+			else {
+				$query = $dbc->select("last_connexion")->from("_bataille_base")
+					->from("_bataille_last_connexion")
+					->from("identite")
+					->where("_bataille_base.ID_identite", "=", "identite.ID_identite", "AND", true)
+					->where("identite.ID_identite", "=", "_bataille_last_connexion.ID_identite", "AND", true)
+					->where("_bataille.ID_base", "=", $id_base)
+					->get();
+			}
+
 
 			if ((is_array($query)) && (count($query) > 0)) {
 				foreach ($query as $obj) {
@@ -212,12 +225,21 @@
 		/**
 		 * set la date de derniere connexion a now
 		 */
-		public static function setLastConnexion() {
+		public static function setLastConnexion($id_base = null) {
 			$dbc = App::getDb();
+
+			if ($id_base === null) {
+				$id_identite = self::getIdIdentite();
+			}
+			else {
+				$query = $dbc->select("ID_identite")->from("_bataille_base")->where("ID_base", "=", $id_base)->get();
+
+				foreach ($query as $obj) $id_identite = $obj->ID_identite;
+			}
 
 			$dbc->update("last_connexion", date("Y-m-d H:i:s"))
 				->from("_bataille_last_connexion")
-				->where("ID_identite", "=", self::getIdIdentite())
+				->where("ID_identite", "=", $id_identite)
 				->set();
 		}
 
