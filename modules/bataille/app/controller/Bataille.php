@@ -103,6 +103,10 @@
 			return ["posx" => $posx, "posy" => $posy];
 		}
 
+		/**
+		 * @return int
+		 * return now timestamp
+		 */
 		public static function getToday() {
 			$today = new \DateTime();
 			return $today->getTimestamp();
@@ -181,7 +185,7 @@
 		/**
 		 * @param $id_base
 		 * @return number
-		 * fonction qui renvoi le temps de trajet entre la base du joueur et une autre base
+		 * fonction qui renvoi le temps de trajet entre la base du joueur et une autre base en secondes
 		 */
 		public static function getDureeTrajet($id_base) {
 			//récupération de la posisiotn de la base du joueur + la base sur laquelle on a cliqué
@@ -189,7 +193,7 @@
 			$base_autre = self::getPosistionBase($id_base);
 			
 			//calcul des distances séparant les deux bases en x et y
-			//cette dstance sera multipliée par 10 sur x et y puis ajoutée pour avoir le temps du trajte en seconde
+			//cette dstance sera multipliée par 15 sur x et y puis ajoutée pour avoir le temps du trajte en seconde
 			$calc_x = abs($base_joueur['posx']-$base_autre['posx']);
 			$calc_y = abs($base_joueur['posy']-$base_autre['posy']);
 			
