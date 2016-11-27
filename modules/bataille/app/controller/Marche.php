@@ -3,6 +3,7 @@
 	
 	
 	use core\App;
+	use core\HTML\flashmessage\FlashMessage;
 
 	class Marche {
 		private $id_base_dest;
@@ -51,8 +52,7 @@
 		 * trajet aurait du revenir
 		 */
 		private function getTransportArrive() {
-			$today = new \DateTime();
-			$today = $today->getTimestamp();
+			$today = Bataille::getToday();
 
 			echo "today : ".$today." ++ date arrivee : ";
 			echo $this->date_arrivee."<br>";
@@ -140,6 +140,40 @@
 			$dbc = App::getDb();
 
 			$dbc->delete()->from("_bataille_marche_transport")->where("ID_marche_transport", "=", $this->id_marche_transport)->del();
+		}
+
+		public function setCommencerTransport($eau, $electricite, $fer, $fuel, $nourriture, $posx, $posy) {
+			$id_base_dest = Bataille::getBaseExistPosition($posx, $posy);
+
+			if ($id_base_dest != 0) {
+				$ressource["eau"] = Bataille::getTestAssezRessourceBase("eau", $eau);
+				$ressource["electricite"] = Bataille::getTestAssezRessourceBase("electricite", $electricite);
+				$ressource["fer"] = Bataille::getTestAssezRessourceBase("fer", $fer);
+				$ressource["fuel"] = Bataille::getTestAssezRessourceBase("fuel", $fuel);
+				$ressource["nourriture"] = Bataille::getTestAssezRessourceBase("nourriture", $nourriture);
+
+				//si pas assez de ressources dispo dans la base pour l'envoi on renvoi erreur
+				foreach ($ressource as $tab) {
+					if (in_array("rouge", $tab)) {echo $posy;echo $posx;
+						FlashMessage::setFlash("Vous n'avez pas autant de ressources disponibles à l'envoi");
+						return false;
+					};
+				}
+
+				//sinon initialise le transport
+				//on recup la date d'arrivee dans la base de destintation
+				$date_arrivee = Bataille::getDureeTrajet($id_base_dest)+Bataille::getToday();
+
+
+				echo("<pre>");
+				print_r($ressource);
+				echo("</pre>");
+
+				return true;
+			}
+
+			FlashMessage::setFlash("Aucune base présente aux coordonnées données");
+			return false;
 		}
 		//-------------------------- END SETTER ----------------------------------------------------------------------------//
 	}

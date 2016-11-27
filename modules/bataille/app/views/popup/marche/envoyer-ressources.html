@@ -1,0 +1,12 @@
+{{include("popup/marche/nav.html")}}
+
+<form action="{{ WEBROOT }}controller/modules/bataille/marche/envoyer_ressources" method="POST">
+	<input type="text" name="eau" placeholder="Eau">
+	<input type="text" name="electricite" placeholder="Eléctricité">
+	<input type="text" name="fer" placeholder="Fer">
+	<input type="text" name="fuel" placeholder="Fuel">
+	<input type="text" name="nourriture" placeholder="Nourriture">
+	<input type="text" name="posx" placeholder="Posx">
+	<input type="text" name="posy" placeholder="Posy">
+	<button type="submit">Envoyer</button>
+</form>
