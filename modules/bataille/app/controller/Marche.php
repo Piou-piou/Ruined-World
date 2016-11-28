@@ -115,7 +115,7 @@
 			$nombre_max_marchand = Bataille::getBatiment()->getNiveauBatiment("marche");
 
 			//on récupère tous les marchands qui sont en transport
-			$query = $dbc->select("nb_marchand")->from("_batille_marche_transport")
+			$query = $dbc->select("nb_marchand")->from("_bataille_marche_transport")
 				->where("ID_base", "=", Bataille::getIdBase(), "OR")
 				->where("ID_base_dest", "=", Bataille::getIdBase())
 				->get();
@@ -206,7 +206,7 @@
 
 				//si pas assez de ressources dispo dans la base pour l'envoi on renvoi erreur
 				foreach ($ressource as $tab) {
-					if (in_array("rouge", $tab)) {echo $posy;echo $posx;
+					if (in_array("rouge", $tab)) {
 						FlashMessage::setFlash("Vous n'avez pas autant de ressources disponibles à l'envoi");
 						return false;
 					};
@@ -214,6 +214,7 @@
 
 				//on check si assez marchand dans la base, si pas assez on return false
 				$nb_marchand = $this->getAssezMarchand($eau+$electricite+$fer+$fuel+$nourriture);
+
 				if ($nb_marchand === false) {
 					FlashMessage::setFlash("Vous n'avez pas assez de marchans disponibles pour effectuer ce trajet");
 					return false;
