@@ -9,9 +9,13 @@
 					var tab = JSON.parse(data);
 
 					$(".ressources .eau").html(tab.bataille.eau);
+					$(".ressources .eau").addClass(tab.bataille.max_eau);
 					$(".ressources .electricite").html(tab.bataille.electricite);
+					$(".ressources .electricite").addClass(tab.bataille.max_electricite);
 					$(".ressources .fer").html(tab.bataille.fer);
+					$(".ressources .fer").addClass(tab.bataille.max_fer);
 					$(".ressources .fuel").html(tab.bataille.fuel);
+					$(".ressources .fuel").addClass(tab.bataille.max_fuel);
 				}, error: function(){
 
 				}
