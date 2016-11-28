@@ -101,6 +101,46 @@
 				return $marche;
 			}
 		}
+
+		/**
+		 * @param $all_ressource
+		 * @return bool
+		 * fonction qui renvoi true si on a assez de marchand pour ce trajet dans la base
+		 * sinon on renvoi false
+		 */
+		private function getAssezMarchand($all_ressource) {
+			$dbc = App::getDb();
+
+			//récupération du nombre max du marchand dispo dans la base
+			$nombre_max_marchand = Bataille::getBatiment()->getNiveauBatiment("marche");
+
+			//on récupère tous les marchands qui sont en transport
+			$query = $dbc->select("nb_marchand")->from("_batille_marche_transport")
+				->where("ID_base", "=", Bataille::getIdBase(), "OR")
+				->where("ID_base_dest", "=", Bataille::getIdBase())
+				->get();
+
+			$marchand_transport = 0;
+			if ((is_array($query)) && (count($query) > 0)) {
+				foreach ($query as $obj) {
+					$marchand_transport += $obj->nb_marchand;
+				}
+			}
+
+			//on a le nombre de marchand dispo dans la base
+			$nombre_marchand_dispo = $nombre_max_marchand-$marchand_transport;
+
+			//on calcul savoir si on en a assez pour transport toutes les ressoures
+			//il faut 1 marchand pour 1000 ressource
+			$nombre_marchand_trajet = ceil($all_ressource/1000);
+
+			//si on a assez de marchand on revoi true sinon false
+			if ($nombre_marchand_dispo >= $nombre_marchand_trajet) {
+				return $nombre_marchand_trajet;
+			}
+
+			return false;
+		}
 		//-------------------------- END GETTER ----------------------------------------------------------------------------//
 
 
@@ -142,7 +182,19 @@
 			$dbc->delete()->from("_bataille_marche_transport")->where("ID_marche_transport", "=", $this->id_marche_transport)->del();
 		}
 
+		/**
+		 * @param $eau
+		 * @param $electricite
+		 * @param $fer
+		 * @param $fuel
+		 * @param $nourriture
+		 * @param $posx
+		 * @param $posy
+		 * @return bool
+		 * Fonction qui permet d'initialiser un transport de ressources d'une base à une autre
+		 */
 		public function setCommencerTransport($eau, $electricite, $fer, $fuel, $nourriture, $posx, $posy) {
+			$dbc = App::getDb();
 			$id_base_dest = Bataille::getBaseExistPosition($posx, $posy);
 
 			if ($id_base_dest != 0) {
@@ -160,15 +212,39 @@
 					};
 				}
 
+				//on check si assez marchand dans la base, si pas assez on return false
+				$nb_marchand = $this->getAssezMarchand($eau+$electricite+$fer+$fuel+$nourriture);
+				if ($nb_marchand === false) {
+					FlashMessage::setFlash("Vous n'avez pas assez de marchans disponibles pour effectuer ce trajet");
+					return false;
+				}
+
 				//sinon initialise le transport
 				//on recup la date d'arrivee dans la base de destintation
 				$date_arrivee = Bataille::getDureeTrajet($id_base_dest)+Bataille::getToday();
 
+				$ressource = [
+					"eau" => $eau,
+					"electricite" => $electricite,
+					"fer" => $fer,
+					"fuel" => $fuel,
+					"nourriture" => $nourriture,
+				];
 
-				echo("<pre>");
-				print_r($ressource);
-				echo("</pre>");
+				//on insert le transport dans la table
+				$dbc->insert("date_arrivee", $date_arrivee)
+					->insert("ressources", serialize($ressource))
+					->insert("aller", 1)
+					->insert("nb_marchand", $nb_marchand)
+					->insert("ID_base_dest", $id_base_dest)
+					->insert("ID_base", Bataille::getIdBase())
+					->into("_bataille_marche_transport")
+					->set();
 
+				//on retire les ressources de la base
+				Bataille::getRessource()->setUpdateRessource($eau, $electricite, $fer, $fuel, $nourriture, "-");
+
+				FlashMessage::setFlash("Votre transport vient de partir !", "info");
 				return true;
 			}
 
