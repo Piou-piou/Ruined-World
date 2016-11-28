@@ -1,7 +1,7 @@
 {{include("nav.html")}}
 
 <div class="row bataille">
-	<div class="small-12 map-players">
+	<div class="small-12 large-10 large-offset-1 columns map-players">
 		<div style="width:{{ bataille.largeur_map*10 }}px;height:{{ bataille.hauteur_map*10 }}px;">
 			{% for i in bataille.map %}
 				<div class="{{ i.ma_base }} open-popup" player="{{ i.id_base }}" popup="popup-base" style="left:{{ i.posx*15}}px;top:{{ i.posy*15 }}px;">
