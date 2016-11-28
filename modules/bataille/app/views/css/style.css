@@ -1,7 +1,7 @@
 @charset "UTF-8";
-/*pour la nav tout en haut de la page ou il y a aide déconnexion...*/
+/*pour la nav tout en haut de la page ou il y a aide d├®connexion...*/
 /*pour la nav principaleou il y a le logo de la map...*/
-/*pour le logo et les ressources + les panneaux lattéraux avec les unités*/
+/*pour le logo et les ressources + les panneaux latt├®raux avec les unit├®s*/
 /*pour le body et le bg de la map*/
 /*pour la map ou on voit tous les players*/
 body {
@@ -86,7 +86,8 @@ body {
   .bataille .ressources img {
     margin-top: -0.5rem; }
   .bataille .side-bar {
-    background-color: #303031; }
+    background-color: #303031;
+    color: #fff; }
   .bataille .map-players {
     position: relative;
     width: 1200px;
