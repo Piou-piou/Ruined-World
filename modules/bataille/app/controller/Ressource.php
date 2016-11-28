@@ -117,8 +117,8 @@
 		private function setAddRessource($nom_ressource, $ressrouce, $diff_temps) {
 			$dbc = App::getDb();
 
-			$ressource = $ressrouce+(round((Bataille::getBatiment()->getProduction($nom_ressource)/3600)*$diff_temps));
-			$stockage_max = Bataille::getBatiment()->getStockageEntrepot();
+			$ressource = $ressrouce+(round((Bataille::getBatiment()->getProduction($nom_ressource, $this->id_base)/3600)*$diff_temps));
+			$stockage_max = Bataille::getBatiment()->getStockageEntrepot($this->id_base);
 
 			if ($ressource > $stockage_max) {
 				$ressource = $stockage_max;

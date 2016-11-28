@@ -68,14 +68,18 @@
 		 * @return int
 		 * pour recuperer le niveau d'un batiment
 		 */
-		public function getNiveauBatiment($nom_batiment_sql) {
+		public function getNiveauBatiment($nom_batiment_sql, $id_base = null) {
 			$dbc = App::getDb();
+
+			if ($id_base == null) {
+				$id_base = Bataille::getIdBase();
+			}
 
 			$query = $dbc->select("niveau")
 				->select("construction")
 				->from("_bataille_batiment")
 				->where("nom_batiment_sql", "=", $nom_batiment_sql, "AND")
-				->where("ID_base", "=", Bataille::getIdBase())
+				->where("ID_base", "=", $id_base)
 				->get();
 
 			if ((is_array($query)) && (count($query) > 0)) {
@@ -97,15 +101,19 @@
 		 * @return int
 		 * recuperation de la production de chaque ressource en fonction du lvl des batiments + recup prod addon
 		 */
-		public function getProduction($ressource) {
+		public function getProduction($ressource, $id_base = null) {
 			$dbc1 = Bataille::getDb();
+
+			if ($id_base == null) {
+				$id_base = Bataille::getIdBase();
+			}
 
 			if ($ressource == "eau") $nom_batiment = "centrale_eau";
 			if ($ressource == "electricite") $nom_batiment = "centrale_electrique";
 			if ($ressource == "fuel") $nom_batiment = "station_pompage_fuel";
 			if ($ressource == "fer") $nom_batiment = "station_forage";
 
-			$niveau = $this->getNiveauBatiment($nom_batiment);
+			$niveau = $this->getNiveauBatiment($nom_batiment, $id_base);
 
 			if ($niveau > 0) {
 				$query = $dbc1->select("production")->from("$nom_batiment")->where("ID_".$nom_batiment, "=", $niveau)->get();
@@ -141,10 +149,14 @@
 		 * @return int
 		 * fonction qui retourne le stockage de l'entrepot
 		 */
-		public function getStockageEntrepot() {
+		public function getStockageEntrepot($id_base = null) {
 			$dbc1 = Bataille::getDb();
 
-			$niveau = $this->getNiveauBatiment("entrepot");
+			if ($id_base == null) {
+				$id_base = Bataille::getIdBase();
+			}
+
+			$niveau = $this->getNiveauBatiment("entrepot", $id_base);
 
 			if ($niveau > 0) {
 				$query = $dbc1->select("stockage")->from("entrepot")->where("ID_entrepot", "=", $niveau)->get();
