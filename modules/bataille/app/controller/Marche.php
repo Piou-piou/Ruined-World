@@ -23,6 +23,7 @@
 				->from("_bataille_base")
 				->where("_bataille_marche_transport.ID_base", "=", Bataille::getIdBase(), "AND")
 				->where("_bataille_marche_transport.ID_base_dest", "=", "_bataille_base.ID_base", "", true)
+				->orderBy("_bataille_marche_transport.aller")
 				->get();
 
 			if ((is_array($query)) && (count($query) > 0)) {
@@ -34,7 +35,7 @@
 					$this->date_arrivee = $obj->date_arrivee;
 					$this->id_marche_transport = $obj->ID_marche_transport;
 
-					$marche = $this->getTransportArrive();
+					$marche[] = $this->getTransportArrive();
 				}
 
 				Bataille::setValues(["marche" => $marche]);
@@ -53,9 +54,6 @@
 		 */
 		private function getTransportArrive() {
 			$today = Bataille::getToday();
-
-			echo "today : ".$today." ++ date arrivee : ";
-			echo $this->date_arrivee."<br>";
 
 			//on test si déja arrivé à destination
 			if (($this->aller == 1) && (($this->date_arrivee-$today) <= 0)) {
@@ -84,17 +82,19 @@
 
 			if ($set_array === true) {
 				if ($this->aller == 1) {
-					$marche["aller"][] = [
+					$marche = [
 						"id_marche_transport" => $this->id_marche_transport,
 						"date_arrivee" => $this->duree_restante_trajet,
-						"nom_base_dest" => $this->nom_base
+						"nom_base_dest" => $this->nom_base,
+						"aller" => $this->aller
 					];
 				}
 				else {
-					$marche["retour"][] = [
+					$marche = [
 						"id_marche_transport" => $this->id_marche_transport,
 						"date_arrivee" => $this->duree_restante_trajet,
-						"nom_base_dest" => $this->nom_base
+						"nom_base_dest" => $this->nom_base,
+						"aller" => $this->aller
 					];
 				}
 

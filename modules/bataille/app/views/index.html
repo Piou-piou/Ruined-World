@@ -28,24 +28,17 @@
 			<div class="small-12 side-bar">
 				<h3>Transport marchandises</h3>
 
-				<h4>Sur l'allé</h4>
-				{% for i in bataille.marche.aller %}
+				{% for i in bataille.marche %}
 					<div>
 						<div id="transport-{{ i.id_marche_transport }}"></div>
-						<p>{{ i.nom_base_dest }}</p>
+
+						{% if (i.aller == 1) %}
+							<p>Sur l'aller à : {{ i.nom_base_dest }}</p>
+						{% else %}
+							<p>Sur le retour de : {{ i.nom_base_dest }}</p>
+						{% endif %}
+						{{ include("js/transport_marche.html") }}
 					</div>
-
-					{{ include("js/transport_marche.html") }}
-				{% endfor %}
-
-				<h4>Sur le retour</h4>
-				{% for i in bataille.marche.retour %}
-					<div>
-						<div id="transport-{{ i.id_marche_transport }}"></div>
-						<p>{{ i.nom_base_dest }}</p>
-					</div>
-
-					{{ include("js/transport_marche.html") }}
 				{% endfor %}
 			</div>
 		</div>
