@@ -68,7 +68,7 @@
 		 * @return int
 		 * pour recuperer le niveau d'un batiment
 		 */
-		private function getNiveauBatiment($nom_batiment_sql) {
+		public function getNiveauBatiment($nom_batiment_sql) {
 			$dbc = App::getDb();
 
 			$query = $dbc->select("niveau")
