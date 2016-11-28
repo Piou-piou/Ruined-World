@@ -95,21 +95,45 @@ body {
     max-height: 1200px;
     overflow: hidden;
     border: 1px solid #000; }
-    .bataille .map-players > div {
+    .bataille .map-players .controls {
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 1;
+      position: absolute; }
+    .bataille .map-players #right {
+      right: 0;
+      top: 0;
+      height: 100%;
+      width: 20px; }
+    .bataille .map-players #left {
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 20px; }
+    .bataille .map-players #top {
+      left: 0;
+      top: 0;
+      height: 20px;
+      width: 100%; }
+    .bataille .map-players #bottom {
+      left: 0;
+      bottom: 0;
+      height: 20px;
+      width: 100%; }
+    .bataille .map-players .map {
       margin: 30px;
       position: absolute; }
-      .bataille .map-players > div > div {
+      .bataille .map-players .map > div {
         width: 10px;
         height: 10px;
         background-color: #FFF;
         position: absolute; }
-        .bataille .map-players > div > div:hover {
+        .bataille .map-players .map > div:hover {
           cursor: pointer; }
-          .bataille .map-players > div > div:hover > div {
+          .bataille .map-players .map > div:hover > div {
             display: block; }
-        .bataille .map-players > div > div.ma-base {
+        .bataille .map-players .map > div.ma-base {
           background-color: green; }
-        .bataille .map-players > div > div > div {
+        .bataille .map-players .map > div > div {
           height: 25px;
           width: 300px;
           background: #FFFFFF;

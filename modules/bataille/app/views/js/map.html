@@ -18,5 +18,25 @@
 		$(".popup .annuler").click(function() {
 			$("#popup-base #ajax").empty();
 		});
+
+		//pour gérer le hover sur les côtés de la map
+		$(".map-players .controls").click(function() {
+			var direction = $(this).attr("direction");
+
+			var position = $(".map-players .map").position();
+
+			if (direction == "top") {
+				$(".map-players .map").css("top", (position.top+10)+"px");
+			}
+			else if (direction == "right") {
+				$(".map-players .map").css("right", (position.right+10)+"px");
+			}
+			else if (direction == "bottom") {
+				$(".map-players .map").css("bottom", (position.bottom+10)+"px");
+			}
+			else if (direction == "left") {
+				$(".map-players .map").css("left", (position.left+10)+"px");
+			}
+		});
 	});
 </script>

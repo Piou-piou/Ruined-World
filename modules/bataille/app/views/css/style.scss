@@ -157,7 +157,41 @@ body {
 		overflow: hidden;
 		border: 1px solid $border-map-players;
 
-		> div {
+		.controls {
+			background: rgba(0, 0, 0, 0.8);
+			z-index: 1;
+			position: absolute;
+		}
+
+		#right {
+			right: 0;
+			top: 0;
+			height: 100%;
+			width: 20px;
+		}
+
+		#left {
+			left: 0;
+			top: 0;
+			height: 100%;
+			width: 20px;
+		}
+
+		#top {
+			left: 0;
+			top: 0;
+			height: 20px;
+			width: 100%;
+		}
+
+		#bottom {
+			left: 0;
+			bottom: 0;
+			height: 20px;
+			width: 100%;
+		}
+
+		.map {
 			margin: 30px;
 			position: absolute;
 

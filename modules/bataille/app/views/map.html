@@ -2,7 +2,12 @@
 
 <div class="row bataille">
 	<div class="small-12 large-10 large-offset-1 columns map-players">
-		<div style="width:{{ bataille.largeur_map*10 }}px;height:{{ bataille.hauteur_map*10 }}px;">
+		<div class="controls" id="top" direction="top"></div>
+		<div class="controls" id="right" direction="right"></div>
+		<div class="controls" id="bottom" direction="bottom"></div>
+		<div class="controls" id="left" direction="left"></div>
+
+		<div style="width:{{ bataille.largeur_map*10 }}px;height:{{ bataille.hauteur_map*10 }}px;" class="map">
 			{% for i in bataille.map %}
 				<div class="{{ i.ma_base }} open-popup" player="{{ i.id_base }}" popup="popup-base" style="left:{{ i.posx*15}}px;top:{{ i.posy*15 }}px;">
 					<div>
