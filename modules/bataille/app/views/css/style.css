@@ -91,7 +91,6 @@ body {
   .bataille .map-players {
     position: relative;
     height: 1200px;
-    max-width: 1200px;
     max-height: 1200px;
     overflow: hidden;
     border: 1px solid #000; }
