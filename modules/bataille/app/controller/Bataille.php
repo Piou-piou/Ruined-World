@@ -107,7 +107,7 @@
 
 		/**
 		 * @return mixed
-		 * renvoi le premier D_base du joueur (première base et base princ du joueur)
+		 * renvoi le premier ID_base du joueur (première base et base princ du joueur)
 		 */
 		public static function getFirstBase() {
 			$dbc = App::getDb();
