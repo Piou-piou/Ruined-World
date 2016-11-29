@@ -10,6 +10,7 @@
 		private static $points;
 		private static $map;
 		private static $database;
+		private static $nation;
 
 		private static $id_base;
 
@@ -87,6 +88,10 @@
 			return self::$database;
 		}
 
+		/**
+		 * @return mixe
+		 * récupère l'ID_identité du joueur
+		 */
 		public static function getIdIdentite() {
 			return $_SESSION['idlogin'.CLEF_SITE];
 		}
@@ -248,11 +253,11 @@
 		 * @param null $id_identite
 		 * get nation of a player
 		 */
-		public static function getNationBase($id_identite = null) {
+		public static function getNation($id_identite = null) {
 			$dbc = App::getDb();
 
-			if ($id_identite === null) {
-				$id_identite = $_SESSION['idlogin'.CLEF_SITE];
+			if (($id_identite === null) && (self::$nation == null)) {
+				$id_identite = Bataille::getIdIdentite();
 			}
 
 			$query = $dbc->select("nation")

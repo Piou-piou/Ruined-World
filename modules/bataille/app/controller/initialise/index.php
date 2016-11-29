@@ -14,7 +14,7 @@
 
 	Bataille::getBase()->getMaBase();
 
-	Bataille::getNationBase();
+	Bataille::getNation();
 
 	$marche = new \modules\bataille\app\controller\Marche();
 
