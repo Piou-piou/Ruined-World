@@ -180,13 +180,11 @@
 					->get();
 			}
 
-
 			if ((is_array($query)) && (count($query) > 0)) {
 				foreach ($query as $obj) {
 					return $obj->last_connexion;
 				}
 			}
-
 		}
 
 		/**
