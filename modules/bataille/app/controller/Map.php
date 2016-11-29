@@ -78,7 +78,7 @@
 		private function getParametres() {
 			$dbc = Bataille::getDb();
 
-			$query = $dbc->select()->from("_map")->where("ID_map", "=", 1)->get();
+			$query = $dbc->select()->from("map")->where("ID_map", "=", 1)->get();
 
 			foreach ($query as $obj) {
 				Bataille::setValues([
