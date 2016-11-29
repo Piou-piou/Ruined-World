@@ -5,12 +5,24 @@
 	use core\App;
 
 	class Map {
-
+		private $largeur;
+		private $hauteur;
 
 
 		//-------------------------- BUILDER ----------------------------------------------------------------------------//
-		public function __construct($id_base = null) {
+		/**
+		 * Map constructor.
+		 * @param null $id_base
+		 * @param null $install_base
+		 * si id_base == null et install_base != null on renvoi true car on est sur l'install d'une base
+		 * donc inutile de tout cahrger la map
+		 */
+		public function __construct($id_base = null, $install_base = null) {
 			$dbc = App::getDb();
+
+			if ($install_base != null) {
+				return true;
+			}
 			
 			if ($id_base == null) {
 				$this->getParametres();
@@ -85,6 +97,36 @@
 					"largeur_map" => $obj->largeur,
 					"hauteur_map" => $obj->hauteur
 				]);
+
+				$this->largeur = $obj->largeur;
+				$this->hauteur = $obj->hauteur;
+			}
+		}
+
+		/**
+		 * @return array
+		 * fonction utilisée lors de la création d'un compte
+		 * renvoi les positions en x et y non occupées
+		 */
+		public function getPositionNewBase() {
+			$this->getParametres();
+
+			if (Bataille::getNombreJoueur() <= 150) {
+				$posx = rand(0, 79);
+				$posy = rand(0, 75);
+			}
+			else {
+				$posx = rand(0, $this->largeur);
+				$posy = rand(0, $this->hauteur);
+			}
+
+			//on test si il y a une base sur ces positions
+			if (Bataille::getBaseExistPosition($posx, $posy)) {
+				$this->getPositionNewBase();
+			}
+			else {
+				//on a une position de base inexistante donc on la return
+				return ["posx" => $posx, "posy" => $posy];
 			}
 		}
 		//-------------------------- END GETTER ----------------------------------------------------------------------------//
