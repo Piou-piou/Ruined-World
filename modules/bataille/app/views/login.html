@@ -1,0 +1,13 @@
+<link rel="stylesheet" type="text/css" href="{{MODULEWEBROOT}}bataille/app/views/css/style.css">
+
+<div class="row bataille">
+	<form class="small-12" action="{{ WEBROOT }}controller/modules/bataille/auth/login" method="post">
+		<label for="pseudo">Votre pseudo : </label>
+		<input type="text" name="pseudo">
+
+		<label for="mdp">Votre mot de passe</label>
+		<input type="password" name="mdp">
+
+		<button type="submit">Connexion</button>
+	</form>
+</div>

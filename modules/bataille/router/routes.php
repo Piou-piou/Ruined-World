@@ -9,7 +9,8 @@
 		"popup/map",
 		"popup/marche/marche",
 		"popup/marche/offre-et-demande",
-		"popup/marche/envoyer-ressources"
+		"popup/marche/envoyer-ressources",
+		"login"
 	];
 	
 	if (\core\modules\GestionModule::getModuleActiver("bataille")) {
