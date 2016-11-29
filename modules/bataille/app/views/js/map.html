@@ -24,18 +24,19 @@
 			var direction = $(this).attr("direction");
 
 			var position = $(".map-players .map").position();
+			var deplace = 50;
 
 			if (direction == "top") {
-				$(".map-players .map").css("top", (position.top+10)+"px");
+				$(".map-players .map").css("top", (position.top+deplace)+"px");
 			}
 			else if (direction == "right") {
-				$(".map-players .map").css("left", (position.left-10)+"px");
+				$(".map-players .map").css("left", (position.left-deplace)+"px");
 			}
 			else if (direction == "bottom") {
-				$(".map-players .map").css("top", (position.top-10)+"px");
+				$(".map-players .map").css("top", (position.top-deplace)+"px");
 			}
 			else if (direction == "left") {
-				$(".map-players .map").css("left", (position.left+10)+"px");
+				$(".map-players .map").css("left", (position.left+deplace)+"px");
 			}
 		});
 	});
