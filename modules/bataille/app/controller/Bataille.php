@@ -91,6 +91,10 @@
 			return $_SESSION['idlogin'.CLEF_SITE];
 		}
 
+		/**
+		 * @return mixed
+		 * renvoi l'id_base du joueur
+		 */
 		public static function getIdBase() {
 			if (self::$id_base == null) {
 				self::$id_base = $_SESSION['id_base'];
@@ -99,6 +103,24 @@
 			}
 
 			return self::$id_base;
+		}
+
+		/**
+		 * @return mixed
+		 * renvoi le premier D_base du joueur (première base et base princ du joueur)
+		 */
+		public static function getFirstBase() {
+			$dbc = App::getDb();
+
+			$query = $dbc->select("ID_base")->from("_bataille_base")
+				->where("ID_identite", "=", self::getIdIdentite())
+				->orderBy("ID_base")
+				->limit(0, 1)
+				->get();
+
+			if ((is_array($query)) && (count($query) == 1)) {
+				foreach ($query as $obj) return $obj->ID_base;
+			}
 		}
 
 		/**
