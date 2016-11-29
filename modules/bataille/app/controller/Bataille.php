@@ -7,6 +7,8 @@
 		private static $ressource;
 		private static $base;
 		private static $batiment;
+		private static $points;
+		private static $map;
 		private static $database;
 
 		private static $id_base;
@@ -57,6 +59,24 @@
 			}
 
 			return self::$batiment;
+		}
+
+		//initialisation of Batiment class
+		public static function getPoints() {
+			if (self::$points == null) {
+				self::$points = new Points();
+			}
+
+			return self::$points;
+		}
+
+		//initialisation of Batiment class
+		public static function getMap() {
+			if (self::$map == null) {
+				self::$map = new Map();
+			}
+
+			return self::$map;
 		}
 
 		//initialisation of Database Core connexion
@@ -243,6 +263,22 @@
 
 			if ((is_array($query)) && (count($query) == 1)) {
 				foreach ($query as $obj) return $obj->ID_base;
+			}
+
+			return 0;
+		}
+
+		/**
+		 * @return int
+		 * fonction qui permet de récupérer le nombre de joueurs sur le serveur
+		 */
+		public static function getNombreJoueur() {
+			$dbc = App::getDb();
+
+			$query = $dbc->select("nombre_joueur")->from("_bataille_nombre_joueur")->where("ID_nombre_joueur", "=", 1)->get();
+
+			if ((is_array($query)) && (count($query) == 1)) {
+				foreach ($query as $obj) return $obj->nombre_joueur;
 			}
 
 			return 0;
