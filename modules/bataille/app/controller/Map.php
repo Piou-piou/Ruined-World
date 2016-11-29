@@ -76,9 +76,9 @@
 		 * fonction qui sert à récupérer les parametres de la map
 		 */
 		private function getParametres() {
-			$dbc = App::getDb();
+			$dbc = Bataille::getDb();
 
-			$query = $dbc->select()->from("_bataille_map")->where("ID_map", "=", 1)->get();
+			$query = $dbc->select()->from("_map")->where("ID_map", "=", 1)->get();
 
 			foreach ($query as $obj) {
 				Bataille::setValues([
