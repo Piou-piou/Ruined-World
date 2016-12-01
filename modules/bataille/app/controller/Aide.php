@@ -28,7 +28,7 @@
 					//on recupere les infos concernant le temps de construction et les batiment qu'il faudra pour construire
 					$query = $dbc1->select()->from($obj->nom_table)->where("ID_".$obj->nom_table, "=", 1)->get();
 
-					if ((is_array($query)) && (count($query) > 0)) {
+					if ((is_array($query)) && (count($query) == 1)) {
 						foreach ($query as $obj) {
 							$ressource_tmp = explode(", ", $obj->ressource_construire);
 
@@ -97,16 +97,18 @@
 							"niveau_batiment" => $pour_construire[$i][$j][2]
 						];
 					}
+
+					return ["batiments" => $batiment];
 				}
 				else {
 					$batiment[] =  [
 						"nom_batiment" => $pour_construire[$i][0][0],
 						"niveau_batiment" => $pour_construire[$i][0][2]
 					];
+
+					return ["batiments" => $batiment];
 				}
 			}
-
-			return ["batiments" => $batiment];
 		}
 		//-------------------------- END GETTER ----------------------------------------------------------------------------//
 
