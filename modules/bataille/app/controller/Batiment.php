@@ -375,6 +375,10 @@
 									$ok_construction = true;
 								}
 							}
+							else {
+								$ok_construction = false;
+								break;
+							}
 						}
 
 						//si ok on affiche le batiment
