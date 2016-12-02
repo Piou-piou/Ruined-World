@@ -374,6 +374,10 @@
 								if ($pour_construire[$j][2] <= $this->getNiveauBatiment($pour_construire[$j][1])) {
 									$ok_construction = true;
 								}
+								else {
+									$ok_construction = false;
+									break;
+								}
 							}
 							else {
 								$ok_construction = false;
