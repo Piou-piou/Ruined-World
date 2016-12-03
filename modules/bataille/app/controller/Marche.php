@@ -7,6 +7,7 @@
 
 	class Marche {
 		private $id_base_dest;
+		private $id_base;
 		private $aller;
 		private $ressources;
 		private $date_arrivee;
@@ -18,12 +19,12 @@
 		public function __construct() {
 			$dbc = App::getDb();
 
-			//récupération des trajets en cours
+			//récupération des trajets en cours d'envoi
 			$query = $dbc->select()->from("_bataille_marche_transport")
 				->from("_bataille_base")
 				->where("_bataille_marche_transport.ID_base", "=", Bataille::getIdBase(), "AND")
 				->where("_bataille_marche_transport.ID_base_dest", "=", "_bataille_base.ID_base", "", true)
-				->orderBy("_bataille_marche_transport.aller")
+				->orderBy("_bataille_marche_transport.aller", "DESC")
 				->get();
 
 			if ((is_array($query)) && (count($query) > 0)) {
@@ -38,7 +39,32 @@
 					$marche[] = $this->getTransportArrive();
 				}
 
-				Bataille::setValues(["marche" => $marche]);
+				Bataille::setValues(["marche_envoyer" => $marche]);
+			}
+
+			//récupération des trajets que l'on va recevoir
+			$query = $dbc->select()->from("_bataille_marche_transport")
+				->from("_bataille_base")
+				->where("aller", "=", 1, "AND")
+				->where("_bataille_marche_transport.ID_base_dest", "=", Bataille::getIdBase(), "AND")
+				->where("_bataille_marche_transport.ID_base", "=", "_bataille_base.ID_base", "", true)
+				->orderBy("_bataille_marche_transport.aller", "DESC")
+				->get();
+
+			if ((is_array($query)) && (count($query) > 0)) {
+				foreach ($query as $obj) {
+					$this->id_base_dest = $obj->ID_base_dest;
+					$this->id_base = $obj->ID_base;
+					$this->aller = $obj->aller;
+					$this->ressources = $obj->ressources;
+					$this->nom_base = $obj->nom_base;
+					$this->date_arrivee = $obj->date_arrivee;
+					$this->id_marche_transport = $obj->ID_marche_transport;
+
+					$marche[] = $this->getTransportArrive();
+				}
+
+				Bataille::setValues(["marche_recevoir" => $marche]);
 			}
 		}
 		//-------------------------- END BUILDER ----------------------------------------------------------------------------//
@@ -60,7 +86,12 @@
 				$this->setLivrerRessource();
 
 				//on calcul la date d'arrivée du retour
-				$date_retour = Bataille::getDureeTrajet($this->id_base_dest)+$this->date_arrivee;
+				if ($this->id_base_dest == Bataille::getIdBase()) {
+					$date_retour = Bataille::getDureeTrajet($this->id_base)+$this->date_arrivee;
+				}
+				else {
+					$date_retour = Bataille::getDureeTrajet($this->id_base_dest)+$this->date_arrivee;
+				}
 
 				//si le retour du trajet est également arrivé on finit le transport sinon on le place sur le retour
 				if ($date_retour < $today) {

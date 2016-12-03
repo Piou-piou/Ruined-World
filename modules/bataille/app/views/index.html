@@ -28,7 +28,7 @@
 			<div class="small-12 side-bar">
 				<h3>Transport marchandises envoyées</h3>
 
-				{% for i in bataille.marche %}
+				{% for i in bataille.marche_envoyer %}
 					<div>
 						<div id="transport-{{ i.id_marche_transport }}"></div>
 
@@ -41,12 +41,26 @@
 					</div>
 				{% endfor %}
 			</div>
+
+			<div class="small-12 side-bar">
+				<h3>Transport marchandises à recevoir</h3>
+
+				{% for i in bataille.marche_recevoir %}
+					<div>
+						<div id="transport-{{ i.id_marche_transport }}"></div>
+
+						{% if (i.aller == 1) %}
+							<p>qui arrive de : {{ i.nom_base_dest }}</p>
+						{% endif %}
+						{{ include("js/transport_marche.html") }}
+					</div>
+				{% endfor %}
+			</div>
 		</div>
 	</div>
 </div>
 
 {{ include("js/batiment.html") }}
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script src="{{MODULEWEBROOT}}bataille/app/views/js/jquery.plugin.min.js"></script>
 <script src="{{MODULEWEBROOT}}bataille/app/views/js/jquery.countdown.js"></script>
 {{ include("js/construire_batiment.html") }}
