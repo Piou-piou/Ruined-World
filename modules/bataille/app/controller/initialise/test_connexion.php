@@ -8,5 +8,5 @@
 		$_SESSION['id_base'] = $_POST['base'];
 	}
 	else {
-		$_SESSION['id_base'] = Bataille::getFirstBase();
+		$_SESSION['id_base'] = \modules\bataille\app\controller\Bataille::getFirstBase();
 	}
