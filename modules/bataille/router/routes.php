@@ -16,7 +16,7 @@
 	if (\core\modules\GestionModule::getModuleActiver("bataille")) {
 		if (!in_array($this->page, $pages_bataille)) {
 			\core\HTML\flashmessage\FlashMessage::setFlash("Cette page n'existe pas ou plus");
-			header("location:".WEBROOT);
+			header("location:".WEBROOT."bataille");
 		}
 
 		//pour l'index -> on récupere les derniers articles
@@ -24,10 +24,14 @@
 			$this->controller = "bataille/app/controller/initialise/index.php";
 		}
 
+
+		//------------------------------- POUR L'AIDE ----------------------------------//
 		if ($this->page == "aide-detail") {
 			\modules\bataille\app\controller\Aide::$parametre_router = $this->parametre;
 			$this->controller = "bataille/app/controller/initialise/aide.php";
 		}
+
+
 
 		//------------------------------- POUR LA MAP ----------------------------------//
 		if ($this->page == "map") {
@@ -37,6 +41,8 @@
 			$this->controller = "bataille/app/controller/initialise/popup/map.php";
 		}
 
+
+
 		//------------------------------- POUR LA POPUP POUR CONSTRUIRE BATIMENT ----------------------------------//
 		if ($this->page == "popup/unbatiment") {
 			$this->controller = "bataille/app/controller/initialise/popup/unbatiment.php";
@@ -44,6 +50,8 @@
 		if ($this->page == "popup/listebatiments") {
 			$this->controller = "bataille/app/controller/initialise/popup/batiments_construire.php";
 		}
+
+
 
 		//------------------------------- POUR LA POPUP POUR LE MARCHE ----------------------------------//
 		if ($this->page == "popup/marche/marche") {
