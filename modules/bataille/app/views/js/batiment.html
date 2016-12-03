@@ -16,7 +16,7 @@
 					}
 				});
 			}
-			else if (nom_batiment == "marche") {
+			else if ((nom_batiment == "marche") || (nom_batiment == "marche en construction")) {
 				$.ajax({
 					type:"POST",
 					data: "nom_batiment="+nom_batiment+"&emplacement="+emplacement,
