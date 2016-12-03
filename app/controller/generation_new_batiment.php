@@ -70,9 +70,9 @@
 
 		$pour_construire = "$eau, $electricite, $fer, $fuel";
 
-		/*echo("$temps +++++ $pour_construire<br>");
+		/*echo("$temps +++++ $pour_construire<br>");*/
 
-		\modules\bataille\app\controller\Bataille::getDb()->insert("ressource_construire", $pour_construire)
+		/*\modules\bataille\app\controller\Bataille::getDb()->insert("ressource_construire", $pour_construire)
 			->insert("temps_construction", $temps)
 			->into("ambassade")
 			->set();*/
