@@ -309,6 +309,25 @@
 
 			return 0;
 		}
+
+		/**
+		 * @param $table
+		 * @param $param
+		 * @return mixed
+		 * fonction qui sert à récupérer un parametre spécifique pour un batiment
+		 * par exemple la vitesse d'un marchand
+		 */
+		public static function getParam($table, $param) {
+			$dbc = self::getDb();
+
+			$table = $table."_config";
+
+			$query = $dbc->select($param)->from($table)->where("ID_".$table, "=", 1)->get();
+
+			if ((is_array($query)) && (count($query) == 1)) {
+				foreach ($query as $obj) return $obj->$param;
+			}
+		}
 		//-------------------------- END GETTER ----------------------------------------------------------------------------//
 		
 		
