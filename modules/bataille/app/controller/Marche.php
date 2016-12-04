@@ -87,10 +87,10 @@
 
 				//on calcul la date d'arrivée du retour
 				if ($this->id_base_dest == Bataille::getIdBase()) {
-					$date_retour = Bataille::getDureeTrajet($this->id_base)+$this->date_arrivee;
+					$date_retour = Bataille::getDureeTrajet($this->id_base, Bataille::getParam("vitesse_marchand"))+$this->date_arrivee;
 				}
 				else {
-					$date_retour = Bataille::getDureeTrajet($this->id_base_dest)+$this->date_arrivee;
+					$date_retour = Bataille::getDureeTrajet($this->id_base_dest, Bataille::getParam("vitesse_marchand"))+$this->date_arrivee;
 				}
 
 				//si le retour du trajet est également arrivé on finit le transport sinon on le place sur le retour
@@ -253,7 +253,7 @@
 
 				//sinon initialise le transport
 				//on recup la date d'arrivee dans la base de destintation
-				$date_arrivee = Bataille::getDureeTrajet($id_base_dest, 5)+Bataille::getToday();
+				$date_arrivee = Bataille::getDureeTrajet($id_base_dest, Bataille::getParam("vitesse_marchand"))+Bataille::getToday();
 
 				$ressource = [
 					"eau" => $eau,

@@ -188,22 +188,6 @@
 		}
 
 		/**
-		 * @return mixed
-		 * recupere le nombre maximum d'emplacement dans la base
-		 */
-		public static function getNombreEmplacementBase() {
-			$dbc1 = self::getDb();
-
-			$query = $dbc1->select("nombre_emplacement")->from("configuration")->where("ID_configuration", "=", 1)->get();
-
-			if ((is_array($query)) && (count($query) > 0)) {
-				foreach ($query as $obj) {
-					return $obj->nombre_emplacement;
-				}
-			}
-		}
-
-		/**
 		 * @param $nom_ressource
 		 * @param $ressource
 		 * @return array
@@ -311,18 +295,15 @@
 		}
 
 		/**
-		 * @param $table
 		 * @param $param
 		 * @return mixed
 		 * fonction qui sert à récupérer un parametre spécifique pour un batiment
-		 * par exemple la vitesse d'un marchand
+		 * par exemple la vitesse d'un marchand ou  le nombred'emplacment de la base
 		 */
-		public static function getParam($table, $param) {
+		public static function getParam($param) {
 			$dbc = self::getDb();
 
-			$table = $table."_config";
-
-			$query = $dbc->select($param)->from($table)->where("ID_".$table, "=", 1)->get();
+			$query = $dbc->select($param)->from("configuration")->where("ID_configuration", "=", 1)->get();
 
 			if ((is_array($query)) && (count($query) == 1)) {
 				foreach ($query as $obj) return $obj->$param;
