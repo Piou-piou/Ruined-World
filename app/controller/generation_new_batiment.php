@@ -32,10 +32,10 @@
 	for ($i=1 ; $i<=$lvl_max ; $i++) {
 		//pour les ressources
 		if ($i == 1) {
-			$eau = 760;
-			$electricite = 820;
-			$fer = 780;
-			$fuel = 800;
+			$eau = 635;
+			$electricite = 705;
+			$fer = 695;
+			$fuel = 740;
 		}
 		else if (($i > 1) && ($i < 7)) {
 			$eau = floor($eau*1.5);
@@ -58,7 +58,7 @@
 
 		//pour le temps de construction
 		if ($i == 1) {
-			$temps = 1450;
+			$temps = 1800;
 		}
 		else if (($i > 1) && ($i < 16))  {
 			$temps = floor($temps*1.28);
@@ -75,5 +75,11 @@
 		/*\modules\bataille\app\controller\Bataille::getDb()->insert("ressource_construire", $pour_construire)
 			->insert("temps_construction", $temps)
 			->into("ambassade")
+			->set();*/
+
+		//pour modifier des batiment au cas ou
+		/*\modules\bataille\app\controller\Bataille::getDb()->update("ressource_construire", $pour_construire)
+			->where("ID_entrepot", "=", $i)
+			->from("entrepot")
 			->set();*/
 	}
