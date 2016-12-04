@@ -229,10 +229,11 @@
 		
 		/**
 		 * @param $id_base
+		 * @param null $vitesse = vitesse de l'unité en question
 		 * @return number
 		 * fonction qui renvoi le temps de trajet entre la base du joueur et une autre base en secondes
 		 */
-		public static function getDureeTrajet($id_base) {
+		public static function getDureeTrajet($id_base, $vitesse = 1) {
 			//récupération de la posisiotn de la base du joueur + la base sur laquelle on a cliqué
 			$base_joueur = self::getPosistionBase($_SESSION['id_base']);
 			$base_autre = self::getPosistionBase($id_base);
@@ -242,7 +243,7 @@
 			$calc_x = abs($base_joueur['posx']-$base_autre['posx']);
 			$calc_y = abs($base_joueur['posy']-$base_autre['posy']);
 			
-			$temps_voyage = ($calc_x*15)+($calc_y*15);
+			$temps_voyage = (($calc_x*70)+($calc_y*70))/$vitesse;
 			
 			return $temps_voyage;
 		}

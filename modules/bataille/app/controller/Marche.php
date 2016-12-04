@@ -253,7 +253,7 @@
 
 				//sinon initialise le transport
 				//on recup la date d'arrivee dans la base de destintation
-				$date_arrivee = Bataille::getDureeTrajet($id_base_dest)+Bataille::getToday();
+				$date_arrivee = Bataille::getDureeTrajet($id_base_dest, 5)+Bataille::getToday();
 
 				$ressource = [
 					"eau" => $eau,
