@@ -65,7 +65,7 @@
 		public function getBatimentsBase() {
 			$dbc = App::getDb();
 
-			$nombre_emplacement = Bataille::getNombreEmplacementBase();
+			$nombre_emplacement = Bataille::getParam("nombre_emplacement");
 
 			for ($i=1 ; $i<($nombre_emplacement+1) ; $i++) {
 				$query = $dbc->select()->from("_bataille_batiment")->where("ID_base", "=", Bataille::getIdBase(), "AND")
