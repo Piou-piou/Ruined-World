@@ -1,11 +1,12 @@
-<nav class="marche">
+<nav class="batiment-speciaux">
 	<ul>
-		<li><a href="marche">Marché</a></li>
+		<li><a href="index">Marché</a></li>
 		<li><a href="offre-et-demande">Listes offres et demandes</a></li>
 		<li><a href="envoyer-ressources">Envoyer des ressources</a></li>
 	</ul>
 
 	<input type="hidden" id="nom_batiment" value="{{ nom_batiment }}">
+	<input type="hidden" id="nom_batiment_sql" value="{{ nom_batiment_sql }}">
 	<input type="hidden" id="emplacement" value="{{ emplacement }}">
 </nav>
-{{ include("js/marche.html") }}
+{{ include("js/batiment_speciaux.html") }}

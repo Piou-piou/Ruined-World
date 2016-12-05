@@ -1,0 +1,29 @@
+<script>
+$(document).ready(function() {
+    $("nav.batiment-speciaux a").click(function(e) {
+		e.preventDefault();
+
+		var page = $(this).attr("href");
+		var nom_batiment = $("nav.batiment-speciaux input#nom_batiment").val();
+		var nom_batiment_sql = $("nav.batiment-speciaux input#nom_batiment_sql").val();
+		var emplacement = $("nav.batiment-speciaux input#emplacement").val();
+
+		console.log(nom_batiment_sql+"gf")
+
+		$.ajax({
+			type:"POST",
+			data: "nom_batiment="+nom_batiment+"&emplacement="+emplacement+"&nom_batiment_sql="+nom_batiment_sql,
+			url: "{{WEBROOT}}bataille/popup/"+nom_batiment_sql+"/"+page,
+			success: function(data){
+				$("#popup-base #ajax").empty();
+				$("#popup-base #ajax").append(data);
+			}, error: function(){
+			}
+		});
+	})
+
+    $(".popup .annuler").click(function() {
+        $("#popup-base #ajax").empty();
+    });
+});
+</script>
