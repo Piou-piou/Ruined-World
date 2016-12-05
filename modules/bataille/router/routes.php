@@ -11,6 +11,8 @@
 		"popup/marche/offre-et-demande",
 		"popup/marche/envoyer-ressources",
 		"popup/ambassade/index",
+		"popup/caserne/index",
+		"popup/centre_de_recherche/index",
 		"login"
 	];
 	
@@ -68,6 +70,17 @@
 		if ($this->page == "popup/ambassade/index") {
 			$this->controller = "bataille/app/controller/initialise/popup/unbatiment.php";
 		}
+
+		//------------------------------- POUR LA POPUP POUR LA CASERNE ----------------------------------//
+		if ($this->page == "popup/caserne/index") {
+			$this->controller = "bataille/app/controller/initialise/popup/unbatiment.php";
+		}
+
+		//------------------------------- POUR LA POPUP POUR LE CENTRE DE RECHERCHE ----------------------------------//
+		if ($this->page == "popup/centre_de_recherche/index") {
+			$this->controller = "bataille/app/controller/initialise/popup/unbatiment.php";
+		}
+
 	}
 	else {
 		\core\HTML\flashmessage\FlashMessage::setFlash("L'accès à ce module n'est pas configurer ou ne fais pas partie de votre offre, contactez votre administrateur pour résoudre ce problème", "info");
