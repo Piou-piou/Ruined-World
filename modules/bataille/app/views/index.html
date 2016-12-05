@@ -10,7 +10,7 @@
 		<h2>Batiments</h2>
 
 		{% for i in bataille.batiments %}
-			<a href="#" class="open-popup" popup="popup-base" emplacement="{{i.emplacement}}" nom_batiment="{{i.nom_batiment}}">
+			<a href="#" class="open-popup" popup="popup-base" emplacement="{{i.emplacement}}" nom_batiment="{{i.nom_batiment}}" nom_batiment_sql="{{i.nom_batiment_sql }}">
 				{{i.nom_batiment}} {{i.niveau}}
 			</a><br>
 		{% endfor %}

@@ -1,6 +1,16 @@
 <script>
 	$(document).ready(function() {
+		var batiments_speciaux = [
+				"marche",
+				"marche en construction",
+				"ambassade",
+				"ambassade en construction"
+		];
+
+		console.log(batiments_speciaux);
+
 		$(".open-popup").click(function() {
+			var nom_batiment_sql = $(this).attr("nom_batiment_sql");
 			var nom_batiment = $(this).attr("nom_batiment");
 			var emplacement = $(this).attr("emplacement");
 
@@ -16,11 +26,11 @@
 					}
 				});
 			}
-			else if ((nom_batiment == "marche") || (nom_batiment == "marche en construction")) {
+			else if (batiments_speciaux.indexOf(nom_batiment) != -1) {
 				$.ajax({
 					type:"POST",
 					data: "nom_batiment="+nom_batiment+"&emplacement="+emplacement,
-					url:"{{WEBROOT}}bataille/popup/marche/marche",
+					url:"{{WEBROOT}}bataille/popup/"+nom_batiment_sql+"/index",
 					success: function(data){
 						$("#popup-base #ajax").append(data);
 					}, error: function(){

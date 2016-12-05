@@ -7,9 +7,10 @@
 		"aide-detail",
 		"map",
 		"popup/map",
-		"popup/marche/marche",
+		"popup/marche/index",
 		"popup/marche/offre-et-demande",
 		"popup/marche/envoyer-ressources",
+		"popup/ambassade/index",
 		"login"
 	];
 	
@@ -54,12 +55,19 @@
 
 
 		//------------------------------- POUR LA POPUP POUR LE MARCHE ----------------------------------//
-		if ($this->page == "popup/marche/marche") {
+		if ($this->page == "popup/marche/index") {
 			$this->controller = "bataille/app/controller/initialise/popup/unbatiment.php";
 		}
 		/*if ($this->page == "popup/marche/offre-et-demande") {
 			$this->controller = "bataille/app/controller/initialise/popup_marche.php";
 		}*/
+
+
+
+		//------------------------------- POUR LA POPUP POUR L'AMBASSADE ----------------------------------//
+		if ($this->page == "popup/ambassade/index") {
+			$this->controller = "bataille/app/controller/initialise/popup/unbatiment.php";
+		}
 	}
 	else {
 		\core\HTML\flashmessage\FlashMessage::setFlash("L'accès à ce module n'est pas configurer ou ne fais pas partie de votre offre, contactez votre administrateur pour résoudre ce problème", "info");
