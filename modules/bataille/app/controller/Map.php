@@ -3,6 +3,7 @@
 	namespace modules\bataille\app\controller;
 
 	use core\App;
+	use core\functions\DateHeure;
 
 	class Map {
 		private $largeur;
@@ -53,7 +54,8 @@
 					->where("_bataille_base.ID_identite", "=", "identite.ID_identite", "", true)
 					->get();
 
-				$temps_trajet = gmdate("H:i:s", Bataille::getDureeTrajet($id_base));
+				//$temps_trajet = gmdate("H:i:s", Bataille::getDureeTrajet($id_base));
+				$temps_trajet = DateHeure::Secondeenheure(Bataille::getDureeTrajet($id_base));
 			}
 			
 			if ((is_array($query)) && (count($query) > 0)) {

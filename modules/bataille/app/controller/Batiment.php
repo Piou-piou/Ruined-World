@@ -2,6 +2,7 @@
 	namespace modules\bataille\app\controller;
 	use core\App;
 	use core\functions\ChaineCaractere;
+	use core\functions\DateHeure;
 	use core\HTML\flashmessage\FlashMessage;
 	use Nette\Utils\DateTime;
 
@@ -475,7 +476,7 @@
 			if ((is_array($query)) && (count($query) > 0)) {
 				foreach ($query as $obj) {
 					$this->ressource_construire = $this->getRessourceConstruireBatiment($this->nom_batiment_sql, $this->niveau_batiment);
-					$this->temps_construction = gmdate("H:i:s", $obj->temps_construction);
+					$this->temps_construction = DateHeure::Secondeenheure($obj->temps_construction);
 				}
 
 				//récupération des éléments particulier à un batiment
