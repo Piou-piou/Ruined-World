@@ -28,6 +28,10 @@
 				return false;
 			}
 		}
+
+		public function getUnitePossibleRecruter() {
+
+		}
 		//-------------------------- END GETTER ----------------------------------------------------------------------------//
 		
 		

@@ -77,7 +77,7 @@
 			$this->controller = "bataille/app/controller/initialise/popup/unbatiment.php";
 		}
 		if ($this->page == "popup/caserne/recruter-troupe") {
-			$this->controller = "bataille/app/controller/initialise/popup/unbatiment.php";
+			$this->controller = "bataille/app/controller/caserne/get_recruter_troupe.php";
 		}
 
 		//------------------------------- POUR LA POPUP POUR LE CENTRE DE RECHERCHE ----------------------------------//
