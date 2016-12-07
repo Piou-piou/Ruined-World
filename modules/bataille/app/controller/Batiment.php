@@ -100,7 +100,7 @@
 		/**
 		 * @param $ressource
 		 * @return int
-		 * recuperation de la production de chaque ressource en fonction du lvl des batiments + recup prod addon
+		 * recuperation de la production de chaque ressource en fonction du lvl des batiments
 		 */
 		public function getProduction($ressource, $id_base = null) {
 			$dbc1 = Bataille::getDb();
@@ -124,21 +124,7 @@
 						$prod = $obj->production;
 					}
 
-					$query = $dbc1->select("production")
-						->from($nom_batiment."_addon")
-						->where("ID_".$nom_batiment."_addon", "=", $this->getNiveauBatiment($nom_batiment."_addon"))
-						->get();
-
-					if ((is_array($query)) && (count($query) > 0)) {
-						foreach ($query as $obj) {
-							$prod_addon = $obj->production;
-						}
-					}
-					else {
-						$prod_addon = 0;
-					}
-
-					return $prod + $prod_addon;
+					return $prod;
 				}
 			}
 			else {
@@ -443,7 +429,6 @@
 
 		/**
 		 * fonction qui renvoi les informations pour augmenter le niveau d'un batiment
-		 * ou la création d'un addon sur ce batiment
 		 * @return int
 		 */
 		private function getInfoUpgradeBatiment() {
