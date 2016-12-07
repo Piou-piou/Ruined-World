@@ -12,6 +12,7 @@
 		"popup/marche/envoyer-ressources",
 		"popup/ambassade/index",
 		"popup/caserne/index",
+		"popup/caserne/recruter-troupe",
 		"popup/centre_de_recherche/index",
 		"login"
 	];
@@ -73,6 +74,9 @@
 
 		//------------------------------- POUR LA POPUP POUR LA CASERNE ----------------------------------//
 		if ($this->page == "popup/caserne/index") {
+			$this->controller = "bataille/app/controller/initialise/popup/unbatiment.php";
+		}
+		if ($this->page == "popup/caserne/recruter-troupe") {
 			$this->controller = "bataille/app/controller/initialise/popup/unbatiment.php";
 		}
 
