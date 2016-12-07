@@ -206,27 +206,7 @@
 				$max_level =  $this->getInfoUpgradeBatiment();
 			}
 			else {
-				//on test voir si le bat est au niveau max et si il peut avoir un addon
-				if (ChaineCaractere::FindInString($nom_batiment, "addon")) {
-					$query = $dbc1->select("nom_table")->from("liste_batiment")->where("nom", "=", $nom_batiment)->get();
-
-					if ((is_array($query)) && (count($query) > 0)) {
-						foreach ($query as $obj) {
-							$this->nom_batiment_sql = $obj->nom_table;
-						}
-
-						$this->niveau_batiment = 0;
-
-						$max_level = $this->getInfoUpgradeBatiment();
-						$niveau_batiment_base = 10;
-					}
-					else {
-						$max_level = 0;
-					}
-				}
-				else {
-					$max_level = 0;
-				}
+				$max_level = 0;
 			}
 
 			//permet de savoir si le batiment produit bien des ressoures
