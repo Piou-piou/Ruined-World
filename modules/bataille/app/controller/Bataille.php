@@ -8,6 +8,7 @@
 		private static $base;
 		private static $batiment;
 		private static $points;
+		private static $centre_recherche;
 		private static $map;
 		private static $database;
 		private static $nation;
@@ -78,6 +79,15 @@
 			}
 
 			return self::$map;
+		}
+
+		//initialisation of Batiment class
+		public static function getCentreRecherche() {
+			if (self::$centre_recherche == null) {
+				self::$centre_recherche = new CentreRecherche();
+			}
+
+			return self::$centre_recherche;
 		}
 
 		//initialisation of Database Core connexion
