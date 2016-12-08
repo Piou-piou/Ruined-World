@@ -25,17 +25,17 @@
 
 	echo(serialize($tab_ressource));*/
 
-	$lvl_max = 30;
+	$lvl_max = 10;
 
 	//foinction qui va générer le tableau pour les 30 lvl
 
 	for ($i=1 ; $i<=$lvl_max ; $i++) {
 		//pour les ressources
 		if ($i == 1) {
-			$eau = 635;
-			$electricite = 705;
-			$fer = 695;
-			$fuel = 740;
+			$eau = 210;
+			$electricite = 60;
+			$fer = 165;
+			$fuel = 225;
 		}
 		else if (($i > 1) && ($i < 7)) {
 			$eau = floor($eau*1.5);
@@ -58,7 +58,7 @@
 
 		//pour le temps de construction
 		if ($i == 1) {
-			$temps = 1800;
+			$temps = 60;
 		}
 		else if (($i > 1) && ($i < 16))  {
 			$temps = floor($temps*1.28);
@@ -70,7 +70,7 @@
 
 		$pour_construire = "$eau, $electricite, $fer, $fuel";
 
-		/*echo("$temps +++++ $pour_construire<br>");*/
+		echo("$temps +++++ $pour_construire<br>");
 
 		/*\modules\bataille\app\controller\Bataille::getDb()->insert("ressource_construire", $pour_construire)
 			->insert("temps_construction", $temps)
@@ -79,7 +79,7 @@
 
 		//pour modifier des batiment au cas ou
 		/*\modules\bataille\app\controller\Bataille::getDb()->update("ressource_construire", $pour_construire)
-			->where("ID_entrepot", "=", $i)
-			->from("entrepot")
+			->where("ID_centrale_eletrique", "=", $i)
+			->from("centrale_eletrique")
 			->set();*/
 	}
