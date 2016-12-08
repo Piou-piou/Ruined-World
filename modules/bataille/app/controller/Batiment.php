@@ -400,13 +400,13 @@
 
 				//on test si assez de ressources dans la base
 				//fer
-				$ressource["fer"] = Bataille::getTestAssezRessourceBase("fer", $ressource_tmp[0]);
+				$ressource["fer"] = Bataille::getTestAssezRessourceBase("fer", $ressource_tmp[2]);
 				//fuel
-				$ressource["fuel"] = Bataille::getTestAssezRessourceBase("fuel", $ressource_tmp[1]);
+				$ressource["fuel"] = Bataille::getTestAssezRessourceBase("fuel", $ressource_tmp[3]);
 				//eau
-				$ressource["eau"] = Bataille::getTestAssezRessourceBase("eau", $ressource_tmp[2]);
+				$ressource["eau"] = Bataille::getTestAssezRessourceBase("eau", $ressource_tmp[0]);
 				//electricite
-				$ressource["electricite"] = Bataille::getTestAssezRessourceBase("electricite", $ressource_tmp[3]);
+				$ressource["electricite"] = Bataille::getTestAssezRessourceBase("electricite", $ressource_tmp[1]);
 
 				return $ressource;
 			}
