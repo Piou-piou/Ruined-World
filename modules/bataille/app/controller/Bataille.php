@@ -8,6 +8,7 @@
 		private static $base;
 		private static $batiment;
 		private static $points;
+		private static $unite;
 		private static $centre_recherche;
 		private static $map;
 		private static $database;
@@ -79,6 +80,15 @@
 			}
 
 			return self::$map;
+		}
+
+		//initialisation of Batiment class
+		public static function getUnite() {
+			if (self::$unite == null) {
+				self::$unite = new Unite();
+			}
+
+			return self::$unite;
 		}
 
 		//initialisation of Batiment class
