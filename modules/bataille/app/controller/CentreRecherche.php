@@ -27,7 +27,7 @@
 		public function getAllRechercheType($type) {
 			$dbc = App::getDb();
 
-			$query = $dbc->select()->from("centre_recherche")->where("type", "=", $type)->get();
+			$query = $dbc->select()->from("_bataille_centre_recherche")->where("type", "=", $type)->get();
 
 			if ((is_array($query)) && (count($query) > 0)) {
 				foreach ($query as $obj) {
