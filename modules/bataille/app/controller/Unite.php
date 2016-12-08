@@ -33,6 +33,8 @@
 			//on recup toutes les unites deja recherchée donc que l'on peut faire
 			$unites = Bataille::getCentreRecherche()->getAllRechercheType($type);
 
+			//recupérer les caractéristiques de l'unité en question
+
 			//si pas d'unites encore recherchees on renvoit un array juste avec 0 dedans
 			Bataille::setValues(["unites" => $unites]);
 		}
