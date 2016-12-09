@@ -14,10 +14,14 @@
 		
 		
 		//-------------------------- GETTER ----------------------------------------------------------------------------//
-		public function getInfosBaseUnite($unite) {
+		private function getInfosBaseUnite($unite, $type) {
 			$dbc1 = Bataille::getDb();
 
-			$query = $dbc1->select()->from("unites")->where("nom", "=", $unite)->get();
+			$query = $dbc1->select()
+				->from("unites")
+				->where("nom", "=", $unite, "AND", true)
+				->where("type", "=", $type, "AND", true)
+				->get();
 
 			if ((is_array($query)) && (count($query) == 1)) {
 				foreach ($query as $obj) {
@@ -34,6 +38,7 @@
 			$unites = Bataille::getCentreRecherche()->getAllRechercheType($type);
 
 			//recupérer les caractéristiques de l'unité en question
+			$caracteristique = $this->getInfosBaseUnite($unites["recherche"], $type);
 
 			//si pas d'unites encore recherchees on renvoit un array juste avec 0 dedans
 			Bataille::setValues(["unites" => $unites]);
