@@ -3,6 +3,12 @@
 {% if bataille.unites is iterable %}
     {% for i in bataille.unites %}
         <p>{{ i.recherche }} -- {{ i.niveau }}</p>
+		<ul>
+			<li>Attaque : {{ i.caracteristique.attaque }}</li>
+			<li>Défense : {{ i.caracteristique.defense }}</li>
+			<li>Résistance : {{ i.caracteristique.resistance }}</li>
+			<li>Vitesse de déplacement : {{ i.caracteristique.vitesse }}</li>
+		</ul>
     {% endfor %}
 {% else %}
     <p>Vous ne pouvez recruter aucune unité, merci d'en rechercher dans votre centre de recherche</p>

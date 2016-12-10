@@ -24,6 +24,12 @@
 		
 		
 		//-------------------------- GETTER ----------------------------------------------------------------------------//
+		/**
+		 * @param $type
+		 * @return array|int
+		 * permet de renvoyer toutes es recherches déjà effectuées pour notre base en fonction
+		 * d'un type donné
+		 */
 		public function getAllRechercheType($type) {
 			$dbc = App::getDb();
 
