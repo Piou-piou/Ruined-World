@@ -1,5 +1,6 @@
 <?php
 	//file sstem to add new building in core
+	//pour l'ajout d'un batiment pour en construire un autre (pour_construire) dans bataille_core
 	/*$tab = [
 		[
 			"centre de commandement",
@@ -15,6 +16,9 @@
 
 	echo(serialize($tab));*/
 
+
+
+	//pour les ressources pour le marché
 	/*$tab_ressource = [
 		"eau" => 0,
 		"electricite" => 1000,
@@ -25,6 +29,21 @@
 
 	echo(serialize($tab_ressource));*/
 
+
+
+	//pour les caractéristiques des unités
+	/*$tab_unites = [
+		"attaque" => 50,
+		"defense" => 30,
+		"resistance" => 35,
+		"vitesse" => 2,
+	];
+
+	echo(serialize($tab_unites));*/
+
+
+
+	//pour le calcul du cout de construction d'un batiment + son temps de construction
 	$lvl_max = 10;
 
 	//foinction qui va générer le tableau pour les 30 lvl
@@ -70,7 +89,7 @@
 
 		$pour_construire = "$eau, $electricite, $fer, $fuel";
 
-		echo("$temps +++++ $pour_construire<br>");
+		/*echo("$temps +++++ $pour_construire<br>");*/
 
 		/*\modules\bataille\app\controller\Bataille::getDb()->insert("ressource_construire", $pour_construire)
 			->insert("temps_construction", $temps)
