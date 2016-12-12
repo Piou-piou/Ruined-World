@@ -1,15 +1,29 @@
 {{include("popup/caserne/nav.html")}}
 
-{% if bataille.unites is iterable %}
-    {% for i in bataille.unites %}
-        <p>{{ i.recherche }} -- {{ i.niveau }}</p>
-		<ul>
-			<li>Attaque : {{ i.caracteristique.attaque }}</li>
-			<li>Défense : {{ i.caracteristique.defense }}</li>
-			<li>Résistance : {{ i.caracteristique.resistance }}</li>
-			<li>Vitesse de déplacement : {{ i.caracteristique.vitesse }}</li>
-		</ul>
-    {% endfor %}
-{% else %}
-    <p>Vous ne pouvez recruter aucune unité, merci d'en rechercher dans votre centre de recherche</p>
-{% endif %}
+<div class="caserne">
+	{% if bataille.unites is iterable %}
+		{% for i in bataille.unites %}
+			<h4>{{ i.recherche }} -- {{ i.niveau }}</h4>
+
+			<h5>Caractéristique de l'unité</h5>
+			<ul>
+				<li>Attaque : {{ i.caracteristique.attaque }}</li>
+				<li>Défense : {{ i.caracteristique.defense }}</li>
+				<li>Résistance : {{ i.caracteristique.resistance }}</li>
+				<li>Vitesse de déplacement : {{ i.caracteristique.vitesse }}</li>
+			</ul>
+
+			<h5>Coût pour recruter une unité</h5>
+			<ul>
+				<li>Eau : {{ i.cout_recruter.eau }}</li>
+				<li>Electricité : {{ i.cout_recruter.electricite }}</li>
+				<li>Fer : {{ i.cout_recruter.fer }}</li>
+				<li>fuel : {{ i.cout_recruter.fuel }}</li>
+			</ul>
+
+			<hr>
+		{% endfor %}
+	{% else %}
+		<p>Vous ne pouvez recruter aucune unité, merci d'en rechercher dans votre centre de recherche</p>
+	{% endif %}
+</div>

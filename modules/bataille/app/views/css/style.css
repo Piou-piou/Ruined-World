@@ -152,4 +152,9 @@ p.rouge {
   .popup .rouge {
     color: red; }
 
+/*-------------------------------------- CASERNE --------------------------------------*/
+.popup .caserne ul li {
+  display: inline-block;
+  font-weight: normal; }
+
 /*# sourceMappingURL=style.css.map */

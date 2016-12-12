@@ -42,6 +42,7 @@
 			if ((is_array($query)) && (count($query) == 1)) {
 				foreach ($query as $obj) {
 					$base_carac = unserialize($obj->caracteristique);
+					$ressource = unserialize($obj->pour_recruter);
 				}
 
 				$coef = $this->coef_unite*$niveau;
@@ -49,10 +50,13 @@
 				if ($niveau == 1) $coef = 1;
 
 				return [
-					"attaque" => round($base_carac["attaque"]*$coef),
-					"defense" => round($base_carac["defense"]*$coef),
-					"resistance" => round($base_carac["resistance"]*$coef),
-					"vitesse" => $base_carac["vitesse"]
+					"caracteristique" => [
+						"attaque" => round($base_carac["attaque"]*$coef),
+						"defense" => round($base_carac["defense"]*$coef),
+						"resistance" => round($base_carac["resistance"]*$coef),
+						"vitesse" => $base_carac["vitesse"]
+					],
+					"cout_recruter" => $ressource
 				];
 			}
 			else {
@@ -71,7 +75,7 @@
 
 			//recupérer les caractéristiques de l'unité en question
 			for ($i=0 ; $i<count($unites) ; $i++) {
-				$unites[$i]["caracteristique"] = $this->getCaracteristiqueUnite($unites[$i]["recherche"], $unites[$i]["niveau"], $type);
+				$unites[$i] += $this->getCaracteristiqueUnite($unites[$i]["recherche"], $unites[$i]["niveau"], $type);
 			}
 
 			//si pas d'unites encore recherchees on renvoit un array juste avec 0 dedans
