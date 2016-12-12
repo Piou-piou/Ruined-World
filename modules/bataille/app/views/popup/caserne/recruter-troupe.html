@@ -30,9 +30,14 @@
 				<li>temps de recrutement : {{ i.temps_recrutement }}</li>
 			</ul>
 
+
+			<input type="text" id="nombre-recruter" placeholder="nombre d'unite à recruter">
+			<a id="recruter">Recruter</a>
+
 			<hr>
 		{% endfor %}
 	{% else %}
 		<p>Vous ne pouvez recruter aucune unité, merci d'en rechercher dans votre centre de recherche</p>
 	{% endif %}
 </div>
+{{include("js/caserne.html")}}
