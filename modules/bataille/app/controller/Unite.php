@@ -3,6 +3,8 @@
 	namespace modules\bataille\app\controller;
 	
 	
+	use core\functions\DateHeure;
+
 	class Unite {
 		private $coef_unite;
 
@@ -43,9 +45,11 @@
 				foreach ($query as $obj) {
 					$base_carac = unserialize($obj->caracteristique);
 					$ressource = unserialize($obj->pour_recruter);
+					$temps_recrutement = DateHeure::Secondeenheure($obj->temps_recrutement);
 				}
 
 				$coef = $this->coef_unite*$niveau;
+				$coef_ameliorer = $this->coef_unite*($niveau+1);
 
 				if ($niveau == 1) $coef = 1;
 
@@ -56,7 +60,19 @@
 						"resistance" => round($base_carac["resistance"]*$coef),
 						"vitesse" => $base_carac["vitesse"]
 					],
-					"cout_recruter" => $ressource
+					"cout_recruter" => [
+						"eau" => $ressource["eau"]*$coef,
+						"electricite" => $ressource["electricite"]*$coef,
+						"fer" => $ressource["fer"]*$coef,
+						"fuel" => $ressource["fuel"]*$coef,
+					],
+					"cout_ameliorer" => [
+						"eau" => $ressource["eau"]*$coef_ameliorer,
+						"electricite" => $ressource["electricite"]*$coef_ameliorer,
+						"fer" => $ressource["fer"]*$coef_ameliorer,
+						"fuel" => $ressource["fuel"]*$coef_ameliorer,
+					],
+					"temps_recrutement" => $temps_recrutement
 				];
 			}
 			else {
