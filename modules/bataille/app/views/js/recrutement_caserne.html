@@ -1,0 +1,9 @@
+{% if i.date_fin_recrutement > 0 %}
+	<script>
+		$(function () {
+			$('#recrutement-{{ i.id_recrutement }}').countdown({
+				until: {{i.date_fin_recrutement}}
+			});
+		});
+	</script>
+{% endif %}

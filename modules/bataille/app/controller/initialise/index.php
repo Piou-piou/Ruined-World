@@ -10,4 +10,6 @@
 
 	$marche = new \modules\bataille\app\controller\Marche();
 
+	Bataille::getUnite()->getRecrutement();
+
 	$arr = Bataille::getValues();

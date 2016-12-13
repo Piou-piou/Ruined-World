@@ -110,9 +110,30 @@
 			$query = $dbc->select()->from("_bataille_recrutement")->where("ID_base", "=", Bataille::getIdBase())->get();
 
 			if ((is_array($query)) && (count($query) > 0)) {
-				foreach ($query as $obj) {
+				$today = Bataille::getToday();
 
+				foreach ($query as $obj) {
+					if ($obj->date_fin-$today <= 0) {
+
+					}
+					else {
+						$nom = $obj->nom;
+						$type = $obj->type;
+						$nombre = $obj->nombre;
+						$date_fin = $obj->date_fin;
+						$id_recrutement = $obj->ID_recrutement;
+					}
 				}
+
+				$recrutement[] = [
+					"nom" => $nom,
+					"type" => $type,
+					"nombre" => $nombre,
+					"date_fin_recrutement" => $date_fin-$today,
+					"id_recrutement" => $id_recrutement
+				];
+
+				Bataille::setValues(["recrutement" => $recrutement]);
 			}
 		}
 		//-------------------------- END GETTER ----------------------------------------------------------------------------//

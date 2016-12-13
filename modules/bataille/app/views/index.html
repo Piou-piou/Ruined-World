@@ -19,6 +19,14 @@
 		<div class="row">
 			<div class="small-12 side-bar">
 				<h3>Unités</h3>
+				{% for i in bataille.recrutement %}
+					<div>
+						<div id="recrutement-{{ i.id_recrutement }}"></div>
+						<p>{{ i.nom }} {{ i.type }} {{ i.nombre }}</p>
+
+						{{ include("js/recrutement_caserne.html") }}
+					</div>
+				{% endfor %}
 			</div>
 		</div>
 
