@@ -114,7 +114,7 @@
 
 				foreach ($query as $obj) {
 					if ($obj->date_fin-$today <= 0) {
-
+						$this->setTerminerRecrutement($obj->ID_recrutement);
 					}
 					else {
 						$nom = $obj->nom;
@@ -195,6 +195,36 @@
 					->set();
 
 				return true;
+			}
+		}
+
+		/**
+		 * @param $id_recrutement
+		 * fonction appellée dans celle qui récupère les recrutement uniquement quand celui ci est finit
+		 * fonction qui sert à terminer un rcrutement et ajouter les unités dans la base
+		 */
+		private function setTerminerRecrutement($id_recrutement) {
+			$dbc = App::getDb();
+
+			$query = $dbc->select()->from("_bataille_recrutement")->where("ID_recrutement", "=", $id_recrutement)->get();
+
+			if ((is_array($query)) && (count($query) == 1)) {
+				foreach ($query as $obj) {
+					$nombre = $obj->nombre;
+					$nom = $obj->nom;
+					$type = $obj->type;
+				}
+
+				if ($type == "unité infanterie") $table = "_bataille_unite";
+
+				for ($i=0 ; $i<$nombre ; $i++) {
+					$dbc->insert("nom_unite", $nom)
+						->insert("ID_base", Bataille::getIdBase())
+						->into($table)
+						->set();
+				}
+
+				$dbc->delete()->from("_bataille_recrutement")->where("ID_recrutement", "=", $id_recrutement)->del();
 			}
 		}
 		//-------------------------- END SETTER ----------------------------------------------------------------------------//    
