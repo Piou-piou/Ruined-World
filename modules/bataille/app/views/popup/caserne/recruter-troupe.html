@@ -3,37 +3,39 @@
 <div class="caserne">
 	{% if bataille.unites is iterable %}
 		{% for i in bataille.unites %}
-			<h4>{{ i.recherche }} -- {{ i.niveau }}</h4>
+			<div>
+				<h4>{{ i.recherche }} -- {{ i.niveau }}</h4>
 
-			<h5>Caractéristique de l'unité</h5>
-			<ul>
-				<li>Attaque : {{ i.caracteristique.attaque }}</li>
-				<li>Défense : {{ i.caracteristique.defense }}</li>
-				<li>Résistance : {{ i.caracteristique.resistance }}</li>
-				<li>Vitesse de déplacement : {{ i.caracteristique.vitesse }}</li>
-			</ul>
+				<h5>Caractéristique de l'unité</h5>
+				<ul>
+					<li>Attaque : {{ i.caracteristique.attaque }}</li>
+					<li>Défense : {{ i.caracteristique.defense }}</li>
+					<li>Résistance : {{ i.caracteristique.resistance }}</li>
+					<li>Vitesse de déplacement : {{ i.caracteristique.vitesse }}</li>
+				</ul>
 
-			<h5>Coût pour améliorer une unité</h5>
-			<ul>
-				<li>Eau : {{ i.cout_ameliorer.eau }}</li>
-				<li>Electricité : {{ i.cout_ameliorer.electricite }}</li>
-				<li>Fer : {{ i.cout_ameliorer.fer }}</li>
-				<li>fuel : {{ i.cout_ameliorer.fuel }}</li>
-			</ul>
+				<h5>Coût pour améliorer une unité</h5>
+				<ul>
+					<li>Eau : {{ i.cout_ameliorer.eau }}</li>
+					<li>Electricité : {{ i.cout_ameliorer.electricite }}</li>
+					<li>Fer : {{ i.cout_ameliorer.fer }}</li>
+					<li>fuel : {{ i.cout_ameliorer.fuel }}</li>
+				</ul>
 
-			<h5>Coût pour recruter une unité</h5>
-			<ul>
-				<li>Eau : {{ i.cout_recruter.eau }}</li>
-				<li>Electricité : {{ i.cout_recruter.electricite }}</li>
-				<li>Fer : {{ i.cout_recruter.fer }}</li>
-				<li>fuel : {{ i.cout_recruter.fuel }}</li>
-				<li>temps de recrutement : {{ i.temps_recrutement }}</li>
-			</ul>
+				<h5>Coût pour recruter une unité</h5>
+				<ul>
+					<li>Eau : {{ i.cout_recruter.eau }}</li>
+					<li>Electricité : {{ i.cout_recruter.electricite }}</li>
+					<li>Fer : {{ i.cout_recruter.fer }}</li>
+					<li>fuel : {{ i.cout_recruter.fuel }}</li>
+					<li>temps de recrutement : {{ i.temps_recrutement }}</li>
+				</ul>
 
-
-			<input type="text" id="nombre-recruter" placeholder="nombre d'unite à recruter">
-			<a id="recruter">Recruter</a>
-
+				<input type="hidden" class="type" value="{{ i.type }}">
+				<input type="hidden" class="nom" value="{{ i.recherche }}">
+				<input type="text" class="nombre-recruter" placeholder="nombre d'unité à recruter">
+				<a id="recruter">Recruter</a>
+			</div>
 			<hr>
 		{% endfor %}
 	{% else %}

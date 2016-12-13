@@ -3,7 +3,9 @@
 	namespace modules\bataille\app\controller;
 	
 	
+	use core\App;
 	use core\functions\DateHeure;
+	use core\HTML\flashmessage\FlashMessage;
 
 	class Unite {
 		private $coef_unite;
@@ -92,6 +94,7 @@
 			//recupérer les caractéristiques de l'unité en question
 			for ($i=0 ; $i<count($unites) ; $i++) {
 				$unites[$i] += $this->getCaracteristiqueUnite($unites[$i]["recherche"], $unites[$i]["niveau"], $type);
+				$unites[$i] += ["type" => $type];
 			}
 
 			//si pas d'unites encore recherchees on renvoit un array juste avec 0 dedans
@@ -101,5 +104,62 @@
 		
 		
 		//-------------------------- SETTER ----------------------------------------------------------------------------//
+		/**
+		 * @param $nom -> nom de l'unité à recruter
+		 * @param $type -> type de l'unité à recruter
+		 * @param $nombre -> nombre d'unité à recruter
+		 * fonction qui permet d'initialiser le début du recrutement d'unités
+		 */
+		public function setCommencerRecruter($nom, $type, $nombre) {
+			$dbc1 = Bataille::getDb();
+			$dbc = App::getDb();
+
+			$query = $dbc1->select("temps_recrutement")
+				->select("pour_recruter")
+				->from("unites")
+				->where("nom", "=", $nom, "AND")
+				->where("type", "=", $type, "")
+				->get();
+
+			if ((is_array($query)) && (count($query) == 1)) {
+				foreach ($query as $obj) {
+					$pour_recruter = unserialize($obj->pour_recruter);
+					$temps_recrutement = $obj->temps_recrutement;
+				}
+			}
+
+			//on test si on a assez de ressource pour recruter les unites
+			//on test si assez de ressources dans la base
+			$retirer_eau = $pour_recruter["eau"]*$nombre;
+			$retirer_electricite = $pour_recruter["electricite"]*$nombre;
+			$retirer_fer = $pour_recruter["fer"]*$nombre;
+			$retirer_fuel = $pour_recruter["fuel"]*$nombre;
+			$eau = Bataille::getTestAssezRessourceBase("eau", $retirer_eau);
+			$electricite = Bataille::getTestAssezRessourceBase("electricite", $retirer_electricite);
+			$fer = Bataille::getTestAssezRessourceBase("fer", $retirer_fer);
+			$fuel = Bataille::getTestAssezRessourceBase("fuel", $retirer_fuel);
+
+
+			if (($eau["class"] || $electricite["class"] || $fer["class"] || $fuel["class"]) == "rouge" ) {
+				FlashMessage::setFlash("Pas assez de ressources pour recruter autant d'unités");
+				return false;
+			}
+			else {
+				//on retire les ressources
+				Bataille::getRessource()->setUpdateRessource($retirer_eau, $retirer_electricite, $retirer_fer, $retirer_fuel, 0, "-");
+
+				$date_fin = Bataille::getToday()+($temps_recrutement*$nombre);
+
+				$dbc->insert("nom", $nom)
+					->insert("type", $type)
+					->insert("nombre", $nombre)
+					->insert("date_fin", $date_fin)
+					->insert("ID_base", Bataille::getIdBase())
+					->into("_bataille_recrutement")
+					->set();
+
+				return true;
+			}
+		}
 		//-------------------------- END SETTER ----------------------------------------------------------------------------//    
 	}
