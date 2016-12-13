@@ -12,7 +12,7 @@
 					url:"{{WEBROOT}}controller/modules/bataille/unites/recruter",
 					success: function(data){
 						if (data == "ok") {
-							/*location.reload();*/
+							location.reload();
 						}
 						else {
 							$("body").prepend(data);

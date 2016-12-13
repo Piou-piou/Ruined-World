@@ -117,21 +117,17 @@
 						$this->setTerminerRecrutement($obj->ID_recrutement);
 					}
 					else {
-						$nom = $obj->nom;
-						$type = $obj->type;
-						$nombre = $obj->nombre;
-						$date_fin = $obj->date_fin;
-						$id_recrutement = $obj->ID_recrutement;
+						$recrutement[] = [
+							"nom" => $obj->nom,
+							"type" => $obj->type,
+							"nombre" => $obj->nombre,
+							"date_fin_recrutement" => $obj->date_fin-$today,
+							"id_recrutement" => $obj->ID_recrutement
+						];
 					}
 				}
 
-				$recrutement[] = [
-					"nom" => $nom,
-					"type" => $type,
-					"nombre" => $nombre,
-					"date_fin_recrutement" => $date_fin-$today,
-					"id_recrutement" => $id_recrutement
-				];
+
 
 				Bataille::setValues(["recrutement" => $recrutement]);
 			}
