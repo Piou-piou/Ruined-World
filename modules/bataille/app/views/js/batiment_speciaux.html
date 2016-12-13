@@ -8,8 +8,6 @@ $(document).ready(function() {
 		var nom_batiment_sql = $("nav.batiment-speciaux input#nom_batiment_sql").val();
 		var emplacement = $("nav.batiment-speciaux input#emplacement").val();
 
-		console.log(nom_batiment_sql+"gf")
-
 		$.ajax({
 			type:"POST",
 			data: "nom_batiment="+nom_batiment+"&emplacement="+emplacement+"&nom_batiment_sql="+nom_batiment_sql,
