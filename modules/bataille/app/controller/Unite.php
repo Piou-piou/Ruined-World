@@ -100,6 +100,21 @@
 			//si pas d'unites encore recherchees on renvoit un array juste avec 0 dedans
 			Bataille::setValues(["unites" => $unites]);
 		}
+
+		/**
+		 * fonction qui renvoi les unité  en cours de recrutement
+		 */
+		public function getRecrutement() {
+			$dbc = App::getDb();
+
+			$query = $dbc->select()->from("_bataille_recrutement")->where("ID_base", "=", Bataille::getIdBase())->get();
+
+			if ((is_array($query)) && (count($query) > 0)) {
+				foreach ($query as $obj) {
+
+				}
+			}
+		}
 		//-------------------------- END GETTER ----------------------------------------------------------------------------//
 		
 		
