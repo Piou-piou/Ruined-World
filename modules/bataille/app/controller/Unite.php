@@ -127,9 +127,52 @@
 					}
 				}
 
-
-
 				Bataille::setValues(["recrutement" => $recrutement]);
+			}
+		}
+
+		/**
+		 * @param null $id_base
+		 * fonction qui récupère toutes les unités qui sont dans la base
+		 */
+		public function getAllUnites($id_base = null) {
+
+			if ($id_base == null) $id_base = Bataille::getIdBase();
+
+			$unite_infanterie = $this->getAllUniteType("unité infanterie", $id_base);
+			$unite_vehicule = $this->getAllUniteType("unité véhicule", $id_base);
+
+			$unites = array_merge($unite_vehicule, $unite_infanterie);
+
+			Bataille::setValues(["unites" => $unites]);
+		}
+
+		/**
+		 * @param $type
+		 * @param $id_base
+		 * @return mixed
+		 * fonction qui récupère toutes les unités en fonction d'un type précis
+		 */
+		public function getAllUniteType($type, $id_base) {
+			$dbc = App::getDb();
+
+			$query = $dbc->select()->from("_bataille_unite")
+				->where("type", "=", $type, "AND")
+				->where("ID_base", "=", $id_base)
+				->orderBy("type")
+				->get();
+
+			if ((is_array($query)) && (count($query) > 0)) {
+				$count = 1;
+				foreach ($query as $obj) {
+					$unite[] = $unites[$type][$obj->nom_unite] = [
+						"nom" => $obj->nom_unite,
+						"type" => $obj->type,
+						"nombre" => $count++
+					];
+				}
+
+				return $unites;
 			}
 		}
 		//-------------------------- END GETTER ----------------------------------------------------------------------------//
@@ -214,7 +257,8 @@
 				if ($type == "unité infanterie") $table = "_bataille_unite";
 
 				for ($i=0 ; $i<$nombre ; $i++) {
-					$dbc->insert("nom_unite", $nom)
+					$dbc->insert("nom_unite", $type)
+						->insert("type", $nom)
 						->insert("ID_base", Bataille::getIdBase())
 						->into($table)
 						->set();

@@ -12,4 +12,6 @@
 
 	Bataille::getUnite()->getRecrutement();
 
+	Bataille::getUnite()->getAllUnites();
+
 	$arr = Bataille::getValues();
