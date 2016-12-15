@@ -139,8 +139,8 @@
 
 			if ($id_base == null) $id_base = Bataille::getIdBase();
 
-			$unite_infanterie = $this->getAllUniteType("unité infanterie", $id_base);
-			$unite_vehicule = $this->getAllUniteType("unité véhicule", $id_base);
+			$unite_infanterie = $this->getAllUniteType("infanterie", $id_base);
+			$unite_vehicule = $this->getAllUniteType("véhicule", $id_base);
 
 			$unites = array_merge($unite_vehicule, $unite_infanterie);
 
@@ -156,20 +156,23 @@
 		public function getAllUniteType($type, $id_base) {
 			$dbc = App::getDb();
 
-			$query = $dbc->select()->from("_bataille_unite")
+			$query = $dbc->select("nom_unite")->from("_bataille_unite")
 				->where("type", "=", $type, "AND")
 				->where("ID_base", "=", $id_base)
-				->orderBy("type")
 				->get();
 
 			if ((is_array($query)) && (count($query) > 0)) {
 				$count = 1;
+				$nom = "";
 				foreach ($query as $obj) {
+					if ($nom != $obj->nom_unite) {
+						$count = 1;
+					}
 					$unite[] = $unites[$type][$obj->nom_unite] = [
 						"nom" => $obj->nom_unite,
-						"type" => $obj->type,
 						"nombre" => $count++
 					];
+					$nom = $obj->nom_unite;
 				}
 
 				return $unites;
