@@ -156,23 +156,24 @@
 		public function getAllUniteType($type, $id_base) {
 			$dbc = App::getDb();
 
-			$query = $dbc->select("nom_unite")->from("_bataille_unite")
+			$query = $dbc->select("nom")->from("_bataille_unite")
 				->where("type", "=", $type, "AND")
-				->where("ID_base", "=", $id_base)
+				->where("ID_base", "=", $id_base, "AND")
+				->where("(ID_groupe IS NULL OR ID_groupe = 0)", "", "", "", true)
 				->get();
 
 			if ((is_array($query)) && (count($query) > 0)) {
 				$count = 1;
 				$nom = "";
 				foreach ($query as $obj) {
-					if ($nom != $obj->nom_unite) {
+					if ($nom != $obj->nom) {
 						$count = 1;
 					}
-					$unite[] = $unites[$type][$obj->nom_unite] = [
-						"nom" => $obj->nom_unite,
+					$unite[] = $unites[$type][$obj->nom] = [
+						"nom" => $obj->nom,
 						"nombre" => $count++
 					];
-					$nom = $obj->nom_unite;
+					$nom = $obj->nom;
 				}
 
 				return $unites;
@@ -260,7 +261,7 @@
 				if ($type == "unité infanterie") $table = "_bataille_unite";
 
 				for ($i=0 ; $i<$nombre ; $i++) {
-					$dbc->insert("nom_unite", $type)
+					$dbc->insert("nom", $type)
 						->insert("type", $nom)
 						->insert("ID_base", Bataille::getIdBase())
 						->into($table)
