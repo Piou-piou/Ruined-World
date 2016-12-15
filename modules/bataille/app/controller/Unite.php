@@ -159,7 +159,6 @@
 
 			for ($i=0 ; $i<$count_type ; $i++) {
 				$type_unite = $this->getAllUniteType($types[$i], $id_base);
-				//$unite_vehicule = $this->getAllUniteType("véhicule", $id_base);
 
 				$unites = array_merge($unites, $type_unite);
 			}
