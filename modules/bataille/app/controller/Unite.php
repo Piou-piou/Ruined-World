@@ -83,6 +83,20 @@
 		}
 
 		/**
+		 * @return array
+		 * fonction qui renvoit tous les types d'unités qu'il est possible de recruter
+		 */
+		private function getAllType() {
+			$dbc1 = Bataille::getDb();
+
+			$query = $dbc1->select("type_unite")->from("configuration")->where("ID_configuration", "=", 1)->get();
+
+			if ((is_array($query)) && (count($query) == 1)) {
+				foreach ($query as $obj) return explode(",", $obj->type_unite);
+			}
+		}
+
+		/**
 		 * @param $type
 		 * fonction qui permet de récupérer les unités qu'i est possible de recruter en fonction
 		 * du type (batiment sur lequel on a cliqué)
@@ -139,10 +153,16 @@
 
 			if ($id_base == null) $id_base = Bataille::getIdBase();
 
-			$unite_infanterie = $this->getAllUniteType("infanterie", $id_base);
-			$unite_vehicule = $this->getAllUniteType("véhicule", $id_base);
+			$types = $this->getAllType();
+			$count_type = count($types);
+			$unites = [];
 
-			$unites = array_merge($unite_vehicule, $unite_infanterie);
+			for ($i=0 ; $i<$count_type ; $i++) {
+				$type_unite = $this->getAllUniteType($types[$i], $id_base);
+				//$unite_vehicule = $this->getAllUniteType("véhicule", $id_base);
+
+				$unites = array_merge($unites, $type_unite);
+			}
 
 			Bataille::setValues(["unites" => $unites]);
 		}
