@@ -111,7 +111,6 @@
 				$unites[$i] += ["type" => $type];
 			}
 
-			//si pas d'unites encore recherchees on renvoit un array juste avec 0 dedans
 			Bataille::setValues(["unites" => $unites]);
 		}
 
@@ -172,7 +171,7 @@
 		 * @return mixed
 		 * fonction qui récupère toutes les unités en fonction d'un type précis
 		 */
-		public function getAllUniteType($type, $id_base) {
+		private function getAllUniteType($type, $id_base) {
 			$dbc = App::getDb();
 
 			$query = $dbc->select("nom")->from("_bataille_unite")
