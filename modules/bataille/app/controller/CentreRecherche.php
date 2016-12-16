@@ -42,6 +42,17 @@
 					];
 				}
 			}
+
+			$count = cout($all_recherche);
+
+			for ($i=0 ; $i<$count ; $i++) {
+				if ((in_array($all_recherche[$i], $recherche_base))) {
+					echo("améliorer<br>");
+				}
+				else {
+					echo("rechercher<br>");
+				}
+			}
 		}
 		//-------------------------- END BUILDER ----------------------------------------------------------------------------//
 		
