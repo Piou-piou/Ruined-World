@@ -23,7 +23,23 @@
 
 			if ((is_array($query)) && (count($query) > 0)) {
 				foreach ($query as $obj) {
+					$recherche_base[] = [
+						"recherche" => $obj->recherche,
+						"niveau" => $obj->niveau,
+						"type" => $obj->type
+					];
+				}
+			}
 
+			$query = $dbc->select()->from("recherche")->where("niveau", ">=", Bataille::getBatiment()->getNiveauBatiment("centre_recherche"))->get();
+
+			if ((is_array($query)) && (count($query) > 0)) {
+				foreach ($query as $obj) {
+					$all_recherche[] = [
+						"recherche" => $obj->recherche,
+						"type" => $obj->type,
+						"cout" => unserialize($obj->cout)
+					];
 				}
 			}
 		}
