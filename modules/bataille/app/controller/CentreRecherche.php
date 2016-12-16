@@ -17,7 +17,15 @@
 		
 		//-------------------------- BUILDER ----------------------------------------------------------------------------//
 		public function __construct() {
-			
+			$dbc = App::getDb();
+
+			$query = $dbc->select()->from("_bataille_centre_recherche")->where("ID_base", "=", Bataille::getIdBase())->get();
+
+			if ((is_array($query)) && (count($query) > 0)) {
+				foreach ($query as $obj) {
+
+				}
+			}
 		}
 		//-------------------------- END BUILDER ----------------------------------------------------------------------------//
 		
