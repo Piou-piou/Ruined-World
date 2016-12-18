@@ -13,8 +13,8 @@
 		"popup/ambassade/index",
 		"popup/caserne/index",
 		"popup/caserne/recruter-troupe",
-		"popup/centre_de_recherche/index",
-		"popup/centre_de_recherche/recherche",
+		"popup/centre_recherche/index",
+		"popup/centre_recherche/recherche",
 		"login"
 	];
 	
@@ -82,10 +82,10 @@
 		}
 
 		//------------------------------- POUR LA POPUP POUR LE CENTRE DE RECHERCHE ----------------------------------//
-		if ($this->page == "popup/centre_de_recherche/index") {
+		if ($this->page == "popup/centre_recherche/index") {
 			$this->controller = "bataille/app/controller/initialise/popup/unbatiment.php";
 		}
-		if ($this->page == "popup/centre_de_recherche/recherche") {
+		if ($this->page == "popup/centre_recherche/recherche") {
 			$this->controller = "bataille/app/controller/initialise/centre_recherche/get_recherche.php";
 		}
 
