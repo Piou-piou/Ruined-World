@@ -1,2 +1,2 @@
 <?php
-	echo("gfd");
+	$centre_recherche = new \modules\bataille\app\controller\CentreRecherche();

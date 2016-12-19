@@ -18,6 +18,7 @@
 		//-------------------------- BUILDER ----------------------------------------------------------------------------//
 		public function __construct() {
 			$dbc = App::getDb();
+			$dbc1 = Bataille::getDb();
 
 			$query = $dbc->select()->from("_bataille_centre_recherche")->where("ID_base", "=", Bataille::getIdBase())->get();
 
@@ -31,7 +32,9 @@
 				}
 			}
 
-			$query = $dbc->select()->from("recherche")->where("niveau", ">=", Bataille::getBatiment()->getNiveauBatiment("centre_recherche"))->get();
+			$query = $dbc1->select()->from("recherche")
+				->where("niveau_centre", "<=", Bataille::getBatiment()->getNiveauBatiment("centre_recherche"))
+				->get();
 
 			if ((is_array($query)) && (count($query) > 0)) {
 				foreach ($query as $obj) {
@@ -43,10 +46,10 @@
 				}
 			}
 
-			$count = cout($all_recherche);
+			$count = count($all_recherche);
 
 			for ($i=0 ; $i<$count ; $i++) {
-				if ((in_array($all_recherche[$i], $recherche_base))) {
+				if ((in_array($all_recherche[$i]['recherche'], $recherche_base[$i]))) {
 					echo("améliorer<br>");
 				}
 				else {

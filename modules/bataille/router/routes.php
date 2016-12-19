@@ -14,7 +14,7 @@
 		"popup/caserne/index",
 		"popup/caserne/recruter-troupe",
 		"popup/centre_recherche/index",
-		"popup/centre_recherche/recherche",
+		"popup/centre_recherche/liste-recherche",
 		"login"
 	];
 	
@@ -85,10 +85,9 @@
 		if ($this->page == "popup/centre_recherche/index") {
 			$this->controller = "bataille/app/controller/initialise/popup/unbatiment.php";
 		}
-		if ($this->page == "popup/centre_recherche/recherche") {
-			$this->controller = "bataille/app/controller/initialise/centre_recherche/get_recherche.php";
+		if ($this->page == "popup/centre_recherche/liste-recherche") {
+			$this->controller = "bataille/app/controller/centre_recherche/get_recherche.php";
 		}
-
 	}
 	else {
 		\core\HTML\flashmessage\FlashMessage::setFlash("L'accès à ce module n'est pas configurer ou ne fais pas partie de votre offre, contactez votre administrateur pour résoudre ce problème", "info");
