@@ -10,7 +10,6 @@
 		
 		//-------------------------- BUILDER ----------------------------------------------------------------------------//
 		public function __construct() {
-			$dbc = App::getDb();
 			$dbc1 = Bataille::getDb();
 
 			$query = $dbc1->select("coef_centre_recherche")->from("configuration")->where("ID_configuration", "=", 1)->get();
@@ -19,60 +18,62 @@
 				foreach ($query as $obj) $this->coef_centre = $obj->coef_centre_recherche;
 			}
 
-			$query = $dbc->select()->from("_bataille_centre_recherche")->where("ID_base", "=", Bataille::getIdBase())->get();
-
-			if ((is_array($query)) && (count($query) > 0)) {
-				foreach ($query as $obj) {
-					$recherche_base[] = [
-						"recherche" => $obj->recherche,
-						"niveau" => $obj->niveau,
-						"type" => $obj->type
-					];
-				}
-			}
-
 			$query = $dbc1->select()->from("recherche")
 				->where("niveau_centre", "<=", Bataille::getBatiment()->getNiveauBatiment("centre_recherche"))
 				->get();
 
 			if ((is_array($query)) && (count($query) > 0)) {
 				foreach ($query as $obj) {
-					$all_recherche[] = [
+					$niveau = $this->getNiveauRecherche($obj->recherche, $obj->type);
+
+					$cout = unserialize($obj->cout);
+
+					//si niveau == 0 ca veut dire que la recherche n'a pas encore été effectuée dans la base
+					if ($niveau > 0) {
+						$cout = [
+							"eau" => $cout["eau"] * ($this->coef_centre * $niveau),
+							"electricite" => $cout["electricite"] * ($this->coef_centre * $niveau),
+							"fer" => $cout["fer"] * ($this->coef_centre * $niveau),
+							"fuel" => $cout["fuel"] * ($this->coef_centre * $niveau)
+						];
+					}
+
+					$recherhce[] = [
 						"recherche" => $obj->recherche,
 						"type" => $obj->type,
-						"cout" => unserialize($obj->cout)
+						"niveau" => $niveau,
+						"cout" => $cout
 					];
 				}
 			}
 
-			$count = count($all_recherche);
+			Bataille::setValues(["centre_recherche" => $recherhce]);
+		}
 
-			for ($i=0 ; $i<$count ; $i++) {
-				if ((in_array($all_recherche[$i]["recherche"], $recherche_base[$i]))) {
-					$niveau = $recherche_base[$i]["niveau"];
-					if ($niveau == 1) $this->coef_centre = 1;
+		/**
+		 * @param $recherche
+		 * @param $type
+		 * @return int
+		 * fonction qui va cehrcher le niveau de la recherche actuelle
+		 * renvoi 0 si elle n'a pas été trouvée
+		 */
+		private function getNiveauRecherche($recherche, $type) {
+			$dbc = App::getDb();
 
-					$all_recherche[$i]["cout"] = [
-						"eau" => $all_recherche[$i]["cout"]["eau"]*($this->coef_centre*$niveau),
-						"electricite" => $all_recherche[$i]["cout"]["electricite"]*($this->coef_centre*$niveau),
-						"fer" => $all_recherche[$i]["cout"]["fer"]*($this->coef_centre*$niveau),
-						"fuel" => $all_recherche[$i]["cout"]["fuel"]*($this->coef_centre*$niveau)
-					];
-					$ameliorer = true;
+			$query = $dbc->select("niveau")
+				->from("_bataille_centre_recherche")
+				->where("ID_base", "=", Bataille::getIdBase(), "AND")
+				->where("recherche", "=", $recherche, "AND")
+				->where("type", "=", $type)
+				->get();
+
+			if ((is_array($query)) && (count($query) > 0)) {
+				foreach ($query as $obj) {
+					return $obj->niveau;
 				}
-				else {
-					$ameliorer = false;
-				}
-
-				$centre_recherche[] = [
-					"recherche" => $all_recherche[$i]["recherche"],
-					"type" => $all_recherche[$i]["type"],
-					"cout" => $all_recherche[$i]["cout"],
-					"ameliorer" => $ameliorer
-				];
 			}
 
-			Bataille::setValues(["centre_recherche" => $centre_recherche]);
+			return 0;
 		}
 		//-------------------------- END BUILDER ----------------------------------------------------------------------------//
 		
