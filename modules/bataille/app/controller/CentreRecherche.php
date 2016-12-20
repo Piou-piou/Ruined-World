@@ -1,11 +1,4 @@
 <?php
-	/**
-	 * Created by PhpStorm.
-	 * User: anthony
-	 * Date: 08/12/2016
-	 * Time: 20:44
-	 */
-	
 	namespace modules\bataille\app\controller;
 	
 	
