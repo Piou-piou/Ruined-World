@@ -1,1 +1,18 @@
 {{include("popup/centre_recherche/nav.html")}}
+
+{% for i in bataille.centre_recherche %}
+	<h3>{{ i.recherche }} {{ i.type }}</h3>
+	<ul>
+		<li>Eau : {{ i.cout.electricite }}</li>
+		<li>Electricité : {{ i.cout.electricite }}</li>
+		<li>Fer : {{ i.cout.fer }}</li>
+		<li>Fuel : {{ i.cout.fuel }}</li>
+		<li>Niveau : {{ i.niveau }}</li>
+	</ul>
+
+	{% if i.niveau == 0 %}
+		<a href="">Rechercher</a>
+	{% else %}
+		<a href="">Améliorer</a>
+	{% endif %}
+{% endfor %}
