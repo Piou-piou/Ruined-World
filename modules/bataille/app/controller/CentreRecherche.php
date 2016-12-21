@@ -27,6 +27,7 @@
 					$niveau = $this->getNiveauRecherche($obj->recherche, $obj->type);
 
 					$cout = unserialize($obj->cout);
+					$temps_recherche = $obj->temps_recherche;
 
 					//si niveau == 0 ca veut dire que la recherche n'a pas encore été effectuée dans la base
 					if ($niveau > 0) {
@@ -36,13 +37,16 @@
 							"fer" => $cout["fer"] * ($this->coef_centre * $niveau),
 							"fuel" => $cout["fuel"] * ($this->coef_centre * $niveau)
 						];
+
+						$temps_recherche = $temps_recherche * ($this->coef_centre * $niveau);
 					}
 
 					$recherhce[] = [
 						"recherche" => $obj->recherche,
 						"type" => $obj->type,
 						"niveau" => $niveau,
-						"cout" => $cout
+						"cout" => $cout,
+						"temps_recherche" => $temps_recherche
 					];
 				}
 			}
