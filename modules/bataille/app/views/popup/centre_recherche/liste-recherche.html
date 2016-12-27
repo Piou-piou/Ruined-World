@@ -10,6 +10,17 @@
 		<li>Niveau : {{ i.niveau }}</li>
 	</ul>
 
+	<h6>Caractéristiques</h6>
+	<ul>
+		{% for key,j in i.special.caracteristique %}
+			{% if i.niveau > 0 %}
+				<li>{{ key }} :  {{ j }} (+{{ ((j*(i.coef_amelioration))-j)|round }})</li>
+			{% else %}
+				<li>{{ key }} :  {{ j }}</li>
+			{% endif %}
+		{% endfor %}
+	</ul>
+
 	{% if i.niveau == 0 %}
 		<a href="">Rechercher</a>
 	{% else %}

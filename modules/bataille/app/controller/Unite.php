@@ -34,7 +34,7 @@
 		 * @return array
 		 * récupère les caractéristiques de l'unité en fonction de son niveau
 		 */
-		private function getCaracteristiqueUnite($unite, $niveau, $type) {
+		public function getCaracteristiqueUnite($unite, $niveau, $type) {
 			$dbc1 = Bataille::getDb();
 
 			$query = $dbc1->select()

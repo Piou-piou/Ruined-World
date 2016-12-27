@@ -25,6 +25,7 @@
 			if ((is_array($query)) && (count($query) > 0)) {
 				foreach ($query as $obj) {
 					$niveau = $this->getNiveauRecherche($obj->recherche, $obj->type);
+					$niveau_recherche = $niveau;
 
 					$cout = unserialize($obj->cout);
 					$temps_recherche = $obj->temps_recherche;
@@ -40,13 +41,18 @@
 
 						$temps_recherche = $temps_recherche * ($this->coef_centre * $niveau);
 					}
+					else {
+						$niveau_recherche = 1;
+					}
 
 					$recherhce[] = [
 						"recherche" => $obj->recherche,
 						"type" => $obj->type,
 						"niveau" => $niveau,
 						"cout" => $cout,
-						"temps_recherche" => $temps_recherche
+						"temps_recherche" => $temps_recherche,
+						"special" => Bataille::getUnite()->getCaracteristiqueUnite($obj->recherche, $niveau_recherche, $obj->type),
+						"coef_amelioration" => Bataille::getParam("coef_niveau_unite")
 					];
 				}
 			}
