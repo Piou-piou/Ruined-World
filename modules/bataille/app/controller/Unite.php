@@ -47,7 +47,7 @@
 				foreach ($query as $obj) {
 					$base_carac = unserialize($obj->caracteristique);
 					$ressource = unserialize($obj->pour_recruter);
-					$temps_recrutement = DateHeure::Secondeenheure($obj->temps_recrutement);
+					$temps_recrutement = DateHeure::Secondeenheure($obj->temps_recrutement-($obj->temps_recrutement*Bataille::getBatiment()->getNiveauBatiment("caserne")/100));
 				}
 
 				$coef = $this->coef_unite*$niveau;
@@ -221,7 +221,7 @@
 			if ((is_array($query)) && (count($query) == 1)) {
 				foreach ($query as $obj) {
 					$pour_recruter = unserialize($obj->pour_recruter);
-					$temps_recrutement = $obj->temps_recrutement;
+					$temps_recrutement = $obj->temps_recrutement-($obj->temps_recrutement*Bataille::getBatiment()->getNiveauBatiment("caserne")/100);
 				}
 			}
 
