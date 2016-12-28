@@ -3,6 +3,7 @@
 	
 	
 	use core\App;
+	use core\functions\DateHeure;
 
 	class CentreRecherche {
 		private $coef_centre;
@@ -50,7 +51,7 @@
 						"type" => $obj->type,
 						"niveau" => $niveau,
 						"cout" => $cout,
-						"temps_recherche" => $temps_recherche,
+						"temps_recherche" => DateHeure::Secondeenheure($temps_recherche),
 						"special" => Bataille::getUnite()->getCaracteristiqueUnite($obj->recherche, $niveau_recherche, $obj->type),
 						"coef_amelioration" => Bataille::getParam("coef_niveau_unite")
 					];
