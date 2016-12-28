@@ -276,13 +276,11 @@
 					$type = $obj->type;
 				}
 
-				if ($type == "unité infanterie") $table = "_bataille_unite";
-
 				for ($i=0 ; $i<$nombre ; $i++) {
 					$dbc->insert("nom", $type)
 						->insert("type", $nom)
 						->insert("ID_base", Bataille::getIdBase())
-						->into($table)
+						->into("_bataille_unite")
 						->set();
 				}
 
