@@ -59,4 +59,11 @@
         <phrase_suivant>Marchand employés au niveau suivant : </phrase_suivant>
         <champ>ID_marche</champ>
     </marche>
+
+    <caserne>
+        <phrase>Réduction du temps de recrutement des unités : </phrase>
+        <phrase_suivant>Réduction du temps de recrutement des unités au niveau suivant : </phrase_suivant>
+        <champ>ID_caserne</champ>
+        <complement>%</complement>
+    </caserne>
 </bataille>

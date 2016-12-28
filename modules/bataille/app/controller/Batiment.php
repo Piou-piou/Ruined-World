@@ -458,7 +458,7 @@
 
 					if ((is_array($query)) && (count($query) > 0)){
 						foreach ($query as $obj) {
-							$this->info_batiment = $xml->$nom_batiment_sql->phrase.$obj->$champ;
+							$this->info_batiment = $xml->$nom_batiment_sql->phrase.$obj->$champ.$xml->$nom_batiment_sql->complement;
 						}
 					}
 
@@ -470,7 +470,7 @@
 
 					if ((is_array($query)) && (count($query) > 0)){
 						foreach ($query as $obj) {
-							$this->info_batiment_next = $xml->$nom_batiment_sql->phrase_suivant.$obj->$champ;
+							$this->info_batiment_next = $xml->$nom_batiment_sql->phrase_suivant.$obj->$champ.$xml->$nom_batiment_sql->complement;
 						}
 					}
 				}
