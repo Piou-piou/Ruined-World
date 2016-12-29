@@ -1,0 +1,26 @@
+<script>
+	$(document).ready(function() {
+		$(".centre_recherche a.rechercher").click(function() {
+			var recherche = $(this).parent().find(".recherche").val();
+			var type = $(this).parent().find(".type").val();
+
+			if (recherche != "") {console.log("dg");
+				$.ajax({
+					type:"POST",
+					data: "recherche="+recherche+"&type="+type,
+					url:"{{WEBROOT}}controller/modules/bataille/centre_recherche/rechercher",
+					success: function(data){
+						if (data == "ok") {
+							location.reload();
+						}
+						else {
+							$("body").prepend(data);
+						}
+					}, error: function(){
+
+					}
+				});
+			}
+		});
+	});
+</script>

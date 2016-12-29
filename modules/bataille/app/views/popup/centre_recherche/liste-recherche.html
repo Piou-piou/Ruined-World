@@ -1,30 +1,37 @@
 {{include("popup/centre_recherche/nav.html")}}
 
-{% for i in bataille.centre_recherche %}
-	<h3>{{ i.recherche }} {{ i.type }}</h3>
-	<ul>
-		<li>Eau : {{ i.cout.electricite }}</li>
-		<li>Electricité : {{ i.cout.electricite }}</li>
-		<li>Fer : {{ i.cout.fer }}</li>
-		<li>Fuel : {{ i.cout.fuel }}</li>
-		<li>Niveau : {{ i.niveau }}</li>
-		<li>Temps de recherche : {{ i.temps_recherche }}</li>
-	</ul>
+<div class="centre_recherche">
+	{% for i in bataille.centre_recherche %}
+		<h3>{{ i.recherche }} {{ i.type }}</h3>
+		<ul>
+			<li>Eau : {{ i.cout.electricite }}</li>
+			<li>Electricité : {{ i.cout.electricite }}</li>
+			<li>Fer : {{ i.cout.fer }}</li>
+			<li>Fuel : {{ i.cout.fuel }}</li>
+			<li>Niveau : {{ i.niveau }}</li>
+			<li>Temps de recherche : {{ i.temps_recherche }}</li>
+		</ul>
 
-	<h6>Caractéristiques</h6>
-	<ul>
-		{% for key,j in i.special.caracteristique %}
-			{% if i.niveau > 0 %}
-				<li>{{ key }} :  {{ j }} (+{{ ((j*(i.coef_amelioration))-j)|round }})</li>
-			{% else %}
-				<li>{{ key }} :  {{ j }}</li>
-			{% endif %}
-		{% endfor %}
-	</ul>
+		<h6>Caractéristiques</h6>
+		<ul>
+			{% for key,j in i.special.caracteristique %}
+				{% if i.niveau > 0 %}
+					<li>{{ key }} :  {{ j }} (+{{ ((j*(i.coef_amelioration))-j)|round }})</li>
+				{% else %}
+					<li>{{ key }} :  {{ j }}</li>
+				{% endif %}
+			{% endfor %}
+		</ul>
 
-	{% if i.niveau == 0 %}
-		<a href="">Rechercher</a>
-	{% else %}
-		<a href="">Améliorer</a>
-	{% endif %}
-{% endfor %}
+		<input type="hidden" class="recherche" value="{{ i.recherche }}">
+		<input type="hidden" class="type" value="{{ i.type }}">
+
+		{% if i.niveau == 0 %}
+			<a class="rechercher">Rechercher</a>
+		{% else %}
+			<a class="rechercher">Améliorer</a>
+		{% endif %}
+	{% endfor %}
+</div>
+
+{{include("js/centre_recherche.html")}}
