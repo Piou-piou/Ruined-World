@@ -178,6 +178,7 @@
 				->where("type", "=", $type, "AND")
 				->where("ID_base", "=", $id_base, "AND")
 				->where("(ID_groupe IS NULL OR ID_groupe = 0)", "", "", "", true)
+				->orderBy("nom")
 				->get();
 
 			if ((is_array($query)) && (count($query) > 0)) {
