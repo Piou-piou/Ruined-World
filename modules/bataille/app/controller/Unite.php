@@ -277,8 +277,8 @@
 				}
 
 				for ($i=0 ; $i<$nombre ; $i++) {
-					$dbc->insert("nom", $type)
-						->insert("type", $nom)
+					$dbc->insert("nom", $nom)
+						->insert("type", $type)
 						->insert("ID_base", Bataille::getIdBase())
 						->into("_bataille_unite")
 						->set();
