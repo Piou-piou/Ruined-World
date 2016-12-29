@@ -29,7 +29,7 @@
 					$niveau_recherche = $niveau;
 
 					$cout = unserialize($obj->cout);
-					$temps_recherche = $obj->temps_recherche;
+					$temps_recherche = round($obj->temps_recherche-($obj->temps_recherche*Bataille::getBatiment()->getNiveauBatiment("centre_recherche")/100));
 
 					//si niveau == 0 ca veut dire que la recherche n'a pas encore été effectuée dans la base
 					if ($niveau > 0) {
@@ -40,7 +40,8 @@
 							"fuel" => $cout["fuel"] * ($this->coef_centre * $niveau)
 						];
 
-						$temps_recherche = $temps_recherche * ($this->coef_centre * $niveau);
+						$temps_recherche = round(($temps_recherche * ($this->coef_centre * $niveau))-($obj->temps_recherche*Bataille::getBatiment()->getNiveauBatiment("centre_recherche")/100));
+
 					}
 					else {
 						$niveau_recherche = 1;
