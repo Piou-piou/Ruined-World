@@ -4,7 +4,7 @@
 			var recherche = $(this).parent().find(".recherche").val();
 			var type = $(this).parent().find(".type").val();
 
-			if (recherche != "") {console.log("dg");
+			if (recherche != "") {
 				$.ajax({
 					type:"POST",
 					data: "recherche="+recherche+"&type="+type,
