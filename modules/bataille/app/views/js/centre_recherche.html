@@ -24,3 +24,13 @@
 		});
 	});
 </script>
+
+{% if bataille.recherche is iterable %}
+	<script>
+		$(function () {
+			$('#decompte-recherche').countdown({
+				until: {{bataille.recherche.date_fin_recherche}}
+			});
+		});
+	</script>
+{% endif %}

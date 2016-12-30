@@ -1,39 +1,44 @@
 {{include("popup/centre_recherche/nav.html")}}
 
+{% if bataille.recherche is iterable %}
+	<h3>{{ bataille.recherche.recherche }} {{ bataille.recherche.type }}</h3>
 
-{% for i in bataille.centre_recherche %}
-	<div class="centre_recherche">
-		<h3>{{ i.recherche }} {{ i.type }}</h3>
-		<ul>
-			<li>Eau : {{ i.cout.electricite }}</li>
-			<li>Electricité : {{ i.cout.electricite }}</li>
-			<li>Fer : {{ i.cout.fer }}</li>
-			<li>Fuel : {{ i.cout.fuel }}</li>
-			<li>Niveau : {{ i.niveau }}</li>
-			<li>Temps de recherche : {{ i.temps_recherche }}</li>
-		</ul>
+	<script src="{{MODULEWEBROOT}}bataille/app/views/js/jquery.plugin.min.js"></script>
+	<script src="{{MODULEWEBROOT}}bataille/app/views/js/jquery.countdown.js"></script>
+	<div id="decompte-recherche"></div>
+{% else %}
+	{% for i in bataille.centre_recherche %}
+		<div class="centre_recherche">
+			<h3>{{ i.recherche }} {{ i.type }}</h3>
+			<ul>
+				<li>Eau : {{ i.cout.electricite }}</li>
+				<li>Electricité : {{ i.cout.electricite }}</li>
+				<li>Fer : {{ i.cout.fer }}</li>
+				<li>Fuel : {{ i.cout.fuel }}</li>
+				<li>Niveau : {{ i.niveau }}</li>
+				<li>Temps de recherche : {{ i.temps_recherche }}</li>
+			</ul>
 
-		<h6>Caractéristiques</h6>
-		<ul>
-			{% for key,j in i.special.caracteristique %}
-				{% if i.niveau > 0 %}
-					<li>{{ key }} :  {{ j }} (+{{ ((j*(i.coef_amelioration))-j)|round }})</li>
-				{% else %}
-					<li>{{ key }} :  {{ j }}</li>
-				{% endif %}
-			{% endfor %}
-		</ul>
+			<h6>Caractéristiques</h6>
+			<ul>
+				{% for key,j in i.special.caracteristique %}
+					{% if i.niveau > 0 %}
+						<li>{{ key }} :  {{ j }} (+{{ ((j*(i.coef_amelioration))-j)|round }})</li>
+					{% else %}
+						<li>{{ key }} :  {{ j }}</li>
+					{% endif %}
+				{% endfor %}
+			</ul>
 
-		<input type="hidden" class="recherche" value="{{ i.recherche }}">
-		<input type="hidden" class="type" value="{{ i.type }}">
+			<input type="hidden" class="recherche" value="{{ i.recherche }}">
+			<input type="hidden" class="type" value="{{ i.type }}">
 
-		{% if i.niveau == 0 %}
-			<a class="rechercher">Rechercher</a>
-		{% else %}
-			<a class="rechercher">Améliorer</a>
-		{% endif %}
-	</div>
-{% endfor %}
-
-
+			{% if i.niveau == 0 %}
+				<a class="rechercher">Rechercher</a>
+			{% else %}
+				<a class="rechercher">Améliorer</a>
+			{% endif %}
+		</div>
+	{% endfor %}
+{% endif %}
 {{include("js/centre_recherche.html")}}
