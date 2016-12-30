@@ -4,6 +4,7 @@
 	
 	use core\App;
 	use core\functions\DateHeure;
+	use core\HTML\flashmessage\FlashMessage;
 
 	class CentreRecherche {
 		private $coef_centre;
@@ -128,6 +129,40 @@
 
 			return 0;
 		}
+
+		/**
+		 * fonction qui renvoi un tableau contenant la recherche en cours si celle-ci n'est pas finie
+		 * sinon elle appelle la fonction setTerminerRecherche
+		 */
+		public function getRecherche() {
+			$dbc = App::getDb();
+
+			$query = $dbc->select()->from("_bataille_recherche")->where("ID_base", "=", Bataille::getIdBase())->get();
+
+			if ((is_array($query)) && (count($query) > 0)) {
+				$today = Bataille::getToday();
+
+				foreach ($query as $obj) {
+					if ($obj->date_fin-$today <= 0) {
+						$this->setTerminerRecherche($obj->ID_recherche);
+					}
+					else {
+						$recherche[] = [
+							"recherche" => $obj->recherche,
+							"type" => $obj->type,
+							"date_fin_recherche" => $obj->date_fin-$today,
+							"id_recherche" => $obj->ID_recherche
+						];
+					}
+				}
+
+				Bataille::setValues(["recherche" => $recherche]);
+
+				return true;
+			}
+
+			return false;
+		}
 		//-------------------------- END GETTER ----------------------------------------------------------------------------//
 		
 		
@@ -137,6 +172,12 @@
 			$dbc = App::getDb();
 			$dbc1 = Bataille::getDb();
 			$niveau_recherche = 0;
+
+			//on test si il n'y a pas déjà une recherche en cours
+			if ($this->getRecherche() == true) {
+				FlashMessage::setFlash("Une recherche est déjà en cours, merci d'attendre la fin de celle-ci");
+				return false;
+			}
 
 			//on récupère la recherche dans notre base savoir si on l'a déjà recherchée pour avoir son lvl
 			$query = $dbc->select("niveau")->from("_bataille_centre_recherche")
@@ -160,7 +201,7 @@
 
 			if ((is_array($query)) && (count($query) == 1)) {
 				foreach ($query as $obj) {
-					$cout = $obj->cout;
+					$cout = unserialize($obj->cout);
 					$temps_recherche = $obj->temps_recherche;
 				}
 			}
@@ -170,14 +211,36 @@
 				$temps_recherche = $this->getTempsRecherche($temps_recherche, $niveau_recherche);
 			}
 
-			$date_fin = Bataille::getToday()+$temps_recherche;
+			//on test si assez de ressources pour effectuer la recherche
+			$eau = Bataille::getTestAssezRessourceBase("eau", $cout["eau"]);
+			$electricite = Bataille::getTestAssezRessourceBase("electricite", $cout["electricite"]);
+			$fer = Bataille::getTestAssezRessourceBase("fer", $cout["fer"]);
+			$fuel = Bataille::getTestAssezRessourceBase("fuel", $cout["fuel"]);
 
-			$dbc->insert("recherche", $recherche)
-				->insert("type", $type)
-				->insert("date_fin", $date_fin)
-				->insert("ID_base", Bataille::getIdBase())
-				->into("_bataille_recherche")
-				->set();
+
+			if (($eau["class"] || $electricite["class"] || $fer["class"] || $fuel["class"]) == "rouge" ) {
+				FlashMessage::setFlash("Pas assez de ressources pour effectuer cette recherche");
+				return false;
+			}
+			else {
+				//on retire les ressources
+				Bataille::getRessource()->setUpdateRessource($cout["eau"], $cout["electricite"], $cout["fer"], $cout["fuel"], 0, "-");
+
+				$date_fin = Bataille::getToday()+$temps_recherche;
+
+				$dbc->insert("recherche", $recherche)
+					->insert("type", $type)
+					->insert("date_fin", $date_fin)
+					->insert("ID_base", Bataille::getIdBase())
+					->into("_bataille_recherche")
+					->set();
+
+				return true;
+			}
+		}
+
+		private function setTerminerRecherche($id_recherche) {
+
 		}
 		//-------------------------- END SETTER ----------------------------------------------------------------------------//
 		
