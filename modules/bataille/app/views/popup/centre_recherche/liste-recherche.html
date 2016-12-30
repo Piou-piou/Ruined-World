@@ -1,7 +1,8 @@
 {{include("popup/centre_recherche/nav.html")}}
 
-<div class="centre_recherche">
-	{% for i in bataille.centre_recherche %}
+
+{% for i in bataille.centre_recherche %}
+	<div class="centre_recherche">
 		<h3>{{ i.recherche }} {{ i.type }}</h3>
 		<ul>
 			<li>Eau : {{ i.cout.electricite }}</li>
@@ -31,7 +32,8 @@
 		{% else %}
 			<a class="rechercher">Améliorer</a>
 		{% endif %}
-	{% endfor %}
-</div>
+	</div>
+{% endfor %}
+
 
 {{include("js/centre_recherche.html")}}
