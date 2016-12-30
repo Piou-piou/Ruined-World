@@ -8,6 +8,8 @@
 
 	class CentreRecherche {
 		private $coef_centre;
+		private $recherche;
+		private $type;
 		
 		
 		//-------------------------- BUILDER ----------------------------------------------------------------------------//
@@ -55,7 +57,11 @@
 
 			Bataille::setValues(["centre_recherche" => $recherhce]);
 		}
-
+		//-------------------------- END BUILDER ----------------------------------------------------------------------------//
+		
+		
+		
+		//-------------------------- GETTER ----------------------------------------------------------------------------//
 		/**
 		 * @param $recherche
 		 * @param $type
@@ -82,6 +88,12 @@
 			return 0;
 		}
 
+		/**
+		 * @param $cout
+		 * @param $niveau_recherche
+		 * @return array
+		 * fonction qui renvoi le cout d'une recherche
+		 */
 		private function getCoutRecherche($cout, $niveau_recherche) {
 			return [
 				"eau" => $cout["eau"] * ($this->coef_centre * $niveau_recherche),
@@ -91,6 +103,11 @@
 			];
 		}
 
+		/**
+		 * @param $temps
+		 * @param int $niveau
+		 * @return floatfonction qui renvoi le temps qu'il faut pour effectuer une recherche
+		 */
 		private function getTempsRecherche($temps, $niveau = 0) {
 			$pourcent = ($temps*Bataille::getBatiment()->getNiveauBatiment("centre_recherche")/100);
 
@@ -100,11 +117,7 @@
 
 			return round(($temps * ($this->coef_centre * $niveau))-$pourcent);
 		}
-		//-------------------------- END BUILDER ----------------------------------------------------------------------------//
-		
-		
-		
-		//-------------------------- GETTER ----------------------------------------------------------------------------//
+
 		/**
 		 * @param $type
 		 * @return array|int
@@ -131,6 +144,7 @@
 		}
 
 		/**
+		 * @return bool
 		 * fonction qui renvoi un tableau contenant la recherche en cours si celle-ci n'est pas finie
 		 * sinon elle appelle la fonction setTerminerRecherche
 		 */
@@ -143,11 +157,14 @@
 				$today = Bataille::getToday();
 
 				foreach ($query as $obj) {
+					$this->recherche = $obj->recherche;
+					$this->type = $obj->type;
+
 					if ($obj->date_fin-$today <= 0) {
 						$this->setTerminerRecherche($obj->ID_recherche);
 					}
 					else {
-						$recherche[] = [
+						$recherche = [
 							"recherche" => $obj->recherche,
 							"type" => $obj->type,
 							"date_fin_recherche" => $obj->date_fin-$today,
@@ -171,7 +188,6 @@
 		public function setCommencerRecherche($recherche, $type) {
 			$dbc = App::getDb();
 			$dbc1 = Bataille::getDb();
-			$niveau_recherche = 0;
 
 			//on test si il n'y a pas déjà une recherche en cours
 			if ($this->getRecherche() == true) {
@@ -180,15 +196,7 @@
 			}
 
 			//on récupère la recherche dans notre base savoir si on l'a déjà recherchée pour avoir son lvl
-			$query = $dbc->select("niveau")->from("_bataille_centre_recherche")
-				->where("recherche", "=", $recherche, "AND")
-				->where("type", "=", $type, "AND")
-				->where("ID_base", "=", Bataille::getIdBase())
-				->get();
-
-			if ((is_array($query)) && (count($query) == 1)) {
-				foreach ($query as $obj) $niveau_recherche = $obj->niveau;
-			}
+			$niveau_recherche = $this->getNiveauRecherche($recherche, $type);
 
 			//récupération du cout initial plus temps de recherche initial pour calculer les bon en fonction
 			//du lvl du centre + du niveau actuel de la recherche
@@ -240,7 +248,29 @@
 		}
 
 		private function setTerminerRecherche($id_recherche) {
+			$dbc = App::getDb();
+			$niveau_recherche = $this->getNiveauRecherche($this->recherche, $this->type);
 
+			if ($niveau_recherche == 0) {
+				$dbc->insert("recherche", $this->recherche)
+					->insert("type", $this->type)
+					->insert("niveau", 1)
+					->insert("ID_base", Bataille::getIdBase())
+					->into("_bataille_centre_recherche")
+					->set();
+			}
+			else {
+				$dbc->update("niveau", $niveau_recherche+1)
+					->from("_bataille_centre_recherche")
+					->where("recherche", "=", $this->recherche, "AND")
+					->where("type", "=", $this->type, "AND")
+					->where("ID_base", "=", Bataille::getIdBase())
+					->set();
+			}
+
+			$dbc->delete()->from("_bataille_recherche")->where("ID_recherche", "=", $id_recherche, "AND")
+				->where("ID_base", "=", Bataille::getIdBase())
+				->del();
 		}
 		//-------------------------- END SETTER ----------------------------------------------------------------------------//
 		
