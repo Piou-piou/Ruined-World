@@ -1,10 +1,12 @@
 {{include("nav.html")}}
 <div class="row bataille">
-	<div class="small-12 medium-3 large-3 columns side-bar">
-		<h3>Construction en cours</h3>
-		{{bataille.nom_batiment_construction}}<br>
+	<div class="small-12 medium-3 large-3 columns">
+		<div class="row side-bar">
+			<h3>Construction en cours</h3>
+			{{bataille.nom_batiment_construction}}<br>
 
-		<div id="defaultCountdown"></div>
+			<div id="defaultCountdown"></div>
+		</div>
 	</div>
 	<div class="small-12 medium-6 large-6 columns">
 		<h2>Batiments</h2>
@@ -16,21 +18,23 @@
 		{% endfor %}
 	</div>
 	<div class="small-12 medium-3 large-3 columns">
-		<div class="row">
-			<div class="small-12 side-bar">
-				<h3>Unités en recrutement</h3>
-				{% for i in bataille.recrutement %}
-					<div>
-						<div id="recrutement-{{ i.id_recrutement }}"></div>
-						<p>{{ i.nom }} {{ i.type }} {{ i.nombre }}</p>
+		{% if bataille.recrutement is iterable %}
+			<div class="row">
+				<div class="small-12 side-bar">
+					<h3>Unités en recrutement</h3>
+					{% for i in bataille.recrutement %}
+						<div>
+							<div id="recrutement-{{ i.id_recrutement }}"></div>
+							<p>{{ i.nom }} {{ i.type }} {{ i.nombre }}</p>
 
-						{{ include("js/recrutement_caserne.html") }}
-					</div>
-				{% endfor %}
+							{{ include("js/recrutement_caserne.html") }}
+						</div>
+					{% endfor %}
+				</div>
 			</div>
-		</div>
 
-		<div class="espacement"></div>
+			<div class="espacement"></div>
+		{% endif %}
 
 		<div class="row">
 			<div class="small-12 side-bar">
@@ -47,37 +51,41 @@
 		<div class="espacement"></div>
 
 		<div class="row">
-			<div class="small-12 side-bar">
-				<h3>Transport marchandises envoyées</h3>
+			{% if bataille.marche_envoyer is iterable %}
+				<div class="small-12 side-bar">
+					<h3>Transport marchandises envoyées</h3>
 
-				{% for i in bataille.marche_envoyer %}
-					<div>
-						<div id="transport-{{ i.id_marche_transport }}"></div>
+					{% for i in bataille.marche_envoyer %}
+						<div>
+							<div id="transport-{{ i.id_marche_transport }}"></div>
 
-						{% if (i.aller == 1) %}
-							<p>Sur l'aller à : {{ i.nom_base_dest }}</p>
-						{% else %}
-							<p>Sur le retour de : {{ i.nom_base_dest }}</p>
-						{% endif %}
-						{{ include("js/transport_marche.html") }}
-					</div>
-				{% endfor %}
-			</div>
+							{% if (i.aller == 1) %}
+								<p>Sur l'aller à : {{ i.nom_base_dest }}</p>
+							{% else %}
+								<p>Sur le retour de : {{ i.nom_base_dest }}</p>
+							{% endif %}
+							{{ include("js/transport_marche.html") }}
+						</div>
+					{% endfor %}
+				</div>
+			{% endif %}
 
-			<div class="small-12 side-bar">
-				<h3>Transport marchandises à recevoir</h3>
+			{% if bataille.marche_recevoir is iterable %}
+				<div class="small-12 side-bar">
+					<h3>Transport marchandises à recevoir</h3>
 
-				{% for i in bataille.marche_recevoir %}
-					<div>
-						<div id="transport-{{ i.id_marche_transport }}"></div>
+					{% for i in bataille.marche_recevoir %}
+						<div>
+							<div id="transport-{{ i.id_marche_transport }}"></div>
 
-						{% if (i.aller == 1) %}
-							<p>qui arrive de : {{ i.nom_base_dest }}</p>
-						{% endif %}
-						{{ include("js/transport_marche.html") }}
-					</div>
-				{% endfor %}
-			</div>
+							{% if (i.aller == 1) %}
+								<p>qui arrive de : {{ i.nom_base_dest }}</p>
+							{% endif %}
+							{{ include("js/transport_marche.html") }}
+						</div>
+					{% endfor %}
+				</div>
+			{% endif %}
 		</div>
 	</div>
 </div>
