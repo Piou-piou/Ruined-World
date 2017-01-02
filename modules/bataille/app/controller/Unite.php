@@ -51,7 +51,6 @@
 				}
 
 				$coef = $this->coef_unite*$niveau;
-				$coef_ameliorer = $this->coef_unite*($niveau+1);
 
 				if ($niveau == 1) $coef = 1;
 
@@ -67,12 +66,6 @@
 						"electricite" => $ressource["electricite"]*$coef,
 						"fer" => $ressource["fer"]*$coef,
 						"fuel" => $ressource["fuel"]*$coef,
-					],
-					"cout_ameliorer" => [
-						"eau" => $ressource["eau"]*$coef_ameliorer,
-						"electricite" => $ressource["electricite"]*$coef_ameliorer,
-						"fer" => $ressource["fer"]*$coef_ameliorer,
-						"fuel" => $ressource["fuel"]*$coef_ameliorer,
 					],
 					"temps_recrutement" => $temps_recrutement
 				];
