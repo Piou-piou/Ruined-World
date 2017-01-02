@@ -115,42 +115,43 @@
 		public function getAllRecherche() {
 			$dbc1 = Bataille::getDb();
 
-			$query = $dbc1->select()->from("recherche")
-				->where("niveau_centre", "<=", Bataille::getBatiment()->getNiveauBatiment("centre_recherche"))
-				->get();
+			//avant de récupérer toutes les recherches, on finit au cas celle en court
+			if ($this->getRecherche() == false) {
+				$query = $dbc1->select()->from("recherche")
+					->where("niveau_centre", "<=", Bataille::getBatiment()->getNiveauBatiment("centre_recherche"))
+					->get();
 
-			if ((is_array($query)) && (count($query) > 0)) {
-				foreach ($query as $obj) {
-					$niveau = $this->getNiveauRecherche($obj->recherche, $obj->type);
-					$niveau_recherche = $niveau;
+				if ((is_array($query)) && (count($query) > 0)) {
+					foreach ($query as $obj) {
+						$niveau = $this->getNiveauRecherche($obj->recherche, $obj->type);
+						$niveau_recherche = $niveau;
 
-					$cout = unserialize($obj->cout);
-					$temps_recherche = $this->getTempsRecherche($obj->temps_recherche);
+						$cout = unserialize($obj->cout);
+						$temps_recherche = $this->getTempsRecherche($obj->temps_recherche);
 
-					//si niveau == 0 ca veut dire que la recherche n'a pas encore été effectuée dans la base
-					if ($niveau > 0) {
-						$cout = $this->getCoutRecherche($cout, $niveau);
-						$temps_recherche = $this->getTempsRecherche($temps_recherche, $niveau);
+						//si niveau == 0 ca veut dire que la recherche n'a pas encore été effectuée dans la base
+						if ($niveau > 0) {
+							$cout = $this->getCoutRecherche($cout, $niveau);
+							$temps_recherche = $this->getTempsRecherche($temps_recherche, $niveau);
+						}
+						else {
+							$niveau_recherche = 1;
+						}
+
+						$recherhce[] = [
+							"recherche" => $obj->recherche,
+							"type" => $obj->type,
+							"niveau" => $niveau,
+							"cout" => $cout,
+							"temps_recherche" => DateHeure::Secondeenheure($temps_recherche),
+							"special" => Bataille::getUnite()->getCaracteristiqueUnite($obj->recherche, $niveau_recherche, $obj->type),
+							"coef_amelioration" => Bataille::getParam("coef_niveau_unite")
+						];
 					}
-					else {
-						$niveau_recherche = 1;
-					}
-
-					$recherhce[] = [
-						"recherche" => $obj->recherche,
-						"type" => $obj->type,
-						"niveau" => $niveau,
-						"cout" => $cout,
-						"temps_recherche" => DateHeure::Secondeenheure($temps_recherche),
-						"special" => Bataille::getUnite()->getCaracteristiqueUnite($obj->recherche, $niveau_recherche, $obj->type),
-						"coef_amelioration" => Bataille::getParam("coef_niveau_unite")
-					];
 				}
+
+				Bataille::setValues(["centre_recherche" => $recherhce]);
 			}
-
-			Bataille::setValues(["centre_recherche" => $recherhce]);
-
-			$this->getRecherche();
 		}
 
 		/**
