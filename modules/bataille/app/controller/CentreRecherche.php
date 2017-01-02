@@ -173,6 +173,8 @@
 
 					if ($obj->date_fin-$today <= 0) {
 						$this->setTerminerRecherche($obj->ID_recherche);
+
+						return false;
 					}
 					else {
 						$recherche = [
