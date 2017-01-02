@@ -21,41 +21,6 @@
 			if ((is_array($query)) && (count($query) == 1)) {
 				foreach ($query as $obj) $this->coef_centre = $obj->coef_centre_recherche;
 			}
-
-			$query = $dbc1->select()->from("recherche")
-				->where("niveau_centre", "<=", Bataille::getBatiment()->getNiveauBatiment("centre_recherche"))
-				->get();
-
-			if ((is_array($query)) && (count($query) > 0)) {
-				foreach ($query as $obj) {
-					$niveau = $this->getNiveauRecherche($obj->recherche, $obj->type);
-					$niveau_recherche = $niveau;
-
-					$cout = unserialize($obj->cout);
-					$temps_recherche = $this->getTempsRecherche($obj->temps_recherche);
-
-					//si niveau == 0 ca veut dire que la recherche n'a pas encore été effectuée dans la base
-					if ($niveau > 0) {
-						$cout = $this->getCoutRecherche($cout, $niveau);
-						$temps_recherche = $this->getTempsRecherche($temps_recherche, $niveau);
-					}
-					else {
-						$niveau_recherche = 1;
-					}
-
-					$recherhce[] = [
-						"recherche" => $obj->recherche,
-						"type" => $obj->type,
-						"niveau" => $niveau,
-						"cout" => $cout,
-						"temps_recherche" => DateHeure::Secondeenheure($temps_recherche),
-						"special" => Bataille::getUnite()->getCaracteristiqueUnite($obj->recherche, $niveau_recherche, $obj->type),
-						"coef_amelioration" => Bataille::getParam("coef_niveau_unite")
-					];
-				}
-			}
-
-			Bataille::setValues(["centre_recherche" => $recherhce]);
 		}
 		//-------------------------- END BUILDER ----------------------------------------------------------------------------//
 		
@@ -141,6 +106,51 @@
 			}
 
 			return 0;
+		}
+
+		/**
+		 * fonction qui renvoi toutes les recherches effectuées ou non dans un tableau
+		 * (ne renvoi que celle que l'on peut faire en fonction du niveau du centre)
+		 */
+		public function getAllRecherche() {
+			$dbc1 = Bataille::getDb();
+
+			$query = $dbc1->select()->from("recherche")
+				->where("niveau_centre", "<=", Bataille::getBatiment()->getNiveauBatiment("centre_recherche"))
+				->get();
+
+			if ((is_array($query)) && (count($query) > 0)) {
+				foreach ($query as $obj) {
+					$niveau = $this->getNiveauRecherche($obj->recherche, $obj->type);
+					$niveau_recherche = $niveau;
+
+					$cout = unserialize($obj->cout);
+					$temps_recherche = $this->getTempsRecherche($obj->temps_recherche);
+
+					//si niveau == 0 ca veut dire que la recherche n'a pas encore été effectuée dans la base
+					if ($niveau > 0) {
+						$cout = $this->getCoutRecherche($cout, $niveau);
+						$temps_recherche = $this->getTempsRecherche($temps_recherche, $niveau);
+					}
+					else {
+						$niveau_recherche = 1;
+					}
+
+					$recherhce[] = [
+						"recherche" => $obj->recherche,
+						"type" => $obj->type,
+						"niveau" => $niveau,
+						"cout" => $cout,
+						"temps_recherche" => DateHeure::Secondeenheure($temps_recherche),
+						"special" => Bataille::getUnite()->getCaracteristiqueUnite($obj->recherche, $niveau_recherche, $obj->type),
+						"coef_amelioration" => Bataille::getParam("coef_niveau_unite")
+					];
+				}
+			}
+
+			Bataille::setValues(["centre_recherche" => $recherhce]);
+
+			$this->getRecherche();
 		}
 
 		/**

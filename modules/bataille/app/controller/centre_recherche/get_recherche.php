@@ -1,6 +1,4 @@
 <?php
-	$centre_recherche = new \modules\bataille\app\controller\CentreRecherche();
-
-	\modules\bataille\app\controller\Bataille::getCentreRecherche()->getRecherche();
+	\modules\bataille\app\controller\Bataille::getCentreRecherche()->getAllRecherche();
 
 	$arr = \modules\bataille\app\controller\Bataille::getValues();
