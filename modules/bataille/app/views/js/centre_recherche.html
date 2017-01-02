@@ -11,7 +11,16 @@
 					url:"{{WEBROOT}}controller/modules/bataille/centre_recherche/rechercher",
 					success: function(data){
 						if (data == "ok") {
-							location.reload();
+							//location.reload();
+							$.ajax({
+								type:"POST",
+								url: "{{WEBROOT}}bataille/popup/centre_recherche/liste-recherche",
+								success: function(data){
+									$("#popup-base #ajax").empty();
+									$("#popup-base #ajax").append(data);
+								}, error: function(){
+								}
+							});
 						}
 						else {
 							$("body").prepend(data);
@@ -29,8 +38,29 @@
 	<script>
 		$(function () {
 			$('#decompte-recherche').countdown({
-				until: {{bataille.recherche.date_fin_recherche}}
+				until: {{bataille.recherche.date_fin_recherche}},
+				onExpiry: setTerminerRecherche
 			});
 		});
+
+		function setTerminerRecherche() {
+			$.ajax({
+				type:"POST",
+				url:"{{WEBROOT}}controller/modules/bataille/centre_recherche/get_recherche",
+				success: function(data){
+					$.ajax({
+						type:"POST",
+						url: "{{WEBROOT}}bataille/popup/centre_recherche/liste-recherche",
+						success: function(data){
+							$("#popup-base #ajax").empty();
+							$("#popup-base #ajax").append(data);
+						}, error: function(){
+						}
+					});
+				}, error: function(){
+
+				}
+			});
+		}
 	</script>
 {% endif %}
