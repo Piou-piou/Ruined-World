@@ -198,6 +198,12 @@
 		
 		
 		//-------------------------- SETTER ----------------------------------------------------------------------------//
+		/**
+		 * @param $recherche
+		 * @param $type
+		 * @return bool
+		 * fonction qui va initialiser la recherche en question
+		 */
 		public function setCommencerRecherche($recherche, $type) {
 			$dbc = App::getDb();
 			$dbc1 = Bataille::getDb();
@@ -260,6 +266,10 @@
 			}
 		}
 
+		/**
+		 * @param $id_recherche
+		 * fonction qui va terminer une recherche en fonction de son ID
+		 */
 		private function setTerminerRecherche($id_recherche) {
 			$dbc = App::getDb();
 			$niveau_recherche = $this->getNiveauRecherche($this->recherche, $this->type);
