@@ -2,8 +2,21 @@
 	<script>
 		$(function () {
 			$('#recrutement-{{ i.id_recrutement }}').countdown({
-				until: {{i.date_fin_recrutement}}
+				until: {{i.date_fin_recrutement}},
+				onExpiry: testFinRecrutement
 			});
 		});
+
+		function testFinRecrutement() {
+			$.ajax({
+				type:"POST",
+				url:"{{WEBROOT}}controller/modules/bataille/caserne/test_terminer_recrutement",
+				success: function(data){
+					$('#recrutement-{{ i.id_recrutement }}').parent().remove();
+				}, error: function(){
+					console.log("error");
+				}
+			});
+		}
 	</script>
 {% endif %}
