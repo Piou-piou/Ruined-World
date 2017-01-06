@@ -22,10 +22,13 @@ $(document).ready(function() {
     $( ".liste-batiments .un-batiment" ).draggable({
         grid: [20, 20],
         snap: ".case",
-        revert: "invalid"
+        revert: "invalid",
     });
 
     $(".map-game").droppable({
         accept: ".un-batiment",
+        drop: function(event, ui) {
+            var batiment = "#"+$(ui.draggable).attr("id");
+        }
     });
 })

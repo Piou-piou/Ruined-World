@@ -98,7 +98,8 @@ body {
       width: 100px;
       height: 100px;
       text-align: center;
-      vertical-align: middle; }
+      vertical-align: middle;
+      z-index: 2; }
   .bataille .map-game {
     width: 1170px;
     height: 545px;
