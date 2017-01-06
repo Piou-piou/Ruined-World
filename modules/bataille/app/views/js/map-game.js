@@ -15,7 +15,17 @@ $(document).ready(function() {
     }
 
 
-    $(".map-game .case").on("click", function() {
+    /*$(".map-game .case").on("click", function() {
         $(this).css("background-color", "red");
-    })
+    });*/
+
+    $( ".liste-batiments .un-batiment" ).draggable({
+        grid: [20, 20],
+        snap: ".case",
+        revert: "invalid"
+    });
+
+    $(".map-game").droppable({
+        accept: ".un-batiment",
+    });
 })
