@@ -8,6 +8,7 @@ $(document).ready(function() {
 
     //var pour le batiment qu'on est en trainde drag
     var taille;
+    var batiment;
 
     //génération de la grille de la map
     for (i=0 ; i<rows ; i++) {
@@ -35,6 +36,15 @@ $(document).ready(function() {
         return taille;
     }
 
+    function testBatimentPosition(posx, posy) {
+        $case = $("#case-"+posx+"-"+posy);
+
+        if ($case.hasClass("poka")) {
+            return true;
+        }
+
+        return false;
+    }
 
     $(".map-game .case").mouseup(function() {
         pos_depart = getArrayTaille($(this).attr("id"));
@@ -43,7 +53,19 @@ $(document).ready(function() {
             for (j=0 ; j<taille[0] ; j++) {
                 posx = j+pos_depart[0];
                 posy = i+pos_depart[1];
-                $("#case-"+posx+"-"+posy).css("background-color", "red");
+
+                if (testBatimentPosition(posx, posy) == false) {
+                    $("#case-"+posx+"-"+posy).css("background-color", "red");
+                    $("#case-"+posx+"-"+posy).addClass("poka");
+                }
+                else {
+                    alert("batiment deja present");
+                    taille = "";
+                    console.log($(batiment));
+                    $(batiment).draggable();
+                    return false;
+                }
+
             }
         }
 
@@ -53,14 +75,14 @@ $(document).ready(function() {
 
 
     //------------------------------------------- DRAG AND DROP D'UN BATIMENT ------------------------------------//
-    $( ".liste-batiments .un-batiment" ).draggable({
+    $(".liste-batiments .un-batiment").draggable({
         grid: [20, 20],
         snap: ".case",
         revert: "invalid",
-        containment: ".map-game",
         cursorAt: { top: -5, left: 0},
         start: function(event, ui) {
             taille = getArrayTaille($(this).find("a").attr("taille"));
+            batiment = "#"+$(this).attr("id");
         }
     });
 
@@ -70,8 +92,6 @@ $(document).ready(function() {
             $(ui.draggable).draggable({ disabled: true });
 
            // $("#popup-base").addClass("visible");
-
-            $batiment = "#"+$(ui.draggable).attr("id");
         }
     });
 })
