@@ -41,7 +41,9 @@ $(document).ready(function() {
 
         for (i=0 ; i<taille[1] ; i++) {
             for (j=0 ; j<taille[0] ; j++) {
-                $("#case-"+(j+pos_depart[0])+"-"+(i+pos_depart[1])).css("background-color", "red");
+                posx = j+pos_depart[0];
+                posy = i+pos_depart[1];
+                $("#case-"+posx+"-"+posy).css("background-color", "red");
             }
         }
 
