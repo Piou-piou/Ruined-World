@@ -180,6 +180,11 @@ body {
 			height: 20px;
 			border: 0.001em solid #fff;
 			position: absolute;
+			visibility: hidden;
+
+			&.visible {
+				visibility: visible;
+			}
 		}
 	}
 

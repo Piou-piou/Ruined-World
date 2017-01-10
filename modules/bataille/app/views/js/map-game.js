@@ -52,10 +52,50 @@ $(document).ready(function() {
         return false;
     }
 
+    /**
+     * fonction qui permet de retirer la class batiment sur une case
+     * afin de rendre celle-ci disponible pour un futur drop
+     */
     function retirerBatiment() {
         $(".case."+batiment).removeClass("batiment");
         $(".case").removeClass(batiment);
     }
+
+    /**
+     * fonction qui permet d'afficher ou de masquer la grille de la map
+     */
+    $(".bataille #afficher-grille").click(function(e) {
+        e.preventDefault();
+
+        console.log("dfg");
+
+        $(".bataille .map-game .case").toggleClass("visible");
+
+        if ($(".bataille .map-game .case").hasClass("visible")) {
+            $(this).html("Masquer la grille");
+        }
+        else {
+            $(this).html("Afficher la grille");
+        }
+    });
+
+
+
+    //------------------------------------------- DRAG AND DROP D'UN BATIMENT ------------------------------------//
+    $(".liste-batiments .un-batiment").draggable({
+        grid: [20, 20],
+        snap: ".case",
+        revert: "invalid",
+        cursorAt: { top: -5, left: 0},
+        start: function(event, ui) {
+            taille = getArrayTaille($(this).find("a").attr("taille"));
+            batiment = $(this).attr("id");
+        }
+    });
+
+    $(".map-game").droppable({
+        accept: ".un-batiment"
+    });
 
     /**
      * fonction appellée lorsqu'on relache la souris après le drag d'un élément sur la grille de la map
@@ -88,23 +128,5 @@ $(document).ready(function() {
             }
         }
         taille = "";
-    });
-
-
-
-    //------------------------------------------- DRAG AND DROP D'UN BATIMENT ------------------------------------//
-    $(".liste-batiments .un-batiment").draggable({
-        grid: [20, 20],
-        snap: ".case",
-        revert: "invalid",
-        cursorAt: { top: -5, left: 0},
-        start: function(event, ui) {
-            taille = getArrayTaille($(this).find("a").attr("taille"));
-            batiment = $(this).attr("id");
-        }
-    });
-
-    $(".map-game").droppable({
-        accept: ".un-batiment"
     });
 })
