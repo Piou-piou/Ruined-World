@@ -53,7 +53,7 @@ $(document).ready(function() {
     }
 
     function retirerBatiment() {
-        $(".case ."+batiment).removeClass("batiment");
+        $(".case."+batiment).removeClass("batiment");
         $(".case").removeClass(batiment);
     }
 
