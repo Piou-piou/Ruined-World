@@ -36,16 +36,33 @@ $(document).ready(function() {
         return taille;
     }
 
+    /**
+     * @param posx
+     * @param posy
+     * @returns {boolean}
+     * fonction qui test si il y a déjà un batiment la ou on vient de poser le nouveau
+     */
     function testBatimentPosition(posx, posy) {
         $case = $("#case-"+posx+"-"+posy);
 
-        if ($case.hasClass("poka")) {
+        if ($case.hasClass("batiment")) {
             return true;
         }
 
         return false;
     }
 
+    function retirerBatiment() {
+        $(".case ."+batiment).removeClass("batiment");
+        $(".case").removeClass(batiment);
+    }
+
+    /**
+     * fonction appellée lorsqu'on relache la souris après le drag d'un élément sur la grille de la map
+     * elle va appeler testBatimentPosition afin de voir si pas de batiment ou l'on vient de poser le notre
+     * renvoi false si il y a un batiment et reset la os de l'élément pour le redrag
+     * sinon on lance la construction du batiment
+     */
     $(".map-game .case").mouseup(function() {
         pos_depart = getArrayTaille($(this).attr("id"));
 
@@ -55,20 +72,21 @@ $(document).ready(function() {
                 posy = i+pos_depart[1];
 
                 if (testBatimentPosition(posx, posy) == false) {
-                    $("#case-"+posx+"-"+posy).css("background-color", "red");
-                    $("#case-"+posx+"-"+posy).addClass("poka");
+                    $("#case-"+posx+"-"+posy).addClass(batiment+" batiment");
                 }
                 else {
                     alert("batiment deja present");
                     taille = "";
-                    console.log($(batiment));
-                    $(batiment).draggable();
+                    $("#"+batiment).css({
+                        left: 0,
+                        top: 0
+                    });
+                    retirerBatiment();
                     return false;
                 }
 
             }
         }
-
         taille = "";
     });
 
@@ -82,16 +100,11 @@ $(document).ready(function() {
         cursorAt: { top: -5, left: 0},
         start: function(event, ui) {
             taille = getArrayTaille($(this).find("a").attr("taille"));
-            batiment = "#"+$(this).attr("id");
+            batiment = $(this).attr("id");
         }
     });
 
     $(".map-game").droppable({
-        accept: ".un-batiment",
-        drop: function(event, ui) {
-            $(ui.draggable).draggable({ disabled: true });
-
-           // $("#popup-base").addClass("visible");
-        }
+        accept: ".un-batiment"
     });
 })
