@@ -80,7 +80,9 @@
 								"nom_batiment" => $obj->nom_batiment." en construction",
 								"nom_batiment_sql" => $obj->nom_batiment_sql,
 								"niveau" => $obj->niveau,
-								"emplacement" => $i
+								"emplacement" => $i,
+								"posx" => $obj->posx,
+								"posy" => $obj->posy,
 							];
 						}
 						else {
@@ -88,7 +90,9 @@
 								"nom_batiment" => $obj->nom_batiment,
 								"nom_batiment_sql" => $obj->nom_batiment_sql,
 								"niveau" => $obj->niveau,
-								"emplacement" => $i
+								"emplacement" => $i,
+								"posx" => $obj->posx,
+								"posy" => $obj->posy,
 							];
 						}
 					}

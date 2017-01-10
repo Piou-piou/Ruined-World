@@ -107,7 +107,13 @@
 	</div>
 
 	<div class="map-game">
-
+		{% for i in bataille.batiments %}
+			<div class="un-batiment" style="left:{{ i.posx }}px;top:{{ i.posy }}px;width:120px;height:60px;">
+				<a href="#" class="open-popup" popup="popup-base" emplacement="{{i.emplacement}}" nom_batiment="{{i.nom_batiment}}" nom_batiment_sql="{{i.nom_batiment_sql }}">
+					{{i.nom_batiment}} {{i.niveau}}
+				</a>
+			</div>
+		{% endfor %}
 	</div>
 </div>
 

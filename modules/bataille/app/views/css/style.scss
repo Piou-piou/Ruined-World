@@ -160,7 +160,6 @@ body {
 			height: 100px;
 			text-align: center;
 			vertical-align: middle;
-			/*z-index: 2;*/
 		}
 	}
 
@@ -170,6 +169,11 @@ body {
 		border: 3px solid #000;
 		margin: 0 auto;
 		position: relative;
+
+		.un-batiment {
+			position: absolute;
+			background-color: #CCCCCC;
+		}
 
 		.case {
 			width: 20px;
