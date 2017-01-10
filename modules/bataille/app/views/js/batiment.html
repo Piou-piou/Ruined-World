@@ -16,7 +16,7 @@
 			var nom_batiment = $(this).attr("nom_batiment");
 			var emplacement = $(this).attr("emplacement");
 
-			if (nom_batiment == "A construire") {
+			/*if (nom_batiment == "A construire") {
 				$.ajax({
 					type:"POST",
 					data: "emplacement="+emplacement,
@@ -28,7 +28,7 @@
 					}
 				});
 			}
-			else if (batiments_speciaux.indexOf(nom_batiment) != -1) {
+			else */if (batiments_speciaux.indexOf(nom_batiment) != -1) {
 				$.ajax({
 					type:"POST",
 					data: "nom_batiment="+nom_batiment+"&nom_batiment_sql="+nom_batiment_sql,
