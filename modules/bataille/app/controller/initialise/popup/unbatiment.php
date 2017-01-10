@@ -5,6 +5,6 @@
 
 	Bataille::getIdBase();
 
-	Bataille::getBatiment()->getUnBatiment($_POST['nom_batiment'], $_POST['emplacement']);
+	Bataille::getBatiment()->getUnBatiment($_POST['nom_batiment']);
 
 	$arr = \modules\bataille\app\controller\Bataille::getValues();

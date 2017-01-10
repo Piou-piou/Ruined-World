@@ -164,7 +164,7 @@
 		 * @param $nom_batiment
 		 * @param $emplacement
 		 */
-		public function getUnBatiment($nom_batiment, $emplacement) {
+		public function getUnBatiment($nom_batiment) {
 			$dbc = App::getDb();
 			$dbc1 = Bataille::getDb();
 
@@ -174,7 +174,6 @@
 			$query = $dbc->select()
 				->from("_bataille_batiment")
 				->where("nom_batiment", "=", $construction[0], "AND")
-				->where("emplacement", "=", $emplacement, "AND")
 				->where("ID_base", "=", Bataille::getIdBase())
 				->get();
 
@@ -192,7 +191,18 @@
 				$max_level =  $this->getInfoUpgradeBatiment();
 			}
 			else {
-				$max_level = 0;
+				$query = $dbc1->select("nom_table")
+					->from("liste_batiment")
+					->where("nom", "=", $nom_batiment)
+					->get();
+
+				if ((is_array($query)) && (count($query) > 0)) {
+					foreach ($query as $obj) {
+						$this->nom_batiment_sql = $obj->nom_table;
+					}
+				}
+
+				$max_level =  $this->getInfoUpgradeBatiment();
 			}
 
 			//permet de savoir si le batiment produit bien des ressoures
@@ -376,7 +386,7 @@
 					}
 				}
 			}
-			Bataille::setValues(["batiments" => $batiment_construire]);
+			Bataille::setValues(["batiments_construire" => $batiment_construire]);
 		}
 
 		/**

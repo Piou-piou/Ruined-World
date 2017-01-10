@@ -16,4 +16,6 @@
 
 	Bataille::getCentreRecherche()->getRecherche();
 
+	Bataille::getBatiment()->getBatimentAConstruire();
+
 	$arr = Bataille::getValues();

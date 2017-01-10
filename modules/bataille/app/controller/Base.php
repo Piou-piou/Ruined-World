@@ -97,17 +97,16 @@
 						}
 					}
 				}
-				else {
+				/*else {
 					$batiments[] = [
 						"nom_batiment" => "A construire",
 						"nom_batiment_sql" => "a_construire",
 						"niveau" => 0,
 						"emplacement" => $i
 					];
-				}
+				}*/
 			}
 
-			//Bataille::$values = array_merge(Bataille::$values, ["batiments" => $batiments]);
 			Bataille::setValues(["batiments" => $batiments]);
 
 			$this->setBatimentsBase($batiments);
