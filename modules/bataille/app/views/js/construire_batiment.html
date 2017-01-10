@@ -11,7 +11,7 @@
 
 				$.ajax({
 					type:"POST",
-					data: "nom_batiment="+nom_batiment+"&nom_batiment_sql="+nom_batiment_sql+"&emplacement="+emplacement,
+					data: "nom_batiment="+nom_batiment+"&nom_batiment_sql="+nom_batiment_sql,
 					url:"{{WEBROOT}}controller/modules/bataille/batiment/construire",
 					success: function(data){
 						location.reload();

@@ -6,11 +6,10 @@ $(document).ready(function() {
 		var page = $(this).attr("href");
 		var nom_batiment = $("nav.batiment-speciaux input#nom_batiment").val();
 		var nom_batiment_sql = $("nav.batiment-speciaux input#nom_batiment_sql").val();
-		var emplacement = $("nav.batiment-speciaux input#emplacement").val();
 
 		$.ajax({
 			type:"POST",
-			data: "nom_batiment="+nom_batiment+"&emplacement="+emplacement+"&nom_batiment_sql="+nom_batiment_sql,
+			data: "nom_batiment="+nom_batiment+"&nom_batiment_sql="+nom_batiment_sql,
 			url: "{{WEBROOT}}bataille/popup/"+nom_batiment_sql+"/"+page,
 			success: function(data){
 				$("#popup-base #ajax").empty();

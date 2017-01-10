@@ -31,7 +31,7 @@
 			else if (batiments_speciaux.indexOf(nom_batiment) != -1) {
 				$.ajax({
 					type:"POST",
-					data: "nom_batiment="+nom_batiment+"&emplacement="+emplacement+"&nom_batiment_sql="+nom_batiment_sql,
+					data: "nom_batiment="+nom_batiment+"&nom_batiment_sql="+nom_batiment_sql,
 					url:"{{WEBROOT}}bataille/popup/"+nom_batiment_sql+"/index",
 					success: function(data){
 						$("#popup-base #ajax").append(data);
@@ -43,7 +43,7 @@
 			else {
 				$.ajax({
 					type:"POST",
-					data: "nom_batiment="+nom_batiment+"&emplacement="+emplacement,
+					data: "nom_batiment="+nom_batiment,
 					url:"{{WEBROOT}}bataille/popup/unbatiment",
 					success: function(data){
 						$("#popup-base #ajax").append(data);
