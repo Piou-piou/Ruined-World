@@ -162,7 +162,6 @@
 		/**
 		 * permet de récupérer toutes les infos d'un batiment dans la popup
 		 * @param $nom_batiment
-		 * @param $emplacement
 		 */
 		public function getUnBatiment($nom_batiment) {
 			$dbc = App::getDb();
@@ -187,8 +186,6 @@
 				if (($construction[1] == true) && ($this->niveau_batiment > 1)) {
 					$this->niveau_batiment = $this->niveau_batiment + 1;
 				}
-				$niveau_batiment_base = $this->niveau_batiment;
-				$max_level =  $this->getInfoUpgradeBatiment();
 			}
 			else {
 				$query = $dbc1->select("nom_table")
@@ -202,8 +199,10 @@
 					}
 				}
 
-				$max_level =  $this->getInfoUpgradeBatiment();
+				$this->niveau_batiment = 0;
 			}
+
+			$max_level =  $this->getInfoUpgradeBatiment();
 
 			//permet de savoir si le batiment produit bien des ressoures
 			$batiment_production = [];
@@ -218,7 +217,6 @@
 
 			Bataille::setValues([
 				"nom_batiment_sql" => $this->nom_batiment_sql,
-				"niveau_batiment_base" => $niveau_batiment_base,
 				"niveau_batiment" => $this->niveau_batiment,
 				"id_batiment" => $this->niveau_batiment,
 				"max_level" => $max_level,
