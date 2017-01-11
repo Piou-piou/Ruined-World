@@ -1,1 +1,188 @@
-body{background-color:#414142}.bataille .rouge{color:#FF0000}.bataille header nav.top{background-color:#000;color:#fff}.bataille header nav.top ul{margin:0}.bataille header nav.top ul li{display:inline-block;padding:0.5rem 1rem}.bataille nav.middle{background-color:#212122;height:100px;width:100%}.bataille nav.middle ul{margin-bottom:0}.bataille nav.middle ul li{list-style:none;display:inline-block}.bataille nav.middle a{display:block}.bataille .ressources .gauche,.bataille .ressources .droite{background-color:#303031;height:50px;color:#fff;padding-top:1rem}.bataille .ressources .gauche .texte,.bataille .ressources .droite .texte{margin-top:0.2rem}.bataille .ressources .gauche::before{background-color:#303031;width:20px;height:50px;position:absolute;top:0;left:-15px;transform:skewX(10deg);content:' '}.bataille .ressources .droite::after{background-color:#303031;width:20px;height:50px;position:absolute;top:0;right:-15px;transform:skewX(-10deg);content:' '}.bataille .ressources .nom-base{height:60px;background-color:#f24237;color:#fff;vertical-align:middle}.bataille .ressources .nom-base::before{background-color:#f24237;width:20px;height:60px;position:absolute;top:0;left:-15px;transform:skewX(10deg);content:' '}.bataille .ressources .nom-base::after{background-color:#f24237;width:20px;height:60px;position:absolute;top:0;right:-15px;transform:skewX(-10deg);content:' ';z-index:1}.bataille .ressources img{margin-top:-0.5rem}.bataille .side-bar{background-color:#303031;color:#fff}.bataille .liste-batiments{float:left;width:150px;position:relative}.bataille .liste-batiments .un-batiment{background-color:#CCCCCC;width:100px;height:100px;text-align:center;vertical-align:middle}.bataille .map-game{width:1170px;height:545px;border:3px solid #000;margin:0 auto;position:relative}.bataille .map-game .un-batiment{position:absolute;background-color:#CCCCCC}.bataille .map-game .case{width:20px;height:20px;border:0.001em solid #fff;position:absolute;visibility:hidden}.bataille .map-game .case.visible{visibility:visible}.bataille .map-players{position:relative;height:1200px;max-height:1200px;overflow:hidden;border:1px solid #000}.bataille .map-players .controls{background:rgba(0,0,0,0.8);z-index:1;position:absolute}.bataille .map-players #right{right:0;top:0;height:100%;width:20px}.bataille .map-players #left{left:0;top:0;height:100%;width:20px}.bataille .map-players #top{left:0;top:0;height:20px;width:100%}.bataille .map-players #bottom{left:0;bottom:0;height:20px;width:100%}.bataille .map-players .map{margin:30px;position:absolute}.bataille .map-players .map>div{width:10px;height:10px;background-color:#FFF;position:absolute}.bataille .map-players .map>div:hover{cursor:pointer}.bataille .map-players .map>div:hover>div{display:block}.bataille .map-players .map>div.ma-base{background-color:green}.bataille .map-players .map>div>div{height:25px;width:300px;background:#fff;position:absolute;top:-30px;display:none}p.rouge{color:red}.popup{overflow-y:visible}.popup .content{min-height:200px;max-height:500px;overflow-y:scroll}.popup .rouge{color:red}.popup .caserne ul li{display:inline-block;font-weight:normal}
+@charset "UTF-8";
+/*pour la nav tout en haut de la page ou il y a aide d├®connexion...*/
+/*pour la nav principaleou il y a le logo de la map...*/
+/*pour le logo et les ressources + les panneaux latt├®raux avec les unit├®s*/
+/*pour le body et le bg de la map*/
+/*pour la map ou on voit tous les players*/
+body {
+  background-color: #414142; }
+
+.bataille {
+  /*-------------------------------------- CLASS GENERALES --------------------------------------*/
+  /*-------------------------------------- HEADER --------------------------------------*/
+  /*partie qui gere l'affichage des ressources + du nom du village*/
+  /*-------------------------------------- SIDE BAR --------------------------------------*/
+  /*-------------------------------------- MAP GAME --------------------------------------*/
+  /*-------------------------------------- MAP --------------------------------------*/ }
+  .bataille .rouge {
+    color: #FF0000; }
+  .bataille header nav.top {
+    background-color: #000;
+    color: #fff; }
+    .bataille header nav.top ul {
+      margin: 0; }
+      .bataille header nav.top ul li {
+        display: inline-block;
+        padding: 0.5rem 1rem; }
+  .bataille nav.middle {
+    background-color: #212122;
+    height: 100px;
+    width: 100%; }
+    .bataille nav.middle ul {
+      margin-bottom: 0; }
+      .bataille nav.middle ul li {
+        list-style: none;
+        display: inline-block; }
+    .bataille nav.middle a {
+      display: block; }
+  .bataille .ressources .gauche, .bataille .ressources .droite {
+    background-color: #303031;
+    height: 50px;
+    color: #fff;
+    padding-top: 1rem; }
+    .bataille .ressources .gauche .texte, .bataille .ressources .droite .texte {
+      margin-top: 0.2rem; }
+  .bataille .ressources .gauche::before {
+    background-color: #303031;
+    width: 20px;
+    height: 50px;
+    position: absolute;
+    top: 0;
+    left: -15px;
+    transform: skewX(10deg);
+    content: ' '; }
+  .bataille .ressources .droite::after {
+    background-color: #303031;
+    width: 20px;
+    height: 50px;
+    position: absolute;
+    top: 0;
+    right: -15px;
+    transform: skewX(-10deg);
+    content: ' '; }
+  .bataille .ressources .nom-base {
+    height: 60px;
+    background-color: #F24237;
+    color: #fff;
+    vertical-align: middle; }
+    .bataille .ressources .nom-base::before {
+      background-color: #F24237;
+      width: 20px;
+      height: 60px;
+      position: absolute;
+      top: 0;
+      left: -15px;
+      transform: skewX(10deg);
+      content: ' '; }
+    .bataille .ressources .nom-base::after {
+      background-color: #F24237;
+      width: 20px;
+      height: 60px;
+      position: absolute;
+      top: 0;
+      right: -15px;
+      transform: skewX(-10deg);
+      content: ' ';
+      z-index: 1; }
+  .bataille .ressources img {
+    margin-top: -0.5rem; }
+  .bataille .side-bar {
+    background-color: #303031;
+    color: #fff; }
+  .bataille .liste-batiments {
+    float: left;
+    width: 150px;
+    position: relative; }
+    .bataille .liste-batiments .un-batiment {
+      background-color: #CCCCCC;
+      width: 100px;
+      height: 100px;
+      text-align: center;
+      vertical-align: middle; }
+  .bataille .map-game {
+    width: 1170px;
+    height: 545px;
+    border: 3px solid #000;
+    margin: 0 auto;
+    position: relative; }
+    .bataille .map-game .un-batiment {
+      position: absolute;
+      background-color: #CCCCCC; }
+    .bataille .map-game .case {
+      width: 20px;
+      height: 20px;
+      border: 0.001em solid #fff;
+      position: absolute;
+      visibility: hidden; }
+      .bataille .map-game .case.visible {
+        visibility: visible; }
+  .bataille .map-players {
+    position: relative;
+    height: 1200px;
+    max-height: 1200px;
+    overflow: hidden;
+    border: 1px solid #000; }
+    .bataille .map-players .controls {
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 1;
+      position: absolute; }
+    .bataille .map-players #right {
+      right: 0;
+      top: 0;
+      height: 100%;
+      width: 20px; }
+    .bataille .map-players #left {
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 20px; }
+    .bataille .map-players #top {
+      left: 0;
+      top: 0;
+      height: 20px;
+      width: 100%; }
+    .bataille .map-players #bottom {
+      left: 0;
+      bottom: 0;
+      height: 20px;
+      width: 100%; }
+    .bataille .map-players .map {
+      margin: 30px;
+      position: absolute; }
+      .bataille .map-players .map > div {
+        width: 10px;
+        height: 10px;
+        background-color: #FFF;
+        position: absolute; }
+        .bataille .map-players .map > div:hover {
+          cursor: pointer; }
+          .bataille .map-players .map > div:hover > div {
+            display: block; }
+        .bataille .map-players .map > div.ma-base {
+          background-color: green; }
+        .bataille .map-players .map > div > div {
+          height: 25px;
+          width: 300px;
+          background: #FFFFFF;
+          position: absolute;
+          top: -30px;
+          display: none; }
+
+p.rouge {
+  color: red; }
+
+.popup {
+  overflow-y: visible; }
+  .popup .content {
+    min-height: 200px;
+    max-height: 500px;
+    overflow-y: scroll; }
+  .popup .rouge {
+    color: red; }
+
+/*-------------------------------------- CASERNE --------------------------------------*/
+.popup .caserne ul li {
+  display: inline-block;
+  font-weight: normal; }
+
+/*# sourceMappingURL=style.css.map */
