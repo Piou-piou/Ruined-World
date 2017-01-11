@@ -19,7 +19,6 @@
 
 	{% if bataille.niveau_batiment > 0 %}
 		<a nom_batiment="{{ nom_batiment }}"
-		   emplacement="{{ emplacement }}"
 		   nom_batiment_sql="{{ bataille.nom_batiment_sql }}"
 		   class="construire {{bataille.ressource.fer.class}} {{bataille.ressource.fuel.class}} {{bataille.ressource.eau.class}}
 		   {{bataille.ressource.electricite.class}}"
