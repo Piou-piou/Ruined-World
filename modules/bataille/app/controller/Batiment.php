@@ -511,16 +511,12 @@
 		 * @param $nom_batiment_sql
 		 * @param $emplacement
 		 */
-		public function setCommencerConstruireBatiment($nom_batiment, $nom_batiment_sql, $emplacement) {
+		public function setCommencerConstruireBatiment($nom_batiment, $nom_batiment_sql) {
 			$dbc = App::getDb();
 			$dbc1 = Bataille::getDb();
 
-			if (ChaineCaractere::FindInString($nom_batiment, "addon")) {
-				$emplacement = 0;
-			}
-
 			if ($this->getConstruction() == 0) {
-				$un_batiment = $this->getUnBatiment($nom_batiment, $emplacement);
+				$un_batiment = $this->getUnBatiment($nom_batiment);
 
 				//on test si assez de ressrouce pour construire le batiment
 				if ($un_batiment == 0) {
@@ -556,7 +552,6 @@
 					//on insere la construction dans la table batiment si new batiment
 					if ($un_batiment == 0) {
 						$dbc->insert("niveau", $this->niveau_batiment+1)
-							->insert("emplacement", $emplacement)
 							->insert("nom_batiment", $nom_batiment)
 							->insert("nom_batiment_sql", $this->nom_batiment_sql)
 							->insert("construction", 1)
@@ -584,7 +579,6 @@
 					$fin_construction = $today+$temps_construction;
 
 					$dbc->insert("date_fin", $fin_construction)
-						->insert("emplacement_construction", $emplacement)
 						->insert("ID_base", Bataille::getIdBase())
 						->insert("ID_batiment", $this->id_batiment)
 						->into("_bataille_construction")
