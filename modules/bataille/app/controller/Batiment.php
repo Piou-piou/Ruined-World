@@ -387,6 +387,71 @@
 			Bataille::setValues(["batiments_construire" => $batiment_construire]);
 		}
 
+		public function getEmplacementConstructionLibre($case_depart, $nom_batiment_sql) {
+			$dbc = App::getDb();
+
+			//récupération de la taille du batiment
+			$width_batiment = 120;
+			$height_batiment = 60;
+
+			//récupération des coordonnées de la sae de départ du batiment
+			$case_depart = explode(",", $case_depart);
+			$posx = $case_depart[0];
+			$posy = $case_depart[1];
+			$finx = $width_batiment+$posx;
+			$finy = $height_batiment+$posy;
+
+			//récupération de tous les batiments
+			$query = $dbc->select("posx")
+				->select("posy")
+				->select("nom_batiment_sql")
+				->from("_bataille_batiment")
+				->where("ID_base", "=", Bataille::getIdBase())
+				->get();
+
+			if ((is_array($query)) && (count($query) > 0)) {
+				foreach ($query as $obj) {
+					$taille_batiment = $this->getTailleBatiment($obj->nom_batiment_sql);
+					$posx_batiment = $obj->posx;
+					$posy_batiment = $obj->posy;
+
+					$finx_batiment = $taille_batiment[0]+$posx_batiment;
+					$finy_batiment = $taille_batiment[1]+$posy_batiment;
+
+					//ok pour coin haut-gauche ++ coin bas-droite
+					if (((($posx >= $posx_batiment) && ($posx <= $finx_batiment)) &&
+						(($posy >= $posy_batiment) && ($posy <= $finy_batiment))) ||
+						((($finx >= $posx_batiment) && ($finx <= $finx_batiment)) &&
+						(($finy >= $posy_batiment) && ($finy <= $finy_batiment))))
+					{
+						echo("toto");
+					}
+				}
+			}
+		}
+
+		/**
+		 * @param $nom_batiment_sql
+		 * @return array
+		 * fonction qui renvoi un tableau contenant la taille et hauteur d'un batiment en
+		 * fonction de son nom
+		 */
+		private function getTailleBatiment($nom_batiment_sql) {
+			$dbc1 = Bataille::getDb();
+
+			$query = $dbc1->select("width")
+				->select("height")
+				->from("liste_batiment")
+				->where("nom_table", "=", $nom_batiment_sql)
+				->get();
+
+			if ((is_array($query)) && (count($query) > 0)) {
+				foreach ($query as $obj) {
+					return [$obj->width, $obj->height];
+				}
+			}
+		}
+
 		/**
 		 * @param $nom_batiment_sql
 		 * @param $niveau
@@ -524,10 +589,6 @@
 					$this->niveau_batiment = 0;
 				}
 				else {
-					//si c'est le lvl 0 de l'addon
-					if ($this->niveau_batiment == 0) {
-						$un_batiment = 0;
-					}
 					$ressource = $this->getRessourceConstruireBatiment($this->nom_batiment_sql, $this->niveau_batiment);
 				}
 
