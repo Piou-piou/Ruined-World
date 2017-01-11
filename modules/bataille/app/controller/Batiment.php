@@ -421,8 +421,16 @@
 					//ok pour coin haut-gauche ++ coin bas-droite
 					if (((($posx >= $posx_batiment) && ($posx <= $finx_batiment)) &&
 						(($posy >= $posy_batiment) && ($posy <= $finy_batiment))) ||
+
 						((($finx >= $posx_batiment) && ($finx <= $finx_batiment)) &&
-						(($finy >= $posy_batiment) && ($finy <= $finy_batiment))))
+						(($finy >= $posy_batiment) && ($finy <= $finy_batiment))) ||
+
+						((($finx >= $posx_batiment) && ($finx <= $finx_batiment)) &&
+						(($posy >= $posy_batiment) && ($posy <= $finy_batiment))) ||
+
+						((($posx >= $posx_batiment) && ($posx <= $finx_batiment)) &&
+						(($finy >= $posy_batiment) && ($finy <= $finy_batiment)))
+					)
 					{
 						echo("toto");
 					}
