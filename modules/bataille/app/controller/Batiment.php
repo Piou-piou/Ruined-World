@@ -509,7 +509,6 @@
 		 * fonction qui initialise la construction d'un batiment
 		 * @param $nom_batiment
 		 * @param $nom_batiment_sql
-		 * @param $emplacement
 		 */
 		public function setCommencerConstruireBatiment($nom_batiment, $nom_batiment_sql) {
 			$dbc = App::getDb();
