@@ -65,46 +65,28 @@
 		public function getBatimentsBase() {
 			$dbc = App::getDb();
 
-			$nombre_emplacement = Bataille::getParam("nombre_emplacement");
+			$query = $dbc->select()->from("_bataille_batiment")->where("ID_base", "=", Bataille::getIdBase())->get();
 
-			for ($i=1 ; $i<($nombre_emplacement+1) ; $i++) {
-				$query = $dbc->select()->from("_bataille_batiment")->where("ID_base", "=", Bataille::getIdBase(), "AND")
-					->where("emplacement", "=", $i)
-					->orderBy("emplacement")
-					->get();
-
-				if (count($query) == 1) {
-					foreach ($query as $obj) {
-						if ($obj->construction) {
-							$batiments[] = [
-								"nom_batiment" => $obj->nom_batiment." en construction",
-								"nom_batiment_sql" => $obj->nom_batiment_sql,
-								"niveau" => $obj->niveau,
-								"emplacement" => $i,
-								"posx" => $obj->posx,
-								"posy" => $obj->posy,
-							];
-						}
-						else {
-							$batiments[] = [
-								"nom_batiment" => $obj->nom_batiment,
-								"nom_batiment_sql" => $obj->nom_batiment_sql,
-								"niveau" => $obj->niveau,
-								"emplacement" => $i,
-								"posx" => $obj->posx,
-								"posy" => $obj->posy,
-							];
-						}
+			if (count($query) > 0) {
+				foreach ($query as $obj) {
+					if ($obj->construction) {
+						$batiments[] = [
+							"nom_batiment" => $obj->nom_batiment." en construction",
+							"nom_batiment_sql" => $obj->nom_batiment_sql,
+							"niveau" => $obj->niveau,
+							"posx" => $obj->posx,
+							"posy" => $obj->posy,
+						];
+					} else {
+						$batiments[] = [
+							"nom_batiment" => $obj->nom_batiment,
+							"nom_batiment_sql" => $obj->nom_batiment_sql,
+							"niveau" => $obj->niveau,
+							"posx" => $obj->posx,
+							"posy" => $obj->posy,
+						];
 					}
 				}
-				/*else {
-					$batiments[] = [
-						"nom_batiment" => "A construire",
-						"nom_batiment_sql" => "a_construire",
-						"niveau" => 0,
-						"emplacement" => $i
-					];
-				}*/
 			}
 
 			Bataille::setValues(["batiments" => $batiments]);
