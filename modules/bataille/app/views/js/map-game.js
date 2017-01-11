@@ -1,24 +1,7 @@
 $(document).ready(function() {
-    //vars pour la map
-    $map = $(".map-game");
-    width = $map.width();
-    height = $map.height();
-    rows = Math.round(height/20);
-    columns = Math.round(width/20);
-
     //var pour le batiment qu'on est en trainde drag
     var taille;
     var batiment;
-
-    //génération de la grille de la map
-    for (i=0 ; i<rows ; i++) {
-        for (j=0 ; j<columns ; j++) {
-            pleft = j*20;
-            ptop = i*20;
-
-            $map.append("<div class='case' id='case-"+pleft+"-"+ptop+"' style='left:"+pleft+"px;top:"+ptop+"px;'></div>");
-        }
-    }
 
     /**
      * @param taille
@@ -89,7 +72,11 @@ $(document).ready(function() {
         cursorAt: { top: -5, left: 0},
         start: function(event, ui) {
             taille = getArrayTaille($(this).find("a").attr("taille"));
-            batiment = $(this).attr("id");
+            batiment = $(this).find("a").attr("nom_batiment_sql");
+            $(".bataille .map-game .case").toggleClass("visible");
+        },
+        stop: function() {
+            $(".bataille .map-game .case").toggleClass("visible");
         }
     });
 
@@ -106,7 +93,21 @@ $(document).ready(function() {
     $(".map-game .case").mouseup(function() {
         pos_depart = getArrayTaille($(this).attr("id"));
 
-        for (i=0 ; i<taille[1] ; i++) {
+        var nom_batiment = $(this).attr("nom_batiment");
+        var nom_batiment_sql = $(this).attr("nom_batiment_sql");
+
+        $.ajax({
+            type:"POST",
+            data: "nom_batiment="+nom_batiment+"&nom_batiment_sql="+nom_batiment_sql,
+            url:"{{WEBROOT}}controller/modules/bataille/batiment/placer_batiment",
+            success: function(data){
+
+            }, error: function(){
+
+            }
+        });
+
+        /*for (i=0 ; i<taille[1] ; i++) {
             for (j=0 ; j<taille[0] ; j++) {
                 posx = j+pos_depart[0];
                 posy = i+pos_depart[1];
@@ -126,7 +127,7 @@ $(document).ready(function() {
                 }
 
             }
-        }
+        }*/
         taille = "";
     });
 })

@@ -13,7 +13,7 @@
 		<h2>Batiments</h2>
 
 		{% for i in bataille.batiments %}
-			<a href="#" class="open-popup" popup="popup-base" emplacement="{{i.emplacement}}" nom_batiment="{{i.nom_batiment}}" nom_batiment_sql="{{i.nom_batiment_sql }}">
+			<a href="#" class="open-popup" popup="popup-base" nom_batiment="{{i.nom_batiment}}" nom_batiment_sql="{{i.nom_batiment_sql }}">
 				{{i.nom_batiment}} {{i.niveau}}
 			</a><br>
 		{% endfor %}
@@ -113,6 +113,12 @@
 					{{i.nom_batiment}} {{i.niveau}}
 				</a>
 			</div>
+		{% endfor %}
+
+		{% for j in 0..((545/20)-1) %}
+			{% for i in 0..((1164/20)-1) %}
+				<div class="case" id="case-{{i*20}}-{{j*20}}" style="left:{{i*20}}px;top:{{j*20}}px;"></div>
+			{% endfor %}
 		{% endfor %}
 	</div>
 </div>
