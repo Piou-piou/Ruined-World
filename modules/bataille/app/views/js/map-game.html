@@ -102,7 +102,7 @@
                 url:"{{WEBROOT}}controller/modules/bataille/batiment/test_emplacement_libre",
                 success: function(data){
                     if (data == "erreur") {
-						$("#"+nom_batiment_sql).parent().css({
+						$("#"+nom_batiment_sql).parent().animate({
 							left: 0,
 							top: 0
 						});
@@ -111,28 +111,6 @@
 
                 }
             });
-
-            /*for (i=0 ; i<taille[1] ; i++) {
-             for (j=0 ; j<taille[0] ; j++) {
-             posx = j+pos_depart[0];
-             posy = i+pos_depart[1];
-
-             if (testBatimentPosition(posx, posy) == false) {
-             $("#case-"+posx+"-"+posy).addClass(batiment+" batiment");
-             }
-             else {
-             alert("batiment deja present");
-             taille = "";
-             $("#"+batiment).css({
-             left: 0,
-             top: 0
-             });
-             retirerBatiment();
-             return false;
-             }
-
-             }
-             }*/
             taille = "";
         });
     })
