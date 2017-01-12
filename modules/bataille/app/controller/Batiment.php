@@ -430,9 +430,9 @@
 
 						((($posx >= $posx_batiment) && ($posx <= $finx_batiment)) &&
 						(($finy >= $posy_batiment) && ($finy <= $finy_batiment)))
-					)
-					{
-						echo("toto");
+					) {
+						echo("erreur");
+						return false;
 					}
 				}
 			}
