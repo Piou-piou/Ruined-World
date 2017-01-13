@@ -323,6 +323,7 @@
 
 
 							$temps_construction = gmdate("H:i:s", $obj->temps_construction);
+							$taille_batiment = $this->getTailleBatiment($all_batiment[$i]);
 						}
 					}
 
@@ -336,7 +337,9 @@
 									"nom_batiment_sql" => $all_batiment[$i],
 									"nom_batiment" => $all_batiment_nom[$i],
 									"ressource" => $ressource,
-									"temps_construction" => $temps_construction
+									"temps_construction" => $temps_construction,
+									"width" => $taille_batiment[0],
+									"height" => $taille_batiment[1]
 								];
 							}
 						}
@@ -368,7 +371,9 @@
 								"nom_batiment_sql" => $all_batiment[$i],
 								"nom_batiment" => $all_batiment_nom[$i],
 								"ressource" => $ressource,
-								"temps_construction" => $temps_construction
+								"temps_construction" => $temps_construction,
+								"width" => $taille_batiment[0],
+								"height" => $taille_batiment[1]
 							];
 						}
 					}
@@ -379,7 +384,9 @@
 							"nom_batiment_sql" => $all_batiment[$i],
 							"nom_batiment" => $all_batiment_nom[$i],
 							"ressource" => $ressource,
-							"temps_construction" => $temps_construction
+							"temps_construction" => $temps_construction,
+							"width" => $taille_batiment[0],
+							"height" => $taille_batiment[1]
 						];
 					}
 				}
@@ -387,12 +394,13 @@
 			Bataille::setValues(["batiments_construire" => $batiment_construire]);
 		}
 
-		public function getEmplacementConstructionLibre($case_depart, $nom_batiment_sql) {
+		public function getEmplacementConstructionLibre($case_depart, $nom_batiment, $nom_batiment_sql) {
 			$dbc = App::getDb();
 
 			//récupération de la taille du batiment
-			$width_batiment = 120;
-			$height_batiment = 60;
+			$taille_batiment = $this->getTailleBatiment($nom_batiment_sql);
+			$width_batiment = $taille_batiment[0];
+			$height_batiment = $taille_batiment[1];
 
 			//récupération des coordonnées de la sae de départ du batiment
 			$case_depart = explode(",", $case_depart);
@@ -434,6 +442,8 @@
 						echo("erreur");
 						return false;
 					}
+
+					//si tout est ok on commence la construction
 				}
 			}
 		}
@@ -444,7 +454,7 @@
 		 * fonction qui renvoi un tableau contenant la taille et hauteur d'un batiment en
 		 * fonction de son nom
 		 */
-		private function getTailleBatiment($nom_batiment_sql) {
+		public function getTailleBatiment($nom_batiment_sql) {
 			$dbc1 = Bataille::getDb();
 
 			$query = $dbc1->select("width")
