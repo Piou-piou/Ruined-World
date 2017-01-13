@@ -1,51 +1,9 @@
 <script>
     $(document).ready(function() {
         //var pour le batiment qu'on est en trainde drag
-        var taille;
         var batiment;
         var nom_batiment;
         var nom_batiment_sql;
-
-        /**
-         * @param taille
-         * @returns {Array}
-         * fonction qui renvoi un tableau contenant la taille x et y d'un batiment
-         * taille[1] = nom batiment ou case
-         * taille[1] = taille en x
-         * taille[2] = taille en y
-         */
-        function getArrayTaille(taille) {
-            temp = taille.split("-");
-
-            taille = [parseInt(temp[1]), parseInt(temp[2])];
-
-            return taille;
-        }
-
-        /**
-         * @param posx
-         * @param posy
-         * @returns {boolean}
-         * fonction qui test si il y a déjà un batiment la ou on vient de poser le nouveau
-         */
-        function testBatimentPosition(posx, posy) {
-            $case = $("#case-"+posx+"-"+posy);
-
-            if ($case.hasClass("batiment")) {
-                return true;
-            }
-
-            return false;
-        }
-
-        /**
-         * fonction qui permet de retirer la class batiment sur une case
-         * afin de rendre celle-ci disponible pour un futur drop
-         */
-        function retirerBatiment() {
-            $(".case."+batiment).removeClass("batiment");
-            $(".case").removeClass(batiment);
-        }
 
         /**
          * fonction qui permet d'afficher ou de masquer la grille de la map
@@ -53,16 +11,15 @@
         $(".bataille #afficher-grille").click(function(e) {
             e.preventDefault();
 
-            $(".bataille .map-game .case").toggleClass("visible");
+            $(".bataille .map-game .cases").toggleClass("visible");
 
-            if ($(".bataille .map-game .case").hasClass("visible")) {
+            if ($(".bataille .map-game .cases").hasClass("visible")) {
                 $(this).html("Masquer la grille");
             }
             else {
                 $(this).html("Afficher la grille");
             }
         });
-
 
 
         //------------------------------------------- DRAG AND DROP D'UN BATIMENT ------------------------------------//
@@ -72,7 +29,6 @@
             revert: "invalid",
             cursorAt: { top: -5, left: 0},
             start: function(event, ui) {
-                taille = getArrayTaille($(this).find("a").attr("taille"));
                 nom_batiment = $(this).find("a").attr("nom_batiment");
 				nom_batiment_sql = $(this).find("a").attr("nom_batiment_sql");
 				batiment = $(this).find("a").attr("id", nom_batiment_sql);
@@ -94,7 +50,9 @@
          * sinon on lance la construction du batiment
          */
         $(".map-game .case").mouseup(function() {
-            pos_depart = getArrayTaille($(this).attr("id"));
+			temp = $(this).attr("id").split("-");
+
+			pos_depart = [parseInt(temp[1]), parseInt(temp[2])];
 
             $.ajax({
                 type:"POST",
@@ -114,7 +72,6 @@
 
                 }
             });
-            taille = "";
         });
     })
 </script>

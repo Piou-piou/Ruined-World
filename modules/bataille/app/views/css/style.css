@@ -105,14 +105,15 @@ body {
     .bataille .map-game .un-batiment {
       position: absolute;
       background-color: #CCCCCC; }
+    .bataille .map-game .cases {
+      visibility: hidden; }
+      .bataille .map-game .cases.visible {
+        visibility: visible; }
     .bataille .map-game .case {
       width: 20px;
       height: 20px;
       border: 0.001em solid #fff;
-      position: absolute;
-      visibility: hidden; }
-      .bataille .map-game .case.visible {
-        visibility: visible; }
+      position: absolute; }
   .bataille .map-players {
     position: relative;
     height: 1200px;
