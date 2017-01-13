@@ -8,6 +8,12 @@ jQuery(function($) {
 			$(this).slideUp();
 		});
 
-		setTimeout("$('.module-flashmessage').slideUp();", 10000);
+		setTimeout(function() {
+			$(".module-flashmessage").slideUp();
+		}, 10000);
+
+		setTimeout(function() {
+			$(".module-flashmessage").remove();
+		}, 12000)
 	}
 });
