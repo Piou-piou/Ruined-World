@@ -28,7 +28,7 @@
 	<div class="small-12 medium-8 large-8 columns">
 		<div class="map-game">
 			{% for i in bataille.batiments %}
-				<div class="un-batiment" style="left:{{ i.posx }}px;top:{{ i.posy }}px;width:{{ i.width }}px;height:{{ i.height }}px;">
+				<div class="un-batiment {{ i.construction }}" style="left:{{ i.posx }}px;top:{{ i.posy }}px;width:{{ i.width }}px;height:{{ i.height }}px;">
 					<a href="#" class="open-popup" popup="popup-base" posy="{{ i.posx }}" posx="{{ i.posx }}" nom_batiment="{{i.nom_batiment}}" nom_batiment_sql="{{i.nom_batiment_sql }}">
 						{{i.nom_batiment}} {{i.niveau}}
 					</a>

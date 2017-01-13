@@ -105,6 +105,8 @@ body {
     .bataille .map-game .un-batiment {
       position: absolute;
       background-color: #CCCCCC; }
+      .bataille .map-game .un-batiment.construction {
+        background-color: #ff6600; }
     .bataille .map-game .cases {
       visibility: hidden; }
       .bataille .map-game .cases.visible {

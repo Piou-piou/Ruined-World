@@ -70,28 +70,22 @@
 			if (count($query) > 0) {
 				foreach ($query as $obj) {
 					$taille_batiment = Bataille::getBatiment()->getTailleBatiment($obj->nom_batiment_sql);
+					$construction = "";
 
 					if ($obj->construction) {
-						$batiments[] = [
-							"nom_batiment" => $obj->nom_batiment." en construction",
-							"nom_batiment_sql" => $obj->nom_batiment_sql,
-							"niveau" => $obj->niveau,
-							"posx" => $obj->posx,
-							"posy" => $obj->posy,
-							"width" => $taille_batiment[0],
-							"height" => $taille_batiment[1]
-						];
-					} else {
-						$batiments[] = [
-							"nom_batiment" => $obj->nom_batiment,
-							"nom_batiment_sql" => $obj->nom_batiment_sql,
-							"niveau" => $obj->niveau,
-							"posx" => $obj->posx,
-							"posy" => $obj->posy,
-							"width" => $taille_batiment[0],
-							"height" => $taille_batiment[1]
-						];
+						$construction = "construction";
 					}
+
+					$batiments[] = [
+						"nom_batiment" => $obj->nom_batiment,
+						"nom_batiment_sql" => $obj->nom_batiment_sql,
+						"niveau" => $obj->niveau,
+						"posx" => $obj->posx,
+						"posy" => $obj->posy,
+						"width" => $taille_batiment[0],
+						"height" => $taille_batiment[1],
+						"construction" => $construction
+					];
 				}
 			}
 

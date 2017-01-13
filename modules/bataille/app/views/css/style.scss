@@ -170,6 +170,10 @@ body {
 		.un-batiment {
 			position: absolute;
 			background-color: #CCCCCC;
+
+			&.construction {
+				background-color: #ff6600;
+			}
 		}
 
 		.cases {
