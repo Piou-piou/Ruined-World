@@ -1,24 +1,51 @@
 {{include("nav.html")}}
 <script src="{{MODULEWEBROOT}}bataille/app/views/js/jquery-ui.min.js"></script>
 <div class="row bataille">
-	<div class="small-12 medium-3 large-3 columns">
+	<div class="small-12 medium-2 large-2 columns">
 		<div class="row side-bar">
 			<h3>Construction en cours</h3>
 			{{bataille.nom_batiment_construction}}<br>
 
 			<div id="defaultCountdown"></div>
 		</div>
-	</div>
-	<div class="small-12 medium-6 large-6 columns">
-		<h2>Batiments</h2>
 
-		{% for i in bataille.batiments %}
-			<a href="#" class="open-popup" popup="popup-base" nom_batiment="{{i.nom_batiment}}" nom_batiment_sql="{{i.nom_batiment_sql }}">
-				{{i.nom_batiment}} {{i.niveau}}
-			</a><br>
-		{% endfor %}
+		<div class="espacement"></div>
+
+		<div class="row side-bar">
+			<a href="#" id="afficher-grille">Afficher la grille</a>
+
+			<div class="liste-batiments">
+				{% for i in bataille.batiments_construire %}
+					<div class="un-batiment draggable" style="width:{{ i.width }}px;height:{{ i.height }}px;">
+						<a href="#" class="open-popup" popup="popup-base" taille="{{i.nom_batiment_sql}}-120-60"  nom_batiment="{{i.nom_batiment}}" nom_batiment_sql="{{i.nom_batiment_sql }}">
+							{{i.nom_batiment}} {{i.niveau}}
+						</a>
+					</div>
+				{% endfor %}
+			</div>
+		</div>
 	</div>
-	<div class="small-12 medium-3 large-3 columns">
+	<div class="small-12 medium-8 large-8 columns">
+		<div class="map-game">
+			{% for i in bataille.batiments %}
+				<div class="un-batiment" style="left:{{ i.posx }}px;top:{{ i.posy }}px;width:{{ i.width }}px;height:{{ i.height }}px;">
+					<a href="#" class="open-popup" popup="popup-base" posy="{{ i.posx }}" posx="{{ i.posx }}" nom_batiment="{{i.nom_batiment}}" nom_batiment_sql="{{i.nom_batiment_sql }}">
+						{{i.nom_batiment}} {{i.niveau}}
+					</a>
+				</div>
+			{% endfor %}
+
+			<div class="cases">
+				{% for j in 0..((545/20)-1) %}
+					{% for i in 0..((1164/20)-1) %}
+						<div class="case" id="case-{{i*20}}-{{j*20}}" style="left:{{i*20}}px;top:{{j*20}}px;"></div>
+					{% endfor %}
+				{% endfor %}
+			</div>
+
+		</div>
+	</div>
+	<div class="small-12 medium-2 large-2 columns">
 		{% if bataille.recrutement is iterable %}
 			<div class="row">
 				<div class="small-12 side-bar">
@@ -90,36 +117,6 @@
 				</div>
 			{% endif %}
 		</div>
-	</div>
-</div>
-
-<div class="bataille">
-	<a href="#" id="afficher-grille">Afficher la grille</a>
-
-	<div class="liste-batiments">
-		{% for i in bataille.batiments_construire %}
-			<div class="un-batiment draggable" style="width:{{ i.width }}px;height:{{ i.height }}px;">
-				<a href="#" class="open-popup" popup="popup-base" taille="{{i.nom_batiment_sql}}-120-60"  nom_batiment="{{i.nom_batiment}}" nom_batiment_sql="{{i.nom_batiment_sql }}">
-					{{i.nom_batiment}} {{i.niveau}}
-				</a>
-			</div>
-		{% endfor %}
-	</div>
-
-	<div class="map-game">
-		{% for i in bataille.batiments %}
-			<div class="un-batiment" style="left:{{ i.posx }}px;top:{{ i.posy }}px;width:{{ i.width }}px;height:{{ i.height }}px;">
-				<a href="#" class="open-popup" popup="popup-base" posy="{{ i.posx }}" posx="{{ i.posx }}" nom_batiment="{{i.nom_batiment}}" nom_batiment_sql="{{i.nom_batiment_sql }}">
-					{{i.nom_batiment}} {{i.niveau}}
-				</a>
-			</div>
-		{% endfor %}
-
-		{% for j in 0..((545/20)-1) %}
-			{% for i in 0..((1164/20)-1) %}
-				<div class="case" id="case-{{i*20}}-{{j*20}}" style="left:{{i*20}}px;top:{{j*20}}px;"></div>
-			{% endfor %}
-		{% endfor %}
 	</div>
 </div>
 

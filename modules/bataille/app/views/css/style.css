@@ -89,16 +89,13 @@ body {
   .bataille .side-bar {
     background-color: #303031;
     color: #fff; }
-  .bataille .liste-batiments {
-    float: left;
-    width: 150px;
-    position: relative; }
-    .bataille .liste-batiments .un-batiment {
-      background-color: #CCCCCC;
-      width: 100px;
-      height: 100px;
-      text-align: center;
-      vertical-align: middle; }
+  .bataille .liste-batiments .un-batiment {
+    background-color: #CCCCCC;
+    width: 100px;
+    height: 100px;
+    text-align: center;
+    vertical-align: middle;
+    margin-top: 20px; }
   .bataille .map-game {
     width: 1170px;
     height: 545px;

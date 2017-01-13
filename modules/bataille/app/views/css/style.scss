@@ -150,16 +150,13 @@ body {
 
 	/*-------------------------------------- MAP GAME --------------------------------------*/
 	.liste-batiments {
-		float: left;
-		width: 150px;
-		position: relative;
-
 		.un-batiment {
 			background-color: #CCCCCC;
 			width: 100px;
 			height: 100px;
 			text-align: center;
 			vertical-align: middle;
+			margin-top: 20px;
 		}
 	}
 
