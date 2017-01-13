@@ -3,7 +3,7 @@
 <h4>{{ bataille.info_batiment }}</h4>
 
 <hr>
-{% if bataille.max_level == 1 %}
+{% if bataille.max_level >=0 and bataille.max_level < 2 %}
 	<h2>Cout pour le prochain niveau</h2>
 	<h3>Niveau suivant : {{ bataille.niveau_batiment+1 }}</h3>
 

@@ -186,6 +186,8 @@
 				if (($construction[1] == true) && ($this->niveau_batiment > 1)) {
 					$this->niveau_batiment = $this->niveau_batiment + 1;
 				}
+
+				$max_level =  $this->getInfoUpgradeBatiment();
 			}
 			else {
 				$query = $dbc1->select("nom_table")
@@ -200,9 +202,9 @@
 				}
 
 				$this->niveau_batiment = 0;
+				$this->getInfoUpgradeBatiment();
+				$max_level = 0;
 			}
-
-			$max_level =  $this->getInfoUpgradeBatiment();
 
 			//permet de savoir si le batiment produit bien des ressoures
 			$batiment_production = [];
@@ -442,9 +444,10 @@
 						echo("erreur");
 						return false;
 					}
-
-					//si tout est ok on commence la construction
 				}
+
+				//si tout est ok on commence la construction
+				$this->setCommencerConstruireBatiment($nom_batiment, $nom_batiment_sql, $posx, $posy);
 			}
 		}
 
@@ -581,7 +584,7 @@
 				return 1;
 			}
 
-			return 0;
+			return "max_level";
 		}
 		//-------------------------- END GETTER ----------------------------------------------------------------------------//
 
@@ -593,7 +596,7 @@
 		 * @param $nom_batiment
 		 * @param $nom_batiment_sql
 		 */
-		public function setCommencerConstruireBatiment($nom_batiment, $nom_batiment_sql) {
+		public function setCommencerConstruireBatiment($nom_batiment, $nom_batiment_sql, $posx, $posy) {
 			$dbc = App::getDb();
 			$dbc1 = Bataille::getDb();
 
@@ -632,6 +635,8 @@
 						$dbc->insert("niveau", $this->niveau_batiment+1)
 							->insert("nom_batiment", $nom_batiment)
 							->insert("nom_batiment_sql", $this->nom_batiment_sql)
+							->insert("posx", intval($posx))
+							->insert("posy", intval($posy))
 							->insert("construction", 1)
 							->insert("ID_base", Bataille::getIdBase())
 							->into("_bataille_batiment")
