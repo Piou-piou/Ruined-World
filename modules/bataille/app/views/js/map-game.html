@@ -59,15 +59,18 @@
                 data: "nom_batiment="+nom_batiment+"&nom_batiment_sql="+nom_batiment_sql+"&pos_depart="+pos_depart,
                 url:"{{WEBROOT}}controller/modules/bataille/batiment/test_emplacement_libre",
                 success: function(data){
-                    if (data == "erreur") {
+					if (data == "ok") {
+						location.reload();
+					}
+                    else {
 						$("#"+nom_batiment_sql).parent().animate({
 							left: 0,
 							top: 0
 						});
+						$("body").prepend(data);
+
+						console.log(data)
                     }
-					else {
-						location.reload();
-					}
                 }
             });
         });

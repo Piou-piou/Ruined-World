@@ -441,13 +441,16 @@
 						((($posx >= $posx_batiment) && ($posx <= $finx_batiment)) &&
 						(($finy >= $posy_batiment) && ($finy <= $finy_batiment)))
 					) {
-						echo("erreur");
 						return false;
 					}
 				}
 
 				//si tout est ok on commence la construction
-				$this->setCommencerConstruireBatiment($nom_batiment, $nom_batiment_sql, $posx, $posy);
+				if ($this->setCommencerConstruireBatiment($nom_batiment, $nom_batiment_sql, $posx, $posy) === false) {
+					return false;
+				}
+
+				echo("ok");
 			}
 		}
 
@@ -616,6 +619,7 @@
 				//si pas assez de ressource
 				if (in_array("rouge", $ressource[0])) {
 					FlashMessage::setFlash("Pas assez de ressources pour construire ce batiment");
+					return false;
 				}
 				else {
 					//recuperation du temps de construction
@@ -673,6 +677,7 @@
 			}
 			else {
 				FlashMessage::setFlash("Un batiment est déjà en construction, vous ne pouvez pas en construire un autre !");
+				return false;
 			}
 		}
 
