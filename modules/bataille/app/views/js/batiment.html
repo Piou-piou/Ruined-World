@@ -2,32 +2,16 @@
 	$(document).ready(function() {
 		var batiments_speciaux = [
 				"marche",
-				"marche en construction",
 				"ambassade",
-				"ambassade en construction",
 				"centre de recherche",
-				"centre de recherche en construction",
 				"caserne",
-				"caserne en construction",
 		];
 
 		$(".open-popup").click(function() {
 			var nom_batiment_sql = $(this).attr("nom_batiment_sql");
 			var nom_batiment = $(this).attr("nom_batiment");
 
-			/*if (nom_batiment == "A construire") {
-				$.ajax({
-					type:"POST",
-					data: "emplacement="+emplacement,
-					url:"{{WEBROOT}}bataille/popup/listebatiments",
-					success: function(data){
-						$("#popup-base #ajax").append(data);
-					}, error: function(){
-
-					}
-				});
-			}
-			else */if (batiments_speciaux.indexOf(nom_batiment) != -1) {
+			if (batiments_speciaux.indexOf(nom_batiment) != -1) {
 				$.ajax({
 					type:"POST",
 					data: "nom_batiment="+nom_batiment+"&nom_batiment_sql="+nom_batiment_sql,
