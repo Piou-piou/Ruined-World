@@ -395,7 +395,15 @@
 			}
 			Bataille::setValues(["batiments_construire" => $batiment_construire]);
 		}
-
+		
+		/**
+		 * @param $case_depart
+		 * @param $nom_batiment
+		 * @param $nom_batiment_sql
+		 * @return bool
+		 * fonction qui test si un il y a la place de construire un batiment en fonction de sa case ou il a été laché en x et y
+		 * et en fonction de sa taille et du positionnement des autres batiments
+		 */
 		public function getEmplacementConstructionLibre($case_depart, $nom_batiment, $nom_batiment_sql) {
 			$dbc = App::getDb();
 
@@ -418,7 +426,7 @@
 				->from("_bataille_batiment")
 				->where("ID_base", "=", Bataille::getIdBase())
 				->get();
-
+			
 			if ((is_array($query)) && (count($query) > 0)) {
 				foreach ($query as $obj) {
 					$taille_batiment = $this->getTailleBatiment($obj->nom_batiment_sql);
@@ -427,22 +435,18 @@
 
 					$finx_batiment = $taille_batiment[0]+$posx_batiment;
 					$finy_batiment = $taille_batiment[1]+$posy_batiment;
-
-					//ok pour coin haut-gauche ++ coin bas-droite
-					if (((($posx >= $posx_batiment) && ($posx <= $finx_batiment)) &&
-						(($posy >= $posy_batiment) && ($posy <= $finy_batiment))) ||
-
-						((($finx >= $posx_batiment) && ($finx <= $finx_batiment)) &&
-						(($finy >= $posy_batiment) && ($finy <= $finy_batiment))) ||
-
-						((($finx >= $posx_batiment) && ($finx <= $finx_batiment)) &&
-						(($posy >= $posy_batiment) && ($posy <= $finy_batiment))) ||
-
-						((($posx >= $posx_batiment) && ($posx <= $finx_batiment)) &&
-						(($finy >= $posy_batiment) && ($finy <= $finy_batiment)))
-					) {
-						return false;
+					
+					for ($i=$posy ; $i<$finy ; $i++) {
+						for ($j=$posx ; $j<$finx ; $j++) {
+							if ((($posx++ >= $posx_batiment) && ($posx++ <= $finx_batiment)) && (($posy++ >= $posy_batiment) && ($posy++ <= $finy_batiment))) {
+								FlashMessage::setFlash("Un batiment est déjà présent à cet emplacement, merci d'en choisir un autre");
+								return false;
+							}
+						}
 					}
+					
+					$posx = $case_depart[0];
+					$posy = $case_depart[1];
 				}
 
 				//si tout est ok on commence la construction
