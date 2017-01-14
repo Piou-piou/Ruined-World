@@ -323,8 +323,7 @@
 								$pour_construire = [];
 							}
 
-
-							$temps_construction = gmdate("H:i:s", $obj->temps_construction);
+							$temps_construction = gmdate("H:i:s", round($obj->temps_construction-($obj->temps_construction*Bataille::getBatiment()->getNiveauBatiment("centre_commandement")/100)));
 							$taille_batiment = $this->getTailleBatiment($all_batiment[$i]);
 						}
 					}
@@ -542,7 +541,7 @@
 			if ((is_array($query)) && (count($query) > 0)) {
 				foreach ($query as $obj) {
 					$this->ressource_construire = $this->getRessourceConstruireBatiment($this->nom_batiment_sql, $this->niveau_batiment);
-					$this->temps_construction = DateHeure::Secondeenheure($obj->temps_construction);
+					$this->temps_construction = DateHeure::Secondeenheure(round($obj->temps_construction-($obj->temps_construction*Bataille::getBatiment()->getNiveauBatiment("centre_commandement")/100)));
 				}
 
 				//récupération des éléments particulier à un batiment
@@ -634,7 +633,7 @@
 						->get();
 
 					foreach ($query as $obj) {
-						$temps_construction = $obj->temps_construction;
+						$temps_construction = round($obj->temps_construction-($obj->temps_construction*Bataille::getBatiment()->getNiveauBatiment("centre_commandement")/100));
 						$ressource_construction = explode(", ", $obj->ressource_construire);
 					}
 
