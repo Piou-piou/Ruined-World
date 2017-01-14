@@ -1,7 +1,6 @@
 <script>
     $(document).ready(function() {
         //var pour le batiment qu'on est en trainde drag
-        var batiment;
         var nom_batiment;
         var nom_batiment_sql;
 
@@ -30,7 +29,6 @@
             start: function(event, ui) {
                 nom_batiment = $(this).find("a").attr("nom_batiment");
 				nom_batiment_sql = $(this).find("a").attr("nom_batiment_sql");
-				batiment = $(this).find("a").attr("id", nom_batiment_sql);
 				$(".bataille .map-game .case").toggleClass("visible");
             },
             stop: function() {
