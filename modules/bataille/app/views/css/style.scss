@@ -21,6 +21,8 @@ $border-map-players: #000;
 $map-bg-mabase: green;
 $map-bg-hover-base: #FFFFFF;
 
+@import "login";
+
 body {
 	background-color: $bg-body;
 }
@@ -29,16 +31,6 @@ body {
 	/*-------------------------------------- CLASS GENERALES --------------------------------------*/
 	.rouge {
 		color: #FF0000;;
-	}
-	
-	
-	
-	/*-------------------------------------- LOGIN --------------------------------------*/
-	&.login {
-		background-image: url(../images/login.jpg);
-		background-repeat: no-repeat;
-		width: 100%;
-		height: 100%;
 	}
 	
 	

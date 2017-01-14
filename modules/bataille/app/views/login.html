@@ -1,13 +1,30 @@
 <link rel="stylesheet" type="text/css" href="{{MODULEWEBROOT}}bataille/app/views/css/style.css">
 
 <div class="row bataille login">
-	<form class="small-12" action="{{ WEBROOT }}controller/modules/bataille/auth/login" method="post">
-		<label for="pseudo">Votre pseudo : </label>
-		<input type="text" name="pseudo">
-
-		<label for="mdp">Votre mot de passe</label>
-		<input type="password" name="mdp">
-
-		<button type="submit">Connexion</button>
-	</form>
+	<div class="login-form active" id="login">
+		<form  action="{{ WEBROOT }}controller/modules/bataille/auth/login" method="post">
+			
+			<h1>Connexion à Ruined world</h1>
+			
+			<div class="modifier-contenu">
+				<div class="bloc">
+					<label class="label" for="pseudo" type-val="string" min="3" max="15" data-error="Le doit être comprise entre 3 et 15 caractères">Pseudo</label>
+					<input type="text" name="pseudo" required/>
+				</div>
+				
+				<div class="bloc">
+					<label class="label" for="mdp" type-val="string" min="3" max="15" data-error="Le mot de passe être comprise entre 3 et 15 caractères">Mot de passe</label>
+					<input type="password" name="mdp" required/>
+				</div>
+			</div>
+			
+			<input type="submit" class="submit-contenu submit-standard no-shadow full-width" value="Connexion">
+		</form>
+		
+		<div class="lien">
+			<a id="mdp-oublie">Mot de passe oublié ?</a>
+		</div>
+	</div>
 </div>
+
+<script src="{{ LIBSWEBROOT }}input_type_admin/js/effet_input.js"></script>
