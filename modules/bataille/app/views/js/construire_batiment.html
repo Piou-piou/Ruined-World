@@ -13,7 +13,12 @@
 					data: "nom_batiment="+nom_batiment+"&nom_batiment_sql="+nom_batiment_sql,
 					url:"{{WEBROOT}}controller/modules/bataille/batiment/construire",
 					success: function(data){
-						location.reload();
+					    if (data == "ok") {
+                            location.reload();
+                        }
+                        else {
+                            $("body").prepend(data);
+                        }
 					}, error: function(){
 
 					}
