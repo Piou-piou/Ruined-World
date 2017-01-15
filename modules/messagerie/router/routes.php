@@ -21,6 +21,10 @@
 		if ($this->page == "messages-supprimes") {
 			$this->controller = "messagerie/app/controller/initialise/messages_supprimes.php";
 		}
+		
+		if ($this->page == "ecrire-message") {
+			$this->controller = "messagerie/app/controller/initialise/ecrire_message.php";
+		}
 
 		if ($this->page == "message") {
 			$this->controller = "messagerie/app/controller/initialise/message.php";
