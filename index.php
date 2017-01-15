@@ -121,17 +121,6 @@
 		}
 	}
 	else {
-		$contenu->getContenuPage();
-		$contenu_page = $contenu->getContenu();
-
-		require("app/controller/initialise_all.php");
-
-		$loader = new Twig_Loader_Filesystem('app/views');
-		$twig = new Twig_Environment($loader);
-
-		$arr = [];
-		$page = "index";
-
-		require("app/views/template/principal.php");
+		header("location:".WEBROOT."bataille");
 	}
 	//--------------------------------------------- FIN ROUTING -------------------------------------------------------//
