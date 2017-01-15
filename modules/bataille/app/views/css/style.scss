@@ -172,37 +172,44 @@ body {
 		}
 	}
 
-	.map-game {
-		width: 1166px;
-		height: 545px;
-		border: 3px solid #000;
-		margin: 0 auto;
-		position: relative;
-
-		.un-batiment {
-			position: absolute;
-			background-color: #CCCCCC;
-
-			&.construction {
-				background-color: #ff6600;
+	.outer-map {
+		background-color: #0000AA;
+		padding: 30px 0;
+		
+		.map-game {
+			width: 1166px;
+			height: 545px;
+			border: 3px solid #000;
+			margin: 0 auto;
+			position: relative;
+			background-color: $bg-body;
+			
+			.un-batiment {
+				position: absolute;
+				background-color: #CCCCCC;
+				
+				&.construction {
+					background-color: #ff6600;
+				}
 			}
-		}
-
-		.cases {
-			visibility: hidden;
-
-			&.visible {
-				visibility: visible;
+			
+			.cases {
+				visibility: hidden;
+				
+				&.visible {
+					visibility: visible;
+				}
 			}
-		}
-
-		.case {
-			width: 20px;
-			height: 20px;
-			border: 0.001em solid #fff;
-			position: absolute;
+			
+			.case {
+				width: 20px;
+				height: 20px;
+				border: 0.001em solid #fff;
+				position: absolute;
+			}
 		}
 	}
+	
 
 
 
