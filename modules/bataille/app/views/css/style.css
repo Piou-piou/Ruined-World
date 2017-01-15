@@ -66,7 +66,7 @@
     padding: 10px 20px;
     min-width: 64px;
     line-height: 18px;
-    background-color: #2196F3;
+    background-color: #F24237;
     color: #fff;
     border: none;
     transition: 0.3s all ease;
@@ -75,9 +75,9 @@
     color: #fff;
     text-align: center;
     box-shadow: 1px 1px 3px #b4b4b4;
-    background: linear-gradient(#2196F3, #2196F3) no-repeat top, linear-gradient(#217ED3, #217ED3) no-repeat bottom;
+    background: linear-gradient(#F24237, #F24237) no-repeat top, linear-gradient(#C33632, #C33632) no-repeat bottom;
     background-size: 100% 100%, 100% 0%;
-    background-color: #2196F3;
+    background-color: #F24237;
     transition: 0.3s all ease;
     cursor: pointer; }
     .bataille .submit-contenu.submit-standard {
@@ -170,7 +170,7 @@
         display: block;
         position: relative;
         top: 20%; }
-      .bataille.login .login-form h1 {
+      .bataille.login .login-form h1, .bataille.login .login-form h2 {
         color: #AFBDC4;
         text-align: center;
         margin-top: 10px;
@@ -226,11 +226,11 @@
           left: 0;
           background-color: #A7A7A7; }
         .bataille.login .login-form .bloc:not(.no-input)::after {
-          background-color: #2196F3;
+          background-color: #F24237;
           transform: scaleX(0);
           transition: transform 0.3s ease; }
         .bataille.login .login-form .bloc.is-focused .label {
-          color: #2196F3; }
+          color: #F24237; }
         .bataille.login .login-form .bloc.is-focused::after {
           transform: scaleX(1); }
         .bataille.login .login-form .bloc.has-label .label {
@@ -253,7 +253,7 @@
         color: #A7A7A7;
         transition: all 0.3s ease; }
         .bataille.login .login-form .lien a:hover {
-          color: #217ED3; }
+          color: #C33632; }
 
 body {
   background-color: #414142; }
