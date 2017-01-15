@@ -228,7 +228,7 @@
 			$dbc = App::getDb();
 			$id_base_dest = Bataille::getBaseExistPosition($posx, $posy);
 
-			if ($id_base_dest != 0) {
+			if (($id_base_dest != 0) && ($id_base_dest != Bataille::getIdBase())) {
 				$ressource["eau"] = Bataille::getTestAssezRessourceBase("eau", $eau);
 				$ressource["electricite"] = Bataille::getTestAssezRessourceBase("electricite", $electricite);
 				$ressource["fer"] = Bataille::getTestAssezRessourceBase("fer", $fer);

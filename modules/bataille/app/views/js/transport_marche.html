@@ -1,9 +1,31 @@
+<script>
+    $(".popup #envoyer-ressources").submit(function(e) {
+        e.preventDefault();
+        
+        $.ajax({
+            type:"POST",
+            data: $(this).serialize(),
+            url: $(this).attr("action"),
+            success: function(data){
+                if (data == "ok") {
+                    location.reload();
+                }
+                else {
+                    $("body").prepend(data);
+                }
+            }, error: function(){
+                
+            }
+        });
+    });
+</script>
+
 {% if i.date_arrivee > 0 %}
 	<script>
-		$(function () {
-			$('#transport-{{ i.id_marche_transport }}').countdown({
-				until: {{i.date_arrivee}}
-			});
-		});
+        $(function () {
+            $('#transport-{{ i.id_marche_transport }}').countdown({
+                until: {{i.date_arrivee}}
+            });
+        });
 	</script>
 {% endif %}
