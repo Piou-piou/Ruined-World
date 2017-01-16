@@ -452,8 +452,6 @@
 				if ($this->setCommencerConstruireBatiment($nom_batiment, $nom_batiment_sql, $posx, $posy) === false) {
 					return false;
 				}
-
-				echo("ok");
 			}
 		}
 
