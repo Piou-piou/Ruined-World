@@ -153,6 +153,12 @@
 				$fer = $this->getFer()-$fer;
 				$fuel = $this->getFuel()-$fuel;
 				$nourriture = $this->getNourriture()-$nourriture;
+				
+				if ($eau < 0) $eau = 0;
+				if ($electricite < 0) $electricite = 0;
+				if ($fer < 0) $fer = 0;
+				if ($fuel < 0) $fuel = 0;
+				if ($nourriture < 0) $nourriture = 0;
 			}
 			else {
 				$eau = $this->getEau()+$eau;
