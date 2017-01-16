@@ -5,3 +5,6 @@
 	if (\modules\bataille\app\controller\Bataille::getBatiment()->setCommencerConstruireBatiment($nom_batiment, $nom_batiment_sql) == false) {
 		\core\HTML\flashmessage\FlashMessage::getFlash();
 	}
+	else {
+		echo("ok");
+	}

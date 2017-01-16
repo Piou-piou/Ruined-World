@@ -676,8 +676,6 @@
 
 					//on retire les ressources de la base
 					Bataille::getRessource()->setUpdateRessource($ressource_construction[2], $ressource_construction[3], $ressource_construction[0], $ressource_construction[1], 0, "-");
-				
-					return "ok";
 				}
 			}
 			else {
