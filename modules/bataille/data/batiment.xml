@@ -73,4 +73,11 @@
         <champ>ID_centre_recherche</champ>
         <complement>%</complement>
     </centre_recherche>
+
+    <centre_commandement>
+        <phrase>Réduction du temps de construction des batiments : </phrase>
+        <phrase_suivant>Réduction du temps de construction des batiments au niveau suivant : </phrase_suivant>
+        <champ>ID_centre_commandement</champ>
+        <complement>%</complement>
+    </centre_commandement>
 </bataille>
