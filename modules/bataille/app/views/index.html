@@ -65,21 +65,23 @@
 			<div class="espacement"></div>
 		{% endif %}
 
-		<div class="row">
-			<div class="small-12 side-bar">
-				Mission Nourriture
-			</div>
-			
-			<div class="small-12 side-bar">
-				<h3>Unités</h3>
-				{% for key,i in bataille.unites %}
-					<h4>{{ key }}</h4>
-					{% for j in i %}
-						<p>{{ j.nom }} {{ j.nombre }}</p>
+		{% if bataille.unites is iterable %}
+			<div class="row">
+				<div class="small-12 side-bar">
+					Mission Nourriture
+				</div>
+
+				<div class="small-12 side-bar">
+					<h3>Unités</h3>
+					{% for key,i in bataille.unites %}
+						<h4>{{ key }}</h4>
+						{% for j in i %}
+							<p>{{ j.nom }} {{ j.nombre }}</p>
+						{% endfor %}
 					{% endfor %}
-				{% endfor %}
+				</div>
 			</div>
-		</div>
+		{% endif %}
 
 		<div class="espacement"></div>
 
