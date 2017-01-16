@@ -620,7 +620,7 @@
 				}
 
 				//si pas assez de ressource
-				if (in_array("rouge", $ressource[0])) {
+				if (($ressource["eau"]["class"] || $ressource["electricite"]["class"] ||$ressource["fer"]["class"] ||$ressource["fuel"]["class"]) == "rouge") {
 					FlashMessage::setFlash("Pas assez de ressources pour construire ce batiment");
 					return false;
 				}
