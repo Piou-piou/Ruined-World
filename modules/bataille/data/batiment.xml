@@ -1,52 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bataille>
     <centrale_eau>
-        <phrase>Production : </phrase>
-        <phrase_suivant>Production au niveau suivant : </phrase_suivant>
+        <phrase>Production d'eau : </phrase>
+        <phrase_suivant>Production d'eau au niveau suivant : </phrase_suivant>
         <champ>production</champ>
+        <complement> par heure</complement>
     </centrale_eau>
 
-    <centrale_eau_addon>
-        <phrase>Production : </phrase>
-        <phrase_suivant>Production au niveau suivant : </phrase_suivant>
-        <champ>production</champ>
-    </centrale_eau_addon>
-
     <centrale_electrique>
-        <phrase>Production : </phrase>
-        <phrase_suivant>Production au niveau suivant : </phrase_suivant>
+        <phrase>Production d'éléctricité : </phrase>
+        <phrase_suivant>Production d'éléctricité au niveau suivant : </phrase_suivant>
         <champ>production</champ>
+        <complement> par heure</complement>
     </centrale_electrique>
 
-    <centrale_electrique_addon>
-        <phrase>Production : </phrase>
-        <phrase_suivant>Production au niveau suivant : </phrase_suivant>
-        <champ>production</champ>
-    </centrale_electrique_addon>
-
     <station_forage>
-        <phrase>Production : </phrase>
-        <phrase_suivant>Production au niveau suivant : </phrase_suivant>
+        <phrase>Production de fer : </phrase>
+        <phrase_suivant>Production de fer au niveau suivant : </phrase_suivant>
         <champ>production</champ>
+        <complement> par heure</complement>
     </station_forage>
 
-    <station_forage_addon>
-        <phrase>Production : </phrase>
-        <phrase_suivant>Production au niveau suivant : </phrase_suivant>
-        <champ>production</champ>
-    </station_forage_addon>
-
     <station_pompage_fuel>
-        <phrase>Production : </phrase>
-        <phrase_suivant>Production au niveau suivant : </phrase_suivant>
+        <phrase>Production de fuel : </phrase>
+        <phrase_suivant>Production de fuel au niveau suivant : </phrase_suivant>
         <champ>production</champ>
+        <complement> par heure</complement>
     </station_pompage_fuel>
-
-    <station_pompage_fuel_addon>
-        <phrase>Production : </phrase>
-        <phrase_suivant>Production au niveau suivant : </phrase_suivant>
-        <champ>production</champ>
-    </station_pompage_fuel_addon>
 
     <entrepot>
         <phrase>Stockage actuel : </phrase>
