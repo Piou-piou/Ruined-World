@@ -336,6 +336,25 @@ p.rouge {
 		min-height: 200px;
 		max-height: 500px;
 		overflow-y: scroll;
+		
+		.lien a {
+			color: #FFFFFF;
+			border: none;
+			transition: 0.3s all ease;
+			font-size: 14px;
+			font-family: Arial;
+			color: #fff;
+			text-align: center;
+			box-shadow: 1px 1px 3px #b4b4b4;
+			margin: 10px;
+			line-height: 18px;
+			background-color: #2196F3;
+			
+			&.annuler:hover {
+				background-color: #217ED3;
+				color: #FFFFFF;
+			}
+		}
 	}
 
 	.rouge {
