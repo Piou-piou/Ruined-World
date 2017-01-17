@@ -108,7 +108,7 @@
 				$id_base = Bataille::getIdBase();
 			}
 
-			if ($ressource == "eau") $nom_batiment = "centrale_eau";
+			$nom_batiment = "centrale_eau";
 			if ($ressource == "electricite") $nom_batiment = "centrale_electrique";
 			if ($ressource == "fuel") $nom_batiment = "station_pompage_fuel";
 			if ($ressource == "fer") $nom_batiment = "station_forage";
@@ -120,10 +120,8 @@
 
 				if ((is_array($query)) && (count($query) > 0)) {
 					foreach ($query as $obj) {
-						$prod = $obj->production;
+						return $obj->production;
 					}
-
-					return $prod;
 				}
 			}
 			else {
