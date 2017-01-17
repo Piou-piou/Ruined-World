@@ -273,8 +273,6 @@
 			$dbc1 = Bataille::getDb();
 			$batiment_construit = [];
 			$batiment_construire = [];
-			$all_batiment = [];
-			$all_batiment_nom = [];
 
 			//recuperation des batiments deja construit dans la base
 			$query = $dbc->select("nom_batiment_sql")
@@ -332,15 +330,22 @@
 						if (in_array($pour_construire[0][1], $batiment_construit)) {
 							if ($pour_construire[0][2] <= $this->getNiveauBatiment($pour_construire[0][1])) {
 								$ressource = $this->getRessourceConstruireBatiment($all_batiment[$i], 0);
+
+								$batiment_construire[] = [
+									"nom_batiment_sql" => $all_batiment[$i],
+									"nom_batiment" => $all_batiment_nom[$i],
+									"ressource" => $ressource,
+									"temps_construction" => $temps_construction,
+									"width" => $taille_batiment[0],
+									"height" => $taille_batiment[1]
+								];
 							}
 						}
 					}
 					else if (count($pour_construire) > 1) {
 						$ok_construction = false;
-						
 						//test si tous les batiments sont construits et on le niveau nécéssaire
-						$c_pour_construire = count($pour_construire);
-						for ($j = 0 ; $j < count($c_pour_construire) ; $j++) {
+						for ($j = 0 ; $j < count($pour_construire) ; $j++) {
 							if (in_array($pour_construire[$j][1], $batiment_construit)) {
 								if ($pour_construire[$j][2] <= $this->getNiveauBatiment($pour_construire[$j][1])) {
 									$ok_construction = true;
@@ -359,20 +364,29 @@
 						//si ok on affiche le batiment
 						if ($ok_construction === true) {
 							$ressource = $this->getRessourceConstruireBatiment($all_batiment[$i], 0);
+
+							$batiment_construire[] = [
+								"nom_batiment_sql" => $all_batiment[$i],
+								"nom_batiment" => $all_batiment_nom[$i],
+								"ressource" => $ressource,
+								"temps_construction" => $temps_construction,
+								"width" => $taille_batiment[0],
+								"height" => $taille_batiment[1]
+							];
 						}
 					}
 					else {
 						$ressource = $this->getRessourceConstruireBatiment($all_batiment[$i], 0);
+
+						$batiment_construire[] = [
+							"nom_batiment_sql" => $all_batiment[$i],
+							"nom_batiment" => $all_batiment_nom[$i],
+							"ressource" => $ressource,
+							"temps_construction" => $temps_construction,
+							"width" => $taille_batiment[0],
+							"height" => $taille_batiment[1]
+						];
 					}
-					
-					$batiment_construire[] = [
-						"nom_batiment_sql" => $all_batiment[$i],
-						"nom_batiment" => $all_batiment_nom[$i],
-						"ressource" => $ressource,
-						"temps_construction" => $temps_construction,
-						"width" => $taille_batiment[0],
-						"height" => $taille_batiment[1]
-					];
 				}
 			}
 			Bataille::setValues(["batiments_construire" => $batiment_construire]);
