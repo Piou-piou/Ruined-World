@@ -14,8 +14,8 @@
 
 
 		//-------------------------- GETTER ----------------------------------------------------------------------------//
-		public function getBatiments(){
-		    return $this->batiments;
+		public function getBatiments() {
+			return $this->batiments;
 		}
 
 		/**

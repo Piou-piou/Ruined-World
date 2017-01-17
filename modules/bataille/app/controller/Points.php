@@ -51,7 +51,7 @@
 		//-------------------------- SETTER ----------------------------------------------------------------------------//
 		/**
 		 * @param $id_base
-		 * @param $type
+		 * @param string $type
 		 * fonction qui ajoute des points à la base en fonction du type
 		 * le type peut etre : batiment, attaque, defense, troupe
 		 */

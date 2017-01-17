@@ -187,8 +187,9 @@
 
 			$ressource->setUpdateRessource($ressource_transport['eau'], $ressource_transport['electricite'], $ressource_transport['fer'], $ressource_transport['fuel'], $ressource_transport['nourriture'], "+");
 		}
-
+		
 		/**
+		 * @param $date_retour
 		 * fonction qui place le trajet en retour
 		 */
 		private function setTrajetRetour($date_retour) {

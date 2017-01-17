@@ -55,7 +55,7 @@
 
 		/**
 		 * @param $cout
-		 * @param $niveau_recherche
+		 * @param integer $niveau_recherche
 		 * @return array
 		 * fonction qui renvoi le cout d'une recherche
 		 */
@@ -71,7 +71,7 @@
 		/**
 		 * @param $temps
 		 * @param int $niveau
-		 * @return floatfonction qui renvoi le temps qu'il faut pour effectuer une recherche
+		 * @return double fonction qui renvoi le temps qu'il faut pour effectuer une recherche
 		 */
 		private function getTempsRecherche($temps, $niveau = 0) {
 			$pourcent = ($temps*Bataille::getBatiment()->getNiveauBatiment("centre_recherche")/100);

@@ -4,7 +4,6 @@
 	use core\functions\ChaineCaractere;
 	use core\functions\DateHeure;
 	use core\HTML\flashmessage\FlashMessage;
-	use Nette\Utils\DateTime;
 
 	class Batiment {
 		//pour quand on recup un batiment
@@ -47,10 +46,10 @@
 		public function getRessourceConstruire() {
 			return $this->ressource_construire;
 		}
-		public function getInfoBatiment(){
-		    return $this->info_batiment;
+		public function getInfoBatiment() {
+			return $this->info_batiment;
 		}
-		public function getInfoBatimentNext(){
+		public function getInfoBatimentNext() {
 			return $this->info_batiment_next;
 		}
 
@@ -148,7 +147,7 @@
 			if ($niveau > 0) {
 				$query = $dbc1->select("stockage")->from("entrepot")->where("ID_entrepot", "=", $niveau)->get();
 
-				if ((is_array($query)) && (count($query) > 0)){
+				if ((is_array($query)) && (count($query) > 0)) {
 					foreach ($query as $obj) {
 						return $obj->stockage;
 					}
@@ -184,10 +183,10 @@
 				}
 
 				if (($construction[1] == true) && ($this->niveau_batiment > 1)) {
-					$this->niveau_batiment = $this->niveau_batiment + 1;
+					$this->niveau_batiment = $this->niveau_batiment+1;
 				}
 
-				$max_level =  $this->getInfoUpgradeBatiment();
+				$max_level = $this->getInfoUpgradeBatiment();
 			}
 			else {
 				$query = $dbc1->select("nom_table")
@@ -306,7 +305,7 @@
 			//et compare la liste des batiments qu'il faut pour construire le batiment
 			//a ceux qui sont deja construit dans la base
 			//si tous les batments qu'il faut son batis on autorise la construction du batiment
-			for ($i=0 ; $i<$c_all_batiment ; $i++) {
+			for ($i = 0 ; $i < $c_all_batiment ; $i++) {
 				if (!in_array($all_batiment[$i], $batiment_construit)) {
 					$query = $dbc1->select("pour_construire")
 						->select("temps_construction")
@@ -348,7 +347,7 @@
 					else if (count($pour_construire) > 1) {
 						$ok_construction = false;
 						//test si tous les batiments sont construits et on le niveau nécéssaire
-						for ($j=0 ; $j<count($pour_construire) ; $j++) {
+						for ($j = 0 ; $j < count($pour_construire) ; $j++) {
 							if (in_array($pour_construire[$j][1], $batiment_construit)) {
 								if ($pour_construire[$j][2] <= $this->getNiveauBatiment($pour_construire[$j][1])) {
 									$ok_construction = true;
@@ -399,7 +398,7 @@
 		 * @param $case_depart
 		 * @param $nom_batiment
 		 * @param $nom_batiment_sql
-		 * @return bool
+		 * @return false|null
 		 * fonction qui test si un il y a la place de construire un batiment en fonction de sa case ou il a été laché en x et y
 		 * et en fonction de sa taille et du positionnement des autres batiments
 		 */
@@ -435,8 +434,8 @@
 					$finx_batiment = $taille_batiment[0]+$posx_batiment;
 					$finy_batiment = $taille_batiment[1]+$posy_batiment;
 					
-					for ($i=$posy ; $i<$finy ; $i++) {
-						for ($j=$posx ; $j<$finx ; $j++) {
+					for ($i = $posy ; $i < $finy ; $i++) {
+						for ($j = $posx ; $j < $finx ; $j++) {
 							if ((($posx++ >= $posx_batiment) && ($posx++ <= $finx_batiment)) && (($posy++ >= $posy_batiment) && ($posy++ <= $finy_batiment))) {
 								FlashMessage::setFlash("Un batiment est déjà présent à cet emplacement, merci d'en choisir un autre");
 								return false;
@@ -479,7 +478,7 @@
 
 		/**
 		 * @param $nom_batiment_sql
-		 * @param $niveau
+		 * @param integer $niveau
 		 * @return array
 		 * recuperation des ressources nécéssaire pour construire le batiment
 		 */
@@ -554,7 +553,7 @@
 						->where("ID_".$this->nom_batiment_sql, "=", $this->niveau_batiment)
 						->get();
 
-					if ((is_array($query)) && (count($query) > 0)){
+					if ((is_array($query)) && (count($query) > 0)) {
 						foreach ($query as $obj) {
 							$this->info_batiment = $xml->$nom_batiment_sql->phrase.$obj->$champ.$xml->$nom_batiment_sql->complement;
 						}
@@ -618,7 +617,7 @@
 				}
 
 				//si pas assez de ressource
-				if (($ressource["eau"]["class"] || $ressource["electricite"]["class"] ||$ressource["fer"]["class"] ||$ressource["fuel"]["class"]) == "rouge") {
+				if (($ressource["eau"]["class"] || $ressource["electricite"]["class"] ||$ressource["fer"]["class"] || $ressource["fuel"]["class"]) == "rouge") {
 					FlashMessage::setFlash("Pas assez de ressources pour construire ce batiment");
 					return false;
 				}

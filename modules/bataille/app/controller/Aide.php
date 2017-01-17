@@ -87,11 +87,11 @@
 		 * renvoi le ou les batiments nécéssaires pour la construction du batiment spécifié
 		 */
 		private function getPourConstruire($pour_construire) {
-			for ($i=0 ; $i<count($pour_construire) ; $i++) {
+			for ($i = 0 ; $i < count($pour_construire) ; $i++) {
 				//si plusieur batiment pour construire le batiment en question
 				$count = count($pour_construire[$i]);
 				if ($count > 1) {
-					for ($j=0 ; $j<$count ; $j++) {
+					for ($j = 0 ; $j < $count ; $j++) {
 						$batiment[] =  [
 							"nom_batiment" => $pour_construire[$i][$j][0],
 							"niveau_batiment" => $pour_construire[$i][$j][2]
