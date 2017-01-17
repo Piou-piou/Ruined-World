@@ -350,7 +350,8 @@ body {
     height: 100px;
     text-align: center;
     vertical-align: middle;
-    margin-top: 20px; }
+    margin-top: 20px;
+    cursor: move; }
   .bataille .map-game {
     width: 1166px;
     height: 545px;
