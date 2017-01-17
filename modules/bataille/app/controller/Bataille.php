@@ -33,7 +33,7 @@
 		 * get array of all values wich will be used in the page
 		 */
 		public static function getValues() {
-		    return ["bataille" => self::$values];
+			return ["bataille" => self::$values];
 		}
 
 		//initilisation of all classes of battle
@@ -183,7 +183,7 @@
 
 		/**
 		 * @param null $id_base -> sert si definit a recuperer l'id identite de la abse en question
-		 * @return mixed
+		 * @return string|null
 		 * recupere la date de la derniere connexion
 		 */
 		public static function getLastConnexion($id_base = null) {
@@ -210,7 +210,7 @@
 		}
 
 		/**
-		 * @param $nom_ressource
+		 * @param string $nom_ressource
 		 * @param $ressource
 		 * @return array
 		 * fonction qui permet de renvyer la couleur rouge si pas assez de ressource pour construire le batiment
@@ -219,8 +219,7 @@
 		public static function getTestAssezRessourceBase($nom_ressource, $ressource) {
 			$f = "get".ucfirst($nom_ressource);
 
-			if ($ressource >  Bataille::getRessource()->$f()) {
-				/*echo("$nom_ressource $ressource ".Bataille::getRessource()->getEau()." ---");*/
+			if ($ressource > Bataille::getRessource()->$f()) {
 				return [
 					"ressource" => $ressource,
 					"class" => "rouge"
@@ -235,7 +234,7 @@
 		
 		/**
 		 * @param $id_base
-		 * @param null $vitesse = vitesse de l'unité en question
+		 * @param integer $vitesse = vitesse de l'unité en question
 		 * @return number
 		 * fonction qui renvoi le temps de trajet entre la base du joueur et une autre base en secondes
 		 */
@@ -301,7 +300,7 @@
 		}
 
 		/**
-		 * @return int
+		 * @return integer
 		 * fonction qui permet de récupérer le nombre de joueurs sur le serveur
 		 */
 		public static function getNombreJoueur() {
@@ -317,7 +316,7 @@
 		}
 
 		/**
-		 * @param $param
+		 * @param string $param
 		 * @return mixed
 		 * fonction qui sert à récupérer un parametre spécifique pour un batiment
 		 * par exemple la vitesse d'un marchand ou  le nombred'emplacment de la base
