@@ -1,32 +1,75 @@
-<h2>{{ nom_batiment }}</h2>
-<h3>Niveau : {{ bataille.niveau_batiment }}</h3>
-<h4>{{ bataille.info_batiment }}</h4>
+<div class="popup-batiment">
+	<div class="row">
+		<div class="small-12 large-6 columns">
+			<img src="{{ MODULEWEBROOT }}bataille/app/views/images/{{ bataille.nom_batiment_sql }}.svg">
+		</div>
+		<div class="small-12 large-6 columns">
+			<h2>{{ nom_batiment }}</h2>
 
-<hr>
-{% if bataille.max_level >=0 and bataille.max_level < 2 %}
-	<h2>Cout pour le prochain niveau</h2>
-	<h3>Niveau suivant : {{ bataille.niveau_batiment+1 }}</h3>
+			<h3>Caractéristiques actuelles</h3>
+			<ul>
+				<li>Niveau : {{ bataille.niveau_batiment }}</li>
+				<li>{{ bataille.info_batiment }}</li>
+			</ul>
 
-	<ul>
-		<li class="{{bataille.ressource.fer.class}}">fer : {{bataille.ressource.fer.ressource}}</li>
-		<li class="{{bataille.ressource.fuel.class}}">fuel : {{bataille.ressource.fuel.ressource}}</li>
-		<li class="{{bataille.ressource.eau.class}}">eau : {{bataille.ressource.eau.ressource}}</li>
-		<li class="{{bataille.ressource.electricite.class}}">électricité : {{bataille.ressource.electricite.ressource}}</li>
-		<li>Temps de construction : {{bataille.temps_construction}}</li>
-	</ul>
+		</div>
+	</div>
+	<div class="row next-lvl">
+		{% if bataille.max_level >=0 and bataille.max_level < 2 %}
+			<h3>Caractéristiques au niveau suivant</h3>
+			<ul>
+				<li>Niveau : {{ bataille.niveau_batiment+1 }}</li>
+				<li>{{ bataille.info_batiment_next }}</li>
+			</ul>
 
-	<h4>{{ bataille.info_batiment_next }}</h4>
 
-	{% if bataille.niveau_batiment > 0 %}
-		<a nom_batiment="{{ nom_batiment }}"
-		   nom_batiment_sql="{{ bataille.nom_batiment_sql }}"
-		   class="construire {{bataille.ressource.fer.class}} {{bataille.ressource.fuel.class}} {{bataille.ressource.eau.class}}
-		   {{bataille.ressource.electricite.class}}"
-		   href="">Améliorer le bâtiment
-		</a>
-	{% endif %}
-{% else %}
-	<!-- partie quand le batiment est au lvl max -->
-	<p>Le batiment a atteint son niveau maxiumum</p>
-{% endif %}
+			<h3>Cout pour le prochain niveau</h3>
+			<ul class="ressources">
+				<li>
+					<div class="left"><img src="{{ MODULEWEBROOT }}bataille/app/views/images/eau.png" alt=""></div>
+					<div class="texte">
+						eau : {{bataille.ressource.eau.ressource}}
+					</div>
+				</li>
+				<li>
+					<div class="left"><img src="{{ MODULEWEBROOT }}bataille/app/views/images/electricite.png" alt=""></div>
+					<div class="texte">
+						électricité : {{bataille.ressource.electricite.ressource}}
+					</div>
+				</li>
+				<li>
+					<div class="left"><img src="{{ MODULEWEBROOT }}bataille/app/views/images/fer.png" alt=""></div>
+					<div class="texte">
+						fer : {{bataille.ressource.fer.ressource}}
+					</div>
+				</li>
+				<li>
+					<div class="left"><img src="{{ MODULEWEBROOT }}bataille/app/views/images/fuel.png" alt=""></div>
+					<div class="texte">
+						fuel : {{bataille.ressource.fuel.ressource}}
+					</div>
+				</li>
+				<li>
+					<div class="left"><img src="{{ MODULEWEBROOT }}bataille/app/views/images/temps.png" alt=""></div>
+					<div class="texte">
+						Temps de construction : {{bataille.temps_construction}}
+					</div>
+				</li>
+			</ul>
+
+			{% if bataille.niveau_batiment > 0 %}
+				<a nom_batiment="{{ nom_batiment }}"
+				   nom_batiment_sql="{{ bataille.nom_batiment_sql }}"
+				   class="construire {{bataille.ressource.fer.class}} {{bataille.ressource.fuel.class}} {{bataille.ressource.eau.class}}
+			   {{bataille.ressource.electricite.class}}"
+				   href="">Améliorer le bâtiment
+				</a>
+			{% endif %}
+		{% else %}
+			<!-- partie quand le batiment est au lvl max -->
+			<p>Le batiment a atteint son niveau maxiumum</p>
+		{% endif %}
+	</div>
+</div>
+
 {{ include("js/construire_batiment.html") }}

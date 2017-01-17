@@ -294,6 +294,35 @@ body {
 			}
 		}
 	}
+	
+	
+	
+	/*-------------------------------------- POPUP --------------------------------------*/
+	.popup-batiment {
+		img {
+			width: 100%;
+		}
+		
+		.next-lvl {
+			padding-left: 1rem;
+			
+			h3 {
+				margin: 1rem 0;
+			}
+			
+			ul.ressources {
+				margin-left: 0;
+				
+				li {
+					display: inline-block;
+					
+					.texte {
+						margin-top: -1rem;
+					}
+				}
+			}
+		}
+	}
 }
 
 p.rouge {
