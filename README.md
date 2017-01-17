@@ -5,4 +5,6 @@
 
 **Ruined world, gestion game is a free game around gestion of a base and an army and ressources producrtion**
 
-This game is actually under developpment
+This game is actually under developpment.
+
+Tank to [Emmanuel Guillou](https://github.com/EmmanuelGuillou) for the creation of images
