@@ -12,3 +12,4 @@ vendor/*
 *.ini
 *.lock
 *.map
+*.config.php
