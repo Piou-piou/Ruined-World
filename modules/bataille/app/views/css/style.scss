@@ -161,9 +161,26 @@ body {
 
 
 	/*-------------------------------------- MAP GAME --------------------------------------*/
+	.un-batiment {
+		background-color: #CCCCCC;
+		
+		&.construction {
+			div {
+				color: #ff6600;
+			}
+		}
+		
+		div {
+			position: absolute;
+			color: #FFFFFF;
+			text-align: center;
+			margin-top: 15%;
+			width: 100%;
+		}
+	}
+	
 	.liste-batiments {
 		.un-batiment {
-			background-color: #CCCCCC;
 			width: 100px;
 			height: 100px;
 			text-align: center;
@@ -182,11 +199,6 @@ body {
 		
 		.un-batiment {
 			position: absolute;
-			background-color: #CCCCCC;
-			
-			&.construction {
-				background-color: #ff6600;
-			}
 		}
 		
 		.cases {

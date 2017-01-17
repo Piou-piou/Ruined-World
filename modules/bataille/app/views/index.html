@@ -18,7 +18,9 @@
 				{% for i in bataille.batiments_construire %}
 					<div class="un-batiment draggable" style="width:{{ i.width }}px;height:{{ i.height }}px;">
 						<a href="#" id="{{i.nom_batiment_sql }}" class="open-popup" popup="popup-base" taille="{{i.nom_batiment_sql}}-120-60"  nom_batiment="{{i.nom_batiment}}" nom_batiment_sql="{{i.nom_batiment_sql }}">
-							{{i.nom_batiment}} {{i.niveau}}
+							<div>{{i.nom_batiment}} {{i.niveau}}</div>
+							
+							<img src="{{ MODULEWEBROOT }}bataille/app/views/images/{{ i.nom_batiment_sql }}.svg">
 						</a>
 					</div>
 				{% endfor %}
@@ -30,7 +32,9 @@
 			{% for i in bataille.batiments %}
 				<div class="un-batiment {{ i.construction }}" style="left:{{ i.posx }}px;top:{{ i.posy }}px;width:{{ i.width }}px;height:{{ i.height }}px;">
 					<a href="#" class="open-popup" popup="popup-base" posy="{{ i.posx }}" posx="{{ i.posx }}" nom_batiment="{{i.nom_batiment}}" nom_batiment_sql="{{i.nom_batiment_sql }}">
-						{{i.nom_batiment}} {{i.niveau}}
+						<div>{{i.nom_batiment}} {{i.niveau}}</div>
+						
+						<img src="{{ MODULEWEBROOT }}bataille/app/views/images/{{ i.nom_batiment_sql }}.svg">
 					</a>
 				</div>
 			{% endfor %}

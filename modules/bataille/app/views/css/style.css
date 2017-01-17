@@ -344,8 +344,17 @@ body {
   .bataille .side-bar {
     background-color: #303031;
     color: #fff; }
+  .bataille .un-batiment {
+    background-color: #CCCCCC; }
+    .bataille .un-batiment.construction div {
+      color: #ff6600; }
+    .bataille .un-batiment div {
+      position: absolute;
+      color: #FFFFFF;
+      text-align: center;
+      margin-top: 15%;
+      width: 100%; }
   .bataille .liste-batiments .un-batiment {
-    background-color: #CCCCCC;
     width: 100px;
     height: 100px;
     text-align: center;
@@ -359,10 +368,7 @@ body {
     margin: 0 auto;
     position: relative; }
     .bataille .map-game .un-batiment {
-      position: absolute;
-      background-color: #CCCCCC; }
-      .bataille .map-game .un-batiment.construction {
-        background-color: #ff6600; }
+      position: absolute; }
     .bataille .map-game .cases {
       visibility: hidden; }
       .bataille .map-game .cases.visible {
