@@ -11,7 +11,7 @@
 			var nom_batiment_sql = $(this).attr("nom_batiment_sql");
 			var nom_batiment = $(this).attr("nom_batiment");
 
-			if (batiments_speciaux.indexOf(nom_batiment) != -1) {
+			/*if (batiments_speciaux.indexOf(nom_batiment) != -1) {
 				$.ajax({
 					type:"POST",
 					data: "nom_batiment="+nom_batiment+"&nom_batiment_sql="+nom_batiment_sql,
@@ -23,7 +23,7 @@
 					}
 				});
 			}
-			else {
+			else {*/
 				$.ajax({
 					type:"POST",
 					data: "nom_batiment="+nom_batiment,
@@ -34,7 +34,7 @@
 
 					}
 				});
-			}
+			/*}*/
 		});
 
 		$(".popup .annuler").click(function() {

@@ -1,3 +1,4 @@
+{%  set nom_batiment_sql = bataille.nom_batiment_sql %}
 <div class="popup-batiment">
 	<div class="row">
 		<div class="small-12 large-6 columns">
@@ -5,6 +6,11 @@
 		</div>
 		<div class="small-12 large-6 columns">
 			<h2>{{ nom_batiment }}</h2>
+			
+			{% if nom_batiment in ["marche","ambassade","centre de recherche","caserne"] %}
+				{%  set url%}popup/{{ bataille.nom_batiment_sql }}/nav.html{% endset %}
+				{% include(url)%}
+			{% endif %}
 
 			<h3>Caractéristiques actuelles</h3>
 			<ul>
