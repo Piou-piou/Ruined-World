@@ -310,14 +310,12 @@
 						->from($all_batiment[$i])
 						->where("ID_".$all_batiment[$i], "=", 1)
 						->get();
-
+					
+					$pour_construire = [];
 					if ((is_array($query)) && (count($query) > 0)) {
 						foreach ($query as $obj) {
 							if ($obj->pour_construire != null) {
 								$pour_construire = unserialize($obj->pour_construire);
-							}
-							else {
-								$pour_construire = [];
 							}
 
 							$temps_construction = gmdate("H:i:s", round($obj->temps_construction-($obj->temps_construction*Bataille::getBatiment()->getNiveauBatiment("centre_commandement")/100)));
