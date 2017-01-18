@@ -68,6 +68,8 @@
 			$query = $dbc->select()->from("_bataille_batiment")->where("ID_base", "=", Bataille::getIdBase())->get();
 
 			if (count($query) > 0) {
+				$batiments = [];
+				
 				foreach ($query as $obj) {
 					$taille_batiment = Bataille::getBatiment()->getTailleBatiment($obj->nom_batiment_sql);
 					$construction = "";
