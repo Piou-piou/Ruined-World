@@ -62,9 +62,6 @@
 		if ($this->page == "popup/marche/index") {
 			$this->controller = "bataille/app/controller/initialise/popup/unbatiment.php";
 		}
-		/*if ($this->page == "popup/marche/offre-et-demande") {
-			$this->controller = "bataille/app/controller/initialise/popup_marche.php";
-		}*/
 
 
 
