@@ -91,6 +91,7 @@
 		 */
 		public function getAllRechercheType($type) {
 			$dbc = App::getDb();
+			$recherche = [];
 
 			$query = $dbc->select()->from("_bataille_centre_recherche")->where("type", "=", $type)->get();
 
