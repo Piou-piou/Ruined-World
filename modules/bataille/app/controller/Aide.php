@@ -21,6 +21,8 @@
 			$query = $dbc1->select()->from($this->getTable($parametre[0]))->where("actif", "=", 1, "AND")->where("type", "=", $parametre[1])->get();
 
 			if ((is_array($query)) && (count($query) > 0)) {
+				$batiments = [];
+				
 				foreach ($query as $obj) {
 					$nom_batiment = $obj->nom;
 					$nom_batiment_sql = $obj->nom_table;
@@ -30,7 +32,6 @@
 
 					if ((is_array($query)) && (count($query) == 1)) {
 						$pour_construire = [];
-						$batiments = [];
 						
 						foreach ($query as $obj) {
 							$ressource_tmp = explode(", ", $obj->ressource_construire);
@@ -90,7 +91,9 @@
 		 * renvoi le ou les batiments nécéssaires pour la construction du batiment spécifié
 		 */
 		private function getPourConstruire($pour_construire) {
-			for ($i = 0 ; $i < count($pour_construire) ; $i++) {
+			$count = count($pour_construire);
+			$batiment = [];
+			for ($i = 0 ; $i < $count ; $i++) {
 				//si plusieur batiment pour construire le batiment en question
 				$count = count($pour_construire[$i]);
 				if ($count > 1) {
