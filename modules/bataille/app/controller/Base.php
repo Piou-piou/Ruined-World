@@ -89,11 +89,11 @@
 						"construction" => $construction
 					];
 				}
+				
+				Bataille::setValues(["batiments" => $batiments]);
+				
+				$this->setBatimentsBase($batiments);
 			}
-
-			Bataille::setValues(["batiments" => $batiments]);
-
-			$this->setBatimentsBase($batiments);
 		}
 		//-------------------------- END GETTER ----------------------------------------------------------------------------//
 
