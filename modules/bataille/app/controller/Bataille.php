@@ -157,6 +157,9 @@
 		 */
 		private static function getPosistionBase($id_base) {
 			$dbc = App::getDb();
+			
+			$posx = 0;
+			$posy = 0;
 
 			$query = $dbc->select("posx")
 				->select("posy")
@@ -340,11 +343,10 @@
 		 */
 		public static function setLastConnexion($id_base = null) {
 			$dbc = App::getDb();
-
-			if ($id_base === null) {
-				$id_identite = self::getIdIdentite();
-			}
-			else {
+			
+			$id_identite = self::getIdIdentite();
+			
+			if ($id_base !== null) {
 				$query = $dbc->select("ID_identite")->from("_bataille_base")->where("ID_base", "=", $id_base)->get();
 
 				foreach ($query as $obj) $id_identite = $obj->ID_identite;
