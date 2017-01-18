@@ -28,8 +28,6 @@
 		 * initialisation de la récupération des messages des différents boites
 		 */
 		public function __construct($type_boite = null) {
-			$dbc = App::getDb();
-
 			if ($type_boite !== null) {
 				if ($type_boite == "boite réception") {
 					$this->getBoiteReception();
@@ -40,26 +38,6 @@
 				else if ($type_boite == "messages supprimés") {
 					$this->getMessageSupprimes();
 				}
-
-				//on check les messages supprimes d'il y a plus de 15 jours et on les delete de la bdd
-				//a changer fonction qui se lancera une fois par jour et qui degagera tous les messages
-				//supprimes de plus vieux que 15 jours
-				/*$today = new \DateTime();
-				$date_del =  $today->sub(new \DateInterval("P15D"))->format("Y-m-d H:i:s");
-
-				$query = $dbc->select("_messagerie_message.ID_message")
-					->from("_messagerie_boite_reception")
-					->from("_messagerie_message")
-					->where("_messagerie_message.date", "<", $date_del, "AND")
-					->where("(_messagerie_boite_reception.ID_identite = 1 OR _messagerie_message.ID_expediteur = 1)", "", "", "AND", true)
-					->where("_messagerie_boite_reception.ID_message", "=", "_messagerie_message.ID_message", "", true)
-					->get();
-
-				if ((is_array($query)) && (count($query) > 0)) {
-					foreach ($query as $obj) {
-						$this->setDeleteMessageBySystem($obj->ID_message);
-					}
-				}*/
 			}
 		}
 		//-------------------------- END BUILDER ----------------------------------------------------------------------------//
