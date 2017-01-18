@@ -53,8 +53,7 @@
 					->where("_bataille_base.ID_base", "=", $id_base, "AND")
 					->where("_bataille_base.ID_identite", "=", "identite.ID_identite", "", true)
 					->get();
-
-				//$temps_trajet = gmdate("H:i:s", Bataille::getDureeTrajet($id_base));
+				
 				$temps_trajet = DateHeure::Secondeenheure(Bataille::getDureeTrajet($id_base));
 			}
 			
