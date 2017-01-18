@@ -29,6 +29,9 @@
 					$query = $dbc1->select()->from($obj->nom_table)->where("ID_".$obj->nom_table, "=", 1)->get();
 
 					if ((is_array($query)) && (count($query) == 1)) {
+						$pour_construire = [];
+						$batiments = [];
+						
 						foreach ($query as $obj) {
 							$ressource_tmp = explode(", ", $obj->ressource_construire);
 
