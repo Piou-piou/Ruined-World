@@ -6,14 +6,22 @@ $(document).ready(function() {
 		var page = $(this).attr("href");
 		var nom_batiment = $("nav.batiment-speciaux input#nom_batiment").val();
 		var nom_batiment_sql = $("nav.batiment-speciaux input#nom_batiment_sql").val();
+		
+		var url_page = nom_batiment_sql+"/"+page;
+		$div_vider = $("#popup-base #ajax .next-lvl");
+		
+		if (page == "index") {
+            url_page = "unbatiment";
+            $div_vider = $("#popup-base #ajax");
+        }
 
 		$.ajax({
 			type:"POST",
 			data: "nom_batiment="+nom_batiment+"&nom_batiment_sql="+nom_batiment_sql,
-			url: "{{WEBROOT}}bataille/popup/"+nom_batiment_sql+"/"+page,
+			url: "{{WEBROOT}}bataille/popup/"+url_page,
 			success: function(data){
-				$("#popup-base #ajax").empty();
-				$("#popup-base #ajax").append(data);
+                $div_vider.empty();
+                $div_vider.append(data);
 			}, error: function(){
 			}
 		});
