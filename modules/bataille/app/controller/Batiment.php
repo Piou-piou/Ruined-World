@@ -352,12 +352,10 @@
 								}
 								else {
 									$ok_construction = false;
-									break;
 								}
 							}
 							else {
 								$ok_construction = false;
-								break;
 							}
 						}
 
