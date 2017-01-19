@@ -20,6 +20,8 @@
 		 */
 		public function __construct($id_base = null, $install_base = null) {
 			$dbc = App::getDb();
+			$temps_trajet = "";
+			$map = [];
 
 			if ($install_base != null) {
 				return true;
