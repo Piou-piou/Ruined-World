@@ -348,7 +348,8 @@ body {
     background-color: #303031;
     color: #fff; }
   .bataille .un-batiment {
-    background-color: #CCCCCC; }
+    background-color: #CCCCCC;
+    position: relative; }
     .bataille .un-batiment.construction div {
       color: #ff6600; }
     .bataille .un-batiment div {
