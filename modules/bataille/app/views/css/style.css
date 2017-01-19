@@ -268,14 +268,16 @@ body {
   /*-------------------------------------- POPUP --------------------------------------*/ }
   .bataille .rouge {
     color: #FF0000; }
-  .bataille header nav.top {
-    background-color: #000;
-    color: #fff; }
-    .bataille header nav.top ul {
-      margin: 0; }
-      .bataille header nav.top ul li {
-        display: inline-block;
-        padding: 0.5rem 1rem; }
+  .bataille header {
+    margin-bottom: 1rem; }
+    .bataille header nav.top {
+      background-color: #000;
+      color: #fff; }
+      .bataille header nav.top ul {
+        margin: 0; }
+        .bataille header nav.top ul li {
+          display: inline-block;
+          padding: 0.5rem 1rem; }
   .bataille nav.middle {
     background-color: #212122;
     height: 100px;
@@ -289,7 +291,7 @@ body {
       display: block; }
   .bataille .ressources .gauche, .bataille .ressources .droite {
     background-color: #303031;
-    height: 50px;
+    min-height: 50px;
     color: #fff;
     padding-top: 1rem; }
     .bataille .ressources .gauche .texte, .bataille .ressources .droite .texte {
@@ -297,7 +299,7 @@ body {
   .bataille .ressources .gauche::before {
     background-color: #303031;
     width: 20px;
-    height: 50px;
+    min-height: 50px;
     position: absolute;
     top: 0;
     left: -15px;
@@ -306,7 +308,7 @@ body {
   .bataille .ressources .droite::after {
     background-color: #303031;
     width: 20px;
-    height: 50px;
+    min-height: 50px;
     position: absolute;
     top: 0;
     right: -15px;

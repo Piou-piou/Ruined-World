@@ -1,7 +1,7 @@
 {{include("nav.html")}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 <div class="row bataille">
-	<div class="small-12 medium-2 large-2 columns">
+	<div class="small-12 medium-12 large-2 columns">
 		<div class="row side-bar">
 			<h3>Construction en cours</h3>
 			{{bataille.nom_batiment_construction}}<br>
@@ -27,7 +27,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="small-12 medium-8 large-8 columns">
+	<div class="small-12 medium-12 large-8 columns">
 		<div class="map-game">
 			{% for i in bataille.batiments %}
 				<div class="un-batiment {{ i.construction }}" style="left:{{ i.posx }}px;top:{{ i.posy }}px;width:{{ i.width }}px;height:{{ i.height }}px;">
@@ -48,7 +48,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="small-12 medium-2 large-2 columns">
+	<div class="small-12 medium-12 large-2 columns">
 		{% if bataille.recrutement is iterable %}
 			<div class="row">
 				<div class="small-12 side-bar">

@@ -37,6 +37,8 @@ body {
 	
 	/*-------------------------------------- HEADER --------------------------------------*/
 	header {
+		margin-bottom: 1rem;
+		
 		nav.top {
 			background-color: $bg-top-nav;
 			color: $clr-top-nav;
@@ -76,7 +78,7 @@ body {
 	.ressources {
 		.gauche, .droite {
 			background-color: $bg-ressource;
-			height: 50px;
+			min-height: 50px;
 			color: $clr-ressource;
 			padding-top: 1rem;
 
@@ -88,7 +90,7 @@ body {
 		.gauche::before {
 			background-color: $bg-ressource;
 			width: 20px;
-			height: 50px;
+			min-height: 50px;
 			position: absolute;
 			top: 0;
 			left: -15px;
@@ -99,7 +101,7 @@ body {
 		.droite::after {
 			background-color: $bg-ressource;
 			width: 20px;
-			height: 50px;
+			min-height: 50px;
 			position: absolute;
 			top: 0;
 			right: -15px;
