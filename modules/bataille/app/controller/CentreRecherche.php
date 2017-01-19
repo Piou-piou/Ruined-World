@@ -123,6 +123,7 @@
 					->get();
 
 				if ((is_array($query)) && (count($query) > 0)) {
+					$recherche = [];
 					foreach ($query as $obj) {
 						$niveau = $this->getNiveauRecherche($obj->recherche, $obj->type);
 						$niveau_recherche = $niveau;
@@ -138,8 +139,8 @@
 						else {
 							$niveau_recherche = 1;
 						}
-
-						$recherhce[] = [
+						
+						$recherche[] = [
 							"recherche" => $obj->recherche,
 							"type" => $obj->type,
 							"niveau" => $niveau,
@@ -151,7 +152,7 @@
 					}
 				}
 
-				Bataille::setValues(["centre_recherche" => $recherhce]);
+				Bataille::setValues(["centre_recherche" => $recherche]);
 			}
 		}
 
