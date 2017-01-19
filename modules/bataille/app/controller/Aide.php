@@ -66,8 +66,6 @@
 
 				Bataille::setValues(["liste_batiments" => $batiments]);
 			}
-
-			return false;
 		}
 		//-------------------------- END BUILDER ----------------------------------------------------------------------------//
 
