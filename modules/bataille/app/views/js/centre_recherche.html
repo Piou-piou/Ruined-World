@@ -54,6 +54,7 @@
 						success: function(data){
 							$("#popup-base #ajax").empty();
 							$("#popup-base #ajax").append(data);
+							$(".decompte-recherche").remove();
 						}, error: function(){
 						}
 					});

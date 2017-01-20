@@ -65,7 +65,7 @@
 			<div class="row">
 				<div class="small-12 side-bar">
 					<h3>Unités en recrutement</h3>
-					<div class="recrutement-unites">
+					<div>
 						{% for i in bataille.recrutement %}
 							<div>
 								<div id="recrutement-{{ i.id_recrutement }}"></div>
@@ -100,6 +100,24 @@
 		{% endif %}
 
 		<div class="espacement"></div>
+		
+		{% if bataille.recherche is iterable %}
+			<div class="row decompte-recherche">
+				<div class="small-12 side-bar">
+					<h3>Recherche en cours</h3>
+					<div>
+						<div>
+							<div id="decompte-recherche"></div>
+							<p>{{ bataille.recherche.recherche }} {{ bataille.recherche.type }}</p>
+							
+							{{ include("js/centre_recherche.html") }}
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="espacement decompte-recherche"></div>
+		{% endif %}
 
 		<div class="row">
 			{% if bataille.marche_envoyer is iterable %}
