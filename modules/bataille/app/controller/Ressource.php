@@ -100,12 +100,10 @@
 			$diff_temps = $today-$last_co;
 
 			//si la derniere actualisation ou connexion est supérieur à 30 sec
-			if ($diff_temps > 180) {
-				$this->setAddRessource("eau", $this->eau, $diff_temps);
-				$this->setAddRessource("electricite", $this->electricite, $diff_temps);
-				$this->setAddRessource("fuel", $this->fuel, $diff_temps);
-				$this->setAddRessource("fer", $this->fer, $diff_temps);
-			}
+			$this->setAddRessource("eau", $this->eau, $diff_temps);
+			$this->setAddRessource("electricite", $this->electricite, $diff_temps);
+			$this->setAddRessource("fuel", $this->fuel, $diff_temps);
+			$this->setAddRessource("fer", $this->fer, $diff_temps);
 		}
 
 		/**
