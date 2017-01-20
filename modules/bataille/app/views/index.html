@@ -11,7 +11,7 @@
 
 		<div class="espacement"></div>
 
-		<div class="row side-bar show-for-medium-up">
+		<div class="row side-bar show-for-large-up">
 			<a href="#" id="afficher-grille">Afficher la grille</a>
 
 			<div class="liste-batiments">
@@ -28,7 +28,7 @@
 		</div>
 	</div>
 	<div class="small-12 medium-12 large-8 columns">
-		<div class="map-game show-for-medium-up">
+		<div class="map-game show-for-large-up">
 			{% for i in bataille.batiments %}
 				<div class="un-batiment {{ i.construction }}" style="left:{{ i.posx }}px;top:{{ i.posy }}px;width:{{ i.width }}px;height:{{ i.height }}px;">
 					<a href="#" class="open-popup" popup="popup-base" posy="{{ i.posx }}" posx="{{ i.posx }}" nom_batiment="{{i.nom_batiment}}" nom_batiment_sql="{{i.nom_batiment_sql }}">
@@ -47,16 +47,16 @@
 				{% endfor %}
 			</div>
 		</div>
-		<div class="show-for-medium-down">
+		<div class="row show-for-medium-down small-collapse">
 			{% for i in bataille.batiments %}
-				<div class="un-batiment {{ i.construction }}" style="width:{{ i.width }}px;height:{{ i.height }}px;">
+				<div class="left un-batiment {{ i.construction }}" style="width:{{ i.width }}px;height:{{ i.height }}px;">
 					<a href="#" class="open-popup" popup="popup-base" posy="{{ i.posx }}" posx="{{ i.posx }}" nom_batiment="{{i.nom_batiment}}" nom_batiment_sql="{{i.nom_batiment_sql }}">
 						<div>{{i.nom_batiment}} {{i.niveau}}</div>
 						
 						<img src="{{ MODULEWEBROOT }}bataille/app/views/images/{{ i.nom_batiment_sql }}.svg">
 					</a>
 				</div>
-				<div class="espacement"></div>
+				{#<div class="espacement"></div>#}
 			{% endfor %}
 		</div>
 	</div>
