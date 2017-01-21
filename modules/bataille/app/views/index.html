@@ -159,9 +159,23 @@
 	</div>
 </div>
 
+<div class="row bataille ajax-load">
+	
+</div>
+
 {{ include("js/map-game.html") }}
 {{ include("js/batiment.html") }}
 <script src="{{MODULEWEBROOT}}bataille/app/views/js/jquery.plugin.min.js"></script>
 <script src="{{MODULEWEBROOT}}bataille/app/views/js/jquery.countdown.js"></script>
 {{ include("js/construire_batiment.html") }}
 {{ include("js/rafraichir_ressource.html") }}
+
+{#
+<script>
+    $.ajax({
+        url:"{{WEBROOT}}bataille/map-game/large-screen",
+        success: function(data){
+            $(".ajax-load").html(data);
+        }
+    });
+</script>#}

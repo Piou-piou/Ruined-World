@@ -15,7 +15,8 @@
 		"popup/caserne/recruter-troupe",
 		"popup/centre_recherche/index",
 		"popup/centre_recherche/liste-recherche",
-		"login"
+		"login",
+		"map-game/large-screen"
 	];
 	
 	if (\core\modules\GestionModule::getModuleActiver("bataille")) {
@@ -84,6 +85,11 @@
 		}
 		if ($this->page == "popup/centre_recherche/liste-recherche") {
 			$this->controller = "bataille/app/controller/centre_recherche/get_recherche.php";
+		}
+		
+		//------------------------------- POUR L'AFFICHAGE DE LA BASE ----------------------------------//
+		if ($this->page == "map-game/large-screen") {
+			$this->controller = "bataille/app/controller/batiment/get_batiment_base.php";
 		}
 	}
 	else {
