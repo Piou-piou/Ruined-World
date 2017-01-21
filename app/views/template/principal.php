@@ -1,3 +1,4 @@
+<?php if (($_POST["loaded_ajax"] || $_GET["loaded_ajax"]) != true ) :?>
 <!DOCTYPE html>
 <html lang="fr">
 	<head>
@@ -18,6 +19,7 @@
 		<link rel="stylesheet" type="text/css" href="<?=TPLWEBROOT?>css/style.css">
 	</head>
 	<body>
+<?php endif;?>
 		<?=\core\HTML\flashmessage\FlashMessage::getFlash();?>
 		<?php //require_once(ROOT."app/views/template/navigation.php");?>
 		<?php //if ($config->getResponsive() == 1) require_once(ROOT."app/views/template/nav_responsive.php");?>
@@ -38,6 +40,7 @@
 				})
 			})
 		</script>
-
+<?php if (($_POST["loaded_ajax"] || $_GET["loaded_ajax"]) != true ) :?>
 	</body>
 </html>
+<?php endif;?>
