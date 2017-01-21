@@ -1,0 +1,126 @@
+<div class="small-12 medium-12 large-2 columns">
+    <div class="row side-bar">
+        <h3>Construction en cours</h3>
+		{{bataille.nom_batiment_construction}}<br>
+        
+        <div id="defaultCountdown"></div>
+    </div>
+    
+    <div class="espacement"></div>
+</div>
+<div class="small-12 medium-12 large-8 columns">
+    <div class="row small-collapse">
+		{% for i in bataille.batiments %}
+            <div class="left un-batiment {{ i.construction }}" style="width:{{ i.width }}px;height:{{ i.height }}px;">
+                <a href="#" class="open-popup" popup="popup-base" posy="{{ i.posx }}" posx="{{ i.posx }}" nom_batiment="{{i.nom_batiment}}" nom_batiment_sql="{{i.nom_batiment_sql }}">
+                    <div>{{i.nom_batiment}} {{i.niveau}}</div>
+                    
+                    <img src="{{ MODULEWEBROOT }}bataille/app/views/images/{{ i.nom_batiment_sql }}.svg">
+                </a>
+            </div>
+		{% endfor %}
+    </div>
+</div>
+<div class="small-12 medium-12 large-2 columns">
+	{% if bataille.recrutement is iterable %}
+        <div class="row">
+            <div class="small-12 side-bar">
+                <h3>Unités en recrutement</h3>
+                <div>
+					{% for i in bataille.recrutement %}
+                        <div>
+                            <div id="recrutement-{{ i.id_recrutement }}"></div>
+                            <p>{{ i.nom }} {{ i.type }} {{ i.nombre }}</p>
+							
+							{{ include("js/recrutement_caserne.html") }}
+                        </div>
+					{% endfor %}
+                </div>
+            </div>
+        </div>
+        
+        <div class="espacement"></div>
+	{% endif %}
+	
+	{% if bataille.unites is iterable %}
+        <div class="row">
+            <div class="small-12 side-bar">
+                Mission Nourriture
+            </div>
+            
+            <div class="small-12 side-bar">
+                <h3>Unités</h3>
+				{% for key,i in bataille.unites %}
+                    <h4>{{ key }}</h4>
+					{% for j in i %}
+                        <p>{{ j.nom }} {{ j.nombre }}</p>
+					{% endfor %}
+				{% endfor %}
+            </div>
+        </div>
+	{% endif %}
+    
+    <div class="espacement"></div>
+	
+	{% if bataille.recherche is iterable %}
+        <div class="row decompte-recherche">
+            <div class="small-12 side-bar">
+                <h3>Recherche en cours</h3>
+                <div>
+                    <div>
+                        <div id="decompte-recherche"></div>
+                        <p>{{ bataille.recherche.recherche }} {{ bataille.recherche.type }}</p>
+						
+						{{ include("js/centre_recherche.html") }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="espacement decompte-recherche"></div>
+	{% endif %}
+    
+    <div class="row">
+		{% if bataille.marche_envoyer is iterable %}
+            <div class="small-12 side-bar">
+                <h3>Transport marchandises envoyées</h3>
+				
+				{% for i in bataille.marche_envoyer %}
+                    <div>
+                        <div id="transport-{{ i.id_marche_transport }}"></div>
+						
+						{% if (i.aller == 1) %}
+                            <p>Sur l'aller à : {{ i.nom_base_dest }}</p>
+						{% else %}
+                            <p>Sur le retour de : {{ i.nom_base_dest }}</p>
+						{% endif %}
+						{{ include("js/transport_marche.html") }}
+                    </div>
+				{% endfor %}
+            </div>
+		{% endif %}
+		
+		{% if bataille.marche_recevoir is iterable %}
+            <div class="small-12 side-bar">
+                <h3>Transport marchandises à recevoir</h3>
+				
+				{% for i in bataille.marche_recevoir %}
+                    <div>
+                        <div id="transport-{{ i.id_marche_transport }}"></div>
+						
+						{% if (i.aller == 1) %}
+                            <p>qui arrive de : {{ i.nom_base_dest }}</p>
+						{% endif %}
+						{{ include("js/transport_marche.html") }}
+                    </div>
+				{% endfor %}
+            </div>
+		{% endif %}
+    </div>
+</div>
+
+<script src="{{LIBSWEBROOT}}popup/js/popup.js"></script>
+
+<script src="{{MODULEWEBROOT}}bataille/app/views/js/jquery.plugin.min.js"></script>
+<script src="{{MODULEWEBROOT}}bataille/app/views/js/jquery.countdown.js"></script>
+{{ include("js/construire_batiment.html") }}

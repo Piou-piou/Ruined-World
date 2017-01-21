@@ -1,32 +1,13 @@
 <script>
 	$(document).ready(function() {
-		var batiments_speciaux = [
-				"marche",
-				"ambassade",
-				"centre de recherche",
-				"caserne",
-		];
-
-		$(".open-popup").click(function() {
+		$(document).on("click", ".open-popup", function() {console.log("dfg")
 			var nom_batiment_sql = $(this).attr("nom_batiment_sql");
 			var nom_batiment = $(this).attr("nom_batiment");
 
-			/*if (batiments_speciaux.indexOf(nom_batiment) != -1) {
-				$.ajax({
-					type:"POST",
-					data: "nom_batiment="+nom_batiment+"&nom_batiment_sql="+nom_batiment_sql,
-					url:"{{WEBROOT}}bataille/popup/"+nom_batiment_sql+"/index",
-					success: function(data){
-						$("#popup-base #ajax").append(data);
-					}, error: function(){
 
-					}
-				});
-			}
-			else {*/
 				$.ajax({
 					type:"POST",
-					data: "nom_batiment="+nom_batiment,
+					data: "loaded_ajax=true&nom_batiment="+nom_batiment,
 					url:"{{WEBROOT}}bataille/popup/unbatiment",
 					success: function(data){
 						$("#popup-base #ajax").append(data);
@@ -34,7 +15,6 @@
 
 					}
 				});
-			/*}*/
 		});
 
 		$(".popup .annuler").click(function() {

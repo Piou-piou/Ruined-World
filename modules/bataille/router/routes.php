@@ -89,7 +89,10 @@
 		
 		//------------------------------- POUR L'AFFICHAGE DE LA BASE ----------------------------------//
 		if ($this->page == "map-game/large-screen") {
-			$this->controller = "bataille/app/controller/batiment/get_batiment_base.php";
+			$this->controller = "bataille/app/controller/initialise/index.php";
+		}
+		if ($this->page == "map-game/small-screen") {
+			$this->controller = "bataille/app/controller/initialise/index.php";
 		}
 	}
 	else {
