@@ -16,7 +16,8 @@
 		"popup/centre_recherche/index",
 		"popup/centre_recherche/liste-recherche",
 		"login",
-		"map-game/large-screen"
+		"map-game/large-screen",
+		"map-game/small-screen"
 	];
 	
 	if (\core\modules\GestionModule::getModuleActiver("bataille")) {
