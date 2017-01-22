@@ -480,6 +480,9 @@ p.rouge {
         color: #FFFFFF; }
   .popup .rouge {
     color: red; }
+  .popup .construire {
+    display: block;
+    padding-bottom: 30px; }
 
 /*-------------------------------------- CASERNE --------------------------------------*/
 .popup .caserne ul li {
