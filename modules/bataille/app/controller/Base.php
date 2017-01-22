@@ -26,8 +26,6 @@
 
 			Bataille::getRessource();
 
-			$this->getBatimentsBase();
-
 			Bataille::setValues([
 				"production_eau" => Bataille::getBatiment()->getProduction("eau"),
 				"production_electricite" => Bataille::getBatiment()->getProduction("electricite"),
