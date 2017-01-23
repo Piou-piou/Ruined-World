@@ -7,7 +7,7 @@
 			if (recherche != "") {
 				$.ajax({
 					type:"POST",
-					data: "recherche="+recherche+"&type="+type,
+					data: "loaded_ajax=true&recherche="+recherche+"&type="+type,
 					url:"{{WEBROOT}}controller/modules/bataille/centre_recherche/rechercher",
 					success: function(data){
 						if (data == "ok") {
@@ -50,6 +50,7 @@
 				success: function(data){
 					$.ajax({
 						type:"POST",
+						data: "loaded_ajax=true",
 						url: "{{WEBROOT}}bataille/popup/centre_recherche/liste-recherche",
 						success: function(data){
 							$("#popup-base #ajax").empty();

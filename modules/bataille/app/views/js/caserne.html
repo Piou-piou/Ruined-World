@@ -8,7 +8,7 @@
 			if (nombre_recruter != "") {
 				$.ajax({
 					type:"POST",
-					data: "nombre_recruter="+nombre_recruter+"&type="+type+"&nom="+nom,
+					data: "loaded_ajax=true&nombre_recruter="+nombre_recruter+"&type="+type+"&nom="+nom,
 					url:"{{WEBROOT}}controller/modules/bataille/unites/recruter",
 					success: function(data){
 						if (data == "ok") {
