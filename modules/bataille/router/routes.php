@@ -15,6 +15,7 @@
 		"popup/caserne/recruter-troupe",
 		"popup/centre_recherche/index",
 		"popup/centre_recherche/liste-recherche",
+		"popup/centre_commandement/liste-missions",
 		"login",
 		"map-game/large-screen",
 		"map-game/small-screen"
