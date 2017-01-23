@@ -9,6 +9,10 @@
 	
 	Bataille::getUnite()->getAllUnites();
 	
+	Bataille::getUnite()->getRecrutement();
+	
 	Bataille::getCentreRecherche()->getRecherche();
+	
+	$marche = new \modules\bataille\app\controller\Marche();
 	
 	$arr = Bataille::getValues();
