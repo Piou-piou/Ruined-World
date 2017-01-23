@@ -60,11 +60,23 @@
 		 * fonction qui renvoi le cout d'une recherche
 		 */
 		private function getCoutRecherche($cout, $niveau_recherche) {
+			$cout_eau = $cout["eau"] * ($this->coef_centre * $niveau_recherche);
+			$cout_eau = Bataille::getTestAssezRessourceBase("eau", $cout_eau);
+			
+			$cout_electricite = $cout["electricite"] * ($this->coef_centre * $niveau_recherche);
+			$cout_electricite = Bataille::getTestAssezRessourceBase("electricite", $cout_electricite);
+			
+			$cout_fer = $cout["fer"] * ($this->coef_centre * $niveau_recherche);
+			$cout_fer = Bataille::getTestAssezRessourceBase("fer", $cout_fer);
+			
+			$cout_fuel = $cout["fuel"] * ($this->coef_centre * $niveau_recherche);
+			$cout_fuel = Bataille::getTestAssezRessourceBase("fuel", $cout_fuel);
+			
 			return [
-				"eau" => $cout["eau"] * ($this->coef_centre * $niveau_recherche),
-				"electricite" => $cout["electricite"] * ($this->coef_centre * $niveau_recherche),
-				"fer" => $cout["fer"] * ($this->coef_centre * $niveau_recherche),
-				"fuel" => $cout["fuel"] * ($this->coef_centre * $niveau_recherche)
+				"eau" => $cout_eau,
+				"electricite" => $cout_electricite,
+				"fer" => $cout_fer,
+				"fuel" => $cout_fuel
 			];
 		}
 

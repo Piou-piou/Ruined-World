@@ -9,10 +9,10 @@
 		<div class="centre_recherche">
 			<h3>{{ i.recherche }} {{ i.type }}</h3>
 			<ul>
-				<li>Eau : {{ i.cout.electricite }}</li>
-				<li>Electricité : {{ i.cout.electricite }}</li>
-				<li>Fer : {{ i.cout.fer }}</li>
-				<li>Fuel : {{ i.cout.fuel }}</li>
+				<li class="{{  i.cout.eau.class }}">Eau : {{ i.cout.eau.ressource }}</li>
+				<li class="{{  i.cout.electricite.class }}">Electricité : {{ i.cout.electricite.ressource }}</li>
+				<li class="{{  i.cout.fer.class }}">Fer : {{ i.cout.fer.ressource }}</li>
+				<li class="{{  i.cout.fuel.class }}">Fuel : {{ i.cout.fuel.ressource }}</li>
 				<li>Niveau : {{ i.niveau }}</li>
 				<li>Temps de recherche : {{ i.temps_recherche }}</li>
 			</ul>
