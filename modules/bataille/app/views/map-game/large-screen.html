@@ -1,12 +1,19 @@
+<script src="{{MODULEWEBROOT}}bataille/app/views/js/jquery.plugin.min.js"></script>
+<script src="{{MODULEWEBROOT}}bataille/app/views/js/jquery.countdown.js"></script>
+
 <div class="small-2 columns">
-	<div class="row side-bar">
-		<h3>Construction en cours</h3>
-		{{bataille.nom_batiment_construction}}<br>
+	{% if bataille.nom_batiment_construction != "" %}
+		<div class="row side-bar">
+			<h3>Construction en cours</h3>
+			{{bataille.nom_batiment_construction}}<br>
+			
+			<div id="defaultCountdown"></div>
+			
+			{{ include("js/construire_batiment.html") }}
+		</div>
 		
-		<div id="defaultCountdown"></div>
-	</div>
-	
-	<div class="espacement"></div>
+		<div class="espacement"></div>
+	{% endif %}
 	
 	<div class="row side-bar">
 		<a href="#" id="afficher-grille">Afficher la grille</a>
@@ -145,7 +152,3 @@
 
 {{ include("js/map-game.html") }}
 <script src="{{LIBSWEBROOT}}popup/js/popup.js"></script>
-
-<script src="{{MODULEWEBROOT}}bataille/app/views/js/jquery.plugin.min.js"></script>
-<script src="{{MODULEWEBROOT}}bataille/app/views/js/jquery.countdown.js"></script>
-{{ include("js/construire_batiment.html") }}

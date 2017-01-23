@@ -10,6 +10,4 @@
 	
 	Bataille::getUnite()->getRecrutement();
 	
-	Bataille::getCentreRecherche()->getRecherche();
-	
 	$arr = Bataille::getValues();

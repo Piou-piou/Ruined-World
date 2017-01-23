@@ -253,10 +253,10 @@
 			}
 
 			//on test si assez de ressources pour effectuer la recherche
-			$eau = Bataille::getTestAssezRessourceBase("eau", $cout["eau"]);
-			$electricite = Bataille::getTestAssezRessourceBase("electricite", $cout["electricite"]);
-			$fer = Bataille::getTestAssezRessourceBase("fer", $cout["fer"]);
-			$fuel = Bataille::getTestAssezRessourceBase("fuel", $cout["fuel"]);
+			$eau = Bataille::getTestAssezRessourceBase("eau", $cout["eau"]["ressource"]);
+			$electricite = Bataille::getTestAssezRessourceBase("electricite", $cout["electricite"]["ressource"]);
+			$fer = Bataille::getTestAssezRessourceBase("fer", $cout["fer"]["ressource"]);
+			$fuel = Bataille::getTestAssezRessourceBase("fuel", $cout["fuel"]["ressource"]);
 
 
 			if (($eau["class"] || $electricite["class"] || $fer["class"] || $fuel["class"]) == "rouge" ) {
@@ -265,7 +265,7 @@
 			}
 			else {
 				//on retire les ressources
-				Bataille::getRessource()->setUpdateRessource($cout["eau"], $cout["electricite"], $cout["fer"], $cout["fuel"], 0, "-");
+				Bataille::getRessource()->setUpdateRessource($cout["eau"]["ressource"], $cout["electricite"]["ressource"], $cout["fer"]["ressource"], $cout["fuel"]["ressource"], 0, "-");
 
 				$date_fin = Bataille::getToday()+$temps_recherche;
 

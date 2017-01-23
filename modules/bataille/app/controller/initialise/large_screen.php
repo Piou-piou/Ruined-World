@@ -9,4 +9,6 @@
 	
 	Bataille::getUnite()->getAllUnites();
 	
+	Bataille::getCentreRecherche()->getRecherche();
+	
 	$arr = Bataille::getValues();
