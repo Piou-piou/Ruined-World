@@ -7,7 +7,7 @@
 		<div class="small-12 large-6 columns">
 			<h2>{{ nom_batiment }}</h2>
 			
-			{% if nom_batiment in ["marche","ambassade","centre de recherche","caserne"] %}
+			{% if nom_batiment in ["marche","ambassade","centre de recherche","caserne","centre de commandement "] %}
 				{%  set url%}popup/{{ bataille.nom_batiment_sql }}/nav.html{% endset %}
 				{% include(url)%}
 			{% endif %}
