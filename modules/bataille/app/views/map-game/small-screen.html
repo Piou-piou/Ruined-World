@@ -1,12 +1,16 @@
 <div class="small-12 columns">
-    <div class="row side-bar">
-        <h3>Construction en cours</h3>
-		{{bataille.nom_batiment_construction}}<br>
+	{% if bataille.nom_batiment_construction != "" %}
+        <div class="row side-bar">
+            <h3>Construction en cours</h3>
+			{{bataille.nom_batiment_construction}}<br>
+            
+            <div id="defaultCountdown"></div>
+			
+			{{ include("js/construire_batiment.html") }}
+        </div>
         
-        <div id="defaultCountdown"></div>
-    </div>
-    
-    <div class="espacement"></div>
+        <div class="espacement"></div>
+	{% endif %}
 </div>
 <div class="small-12 columns">
     <div class="row small-collapse">
