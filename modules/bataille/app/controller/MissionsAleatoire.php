@@ -38,6 +38,7 @@
 				
 				if ($last_check_mission == "") {
 					$this->setUpdateLastCheckMissions();
+					$this->setMissionsAleatoire();
 				}
 				else {
 					$today = new \DateTime();
@@ -48,9 +49,17 @@
 					
 					if ($diff_jour >= 1) {
 						$this->setUpdateLastCheckMissions();
+						$this->setMissionsAleatoire();
 					}
 				}
 			}
+		}
+		
+		/**
+		 * fonction qui récupere tous les types de missions et les return dans un array
+		 */
+		private function getTypeMission() {
+			
 		}
 		//-------------------------- END GETTER ----------------------------------------------------------------------------//
 		
@@ -68,6 +77,27 @@
 				->from("_bataille_base")
 				->where("ID_base", "=", Bataille::getIdBase())
 				->set();
+		}
+		
+		/**
+		 * @param $type
+		 * fonction qui recupere des missions aleatoirement de chaque type et qui les ajoute
+		 * dans la table _bataille_mission_aleatoire
+		 */
+		private function setMissionsAleatoire($type) {
+			$dbc1 = Bataille::getDb();
+			
+			$query = $dbc1->select()->from("mission")
+				->where("type", "=", $type)
+				->orderBy("RAND()")
+				->limit(0, 3)
+				->get();
+			
+			if ((is_array($query)) && (count($query))) {
+				foreach ($query as $obj) {
+					echo($obj->nom_mission."<br>");
+				}
+			}
 		}
 		//-------------------------- END SETTER ----------------------------------------------------------------------------//
 		
