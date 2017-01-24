@@ -9,6 +9,11 @@
 		
 		
 		//-------------------------- BUILDER ----------------------------------------------------------------------------//
+		/**
+		 * MissionsAleatoire constructor.
+		 * le constructeur s'occupe de vérifier le last_check des missions et au cas ou si il est plus vieux d'un jour
+		 * appeler la fonction pour recharger les missions
+		 */
 		public function __construct() {
 			$dbc = App::getDb();
 			
