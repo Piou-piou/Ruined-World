@@ -10,23 +10,6 @@
 		
 		//-------------------------- BUILDER ----------------------------------------------------------------------------//
 		public function __construct() {
-			/*$dbc = App::getDb();
-			$dbc1 = Bataille::getDb();*/
-			
-			//test si on a deje des missions dans la base
-			$this->getTestCheckMission();
-		}
-		//-------------------------- END BUILDER ----------------------------------------------------------------------------//
-		
-		
-		
-		//-------------------------- GETTER ----------------------------------------------------------------------------//
-		/**
-		 * fonction qui regarde la derniere fois que la récupération de missions a été effectuée.
-		 * Si jamais fait on ajoute la date du jour en bdd et on lance la récupération de missions
-		 * sinon si elle est supérieur a 1 jour on la remet a la date du jour + on get de nouvelles missions
-		 */
-		private function getTestCheckMission() {
 			$dbc = App::getDb();
 			
 			$query = $dbc->select("last_check_mission")->from("_bataille_base")->where("ID_base", "=", Bataille::getIdBase())->get();
@@ -54,12 +37,16 @@
 				}
 			}
 		}
+		//-------------------------- END BUILDER ----------------------------------------------------------------------------//
 		
+		
+		
+		//-------------------------- GETTER ----------------------------------------------------------------------------//
 		/**
 		 * fonction qui récupere tous les types de missions et les return dans un array
 		 */
 		private function getTypeMission() {
-			
+			return explode(",", Bataille::getParam("type_missions"));
 		}
 		//-------------------------- END GETTER ----------------------------------------------------------------------------//
 		
@@ -84,18 +71,28 @@
 		 * fonction qui recupere des missions aleatoirement de chaque type et qui les ajoute
 		 * dans la table _bataille_mission_aleatoire
 		 */
-		private function setMissionsAleatoire($type) {
+		private function setMissionsAleatoire() {
+			$dbc = App::getDb();
 			$dbc1 = Bataille::getDb();
 			
-			$query = $dbc1->select()->from("mission")
-				->where("type", "=", $type)
-				->orderBy("RAND()")
-				->limit(0, 3)
-				->get();
+			$dbc->delete()->from("_bataille_mission_aleatoire")->where("ID_base", "=", Bataille::getIdBase())->del();
 			
-			if ((is_array($query)) && (count($query))) {
-				foreach ($query as $obj) {
-					echo($obj->nom_mission."<br>");
+			$type_missions = $this->getTypeMission();
+			
+			foreach ($type_missions as $un_type) {
+				$query = $dbc1->select()->from("mission")
+					->where("type", "=", $un_type)
+					->orderBy("RAND()")
+					->limit(0, 3)
+					->get();
+				
+				if ((is_array($query)) && (count($query))) {
+					foreach ($query as $obj) {
+						$dbc->insert("ID_mission", $obj->ID_mission)
+							->insert("ID_base", Bataille::getIdBase())
+							->into("_bataille_mission_aleatoire")
+							->set();
+					}
 				}
 			}
 		}
