@@ -10,6 +10,7 @@
 		private static $points;
 		private static $unite;
 		private static $centre_recherche;
+		private static $missions_aleatoire;
 		private static $map;
 		private static $database;
 		private static $nation;
@@ -64,7 +65,7 @@
 			return self::$batiment;
 		}
 
-		//initialisation of Batiment class
+		//initialisation of Points class
 		public static function getPoints() {
 			if (self::$points == null) {
 				self::$points = new Points();
@@ -73,7 +74,7 @@
 			return self::$points;
 		}
 
-		//initialisation of Batiment class
+		//initialisation of Map class
 		public static function getMap() {
 			if (self::$map == null) {
 				self::$map = new Map();
@@ -91,13 +92,22 @@
 			return self::$unite;
 		}
 
-		//initialisation of Batiment class
+		//initialisation of CentreRecherche class
 		public static function getCentreRecherche() {
 			if (self::$centre_recherche == null) {
 				self::$centre_recherche = new CentreRecherche();
 			}
 
 			return self::$centre_recherche;
+		}
+		
+		//initialisation of MissionsAleatoire class
+		public static function getMissionsAleatoire() {
+			if (self::$missions_aleatoire == null) {
+				self::$missions_aleatoire = new MissionsAleatoire();
+			}
+			
+			return self::$missions_aleatoire;
 		}
 
 		//initialisation of Database Core connexion

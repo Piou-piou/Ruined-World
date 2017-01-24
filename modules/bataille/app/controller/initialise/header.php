@@ -6,4 +6,6 @@
 	
 	Bataille::getNation();
 	
+	Bataille::getMissionsAleatoire();
+	
 	$arr = Bataille::getValues();
