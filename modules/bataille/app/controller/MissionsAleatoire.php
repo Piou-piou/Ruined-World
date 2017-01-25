@@ -59,7 +59,7 @@
 		 * @return int
 		 * renvoi le nombre de missions encore disponibles dans la base
 		 */
-		public function getNbMissions() {
+		private function getNbMissions() {
 			$dbc = App::getDb();
 			
 			$query = $dbc->select("ID_mission_aleatoire")->from("_bataille_mission_aleatoire")->where("ID_base", "=", Bataille::getIdBase())->get();
@@ -75,6 +75,18 @@
 				]);
 				
 				return $count;
+			}
+		}
+		
+		private function getTempsMission($id_mission) {
+			$dbc1 = Bataille::getDb();
+			
+			$query = $dbc1->select("duree")->from("mission")->where("ID_mission", "=", $id_mission)->get();
+			
+			if ((is_array($query)) && (count($query))) {
+				foreach ($query as $obj) {
+					return $obj->duree;
+				}
 			}
 		}
 		
@@ -119,7 +131,7 @@
 		 * fonction qui met a jour le last_ckeck_missions dans _bataille_base
 		 * le met à la date du jour
 		 */
-		public function setUpdateLastCheckMissions() {
+		private function setUpdateLastCheckMissions() {
 			$dbc = App::getDb();
 			
 			$dbc->update("last_check_mission", Bataille::getToday())
@@ -159,6 +171,38 @@
 					}
 				}
 			}
+		}
+		
+		/**
+		 * @param $id_mission
+		 * @param $nombre_unite
+		 * @param $nom_unite
+		 * @param $type_unite
+		 * fonction sert a lancer une mission
+		 */
+		public function setCommencerMission($id_mission, $nombre_unite, $nom_unite, $type_unite) {
+			$dbc = App::getDb();
+			
+			$dbc->insert("date_fin", $this->getTempsMission($id_mission)+Bataille::getToday())
+				->insert("ID_base", Bataille::getIdBase())
+				->insert("ID_mission", $id_mission)
+				->into("_bataille_missions_cours")
+				->set();
+			
+			$id_missions_cours = $dbc->lastInsertId();
+			
+			$count = count($nombre_unite);
+			for ($i=0 ; $i<$count ; $i++) {
+				$new_tab[] = [
+					"nombre_unite" =>  $nombre_unite[$i],
+					"nom_unite" =>  $nom_unite[$i],
+					"type_unite" =>  $type_unite[$i]
+				];
+			}
+			
+			echo("<pre>");
+			print_r($new_tab);
+			echo("</pre>");
 		}
 		//-------------------------- END SETTER ----------------------------------------------------------------------------//
 		
