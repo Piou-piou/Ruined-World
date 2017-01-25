@@ -193,16 +193,8 @@
 			
 			$count = count($nombre_unite);
 			for ($i=0 ; $i<$count ; $i++) {
-				$new_tab[] = [
-					"nombre_unite" =>  $nombre_unite[$i],
-					"nom_unite" =>  $nom_unite[$i],
-					"type_unite" =>  $type_unite[$i]
-				];
+				Bataille::getUnite()->setCommencerExpedition($nombre_unite[$i], $nom_unite[$i], $type_unite[$i], $id_missions_cours);
 			}
-			
-			echo("<pre>");
-			print_r($new_tab);
-			echo("</pre>");
 		}
 		//-------------------------- END SETTER ----------------------------------------------------------------------------//
 		

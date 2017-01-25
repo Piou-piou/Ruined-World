@@ -170,7 +170,8 @@
 			$query = $dbc->select("nom")->from("_bataille_unite")
 				->where("type", "=", $type, "AND")
 				->where("ID_base", "=", $id_base, "AND")
-				->where("(ID_groupe IS NULL OR ID_groupe = 0)", "", "", "", true)
+				->where("(ID_groupe IS NULL OR ID_groupe = 0)", "", "", "AND", true)
+				->where("(ID_mission IS NULL OR ID_mission = 0)", "", "", "", true)
 				->orderBy("nom")
 				->get();
 
@@ -190,6 +191,28 @@
 
 				return $unites;
 			}
+		}
+		
+		/**
+		 * @param $type
+		 * @param $nom
+		 * @return int
+		 * renvoi le nombre d'unite en fonction d'un type et d'un nom qui ne sont ni dans un groupe ni
+		 * en mission
+		 */
+		private function getNombreUniteNom($type, $nom) {
+			$dbc = App::getDb();
+			
+			$query = $dbc->select("nom")->from("_bataille_unite")
+				->where("type", "=", $type, "AND")
+				->where("nom", "=", $nom, "AND")
+				->where("ID_base", "=", Bataille::getIdBase(), "AND")
+				->where("(ID_groupe IS NULL OR ID_groupe = 0)", "", "", "AND", true)
+				->where("(ID_mission IS NULL OR ID_mission = 0)", "", "", "", true)
+				->orderBy("nom")
+				->get();
+			
+			return count($query);
 		}
 		//-------------------------- END GETTER ----------------------------------------------------------------------------//
 		
@@ -280,6 +303,35 @@
 
 				$dbc->delete()->from("_bataille_recrutement")->where("ID_recrutement", "=", $id_recrutement)->del();
 			}
+		}
+		
+		/**
+		 * @param $nombre_unite
+		 * @param $nom_unite
+		 * @param $type_unite
+		 * @param $id_mission
+		 * @return bool
+		 * permet de lancer des unites en expédition en ajoutant à chaque unité un id_mission
+		 */
+		public function setCommencerExpedition($nombre_unite, $nom_unite, $type_unite, $id_mission) {
+			$dbc = App::getDb();
+			
+			$nombre_unite_base = $this->getNombreUniteNom($type_unite, $nom_unite);
+			
+			if ($nombre_unite > $nombre_unite_base) {
+				FlashMessage::setFlash("Pas assez d'unités ".$nom_unite." disponibles dans la base pour partir en mission");
+				return false;
+			}
+			
+			$dbc->update("ID_mission", $id_mission)
+				->from("_bataille_unite")
+				->where("type", "=", $type_unite, "AND")
+				->where("nom", "=", $nom_unite, "AND")
+				->where("ID_base", "=", Bataille::getIdBase())
+				->limit($nombre_unite, "no")
+				->set();
+			
+			return true;
 		}
 		//-------------------------- END SETTER ----------------------------------------------------------------------------//    
 	}
