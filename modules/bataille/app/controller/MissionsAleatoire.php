@@ -3,6 +3,7 @@
 	
 	
 	use core\App;
+	use core\functions\DateHeure;
 	
 	class MissionsAleatoire {
 		
@@ -77,11 +78,36 @@
 			}
 		}
 		
+		/**
+		 * récupères les missions encore disponible dans la base
+		 */
 		public function getMissions() {
 			$dbc = App::getDb();
 			$dbc1 = Bataille::getDb();
 			
+			$query = $dbc->select()->from("_bataille_mission_aleatoire")->where("ID_base", "=", Bataille::getIdBase())->get();
 			
+			if ((is_array($query)) && (count($query))) {
+				foreach ($query as $obj) {
+					$query1 = $dbc1->select()->from("mission")->where("ID_mission", "=", $obj->ID_mission)->get();
+					
+					if ((is_array($query1)) && (count($query1))) {
+						foreach ($query1 as $obj) {
+							$missions[] = [
+								"nom_mission" => $obj->nom_mission,
+								"description" => $obj->description,
+								"points_gagne" => $obj->points_gagne,
+								"type" => $obj->type,
+								"ressource_gagnee" => $obj->ressource_gagnee,
+								"pourcentage_perte" => $obj->pourcentage_perte,
+								"duree" => DateHeure::Secondeenheure($obj->duree)
+							];
+						}
+					}
+				}
+				
+				Bataille::setValues(["missions" => $missions]);
+			}
 		}
 		//-------------------------- END GETTER ----------------------------------------------------------------------------//
 		
