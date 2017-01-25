@@ -20,7 +20,7 @@
 		</ul>
 
 		{% if bataille.unites is iterable %}
-			<form action="">
+			<form action="{{ WEBRROT }}controller/modules/bataille/missions/lancer_mission" method="post">
 				{% for key,j in bataille.unites %}
 					<h5>{{ key }}</h5>
 
@@ -30,7 +30,9 @@
 								<label for="nombre_unite">Nombre d'unités {{ x.nom }}</label>
 							</div>
 							<div class="small-12 medium-6 large-3 columns">
-								<input type="range" class="range" name="nombre_unite" value="0" min="0" step="1" max="{{ x.nombre }}">
+								<input type="range" class="range" name="nombre_unite[]" value="0" min="0" step="1" max="{{ x.nombre }}">
+								<input type="hidden" name="nom_unite[]" value="{{ x.nom }}">
+								<input type="hidden" name="type_unite[]" value="{{ key }}">
 							</div>
 							<div class="small-12 medium-6 large-5 columns end">
 								<span class="total-envoi">0</span> {{ x.nom }} seront envoyées
@@ -38,6 +40,9 @@
 						</div>
 					{% endfor %}
 				{% endfor %}
+
+				<input type="hidden" name="id_mission" value="{{ i.id_mission }}">
+				<button type="submit">Envoyer</button>
 			</form>
 		{% endif %}
 	{% endfor %}

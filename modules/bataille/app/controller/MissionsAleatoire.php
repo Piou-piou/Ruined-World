@@ -94,6 +94,7 @@
 					if ((is_array($query1)) && (count($query1))) {
 						foreach ($query1 as $obj) {
 							$missions[] = [
+								"id_mission" => $obj->ID_mission,
 								"nom_mission" => $obj->nom_mission,
 								"description" => $obj->description,
 								"points_gagne" => $obj->points_gagne,
