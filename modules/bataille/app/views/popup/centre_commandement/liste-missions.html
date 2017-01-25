@@ -1,3 +1,16 @@
 <h3>Listes des missions disponibles actuellement</h3>
-<p>Vous avez actuellement ? missions disponibles. Les missions changent toutes les heures, le dernier changement date d'il y a ?min.</p>
+<p>Vous avez actuellement {{ bataille.nb_missions }} missions disponibles. Les missions changent toutes les 3
+   heures, le prochain changement sera effectué dans <span id="next_check"></span>.</p>
+
+
+
+<script src="{{MODULEWEBROOT}}bataille/app/views/js/jquery.plugin.min.js"></script>
+<script src="{{MODULEWEBROOT}}bataille/app/views/js/jquery.countdown.js"></script>
+<script>
+    $(function () {
+        $('#next_check').countdown({
+            until: {{bataille.next_check_missions}},
+        });
+    });
+</script>
 

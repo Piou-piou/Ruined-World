@@ -6,7 +6,7 @@
 	use core\functions\DateHeure;
 	
 	class MissionsAleatoire {
-		
+		private $last_check_mission;
 		
 		
 		//-------------------------- BUILDER ----------------------------------------------------------------------------//
@@ -22,26 +22,26 @@
 			
 			if (is_array($query) && (count($query) == 1)) {
 				foreach ($query as $obj) {
-					$last_check_mission = $obj->last_check_mission;
+					$this->last_check_mission = $obj->last_check_mission;
 				}
 				
-				if ($last_check_mission == "") {
+				if ($this->last_check_mission == "") {
 					$this->setUpdateLastCheckMissions();
 					$this->setMissionsAleatoire();
 				}
 				else {
-					$today = new \DateTime();
-					$last_check_mission = new \DateTime($last_check_mission);
-					$interval = $last_check_mission->diff($today);
+					$today = Bataille::getToday();
+					$interval = $today-$this->last_check_mission;
 					
-					$diff_jour = explode("+", $interval->format("%R%a"))[1];
-					
-					if ($diff_jour >= 1) {
+					if ($interval >= 10800) {
 						$this->setUpdateLastCheckMissions();
 						$this->setMissionsAleatoire();
 					}
 				}
 			}
+			
+			$this->getNbMissions();
+			Bataille::setValues(["next_check_missions" => ($this->last_check_mission+10800)-Bataille::getToday()]);
 		}
 		//-------------------------- END BUILDER ----------------------------------------------------------------------------//
 		
@@ -71,7 +71,7 @@
 				
 				$count = count($id);
 				Bataille::setValues([
-					"nb_mission" => $count
+					"nb_missions" => $count
 				]);
 				
 				return $count;
@@ -121,10 +121,12 @@
 		public function setUpdateLastCheckMissions() {
 			$dbc = App::getDb();
 			
-			$dbc->update("last_check_mission", date("Y-m-d"))
+			$dbc->update("last_check_mission", Bataille::getToday())
 				->from("_bataille_base")
 				->where("ID_base", "=", Bataille::getIdBase())
 				->set();
+			
+			$this->last_check_mission = Bataille::getToday();
 		}
 		
 		/**
