@@ -62,7 +62,7 @@
 			if ((is_array($query)) && (count($query) > 0)) {
 				foreach ($query as $obj) {
 					$ma_base = "";
-					if ($obj->ID_identite == 1) {
+					if ($obj->ID_base == Bataille::getIdBase()) {
 						$ma_base = "ma-base";
 					}
 					
