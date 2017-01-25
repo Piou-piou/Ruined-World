@@ -96,7 +96,7 @@
 		
 		//------------------------------- POUR L'AFFICHAGE DE LA BASE ----------------------------------//
 		if ($this->page == "map-game/large-screen") {
-			$this->controller = "bataille/app/controller/missions/large_screen.php";
+			$this->controller = "bataille/app/controller/initialise/large_screen.php";
 		}
 		if ($this->page == "map-game/small-screen") {
 			$this->controller = "bataille/app/controller/initialise/small_screen.php";
