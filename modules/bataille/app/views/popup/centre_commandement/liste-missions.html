@@ -7,17 +7,39 @@
 
 <div class="row">
 	<h3>Listes des missions disponibles</h3>
-	
+
 	{% for i in bataille.missions %}
 		<h4>{{ i.nom_mission }}</h4>
 		<p>{{ i.description }}</p>
-		
+
 		<ul>
 			<li>Nombre de points gagné : {{ i.points_gagne }}</li>
 			<li>Ressources gagnées : {{ i.ressource_gagnee }} par unité envoyée</li>
 			<li>Pourcentage de perte possible : de 0% à {{ i.pourcentage_perte }}%</li>
 			<li>Durée de la mission : {{ i.duree }}</li>
 		</ul>
+
+		{% if bataille.unites is iterable %}
+			<form action="">
+				{% for key,j in bataille.unites %}
+					<h5>{{ key }}</h5>
+
+					{% for x in j %}
+						<div class="row">
+							<div class="small-12 medium-6 large-3 columns">
+								<label for="nombre_unite">Nombre d'unités {{ x.nom }}</label>
+							</div>
+							<div class="small-12 medium-6 large-3 columns">
+								<input type="range" class="range" name="nombre_unite" value="0" min="0" step="1" max="{{ x.nombre }}">
+							</div>
+							<div class="small-12 medium-6 large-5 columns end">
+								<span class="total-envoi">0</span> {{ x.nom }} seront envoyées
+							</div>
+						</div>
+					{% endfor %}
+				{% endfor %}
+			</form>
+		{% endif %}
 	{% endfor %}
 </div>
 
@@ -34,3 +56,10 @@
     });
 </script>
 
+<script>
+    $(function () {
+        $(".range").on("change", function() {
+            $(this).parent().parent().find(".total-envoi").html($(this).val());
+        });
+    });
+</script>
