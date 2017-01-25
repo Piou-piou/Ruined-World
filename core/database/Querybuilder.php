@@ -133,8 +133,14 @@
 		 * @param integer $debut
 		 * @param integer $fin
 		 */
-		public function limit($debut, $fin) {
-			$this->limit = " LIMIT ".$debut.", ".$fin." ";
+		public function limit($debut = "", $fin) {
+			if ($debut == "") {
+				$this->limit = " LIMIT ".$fin." ";
+			}
+			else {
+				$this->limit = " LIMIT ".$debut.", ".$fin." ";
+			}
+			
 
 			return $this;
 		}
