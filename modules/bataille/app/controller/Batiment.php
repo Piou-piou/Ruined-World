@@ -101,19 +101,15 @@
 		 * @return int
 		 * recuperation de la production de chaque ressource en fonction du lvl des batiments
 		 */
-		public function getProduction($ressource, $id_base = null) {
+		public function getProduction($ressource) {
 			$dbc1 = Bataille::getDb();
-
-			if ($id_base == null) {
-				$id_base = Bataille::getIdBase();
-			}
-
+			
 			$nom_batiment = "centrale_eau";
 			if ($ressource == "electricite") $nom_batiment = "centrale_electrique";
 			if ($ressource == "fuel") $nom_batiment = "station_pompage_fuel";
 			if ($ressource == "fer") $nom_batiment = "station_forage";
 
-			$niveau = $this->getNiveauBatiment($nom_batiment, $id_base);
+			$niveau = $this->getNiveauBatiment($nom_batiment, Bataille::getIdBase());
 
 			if ($niveau > 0) {
 				$query = $dbc1->select("production")->from("$nom_batiment")->where("ID_".$nom_batiment, "=", $niveau)->get();
@@ -133,14 +129,10 @@
 		 * @return int
 		 * fonction qui retourne le stockage de l'entrepot
 		 */
-		public function getStockage($batiment = "entrepot", $id_base = null) {
+		public function getStockage($batiment = "entrepot") {
 			$dbc1 = Bataille::getDb();
 
-			if ($id_base == null) {
-				$id_base = Bataille::getIdBase();
-			}
-
-			$niveau = $this->getNiveauBatiment($batiment, $id_base);
+			$niveau = $this->getNiveauBatiment($batiment, Bataille::getIdBase());
 
 			if ($niveau > 0) {
 				$query = $dbc1->select("stockage")->from($batiment)->where("ID_".$batiment, "=", $niveau)->get();
