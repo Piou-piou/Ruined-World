@@ -1,6 +1,26 @@
-<h3>Listes des missions disponibles actuellement</h3>
-<p>Vous avez actuellement {{ bataille.nb_missions }} missions disponibles. Les missions changent toutes les 3
-   heures, le prochain changement sera effectué dans <span id="next_check"></span>.</p>
+<div class="row">
+	<h3>Listes des missions disponibles actuellement</h3>
+	<p>Vous avez actuellement {{ bataille.nb_missions }} missions disponibles. Les missions changent toutes les 3
+	   heures, le prochain changement sera effectué dans <span id="next_check"></span>.
+	</p>
+</div>
+
+<div class="row">
+	<h3>Listes des missions disponibles</h3>
+	
+	{% for i in bataille.missions %}
+		<h4>{{ i.nom_mission }}</h4>
+		<p>{{ i.description }}</p>
+		
+		<ul>
+			<li>Nombre de points gagné : {{ i.points_gagne }}</li>
+			<li>Ressources gagnées : {{ i.ressource_gagnee }} par unité envoyée</li>
+			<li>Pourcentage de perte possible : de 0% à {{ i.pourcentage_perte }}%</li>
+			<li>Durée de la mission : {{ i.duree }}</li>
+		</ul>
+	{% endfor %}
+</div>
+
 
 
 
