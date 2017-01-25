@@ -31,7 +31,7 @@
 				"production_electricite" => Bataille::getBatiment()->getProduction("electricite"),
 				"production_fer" => Bataille::getBatiment()->getProduction("fer"),
 				"production_fuel" => Bataille::getBatiment()->getProduction("fuel"),
-				"stockage_entrepot" => Bataille::getBatiment()->getStockageEntrepot()
+				"stockage_entrepot" => Bataille::getBatiment()->getStockage()
 			]);
 		}
 

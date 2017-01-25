@@ -74,7 +74,7 @@
 		}
 
 		private function getStockageMax($ressource) {
-			$stockage_max = Bataille::getBatiment()->getStockageEntrepot();
+			$stockage_max = Bataille::getBatiment()->getStockage();
 
 			if ($this->$ressource == $stockage_max) {
 				return "rouge";
@@ -116,7 +116,7 @@
 			$dbc = App::getDb();
 
 			$ressource = $ressrouce+(round((Bataille::getBatiment()->getProduction($nom_ressource, $this->id_base)/3600)*$diff_temps));
-			$stockage_max = Bataille::getBatiment()->getStockageEntrepot($this->id_base);
+			$stockage_max = Bataille::getBatiment()->getStockage();
 
 			if ($ressource > $stockage_max) {
 				$ressource = $stockage_max;
@@ -165,7 +165,7 @@
 				$fuel = $this->getFuel()+$fuel;
 				$nourriture = $this->getNourriture()+$nourriture;
 
-				$stockage_max = Bataille::getBatiment()->getStockageEntrepot();
+				$stockage_max = Bataille::getBatiment()->getStockage();
 
 				if ($eau > $stockage_max) $eau = $stockage_max;
 				if ($electricite > $stockage_max) $electricite = $stockage_max;

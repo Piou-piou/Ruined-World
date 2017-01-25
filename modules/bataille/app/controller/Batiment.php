@@ -133,17 +133,17 @@
 		 * @return int
 		 * fonction qui retourne le stockage de l'entrepot
 		 */
-		public function getStockageEntrepot($id_base = null) {
+		public function getStockage($batiment = "entrepot", $id_base = null) {
 			$dbc1 = Bataille::getDb();
 
 			if ($id_base == null) {
 				$id_base = Bataille::getIdBase();
 			}
 
-			$niveau = $this->getNiveauBatiment("entrepot", $id_base);
+			$niveau = $this->getNiveauBatiment($batiment, $id_base);
 
 			if ($niveau > 0) {
-				$query = $dbc1->select("stockage")->from("entrepot")->where("ID_entrepot", "=", $niveau)->get();
+				$query = $dbc1->select("stockage")->from($batiment)->where("ID_".$batiment, "=", $niveau)->get();
 
 				if ((is_array($query)) && (count($query) > 0)) {
 					foreach ($query as $obj) {
