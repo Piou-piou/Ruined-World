@@ -133,9 +133,9 @@
 		 * @param integer $debut
 		 * @param integer $fin
 		 */
-		public function limit($debut = "", $fin) {
-			if ($debut == "") {
-				$this->limit = " LIMIT ".$fin." ";
+		public function limit($debut, $fin = "no") {
+			if ($fin == "no") {
+				$this->limit = " LIMIT ".$debut." ";
 			}
 			else {
 				$this->limit = " LIMIT ".$debut.", ".$fin." ";
@@ -185,6 +185,8 @@
 
 				$values = array_merge($values, $this->getWhereConditions()[1]);
 			}
+			
+			$requete .= $this->limit;
 
 			$this->prepare($requete, $values);
 			$this->unsetQueryBuilder();
