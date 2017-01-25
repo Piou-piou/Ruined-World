@@ -53,6 +53,36 @@
 		private function getTypeMission() {
 			return explode(",", Bataille::getParam("type_missions"));
 		}
+		
+		/**
+		 * @return int
+		 * renvoi le nombre de missions encore disponibles dans la base
+		 */
+		public function getNbMissions() {
+			$dbc = App::getDb();
+			
+			$query = $dbc->select("ID_mission_aleatoire")->from("_bataille_mission_aleatoire")->where("ID_base", "=", Bataille::getIdBase())->get();
+			
+			if ((is_array($query)) && (count($query))) {
+				foreach ($query as $obj) {
+					$id[] = $obj->ID_base;
+				}
+				
+				$count = count($id);
+				Bataille::setValues([
+					"nb_mission" => $count
+				]);
+				
+				return $count;
+			}
+		}
+		
+		public function getMissions() {
+			$dbc = App::getDb();
+			$dbc1 = Bataille::getDb();
+			
+			
+		}
 		//-------------------------- END GETTER ----------------------------------------------------------------------------//
 		
 		
