@@ -204,6 +204,10 @@
 
 				$values = array_merge($values, $this->getWhereConditions()[1]);
 			}
+			
+			$requete .= $this->order_by;
+			
+			$requete .= $this->limit;
 
 			$this->prepare($requete, $values);
 			$this->unsetQueryBuilder();
