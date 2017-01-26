@@ -14,13 +14,7 @@
 		
 		//-------------------------- BUILDER ----------------------------------------------------------------------------//
 		public function __construct() {
-			$dbc1 = Bataille::getDb();
-
-			$query = $dbc1->select("coef_centre_recherche")->from("configuration")->where("ID_configuration", "=", 1)->get();
-
-			if ((is_array($query)) && (count($query) == 1)) {
-				foreach ($query as $obj) $this->coef_centre = $obj->coef_centre_recherche;
-			}
+			$this->coef_centre = Bataille::getParam("coef_centre_recherche");
 		}
 		//-------------------------- END BUILDER ----------------------------------------------------------------------------//
 		

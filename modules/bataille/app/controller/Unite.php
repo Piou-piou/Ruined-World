@@ -14,13 +14,7 @@
 		
 		//-------------------------- BUILDER ----------------------------------------------------------------------------//
 		public function __construct() {
-			$dbc1 = Bataille::getDb();
-
-			$query = $dbc1->select("coef_niveau_unite")->from("configuration")->where("ID_configuration", "=", 1)->get();
-
-			if ((is_array($query)) && (count($query) == 1)) {
-				foreach ($query as $obj) $this->coef_unite = $obj->coef_niveau_unite;
-			}
+			$this->coef_unite = Bataille::getParam("coef_niveau_unite");
 		}
 		//-------------------------- END BUILDER ----------------------------------------------------------------------------//
 		
@@ -80,13 +74,7 @@
 		 * fonction qui renvoit tous les types d'unités qu'il est possible de recruter
 		 */
 		private function getAllType() {
-			$dbc1 = Bataille::getDb();
-
-			$query = $dbc1->select("type_unite")->from("configuration")->where("ID_configuration", "=", 1)->get();
-
-			if ((is_array($query)) && (count($query) == 1)) {
-				foreach ($query as $obj) return explode(",", $obj->type_unite);
-			}
+			return explode(",", Bataille::getParam("type_unite"));
 		}
 
 		/**
@@ -212,6 +200,20 @@
 				->where("(ID_groupe IS NULL OR ID_groupe = 0)", "", "", "AND", true)
 				->where("(ID_mission IS NULL OR ID_mission = 0)", "", "", "", true)
 				->orderBy("nom")
+				->get();
+			
+			return count($query);
+		}
+		
+		/**
+		 * @return int
+		 * fonction qui renvoi le nombre d'unité vivante dans la base qui consomme de la nourriture
+		 */
+		public function getUniteHumaine() {
+			$dbc = App::getDb();
+			
+			$query = $dbc->select("ID_unite")->from("_bataille_unite")
+				->where("type", "=", "infanterie")
 				->get();
 			
 			return count($query);

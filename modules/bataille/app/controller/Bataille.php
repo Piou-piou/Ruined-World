@@ -11,6 +11,7 @@
 		private static $unite;
 		private static $centre_recherche;
 		private static $missions_aleatoire;
+		private static $nourriture;
 		private static $map;
 		private static $database;
 		private static $nation;
@@ -108,6 +109,15 @@
 			}
 			
 			return self::$missions_aleatoire;
+		}
+		
+		//initialisation of Nourriture class
+		public static function getNourriture() {
+			if (self::$nourriture == null) {
+				self::$nourriture = new Nourriture();
+			}
+			
+			return self::$nourriture;
 		}
 
 		//initialisation of Database Core connexion
