@@ -69,7 +69,6 @@
 			$dbc->update("points", $points)
 				->from("_bataille_base")
 				->where("ID_base", "=", $id_base, "AND")
-				->where("ID_identite", "=", $_SESSION['idlogin'.CLEF_SITE])
 				->set();
 		}
 		//-------------------------- END SETTER ----------------------------------------------------------------------------//
