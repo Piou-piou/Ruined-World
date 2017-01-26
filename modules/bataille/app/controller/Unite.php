@@ -209,7 +209,7 @@
 		 * @return int
 		 * fonction qui renvoi le nombre d'unité vivante dans la base qui consomme de la nourriture
 		 */
-		public function getUniteHumaine() {
+		public function getNombreUniteHumaine() {
 			$dbc = App::getDb();
 			
 			$query = $dbc->select("ID_unite")->from("_bataille_unite")

@@ -6,4 +6,6 @@
 	
 	Bataille::getNation();
 	
+	Bataille::getNourriture();
+	
 	$arr = Bataille::getValues();
