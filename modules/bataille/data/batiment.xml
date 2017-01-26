@@ -60,4 +60,10 @@
         <champ>ID_centre_commandement</champ>
         <complement>%</complement>
     </centre_commandement>
+
+    <grenier>
+        <phrase>Stockage actuel : </phrase>
+        <phrase_suivant>Stockage au niveau suivant : </phrase_suivant>
+        <champ>stockage</champ>
+    </grenier>
 </bataille>
