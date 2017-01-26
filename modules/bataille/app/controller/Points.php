@@ -68,7 +68,7 @@
 			
 			$dbc->update("points", $points)
 				->from("_bataille_base")
-				->where("ID_base", "=", $id_base, "AND")
+				->where("ID_base", "=", $id_base)
 				->set();
 		}
 		//-------------------------- END SETTER ----------------------------------------------------------------------------//
