@@ -231,27 +231,28 @@
 		 */
 		public function setCommencerMission($id_mission, $nombre_unite, $nom_unite, $type_unite) {
 			$dbc = App::getDb();
-			if ($nombre_unite > 0) {
-				$dbc->insert("date_fin", $this->getTempsMission($id_mission)+Bataille::getToday())
-					->insert("ID_base", Bataille::getIdBase())
-					->insert("ID_mission", $id_mission)
-					->into("_bataille_missions_cours")
-					->set();
-				
-				$id_missions_cours = $dbc->lastInsertId();
-				
-				$count = count($nombre_unite);
 			
-			
-				for ($i=0 ; $i<$count ; $i++) {
-					Bataille::getUnite()->setCommencerExpedition($nombre_unite[$i], $nom_unite[$i], $type_unite[$i], $id_missions_cours);
-				}
-				
-				$this->setDeleteMission($id_mission);
+			if ($nombre_unite == 0) {
+				FlashMessage::setFlash("Pas assez d'unité pour effectuer cette missions");
+				return false;
 			}
 			
-			FlashMessage::setFlash("Pas assez d'unité pour effectuer cette missions");
-			return false;
+			$dbc->insert("date_fin", $this->getTempsMission($id_mission)+Bataille::getToday())
+				->insert("ID_base", Bataille::getIdBase())
+				->insert("ID_mission", $id_mission)
+				->into("_bataille_missions_cours")
+				->set();
+			
+			$id_missions_cours = $dbc->lastInsertId();
+			
+			$count = count($nombre_unite);
+			
+			
+			for ($i=0 ; $i<$count ; $i++) {
+				Bataille::getUnite()->setCommencerExpedition($nombre_unite[$i], $nom_unite[$i], $type_unite[$i], $id_missions_cours);
+			}
+			
+			$this->setDeleteMission($id_mission);
 		}
 		
 		/**
