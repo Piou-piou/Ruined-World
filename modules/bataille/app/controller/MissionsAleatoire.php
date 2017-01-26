@@ -227,16 +227,16 @@
 				foreach ($query as $obj) {
 					$infos_missions = $this->getInfosMission($obj->ID_mission);
 					
+					$unite_revenu = Bataille::getUnite()->setTerminerExpedition($obj->ID_mission, $infos_missions["pourcentage_perte"]);
+					
 					if ($infos_missions["type"] == "nourriture") {
-						Bataille::getRessource()->setUpdateRessource(0, 0, 0, 0, $infos_missions["ressource_gagnee"], "+");
+						Bataille::getRessource()->setUpdateRessource(0, 0, 0, 0, $infos_missions["ressource_gagnee"]*$unite_revenu, "+");
 					}
 					else {
 						//Bataille::getRessource()->setUpdateRessource(0, 0, 0, 0, $obj->ressource_gagnee, "+");
 					}
 					
 					Points::setAjouterPoints(Bataille::getIdBase(), "", $infos_missions["points_gange"]);
-					
-					Bataille::getUnite()->setTerminerExpedition($obj->ID_mission, $infos_missions["pourcentage_perte"]);
 					
 					$dbc->delete()->from("_bataille_missions_cours")
 						->where("ID_base", "=", Bataille::getIdBase(), "AND")

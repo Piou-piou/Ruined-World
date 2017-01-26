@@ -337,6 +337,7 @@
 		/**
 		 * @param $id_mission
 		 * @param $pourcentage_perte
+		 * @return int
 		 * fonction qui termine une expdedition au niveau des troupes, cette fonction s'occupe d'en
 		 * supprimer de la bdd en fonction du nombre de troupe envoyé et du cpourcentage de perte
 		 */
@@ -369,6 +370,9 @@
 				->where("ID_base", "=", Bataille::getIdBase(), "AND")
 				->where("ID_mission", "=", $id_mission, "", true)
 				->set();
+			
+			//renvoi le nombre d'unites qui ont réussi àrentrer à la base
+			return $nombre_unite-$unite_tuees;
 		}
 		//-------------------------- END SETTER ----------------------------------------------------------------------------//    
 	}
