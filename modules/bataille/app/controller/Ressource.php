@@ -170,12 +170,13 @@
 				$nourriture = $this->getNourriture()+$nourriture;
 
 				$stockage_max = Bataille::getBatiment()->getStockage();
+				$stockage_max_grenier = Bataille::getBatiment()->getStockage("grenier");
 
 				if ($eau > $stockage_max) $eau = $stockage_max;
 				if ($electricite > $stockage_max) $electricite = $stockage_max;
 				if ($fer > $stockage_max) $fer = $stockage_max;
 				if ($fuel > $stockage_max) $fuel = $stockage_max;
-				if ($nourriture > $stockage_max) $nourriture = $stockage_max;
+				if ($nourriture > $stockage_max_grenier) $nourriture = $stockage_max_grenier;
 			}
 
 
