@@ -116,7 +116,11 @@
 			$dbc = App::getDb();
 
 			$ressource = $ressrouce+(round((Bataille::getBatiment()->getProduction($nom_ressource)/3600)*$diff_temps));
+			
 			$stockage_max = Bataille::getBatiment()->getStockage();
+			if ($nom_ressource == "nourriture") {
+				$stockage_max = Bataille::getBatiment()->getStockage("grenier");
+			}
 
 			if ($ressource > $stockage_max) {
 				$ressource = $stockage_max;
