@@ -333,5 +333,42 @@
 			
 			return true;
 		}
+		
+		/**
+		 * @param $id_mission
+		 * @param $pourcentage_perte
+		 * fonction qui termine une expdedition au niveau des troupes, cette fonction s'occupe d'en
+		 * supprimer de la bdd en fonction du nombre de troupe envoyé et du cpourcentage de perte
+		 */
+		public function setTerminerExpedition($id_mission, $pourcentage_perte) {
+			$dbc = App::getDb();
+			$perte = rand(0, $pourcentage_perte);
+			
+			$query = $dbc->select()->from("_bataille_unite")->where("ID_mission", "=", $id_mission, "AND")
+				->where("ID_base", "=", Bataille::getIdBase())
+				->get();
+			
+			//test si il y aura des unités à tuer
+			$nombre_unite = count($query);
+			$unite_tuees = 0;
+			if ((is_array($query)) && ($nombre_unite > 0)) {
+				$unite_tuees = round($nombre_unite*$perte/100);
+			}
+			
+			//si oui on en delete aléatoirement
+			if ($unite_tuees > 0) {
+				$dbc->delete()->from("_bataille_unite")->where("ID_mission", "=", $id_mission, "AND")
+					->where("ID_base", "=", Bataille::getIdBase())
+					->orderBy("RAND() ")
+					->limit($unite_tuees)
+					->del();
+			}
+			
+			$dbc->update("ID_mission", 0)
+				->from("_bataille_unite")
+				->where("ID_base", "=", Bataille::getIdBase(), "AND")
+				->where("ID_mission", "=", $id_mission, "", true)
+				->set();
+		}
 		//-------------------------- END SETTER ----------------------------------------------------------------------------//    
 	}

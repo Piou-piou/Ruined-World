@@ -52,14 +52,18 @@
 		/**
 		 * @param $id_base
 		 * @param string $type
+		 * @param int $points
 		 * fonction qui ajoute des points à la base en fonction du type
 		 * le type peut etre : batiment, attaque, defense, troupe
 		 */
-		public static function setAjouterPoints($id_base, $type) {
+		public static function setAjouterPoints($id_base, $type=null, $points=null) {
 			$dbc = App::getDb();
 
 			if ($type == "batiment") {
 				$points = self::getPointsBase($id_base)+self::getPointAjoutBatiment();
+			}
+			else {
+				$points = self::getPointsBase($id_base)+$points;
 			}
 			
 			$dbc->update("points", $points)

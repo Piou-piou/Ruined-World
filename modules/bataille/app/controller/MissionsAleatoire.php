@@ -78,6 +78,11 @@
 			}
 		}
 		
+		/**
+		 * @param $id_mission
+		 * @return mixed
+		 * fonction qui récupère la durée d'une mission
+		 */
 		private function getTempsMission($id_mission) {
 			$dbc1 = Bataille::getDb();
 			
@@ -95,31 +100,40 @@
 		 */
 		public function getMissions() {
 			$dbc = App::getDb();
-			$dbc1 = Bataille::getDb();
 			
 			$query = $dbc->select()->from("_bataille_mission_aleatoire")->where("ID_base", "=", Bataille::getIdBase())->get();
 			
 			if ((is_array($query)) && (count($query))) {
 				foreach ($query as $obj) {
-					$query1 = $dbc1->select()->from("mission")->where("ID_mission", "=", $obj->ID_mission)->get();
-					
-					if ((is_array($query1)) && (count($query1))) {
-						foreach ($query1 as $obj) {
-							$missions[] = [
-								"id_mission" => $obj->ID_mission,
-								"nom_mission" => $obj->nom_mission,
-								"description" => $obj->description,
-								"points_gagne" => $obj->points_gagne,
-								"type" => $obj->type,
-								"ressource_gagnee" => $obj->ressource_gagnee,
-								"pourcentage_perte" => $obj->pourcentage_perte,
-								"duree" => DateHeure::Secondeenheure($obj->duree)
-							];
-						}
-					}
+					$missions[] = $this->getInfosMission($obj->ID_mission);
 				}
 				
 				Bataille::setValues(["missions" => $missions]);
+			}
+		}
+		
+		/**
+		 * @param $id_mission
+		 * @return array
+		 * pour récupérer les infos d'une mission dans la bdd _core
+		 */
+		private function getInfosMission($id_mission) {
+			$dbc1 = Bataille::getDb();
+			$query1 = $dbc1->select()->from("mission")->where("ID_mission", "=", $id_mission)->get();
+			
+			if ((is_array($query1)) && (count($query1) > 0)) {
+				foreach ($query1 as $obj) {
+					return [
+						"id_mission" => $obj->ID_mission,
+						"nom_mission" => $obj->nom_mission,
+						"description" => $obj->description,
+						"points_gagne" => $obj->points_gagne,
+						"type" => $obj->type,
+						"ressource_gagnee" => $obj->ressource_gagnee,
+						"pourcentage_perte" => $obj->pourcentage_perte,
+						"duree" => DateHeure::Secondeenheure($obj->duree)
+					];
+				}
 			}
 		}
 		//-------------------------- END GETTER ----------------------------------------------------------------------------//
@@ -194,6 +208,41 @@
 			$count = count($nombre_unite);
 			for ($i=0 ; $i<$count ; $i++) {
 				Bataille::getUnite()->setCommencerExpedition($nombre_unite[$i], $nom_unite[$i], $type_unite[$i], $id_missions_cours);
+			}
+		}
+		
+		/**
+		 * fonctin qui termine les missions en cours et qui ajoutera les ressources + les points
+		 * et qui au cas ou pourra tuer des inités
+		 */
+		public function setTerminerMissions() {
+			$dbc = App::getDb();
+			
+			$query = $dbc->select()->from("_bataille_missions_cours")
+				->where("date_fin", "<=", Bataille::getToday(), "AND")
+				->where("ID_base", "=", Bataille::getIdBase())
+				->get();
+			
+			if ((is_array($query)) && (count($query))) {
+				foreach ($query as $obj) {
+					$infos_missions = $this->getInfosMission($obj->ID_mission);
+					
+					if ($infos_missions["type"] == "nourriture") {
+						Bataille::getRessource()->setUpdateRessource(0, 0, 0, 0, $infos_missions["ressource_gagnee"], "+");
+					}
+					else {
+						//Bataille::getRessource()->setUpdateRessource(0, 0, 0, 0, $obj->ressource_gagnee, "+");
+					}
+					
+					Points::setAjouterPoints(Bataille::getIdBase(), "", $infos_missions["points_gange"]);
+					
+					Bataille::getUnite()->setTerminerExpedition($obj->ID_mission, $infos_missions["pourcentage_perte"]);
+					
+					$dbc->delete()->from("_bataille_missions_cours")
+						->where("ID_base", "=", Bataille::getIdBase(), "AND")
+						->where("ID_mission", "=", $obj->ID_mission)
+						->del();
+				}
 			}
 		}
 		//-------------------------- END SETTER ----------------------------------------------------------------------------//
