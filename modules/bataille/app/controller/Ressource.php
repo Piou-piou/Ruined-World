@@ -72,9 +72,19 @@
 		public function getNourriture() {
 			return $this->nourriture;
 		}
-
+		
+		/**
+		 * @param $ressource
+		 * @return string
+		 * fonction qui sert à tester si on a atteint le stockage maximum pour une ressource en particulier
+		 */
 		private function getStockageMax($ressource) {
-			$stockage_max = Bataille::getBatiment()->getStockage();
+			if ($ressource == "nourriture") {
+				$stockage_max = Bataille::getBatiment()->getStockage("grenier");
+			}
+			else {
+				$stockage_max = Bataille::getBatiment()->getStockage();
+			}
 
 			if ($this->$ressource == $stockage_max) {
 				return "rouge";
