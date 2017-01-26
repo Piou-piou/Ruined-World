@@ -249,7 +249,7 @@
 						//Bataille::getRessource()->setUpdateRessource(0, 0, 0, 0, $obj->ressource_gagnee, "+");
 					}
 					
-					Points::setAjouterPoints(Bataille::getIdBase(), "", $infos_missions["points_gange"]);
+					Points::setAjouterPoints(Bataille::getIdBase(), "missions", $infos_missions["points_gange"]);
 					
 					$dbc->delete()->from("_bataille_missions_cours")
 						->where("ID_base", "=", Bataille::getIdBase(), "AND")

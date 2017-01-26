@@ -62,7 +62,7 @@
 			if ($type == "batiment") {
 				$points = self::getPointsBase($id_base)+self::getPointAjoutBatiment();
 			}
-			else {
+			else if ($type == "missions") {
 				$points = self::getPointsBase($id_base)+$points;
 			}
 			
