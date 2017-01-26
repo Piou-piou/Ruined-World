@@ -154,7 +154,7 @@
 
 				$unites = array_merge($unites, $type_unite);
 			}
-
+			
 			Bataille::setValues(["unites" => $unites]);
 		}
 
@@ -191,6 +191,8 @@
 
 				return $unites;
 			}
+			
+			return [];
 		}
 		
 		/**
