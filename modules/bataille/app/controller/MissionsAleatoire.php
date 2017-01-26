@@ -157,6 +157,17 @@
 		}
 		
 		/**
+		 * @param $id_mission
+		 * fonction qui retire une mission de la liste des missions aleatoire des qu'on la lance
+		 */
+		private function setDeleteMission($id_mission) {
+			$dbc = App::getDb();
+			
+			$dbc->delete()->from("_bataille_mission_aleatoire")->where("ID_base", "=", Bataille::getIdBase(), "AND")
+				->where("ID_mission", "=", $id_mission)->del();
+		}
+		
+		/**
 		 * @param $type
 		 * fonction qui recupere des missions aleatoirement de chaque type et qui les ajoute
 		 * dans la table _bataille_mission_aleatoire
@@ -209,6 +220,8 @@
 			for ($i=0 ; $i<$count ; $i++) {
 				Bataille::getUnite()->setCommencerExpedition($nombre_unite[$i], $nom_unite[$i], $type_unite[$i], $id_missions_cours);
 			}
+			
+			$this->setDeleteMission($id_mission);
 		}
 		
 		/**
