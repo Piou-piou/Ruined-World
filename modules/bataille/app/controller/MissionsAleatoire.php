@@ -227,7 +227,7 @@
 				foreach ($query as $obj) {
 					$infos_missions = $this->getInfosMission($obj->ID_mission);
 					
-					$unite_revenu = Bataille::getUnite()->setTerminerExpedition($obj->ID_mission, $infos_missions["pourcentage_perte"]);
+					$unite_revenu = Bataille::getUnite()->setTerminerExpedition($obj->ID_missions_cours, $infos_missions["pourcentage_perte"]);
 					
 					if ($infos_missions["type"] == "nourriture") {
 						Bataille::getRessource()->setUpdateRessource(0, 0, 0, 0, $infos_missions["ressource_gagnee"]*$unite_revenu, "+");
