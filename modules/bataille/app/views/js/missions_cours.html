@@ -1,0 +1,9 @@
+{% if i.date_fin > 0 %}
+	<script>
+		$(function () {
+			$('#missions-{{ i.id_missions_cours }}').countdown({
+				until: {{i.date_fin}}
+			});
+		});
+	</script>
+{% endif %}

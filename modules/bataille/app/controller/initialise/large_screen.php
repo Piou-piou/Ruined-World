@@ -15,4 +15,8 @@
 	
 	$marche = new \modules\bataille\app\controller\Marche();
 	
+	Bataille::getMissionsAleatoire();
+	
+	Bataille::getMissionsAleatoire()->setTerminerMissions();
+	
 	$arr = Bataille::getValues();

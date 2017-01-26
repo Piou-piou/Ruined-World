@@ -42,6 +42,8 @@
 			
 			$this->getNbMissions();
 			Bataille::setValues(["next_check_missions" => ($this->last_check_mission+10800)-Bataille::getToday()]);
+			
+			$this->getMissionsCours();
 		}
 		//-------------------------- END BUILDER ----------------------------------------------------------------------------//
 		
@@ -134,6 +136,27 @@
 						"duree" => DateHeure::Secondeenheure($obj->duree)
 					];
 				}
+			}
+		}
+		
+		/**
+		 * fonction qui récupère les missions qui sont en cours dans la base
+		 */
+		private function getMissionsCours() {
+			$dbc = App::getDb();
+			
+			$query = $dbc->select()->from("_bataille_missions_cours")->where("ID_base", "=", Bataille::getIdBase())->get();
+			
+			if ((is_array($query)) && (count($query) > 0)) {
+				foreach ($query as $obj) {
+					$missions[] =[
+						"id_missions_cours" => $obj->ID_missions_cours,
+						"date_fin" => $obj->date_fin-Bataille::getToday(),
+						"infos" => $this->getInfosMission($obj->ID_mission)
+					];
+				}
+				
+				Bataille::setValues(["missions_cours" => $missions]);
 			}
 		}
 		//-------------------------- END GETTER ----------------------------------------------------------------------------//

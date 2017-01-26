@@ -85,9 +85,30 @@
 				{% endfor %}
 			</div>
 		</div>
+
+		<div class="espacement"></div>
 	{% endif %}
-	
-	<div class="espacement"></div>
+
+	{% if bataille.missions_cours is iterable %}
+		<div class="row decompte-recherche">
+			<div class="small-12 side-bar">
+				<h3>Missions en cours</h3>
+				<div>
+					{% for i in bataille.missions_cours %}
+						<div>
+							<div id="missions-{{ i.id_missions_cours }}"></div>
+							<p>{{ i.infos.nom_mission }}</p>
+
+							{{ include("js/missions_cours.html") }}
+						</div>
+					{% endfor %}
+				</div>
+
+			</div>
+		</div>
+
+		<div class="espacement"></div>
+	{% endif %}
 	
 	{% if bataille.recherche is iterable %}
 		<div class="row decompte-recherche">
