@@ -99,7 +99,10 @@
 			$dbc = App::getDb();
 			$recherche = [];
 
-			$query = $dbc->select()->from("_bataille_centre_recherche")->where("type", "=", $type)->get();
+			$query = $dbc->select()->from("_bataille_centre_recherche")
+				->where("type", "=", $type, "AND")
+				->where("ID_base", "=", Bataille::getIdBase())
+				->get();
 
 			if ((is_array($query)) && (count($query) > 0)) {
 				foreach ($query as $obj) {
