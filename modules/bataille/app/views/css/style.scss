@@ -14,6 +14,7 @@ $clr-ressource: #fff;
 
 /*pour le body et le bg de la map*/
 $bg-body: #414142;
+$bg-messagerie: #626263;
 $bg-map: #2C626A;
 
 /*pour la map ou on voit tous les players*/
@@ -434,6 +435,8 @@ p.rouge {
 	}
 }
 
+
+
 /*-------------------------------------- CASERNE --------------------------------------*/
 .popup .caserne {
 	ul {
@@ -441,5 +444,31 @@ p.rouge {
 			display: inline-block;
 			font-weight: normal;
 		}
+	}
+}
+
+
+
+/*-------------------------------------- MESSAGERIE --------------------------------------*/
+.messagerie {
+	nav {
+		background-color: $bg-messagerie;
+		
+		ul {
+			li {
+				display: inline-block;
+				list-style: none;
+				padding: 10px;
+				
+				&:not(:last-child) {
+					border-right: 1px solid #fff;
+				}
+			}
+		}
+	}
+	
+	.liste-message {
+		background-color: $bg-messagerie;
+		min-height: 600px;
 	}
 }

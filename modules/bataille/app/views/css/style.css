@@ -526,4 +526,17 @@ p.rouge {
   display: inline-block;
   font-weight: normal; }
 
+/*-------------------------------------- MESSAGERIE --------------------------------------*/
+.messagerie nav {
+  background-color: #626263; }
+  .messagerie nav ul li {
+    display: inline-block;
+    list-style: none;
+    padding: 10px; }
+    .messagerie nav ul li:not(:last-child) {
+      border-right: 1px solid #fff; }
+.messagerie .liste-message {
+  background-color: #626263;
+  min-height: 600px; }
+
 /*# sourceMappingURL=style.css.map */
