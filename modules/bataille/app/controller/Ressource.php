@@ -188,6 +188,14 @@
 				if ($fuel > $stockage_max) $fuel = $stockage_max;
 				if ($nourriture > $stockage_max_grenier) $nourriture = $stockage_max_grenier;
 			}
+			
+			Bataille::setValues([
+				"eau" => $eau,
+				"electricite" => $electricite,
+				"fer" => $fer,
+				"fuel" => $fuel,
+				"nourriture" => $nourriture
+			]);
 
 
 			$dbc->update("eau", $eau)
