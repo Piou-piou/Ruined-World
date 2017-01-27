@@ -107,5 +107,4 @@
 			Bataille::getRessource()->setUpdateRessource(0, 0, 0, 0, $nourriture_consommee, "-");
 		}
 		//-------------------------- END SETTER ----------------------------------------------------------------------------//
-		
 	}
