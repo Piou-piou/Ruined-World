@@ -56,10 +56,10 @@
 						"vitesse" => $base_carac["vitesse"]
 					],
 					"cout_recruter" => [
-						"eau" => $ressource["eau"]*$coef,
-						"electricite" => $ressource["electricite"]*$coef,
-						"fer" => $ressource["fer"]*$coef,
-						"fuel" => $ressource["fuel"]*$coef,
+						"eau" => $ressource["eau"],
+						"electricite" => $ressource["electricite"],
+						"fer" => $ressource["fer"],
+						"fuel" => $ressource["fuel"],
 					],
 					"temps_recrutement" => $temps_recrutement
 				];
@@ -248,10 +248,10 @@
 
 			//on test si on a assez de ressource pour recruter les unites
 			//on test si assez de ressources dans la base
-			$retirer_eau = $pour_recruter["eau"]*$nombre;
-			$retirer_electricite = $pour_recruter["electricite"]*$nombre;
-			$retirer_fer = $pour_recruter["fer"]*$nombre;
-			$retirer_fuel = $pour_recruter["fuel"]*$nombre;
+			$retirer_eau = intval($pour_recruter["eau"])*$nombre;
+			$retirer_electricite = intval($pour_recruter["electricite"])*$nombre;
+			$retirer_fer = intval($pour_recruter["fer"])*$nombre;
+			$retirer_fuel = intval($pour_recruter["fuel"])*$nombre;
 			$eau = Bataille::getTestAssezRessourceBase("eau", $retirer_eau);
 			$electricite = Bataille::getTestAssezRessourceBase("electricite", $retirer_electricite);
 			$fer = Bataille::getTestAssezRessourceBase("fer", $retirer_fer);
