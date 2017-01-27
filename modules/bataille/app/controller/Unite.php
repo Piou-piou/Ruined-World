@@ -213,7 +213,8 @@
 			$dbc = App::getDb();
 			
 			$query = $dbc->select("ID_unite")->from("_bataille_unite")
-				->where("type", "=", "infanterie")
+				->where("type", "=", "infanterie", "AND")
+				->where("ID_base", "=", Bataille::getIdBase())
 				->get();
 			
 			return count($query);
