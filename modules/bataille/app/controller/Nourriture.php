@@ -24,6 +24,9 @@
 			if (Bataille::getRessource()->getNourriture() == 0) {
 				Bataille::setValues(["nourriture_mort_heure" => $this->getNombreUniteMortHeure()]);
 			}
+			else {
+				Bataille::setValues(["nourriture_consom_heure" => $this->getConsommationNourritureHeure()]);
+			}
 		}
 		//-------------------------- END BUILDER ----------------------------------------------------------------------------//
 		
@@ -65,10 +68,24 @@
 			return  Bataille::getParam("unite_nourriture_heure");
 		}
 		
+		/**
+		 * @return number
+		 * renvoi le nombre d'unités qui meurrent à l'aheure quand plus de nourriture dans la base
+		 */
 		private function getNombreUniteMortHeure() {
 			$nb_unite = Bataille::getUnite()->getNombreUniteHumaine();
 			
 			return abs(round((0-($nb_unite*$this->getConsommationNourritureUnite()))/100));
+		}
+		
+		/**
+		 * @return number
+		 * renvoi le nombre d'unités qui meurrent à l'aheure quand plus de nourriture dans la base
+		 */
+		private function getConsommationNourritureHeure() {
+			$nb_unite = Bataille::getUnite()->getNombreUniteHumaine();
+			
+			return round(($nb_unite*$this->getConsommationNourritureUnite()));
 		}
 		//-------------------------- END GETTER ----------------------------------------------------------------------------//
 		

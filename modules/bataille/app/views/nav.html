@@ -54,7 +54,11 @@
 								{{ bataille.nourriture }} / {{ bataille.stockage_grenier }}
 							</span>
 						</p>
-						<p><span>{{ bataille.nourriture_mort_heure }} morts par heure</span></p>
+						{% if bataille.nourriture_mort_heure != "" %}
+							<p><span>{{ bataille.nourriture_mort_heure }} morts par heure</span></p>
+						{% else %}
+							<p><span>-{{ bataille.nourriture_consom_heure }} nourriture par heure</span></p>
+						{% endif %}
 					</div>
 					<div class="small-12 medium-12 large-5 columns droite">
 						<div class="small-6 columns">
