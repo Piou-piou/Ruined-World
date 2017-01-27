@@ -379,5 +379,23 @@
 			//renvoi le nombre d'unites qui ont réussi àrentrer à la base
 			return $nombre_unite-$unite_tuees;
 		}
+		
+		/**
+		 * @param $nombre
+		 * fonction qui permet de tuer des unites
+		 */
+		public function setTuerUnites($nombre) {
+			$dbc = App::getDb();
+			
+			if ($nombre > 0) {
+				$dbc->delete()->from("_bataille_unite")
+					->where("ID_base", "=", Bataille::getIdBase(), "AND")
+					->where("type", "=", "infanterie", "AND")
+					->where("(ID_mission IS NULL OR ID_mission = 0)", "", "", "", true)
+					->orderBy("RAND() ")
+					->limit($nombre)
+					->del();
+			}
+		}
 		//-------------------------- END SETTER ----------------------------------------------------------------------------//    
 	}
