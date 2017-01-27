@@ -40,10 +40,7 @@
 					"max_electricite" => $this->getStockageMax("electricite"),
 					"max_fer" => $this->getStockageMax("fer"),
 					"max_fuel" => $this->getStockageMax("fuel"),
-					"max_nourriture" => $this->getStockageMax("nourriture")
-				]);
-
-				Bataille::setValues([
+					"max_nourriture" => $this->getStockageMax("nourriture"),
 					"eau" => $this->eau,
 					"electricite" => $this->electricite,
 					"fer" => $this->fer,
@@ -194,7 +191,12 @@
 				"electricite" => $electricite,
 				"fer" => $fer,
 				"fuel" => $fuel,
-				"nourriture" => $nourriture
+				"nourriture" => $nourriture,
+				"max_eau" => $this->getStockageMax("eau"),
+				"max_electricite" => $this->getStockageMax("electricite"),
+				"max_fer" => $this->getStockageMax("fer"),
+				"max_fuel" => $this->getStockageMax("fuel"),
+				"max_nourriture" => $this->getStockageMax("nourriture")
 			]);
 
 
