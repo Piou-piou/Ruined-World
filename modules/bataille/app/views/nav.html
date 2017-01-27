@@ -48,29 +48,34 @@
 					<div class="small-12 large-2 columns nom-base">
 						<h3 class="text-center"><a href="{{ WEBROOT }}bataille">{{bataille.nom_base}}</a></h3>
 						<p>Points de la base :  {{bataille.points}}</p>
-						<p>
-							Nourriture :
-							<span class="{{ bataille.max_nourriture }}">
-								{{ bataille.nourriture }} / {{ bataille.stockage_grenier }}
-							</span>
-						</p>
-						{% if bataille.nourriture_mort_heure != "" %}
-							<p><span>{{ bataille.nourriture_mort_heure }} morts par heure</span></p>
-						{% else %}
-							<p><span>-{{ bataille.nourriture_consom_heure }} nourriture par heure</span></p>
-						{% endif %}
 					</div>
-					<div class="small-12 medium-12 large-5 columns droite">
-						<div class="small-6 columns">
-							<div class="left"><img src="{{ MODULEWEBROOT }}bataille/app/views/images/fer.png" alt=""></div>
-							<div class="texte">
-								<span class="{{bataille.max_fer}}"><span class="fer">{{bataille.fer}}</span>  / {{ bataille.stockage_entrepot }} </span>(+{{bataille.production_fer}})
+					<div class="small-12 medium-12 large-5 columns">
+						<div class="row droite">
+							<div class="small-6 columns">
+								<div class="left"><img src="{{ MODULEWEBROOT }}bataille/app/views/images/fer.png" alt=""></div>
+								<div class="texte">
+									<span class="{{bataille.max_fer}}"><span class="fer">{{bataille.fer}}</span>  / {{ bataille.stockage_entrepot }} </span>(+{{bataille.production_fer}})
+								</div>
+							</div>
+							<div class="small-6 columns">
+								<div class="left"><img src="{{ MODULEWEBROOT }}bataille/app/views/images/fuel.png" alt=""></div>
+								<div class="texte">
+									<span class="{{bataille.max_fuel}}"><span class="fuel">{{bataille.fuel}}</span>  / {{ bataille.stockage_entrepot }} </span>(+{{bataille.production_fuel}})
+								</div>
 							</div>
 						</div>
-						<div class="small-6 columns">
-							<div class="left"><img src="{{ MODULEWEBROOT }}bataille/app/views/images/fuel.png" alt=""></div>
-							<div class="texte">
-								<span class="{{bataille.max_fuel}}"><span class="fuel">{{bataille.fuel}}</span>  / {{ bataille.stockage_entrepot }} </span>(+{{bataille.production_fuel}})
+						<div class="row">
+							<div class="small-12 medium-12 large-6 nourriture">
+								<div class="left"><img src="{{ MODULEWEBROOT }}bataille/app/views/images/nourriture.png" alt=""></div>
+								<div class="texte">
+									<span class="{{ bataille.max_nourriture }}">{{ bataille.nourriture }} / {{ bataille.stockage_grenier }}</span>
+									
+									{% if bataille.nourriture_mort_heure != "" %}
+										<p><span>{{ bataille.nourriture_mort_heure }} morts par heure</span></p>
+									{% else %}
+										<p><span>-{{ bataille.nourriture_consom_heure }} steaks par heure</span></p>
+									{% endif %}
+								</div>
 							</div>
 						</div>
 					</div>
