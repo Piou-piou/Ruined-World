@@ -316,7 +316,7 @@ body {
       transform: skewX(-10deg);
       content: ' '; } }
   .bataille .ressources .nom-base {
-    height: 100px;
+    height: 109px;
     background-color: #F24237;
     color: #fff;
     vertical-align: middle; }
