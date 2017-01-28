@@ -284,7 +284,7 @@
 					$destinataires[] = $this->getIdIdentiteExist($destinataire);
 					$expediteur = $_SESSION['idlongin'.CLEF_SITE];
 				}
-				else if (is_int($destinataire)) {
+				else if (is_numeric($destinataire)) {
 					$destinataires[] = $destinataire;
 					$expediteur = 1;
 				}
