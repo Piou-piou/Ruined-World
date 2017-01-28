@@ -272,6 +272,7 @@
 				for ($i=0 ; $i<$c ; $i++) {
 					if ($this->getIdIdentiteExist($destinataires[$i]) !== false) {
 						$destinataires[] = $this->getIdIdentiteExist($destinataires[$i]);
+						$expediteur = $_SESSION['idlongin'.CLEF_SITE];
 					}
 					else {
 						return false;
@@ -281,6 +282,11 @@
 			else {
 				if ($this->getIdIdentiteExist($destinataire) !== false) {
 					$destinataires[] = $this->getIdIdentiteExist($destinataire);
+					$expediteur = $_SESSION['idlongin'.CLEF_SITE];
+				}
+				else if (is_int($destinataire)) {
+					$destinataires[] = $destinataire;
+					$expediteur = 1;
 				}
 				else {
 					return false;
@@ -293,13 +299,13 @@
 					->insert("objet", $objet)
 					->insert("url", ChaineCaractere::setUrl($objet))
 					->insert("date", date("Y-m-d H:i:s"))
-					->insert("ID_expediteur", 1)
+					->insert("ID_expediteur", $expediteur)
 					->into("_messagerie_message")
 					->set();
 
 				$id_message = $dbc->lastInsertId();
 
-				foreach ($destinataires as $destinataire) {echo("gddg $destinataire");
+				foreach ($destinataires as $destinataire) {
 					$dbc->insert("ID_identite", $destinataire)
 						->insert("ID_message", $id_message)
 						->into("_messagerie_boite_reception")
