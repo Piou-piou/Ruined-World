@@ -1,12 +1,14 @@
 {{ include("nav-bataille.html") }}
 {{ include("nav.html") }}
 
-<div class="row">
-	<div class="small-12 large-10 large-centered columns">
-		{% for i in messagerie %}
-			<a href="{{WEBROOT}}messagerie/message/{{i.url}}">
-				<p>{{i.date_message}} | {{i.pseudo_expediteur}} | {{i.objet}}</p>
-			</a>
-		{% endfor %}
+<div class="row messagerie">
+	<div class="liste-message">
+		<div class="small-12 large-10 large-centered columns">
+			{% for i in messagerie %}
+				<a href="{{WEBROOT}}messagerie/message/{{i.url}}">
+					<p>{{i.date_message}} | {{i.pseudo_expediteur}} | {{i.objet}}</p>
+				</a>
+			{% endfor %}
+		</div>
 	</div>
 </div>

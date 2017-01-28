@@ -1,20 +1,22 @@
 {{ include("nav-bataille.html") }}
 {{ include("nav.html") }}
 
-<div class="row">
-	<div class="small-12 large-10 large-centered columns">
-		<form action="{{WEBROOT}}controller/modules/messagerie/message/envoyer" method="POST">
-			<div class="small-6 columns">
-				<input type="text" name="objet" value="{{ objet }}" placeholder="objet">
-			</div>
-			<div class="small-6 columns">
-				<input type="text" name="destinataire" value="{{ destinataire }}" placeholder="destinataire">
-			</div>
-			<div class="small-12 columns">
-				<textarea class="columns" name="message" id="" cols="30" rows="10">{{ message }}</textarea>
-			</div>
-			
-			<button type="submit">Envoyer</button>
-		</form>
+<div class="row messagerie">
+	<div class="liste-message">
+		<div class="small-12 large-10 large-centered columns">
+			<form action="{{WEBROOT}}controller/modules/messagerie/message/envoyer" method="POST">
+				<div class="small-6 columns">
+					<input type="text" name="objet" value="{{ objet }}" placeholder="objet">
+				</div>
+				<div class="small-6 columns">
+					<input type="text" name="destinataire" value="{{ destinataire }}" placeholder="destinataire">
+				</div>
+				<div class="small-12 columns">
+					<textarea class="columns" name="message" id="" cols="30" rows="10">{{ message }}</textarea>
+				</div>
+				
+				<button type="submit">Envoyer</button>
+			</form>
+		</div>
 	</div>
 </div>

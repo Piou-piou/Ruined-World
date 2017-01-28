@@ -8,4 +8,6 @@
 	
 	Bataille::getNation();
 	
+	//\modules\bataille\app\controller\GenerationRapport::setGenererRapport("rapport de mission", "toto", "mission");
+	
 	$arr = Bataille::getValues();
