@@ -1,3 +1,3 @@
 <?php
 	
-	require_once(MODULEROOT."bataille/app/controller/initialise/index.php");
+	require_once(MODULEROOT."bataille/app/controller/initialise/header.php");
