@@ -47,8 +47,9 @@
 		//-------------------------- SETTER ----------------------------------------------------------------------------//
 		/**
 		 * @param $id_base
-		 * @param string $type
-		 * @param int $points
+		 * @param null $type
+		 * @param null $points
+		 * @return int|null
 		 * fonction qui ajoute des points à la base en fonction du type
 		 * le type peut etre : batiment, attaque, defense, troupe
 		 */
@@ -66,6 +67,8 @@
 				->from("_bataille_base")
 				->where("ID_base", "=", $id_base)
 				->set();
+			
+			return $points;
 		}
 		//-------------------------- END SETTER ----------------------------------------------------------------------------//
 		

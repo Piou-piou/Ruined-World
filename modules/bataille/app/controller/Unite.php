@@ -219,6 +219,22 @@
 			
 			return count($query);
 		}
+		
+		/**
+		 * @param $id_mission
+		 * @return int
+		 * fonction qui renvoi le nombre d'unités envoyées sur une mission en particulier
+		 */
+		public function getUnitesMission($id_mission) {
+			$dbc = App::getDb();
+			
+			$query = $dbc->select("ID_unite")->from("_bataille_unite")
+				->where("ID_mission", "=", $id_mission, "AND")
+				->where("ID_base", "=", Bataille::getIdBase())
+				->get();
+			
+			return count($query);
+		}
 		//-------------------------- END GETTER ----------------------------------------------------------------------------//
 		
 		

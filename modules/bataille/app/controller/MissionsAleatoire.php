@@ -271,6 +271,7 @@
 				foreach ($query as $obj) {
 					$infos_missions = $this->getInfosMission($obj->ID_mission);
 					
+					$unites_envoyees = Bataille::getUnite()->getUnitesMission($obj->ID_missions_cours);
 					$unite_revenu = Bataille::getUnite()->setTerminerExpedition($obj->ID_missions_cours, $infos_missions["pourcentage_perte"]);
 					
 					if ($infos_missions["type"] == "nourriture") {
@@ -280,12 +281,25 @@
 						//Bataille::getRessource()->setUpdateRessource(0, 0, 0, 0, $obj->ressource_gagnee, "+");
 					}
 					
-					Points::setAjouterPoints(Bataille::getIdBase(), "missions", $infos_missions["points_gagne"]);
+					$points_base = Points::getPointsBase(Bataille::getIdBase());
+					$points_base_new = Points::setAjouterPoints(Bataille::getIdBase(), "missions", $infos_missions["points_gagne"]);
 					
 					$dbc->delete()->from("_bataille_missions_cours")
 						->where("ID_base", "=", Bataille::getIdBase(), "AND")
 						->where("ID_mission", "=", $obj->ID_mission)
 						->del();
+					
+					//génération du rapport de mission
+					$titre = "Rapport de la mission ".$infos_missions["nom_mission"];
+					$infos = [
+						"mission" => $infos_missions,
+						"unites_envoyees" => $unites_envoyees,
+						"unites_revenues" => $unite_revenu,
+						"points_base_avant" => $points_base,
+						"points_base_new" => $points_base_new,
+						"ressource_gagnee" => $infos_missions["ressource_gagnee"]*$unite_revenu
+					];
+					GenerationRapport::setGenererRapport($titre, $infos, "mission");
 				}
 			}
 		}
