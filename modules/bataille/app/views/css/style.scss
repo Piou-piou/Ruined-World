@@ -88,10 +88,6 @@ body {
 			}
 		}
 		
-		.droite {
-			margin-left: 0;
-		}
-		
 		@media screen and (min-width: 1100px) {
 			.gauche::before {
 				background-color: $bg-ressource;
@@ -160,7 +156,6 @@ body {
 		}
 		
 		.nourriture {
-			margin-left: 1rem;
 			margin-top: 0.5rem;
 			padding-left: 1rem;
 			padding-top: 0.6rem;
@@ -179,17 +174,6 @@ body {
 			}
 			
 			@media screen and (min-width: 1100px) {
-				&::before {
-					background-color: $bg-ressource;
-					width: 20px;
-					min-height: 51px;
-					position: absolute;
-					top: 0px;
-					left: -10px;
-					transform: skewX(-10deg);
-					content: ' ';
-				}
-				
 				&::after {
 					background-color: $bg-ressource;
 					width: 20px;
