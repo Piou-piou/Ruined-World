@@ -19,7 +19,7 @@
 				<ul class="right">
 					<ul>
 						<li>
-							{% if {{ messagerie.messages_non_lu }} != "" %}
+							{% if messagerie.messages_non_lu != "" %}
 								<div class="message-non-lu">{{ messagerie.messages_non_lu }}</div>
 							{% endif %}
 							<a href="{{ WEBROOT }}messagerie"><img src="{{MODULEWEBROOT}}bataille/app/views/images/messagerie.png" alt=""></a>
