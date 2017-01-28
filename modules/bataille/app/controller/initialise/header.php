@@ -11,3 +11,8 @@
 	//\modules\bataille\app\controller\GenerationRapport::setGenererRapport("rapport de mission", "toto", "mission");
 	
 	$arr = Bataille::getValues();
+	
+	$messagerie = new \modules\messagerie\app\controller\Messagerie();
+	$messagerie->getMessageNonLu();
+	
+	$arr = array_merge($arr, $messagerie->getValues());
