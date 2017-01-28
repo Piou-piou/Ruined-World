@@ -1,17 +1,19 @@
 {{ include("nav-bataille.html") }}
 {{ include("nav.html") }}
 
-<div class="row">
-	<div class="small-12 large-10 large-centered columns">
-		<h3>{{messagerie.objet}}</h3>
-		<h5>Envoyé le {{messagerie.date_message}} par : {{messagerie.pseudo_expediteur}}</h5>
-		
-		<article>
-			{{messagerie.message}}
-		</article>
-		
-		{% if messagerie.supprimer != 1 %}
-			<a href="{{WEBROOT}}controller/modules/messagerie/message/archiver?id_message={{messagerie.id_message}}">Archiver ce message</a>
-		{% endif %}
+<div class="row messagerie">
+	<div class="liste-message">
+		<div class="small-12 large-10 large-centered columns">
+			<h3>{{messagerie.objet}}</h3>
+			<h5>Envoyé le {{messagerie.date_message}} par : {{messagerie.pseudo_expediteur}}</h5>
+			
+			<article>
+				{{messagerie.message|raw}}
+			</article>
+			
+			{% if messagerie.supprimer != 1 %}
+				<a href="{{WEBROOT}}controller/modules/messagerie/message/archiver?id_message={{messagerie.id_message}}">Archiver ce message</a>
+			{% endif %}
+		</div>
 	</div>
 </div>
