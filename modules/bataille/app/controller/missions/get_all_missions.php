@@ -1,5 +1,5 @@
 <?php
-	$missions = \modules\bataille\app\controller\Bataille::getMissionsAleatoire()->getMissions("nourriture");
+	$missions = \modules\bataille\app\controller\Bataille::getMissionsAleatoire()->getMissions();
 	
 	\modules\bataille\app\controller\Bataille::getUnite()->getAllUnites();
 	

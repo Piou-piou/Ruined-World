@@ -25,19 +25,21 @@
 					<h5>{{ key }}</h5>
 
 					{% for x in j %}
-						<div class="row">
-							<div class="small-12 medium-6 large-3 columns">
-								<label for="nombre_unite">Nombre d'unités {{ x.nom }}</label>
+						{% if x.nom != "défense" %}
+							<div class="row">
+								<div class="small-12 medium-6 large-3 columns">
+									<label for="nombre_unite">Nombre d'unités {{ x.nom }}</label>
+								</div>
+								<div class="small-12 medium-6 large-3 columns">
+									<input type="range" class="range" name="nombre_unite[]" value="0" min="0" step="1" max="{{ x.nombre }}">
+									<input type="hidden" name="nom_unite[]" value="{{ x.nom }}">
+									<input type="hidden" name="type_unite[]" value="{{ key }}">
+								</div>
+								<div class="small-12 medium-6 large-5 columns end">
+									<span class="total-envoi">0</span> {{ x.nom }} seront envoyées
+								</div>
 							</div>
-							<div class="small-12 medium-6 large-3 columns">
-								<input type="range" class="range" name="nombre_unite[]" value="0" min="0" step="1" max="{{ x.nombre }}">
-								<input type="hidden" name="nom_unite[]" value="{{ x.nom }}">
-								<input type="hidden" name="type_unite[]" value="{{ key }}">
-							</div>
-							<div class="small-12 medium-6 large-5 columns end">
-								<span class="total-envoi">0</span> {{ x.nom }} seront envoyées
-							</div>
-						</div>
+						{% endif %}
 					{% endfor %}
 				{% endfor %}
 
