@@ -1,7 +1,7 @@
 # Ruined world
 
-[![Build Status](https://scrutinizer-ci.com/g/Piou-piou/bataille/badges/build.png?b=master)](https://scrutinizer-ci.com/g/Piou-piou/bataille/build-status/master)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Piou-piou/bataille/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Piou-piou/bataille/?branch=master)
+[![Build Status](https://scrutinizer-ci.com/g/Piou-piou/Ruined-World/badges/build.png?b=master)](https://scrutinizer-ci.com/g/Piou-piou/bataille/build-status/master)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Piou-piou/Ruined-World/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Piou-piou/bataille/?branch=master)
 
 **Ruined world, gestion game is a free game around gestion of a base and an army and ressources producrtion**
 
