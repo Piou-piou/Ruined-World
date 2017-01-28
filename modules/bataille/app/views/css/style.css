@@ -286,7 +286,10 @@ body {
       margin: 0.5rem 0; }
       .bataille nav.middle ul li {
         list-style: none;
-        display: inline-block; }
+        display: inline-block;
+        transition: all 0.3s ease; }
+        .bataille nav.middle ul li:hover {
+          transform: scale(1.1); }
         .bataille nav.middle ul li .message-non-lu {
           position: absolute;
           color: #fff;
