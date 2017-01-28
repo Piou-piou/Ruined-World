@@ -280,13 +280,26 @@ body {
           padding: 0.5rem 1rem; }
   .bataille nav.middle {
     background-color: #212122;
-    height: 100px;
     width: 100%; }
     .bataille nav.middle ul {
-      margin-bottom: 0; }
+      margin-bottom: 0;
+      margin: 0.5rem 0; }
       .bataille nav.middle ul li {
         list-style: none;
-        display: inline-block; }
+        display: inline-block;
+        transition: all 0.3s ease; }
+        .bataille nav.middle ul li:hover {
+          transform: scale(1.1); }
+        .bataille nav.middle ul li .message-non-lu {
+          position: absolute;
+          color: #fff;
+          background-color: #F24237;
+          width: 30px;
+          height: 30px;
+          border-radius: 15px;
+          text-align: center;
+          margin-top: 0.2rem;
+          margin-left: -0.5rem; }
     .bataille nav.middle a {
       display: block; }
   .bataille .ressources .gauche, .bataille .ressources .droite {

@@ -58,15 +58,32 @@ body {
 
 	nav.middle {
 		background-color: $bg-nav;
-		height: 100px;
 		width: 100%;
 
 		ul {
 			margin-bottom: 0;
+			margin: 0.5rem 0;
 
 			li {
 				list-style: none;
 				display: inline-block;
+				transition: all 0.3s ease;
+				
+				&:hover {
+					transform: scale(1.1);
+				}
+				
+				.message-non-lu {
+					position: absolute;
+					color: #fff;
+					background-color: $bg-nom-base;
+					width: 30px;
+					height: 30px;
+					border-radius: 15px;
+					text-align: center;
+					margin-top: 0.2rem;
+					margin-left: -0.5rem;
+				}
 			}
 		}
 

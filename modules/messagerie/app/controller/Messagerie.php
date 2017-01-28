@@ -86,7 +86,7 @@
 				->from("_messagerie_boite_reception")
 				->from("_messagerie_message")
 				->from("identite")
-				->where("_messagerie_boite_reception.ID_identite", "=", 1, "AND")
+				->where("_messagerie_boite_reception.ID_identite", "=", $_SESSION['idlogin'.CLEF_SITE], "AND")
 				->where("_messagerie_boite_reception.supprimer", " IS ", "NULL", "AND", true)
 				->where("_messagerie_boite_reception.ID_message", "=", "_messagerie_message.ID_message", "AND", true)
 				->where("_messagerie_message.ID_expediteur", "=", "identite.ID_identite", "", true)
@@ -102,9 +102,11 @@
 						"pseudo_expediteur" => $obj->pseudo,
 						"url" => $obj->url
 					];
-
-					$this->values[] = $arr;
+					
+					$values[] = $arr;
 				}
+				
+				$this->setValues($values);
 			}
 		}
 
@@ -118,7 +120,7 @@
 				->from("_messagerie_boite_reception")
 				->from("_messagerie_message")
 				->from("identite")
-				->where("_messagerie_message.ID_expediteur", "=", 1, "AND")
+				->where("_messagerie_message.ID_expediteur", "=", $_SESSION['idlogin'.CLEF_SITE], "AND")
 				->where("_messagerie_boite_reception.ID_message", "=", "_messagerie_message.ID_message", "AND", true)
 				->where("_messagerie_boite_reception.ID_identite", "=", "identite.ID_identite", "", true)
 				->get();
@@ -134,8 +136,10 @@
 						"url" => $obj->url
 					];
 
-					$this->values[] = $arr;
+					$values[] = $arr;
 				}
+				
+				$this->setValues($values);
 			}
 		}
 
@@ -149,7 +153,7 @@
 				->from("_messagerie_boite_reception")
 				->from("_messagerie_message")
 				->from("identite")
-				->where("_messagerie_boite_reception.ID_identite", "=", 1, "AND")
+				->where("_messagerie_boite_reception.ID_identite", "=", $_SESSION['idlogin'.CLEF_SITE], "AND")
 				->where("_messagerie_boite_reception.supprimer", "=", 1, "AND")
 				->where("_messagerie_boite_reception.ID_message", "=", "_messagerie_message.ID_message", "AND", true)
 				->where("_messagerie_message.ID_expediteur", "=", "identite.ID_identite", "", true)
@@ -166,8 +170,10 @@
 						"url" => $obj->url
 					];
 
-					$this->values[] = $arr;
+					$values[] = $arr;
 				}
+				
+				$this->setValues($values);
 			}
 		}
 
@@ -189,6 +195,26 @@
 
 			return false;
 		}
+		
+		/**
+		 * fonction qui sert à récupérer les messages non lus
+		 */
+		public function getMessageNonLu() {
+			$dbc = App::getDb();
+			
+			$query = $dbc->select("ID_message")
+				->from("_messagerie_boite_reception")
+				->where("ID_identite", "=", $_SESSION['idlogin'.CLEF_SITE], "AND")
+				->where("lu", " IS NULL ", "", "OR", true)
+				->where("lu", "=", 0, "", true)
+				->get();
+			
+			$count = count($query);
+			
+			if ($count > 0) {
+				$this->setValues(["messages_non_lu" => count($query)]);
+			}
+		}
 
 		/**
 		 * @param $url_message
@@ -208,7 +234,7 @@
 
 			if ((is_array($query)) && (count($query) > 0)) {
 				foreach ($query as $obj) {
-					$this->values = [
+					$this->setValues([
 						"id_message" => $obj->ID_message,
 						"objet" => $obj->objet,
 						"message" => $obj->message,
@@ -217,7 +243,9 @@
 						"pseudo_expediteur" => $obj->pseudo,
 						"url" => $obj->url,
 						"supprimer" => $obj->supprimer
-					];
+					]);
+					
+					$this->setLireMessage($obj->ID_message);
 				}
 			}
 			else {
@@ -229,6 +257,28 @@
 		
 		
 		//-------------------------- SETTER ----------------------------------------------------------------------------//
+		/**
+		 * @param $values
+		 * can set values while keep older infos
+		 */
+		public function setValues($values) {
+			$this->values = array_merge($this->values, $values);
+		}
+		
+		/**
+		 * @param $id_message
+		 * fonction qui passe un message en lu un fois qu'il a été ouvert
+		 */
+		private function setLireMessage($id_message) {
+			$dbc = App::getDb();
+			
+			$dbc->update("lu", 1)
+				->from("_messagerie_boite_reception")
+				->where("ID_message", "=", $id_message, "AND")
+				->where("ID_identite", "=", $_SESSION['idlogin'.CLEF_SITE])
+				->set();
+		}
+		
 		/**
 		 * @param $id_message
 		 * pour passer le message en supprimé, il sera alors consultable dans la table messages supprimés
@@ -273,7 +323,7 @@
 				for ($i=0 ; $i<$c ; $i++) {
 					if ($this->getIdIdentiteExist($destinataires[$i]) !== false) {
 						$destinataires[] = $this->getIdIdentiteExist($destinataires[$i]);
-						$expediteur = $_SESSION['idlongin'.CLEF_SITE];
+						$expediteur = $_SESSION['idlogin'.CLEF_SITE];
 					}
 					else {
 						return false;
@@ -283,7 +333,7 @@
 			else {
 				if ($this->getIdIdentiteExist($destinataire) !== false) {
 					$destinataires[] = $this->getIdIdentiteExist($destinataire);
-					$expediteur = $_SESSION['idlongin'.CLEF_SITE];
+					$expediteur = $_SESSION['idlogin'.CLEF_SITE];
 				}
 				else if (is_numeric($destinataire)) {
 					$destinataires[] = $destinataire;
