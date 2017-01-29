@@ -25,11 +25,11 @@
         $(function () {
             $('#transport-{{ i.id_marche_transport }}').countdown({
                 until: {{i.date_arrivee}},
-                onExpiry: testFinTransport
+                onExpiry: testFinTransport{{ i.id_marche_transport }}
             });
         });
 
-        function testFinTransport() {
+        function testFinTransport{{ i.id_marche_transport }}() {
 	        $('#transport-{{ i.id_marche_transport }}').parent().remove();
         }
 	</script>
