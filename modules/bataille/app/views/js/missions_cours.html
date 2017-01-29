@@ -2,8 +2,14 @@
 	<script>
 		$(function () {
 			$('#missions-{{ i.id_missions_cours }}').countdown({
-				until: {{i.date_fin}}
+				until: {{i.date_fin}},
+                onExpiry: finMission{{ i.id_missions_cours }}
 			});
 		});
+        
+        
+        function finMission{{ i.id_missions_cours }}() {
+	        $('#missions-{{ i.id_missions_cours }}').parent().remove();
+        }
 	</script>
 {% endif %}

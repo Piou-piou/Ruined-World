@@ -15,6 +15,4 @@
 	
 	Bataille::getMissionsAleatoire();
 	
-	Bataille::getMissionsAleatoire()->setTerminerMissions();
-	
 	$arr = Bataille::getValues();

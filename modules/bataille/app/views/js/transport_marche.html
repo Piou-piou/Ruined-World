@@ -24,8 +24,13 @@
 	<script>
         $(function () {
             $('#transport-{{ i.id_marche_transport }}').countdown({
-                until: {{i.date_arrivee}}
+                until: {{i.date_arrivee}},
+                onExpiry: testFinTransport{{ i.id_marche_transport }}
             });
         });
+
+        function testFinTransport{{ i.id_marche_transport }}() {
+	        $('#transport-{{ i.id_marche_transport }}').parent().remove();
+        }
 	</script>
 {% endif %}

@@ -3,11 +3,11 @@
 		$(function () {
 			$('#recrutement-{{ i.id_recrutement }}').countdown({
 				until: {{i.date_fin_recrutement}},
-				onExpiry: testFinRecrutement
+				onExpiry: testFinRecrutement{{ i.id_recrutement }}
 			});
 		});
 
-		function testFinRecrutement() {
+		function testFinRecrutement{{ i.id_recrutement }}() {
 			$.ajax({
 				type:"POST",
 				url:"{{WEBROOT}}controller/modules/bataille/caserne/test_terminer_recrutement",
