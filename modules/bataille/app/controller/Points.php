@@ -6,6 +6,38 @@
 	
 	class Points {
 		//-------------------------- BUILDER ----------------------------------------------------------------------------//
+		public function __construct($start = null) {
+			$dbc = App::getDb();
+			
+			if ($start === null) $start = 0;
+			
+			$query = $dbc->select("identite.pseudo")
+				->select("_bataille_base.points")
+				->select("_bataille_base.ID_identite")
+				->from("_bataille_base")
+				->from("identite")
+				->where("_bataille_base.ID_identite", "=", "identite.ID_identite", "", true)
+				->orderBy("_bataille_base.points", "DESC")
+				->limit($start, 50)
+				->get();
+			
+			if ((is_array($query)) && (count($query) > 0)) {
+				$count = 1;
+				foreach ($query as $obj) {
+					$values[] = [
+						"id_identite" => $obj->ID_identite,
+						"pseudo" => $obj->pseudo,
+						"points" => $obj->points,
+						"classement" => $count
+					];
+					
+					$count++;
+				}
+				
+				Bataille::setValues(["classement" => $values]);
+			}
+			
+		}
 		//-------------------------- END BUILDER ----------------------------------------------------------------------------//
 		
 		

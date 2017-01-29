@@ -18,9 +18,14 @@
 			<div class="row">
 				<ul class="right">
 					<ul>
-						<li><a href="{{ WEBROOT }}messagerie"><img src="{{MODULEWEBROOT}}bataille/app/views/images/messagerie.png" alt=""></a></li>
+						<li>
+							{% if messagerie.messages_non_lu != "" %}
+								<div class="message-non-lu">{{ messagerie.messages_non_lu }}</div>
+							{% endif %}
+							<a href="{{ WEBROOT }}messagerie"><img src="{{MODULEWEBROOT}}bataille/app/views/images/messagerie.png" alt=""></a>
+						</li>
 						<li><a href="{{WEBROOT}}bataille/map"><img src="{{MODULEWEBROOT}}bataille/app/views/images/carte.png" alt=""></a></li>
-						<li><a href=""><img src="{{MODULEWEBROOT}}bataille/app/views/images/classement.png" alt=""></a></li>
+						<li><a href="{{WEBROOT}}bataille/classement"><img src="{{MODULEWEBROOT}}bataille/app/views/images/classement.png" alt=""></a></li>
 					</ul>
 				</ul>
 			</div>

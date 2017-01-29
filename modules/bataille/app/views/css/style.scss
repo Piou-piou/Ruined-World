@@ -473,3 +473,14 @@ p.rouge {
 		min-height: 600px;
 	}
 }
+
+
+
+/*-------------------------------------- CLASSEMENT --------------------------------------*/
+.classement {
+	.ligne {
+		border-bottom: 1px solid $bg-nom-base;
+		padding-bottom: 1rem;
+		padding-top: 1rem;
+	}
+}

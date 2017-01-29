@@ -544,4 +544,10 @@ p.rouge {
   background-color: #626263;
   min-height: 600px; }
 
+/*-------------------------------------- CLASSEMENT --------------------------------------*/
+.classement .ligne {
+  border-bottom: 1px solid #F24237;
+  padding-bottom: 1rem;
+  padding-top: 1rem; }
+
 /*# sourceMappingURL=style.css.map */

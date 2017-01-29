@@ -18,7 +18,8 @@
 		"popup/centre_commandement/liste-missions",
 		"login",
 		"map-game/large-screen",
-		"map-game/small-screen"
+		"map-game/small-screen",
+		"classement"
 	];
 	
 	if (\core\modules\GestionModule::getModuleActiver("bataille")) {
@@ -100,6 +101,11 @@
 		}
 		if ($this->page == "map-game/small-screen") {
 			$this->controller = "bataille/app/controller/initialise/small_screen.php";
+		}
+		
+		//------------------------------- POUR L'AFFICHAGE DU CLASSEMENT ----------------------------------//
+		if ($this->page == "classement") {
+			$this->controller = "bataille/app/controller/initialise/classement.php";
 		}
 	}
 	else {
