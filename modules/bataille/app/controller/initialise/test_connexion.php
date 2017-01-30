@@ -10,6 +10,6 @@
 	else if (isset($_POST['base'])) {
 		$_SESSION['id_base'] = $_POST['base'];
 	}
-	else {
+	else if (!isset($_SESSION['id_base'])) {
 		$_SESSION['id_base'] = \modules\bataille\app\controller\Bataille::getFirstBase();
 	}
