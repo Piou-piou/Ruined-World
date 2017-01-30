@@ -100,7 +100,28 @@
 				->where("ID_base", "=", $id_base)
 				->set();
 			
+			self::setAjouterPointsTotaux();
+			
 			return $points;
+		}
+		
+		/**
+		 * fonction qui prend les points de toutes les bases et qui les ajoute sur le joueur en lui même
+		 */
+		private static function setAjouterPointsTotaux() {
+			$dbc = App::getDb();
+			
+			$query = $dbc->select("points")->from("_bataille_base")->where("ID_identite", "=", Bataille::getIdIdentite())->get();
+			
+			if ((is_array($query)) && (count($query) > 0)) {
+				$points = 0;
+				
+				foreach ($query as $obj) {
+					$points += $obj->points;
+				}
+				
+				$dbc->update("points", $points)->from("_bataille_infos_player")->where("ID_identite", "=", Bataille::getIdIdentite())->set();
+			}
 		}
 		//-------------------------- END SETTER ----------------------------------------------------------------------------//
 		
