@@ -182,6 +182,8 @@ button.no-style {
 				
 				ul {
 					display: none;
+					background-color: $bg-nom-base;
+					margin-left: 0;
 					
 					&.active {
 						display: block;

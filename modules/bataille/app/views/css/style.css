@@ -371,7 +371,9 @@ button.no-style {
     .bataille .ressources .nom-base .changer-base {
       cursor: pointer; }
       .bataille .ressources .nom-base .changer-base ul {
-        display: none; }
+        display: none;
+        background-color: #F24237;
+        margin-left: 0; }
         .bataille .ressources .nom-base .changer-base ul.active {
           display: block; }
         .bataille .ressources .nom-base .changer-base ul li {
