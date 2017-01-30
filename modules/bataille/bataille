@@ -45,8 +45,8 @@ CREATE TABLE _bataille_caserne (ID_caserne INT  AUTO_INCREMENT NOT NULL,
 ID_batiment INT,
 PRIMARY KEY (ID_caserne) ) ENGINE=InnoDB;
 
-DROP TABLE IF EXISTS _bataille_last_connexion ;
-CREATE TABLE _bataille_last_connexion (ID_last_connexion INT  AUTO_INCREMENT NOT NULL,
+DROP TABLE IF EXISTS _bataille_infos_player ;
+CREATE TABLE _bataille_infos_player (ID_last_connexion INT  AUTO_INCREMENT NOT NULL,
 last_connexion DATETIME,
 ID_identite INT NOT NULL,
 PRIMARY KEY (ID_last_connexion) ) ENGINE=InnoDB;

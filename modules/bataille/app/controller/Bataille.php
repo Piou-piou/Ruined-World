@@ -213,15 +213,15 @@
 			$dbc = App::getDb();
 
 			if ($id_base === null) {
-				$query = $dbc->select()->from("_bataille_last_connexion")->where("ID_identite", "=", self::getIdIdentite())->get();
+				$query = $dbc->select()->from("_bataille_infos_player")->where("ID_identite", "=", self::getIdIdentite())->get();
 			}
 			else {
-				$query = $dbc->select("_bataille_last_connexion.last_connexion")->from("_bataille_base")
-					->from("_bataille_last_connexion")
+				$query = $dbc->select("_bataille_infos_player.last_connexion")->from("_bataille_base")
+					->from("_bataille_infos_player")
 					->from("identite")
 					->where("_bataille_base.ID_base", "=", $id_base, "AND")
 					->where("_bataille_base.ID_identite", "=", "identite.ID_identite", "AND", true)
-					->where("identite.ID_identite", "=", "_bataille_last_connexion.ID_identite", "", true)
+					->where("identite.ID_identite", "=", "_bataille_infos_player.ID_identite", "", true)
 					->get();
 			}
 
@@ -373,7 +373,7 @@
 			}
 
 			$dbc->update("last_connexion", date("Y-m-d H:i:s"))
-				->from("_bataille_last_connexion")
+				->from("_bataille_infos_player")
 				->where("ID_identite", "=", $id_identite)
 				->set();
 		}
