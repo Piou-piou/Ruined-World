@@ -137,7 +137,9 @@
 					}
 				}
 				
-				Bataille::setValues(["base_joueur" => $une_base]);
+				if (count($une_base) > 0) {
+					Bataille::setValues(["base_joueur" => $une_base]);
+				}
 			}
 		}
 		//-------------------------- END GETTER ----------------------------------------------------------------------------//
