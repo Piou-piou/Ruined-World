@@ -15,7 +15,7 @@ $clr-ressource: #fff;
 /*pour le body et le bg de la map*/
 $bg-body: #414142;
 $bg-messagerie: #626263;
-$bg-map: #2C626A;
+$bg-map: #2A6BC3;
 
 /*pour la map ou on voit tous les players*/
 $border-map-players: #000;
@@ -178,7 +178,15 @@ button.no-style {
 			}
 			
 			.changer-base {
+				cursor: pointer;
+				
 				ul {
+					display: none;
+					
+					&.active {
+						display: block;
+					}
+					
 					li {
 						list-style: none;
 					}
@@ -306,6 +314,7 @@ button.no-style {
 		max-height: 1200px;
 		overflow: hidden;
 		border: 1px solid $border-map-players;
+		background-color: $bg-map;
 
 		.controls {
 			background: rgba(0, 0, 0, 0.8);
@@ -365,7 +374,7 @@ button.no-style {
 				
 				> div {
 					height: 25px;
-					width: 300px;
+					min-width: 350px;
 					background: $map-bg-hover-base;
 					position: absolute;
 					top: -30px;

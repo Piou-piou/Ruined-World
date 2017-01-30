@@ -368,8 +368,14 @@ button.no-style {
       text-align: center;
       margin-bottom: 0;
       margin-top: 0.5rem; }
-    .bataille .ressources .nom-base .changer-base ul li {
-      list-style: none; }
+    .bataille .ressources .nom-base .changer-base {
+      cursor: pointer; }
+      .bataille .ressources .nom-base .changer-base ul {
+        display: none; }
+        .bataille .ressources .nom-base .changer-base ul.active {
+          display: block; }
+        .bataille .ressources .nom-base .changer-base ul li {
+          list-style: none; }
   .bataille .ressources .nourriture {
     margin-top: 0.5rem;
     padding-left: 1rem;
@@ -441,7 +447,8 @@ button.no-style {
     height: 1200px;
     max-height: 1200px;
     overflow: hidden;
-    border: 1px solid #000; }
+    border: 1px solid #000;
+    background-color: #2A6BC3; }
     .bataille .map-players .controls {
       background: rgba(0, 0, 0, 0.8);
       z-index: 1;
@@ -482,7 +489,7 @@ button.no-style {
           background-color: green; }
         .bataille .map-players .map > div > div {
           height: 25px;
-          width: 300px;
+          min-width: 350px;
           background: #FFFFFF;
           position: absolute;
           top: -30px;
