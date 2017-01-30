@@ -67,9 +67,9 @@
 		}
 
 		//initialisation of Points class
-		public static function getPoints() {
+		public static function getPoints($points = null) {
 			if (self::$points == null) {
-				self::$points = new Points();
+				self::$points = new Points($points);
 			}
 
 			return self::$points;
