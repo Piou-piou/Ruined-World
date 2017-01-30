@@ -64,29 +64,14 @@
 
 
 		//------------------------------- POUR LA POPUP POUR LE MARCHE ----------------------------------//
-		if ($this->page == "popup/marche/index") {
-			$this->controller = "bataille/app/controller/initialise/popup/unbatiment.php";
-		}
 
-
-
-		//------------------------------- POUR LA POPUP POUR L'AMBASSADE ----------------------------------//
-		if ($this->page == "popup/ambassade/index") {
-			$this->controller = "bataille/app/controller/initialise/popup/unbatiment.php";
-		}
 
 		//------------------------------- POUR LA POPUP POUR LA CASERNE ----------------------------------//
-		if ($this->page == "popup/caserne/index") {
-			$this->controller = "bataille/app/controller/initialise/popup/unbatiment.php";
-		}
 		if ($this->page == "popup/caserne/recruter-troupe") {
 			$this->controller = "bataille/app/controller/caserne/get_recruter_troupe.php";
 		}
 
 		//------------------------------- POUR LA POPUP POUR LE CENTRE DE RECHERCHE ----------------------------------//
-		if ($this->page == "popup/centre_recherche/index") {
-			$this->controller = "bataille/app/controller/initialise/popup/unbatiment.php";
-		}
 		if ($this->page == "popup/centre_recherche/liste-recherche") {
 			$this->controller = "bataille/app/controller/centre_recherche/get_recherche.php";
 		}
