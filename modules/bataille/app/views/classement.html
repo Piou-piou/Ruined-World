@@ -1,0 +1,31 @@
+{{include("nav.html")}}
+
+<div class="row classement">
+	{% for i in bataille.classement %}
+		<div class="small-12 large-9 large-centered columns">
+			<a href="#" class="open-popup" popup="popup-base" player="{{ i.id_identite }}">
+				<div class="small-2 small-offset-2 columns ligne">{{ i.classement }}</div>
+				<div class="small-4 columns ligne">{{ i.pseudo }}</div>
+				<div class="small-2 end columns ligne">{{ i.points }}</div>
+			</a>
+		</div>
+	{% endfor %}
+</div>
+
+<div class="row">
+	<div class="small-12 large-9 large-centered columns">
+		{% if next > 0 %}
+			<div class="small-12 medium-2 large-2 columns">
+				<a href="{{WEBROOT}}bataille/classement?next={{ next+5}}">Page précédente</a>
+			</div>
+			<div class="small-12 medium-2 large-2 right columns">
+				<a href="{{WEBROOT}}bataille/classement?next={{ next-5}}">Page suivante</a>
+			</div>
+		{% elseif next == 0 %}
+			<div class="small-12 medium-2 large-2 columns">
+				<a href="{{WEBROOT}}bataille/classement?next=5">Page précédente</a>
+			</div>
+		{% endif %}
+	</div>
+</div>
+{{ include("js/joueur.html") }}

@@ -23,6 +23,8 @@
 		 */
 		public function getMaBase() {
 			$this->getInfoBase();
+			
+			$this->getBasesJoueur();
 
 			Bataille::getRessource();
 
@@ -93,6 +95,49 @@
 				Bataille::setValues(["batiments" => $batiments]);
 				
 				$this->setBatimentsBase($batiments);
+			}
+		}
+		
+		/**
+		 * @param null $id_identite
+		 * fonction qui récupère les bases d'un joueur
+		 */
+		public function getBasesJoueur($id_identite = null) {
+			$dbc = App::getDb();
+			$exclude = 0;
+			
+			if ($id_identite === null) {
+				$id_identite = Bataille::getIdIdentite();
+				$exclude = Bataille::getIdBase();
+			}
+			
+			$query = $dbc->select("pseudo")->from("identite")->where("ID_identite", "=", $id_identite)->get();
+			
+			if ((is_array($query)) && (count($query) == 1)) {
+				foreach ($query as $obj) {
+					Bataille::setValues(["pseudo" => $obj->pseudo]);
+				}
+				
+				$query = $dbc->select()
+					->from("_bataille_base")
+					->where("ID_identite", "=", $id_identite, "AND")
+					->where("ID_base", "!=", $exclude)
+					->orderBy("ID_base", "DESC")
+					->get();
+				
+				if ((is_array($query)) && (count($query) > 0)) {
+					foreach ($query as $obj) {
+						$une_base[] = [
+							"id_base" => $obj->ID_base,
+							"nom_base" => $obj->nom_base,
+							"points_base" => $obj->points,
+							"posx" => $obj->posx,
+							"posy" => $obj->posy
+						];
+					}
+				}
+				
+				Bataille::setValues(["base_joueur" => $une_base]);
 			}
 		}
 		//-------------------------- END GETTER ----------------------------------------------------------------------------//

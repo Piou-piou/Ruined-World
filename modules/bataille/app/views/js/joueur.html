@@ -1,0 +1,22 @@
+<script>
+	$(document).ready(function() {
+		$(".open-popup").click(function() {
+			var id_identite = $(this).attr("player");
+			
+			$.ajax({
+				type:"POST",
+				data: "loaded_ajax=true&id_identite="+id_identite,
+				url:"{{WEBROOT}}bataille/popup/joueur",
+				success: function(data){
+					$("#popup-base #ajax").append(data);
+				}, error: function(){
+					
+				}
+			});
+		});
+        
+        $(".popup .annuler").click(function() {
+            $("#popup-base #ajax").empty();
+        });
+	});
+</script>

@@ -28,6 +28,12 @@ body {
 	background-color: $bg-body;
 }
 
+button.no-style {
+	background-color: inherit;
+	padding:0;
+	margin: 0;
+}
+
 .bataille {
 	/*-------------------------------------- CLASS GENERALES --------------------------------------*/
 	.rouge {
@@ -169,6 +175,14 @@ body {
 				text-align: center;
 				margin-bottom: 0;
 				margin-top: 0.5rem;
+			}
+			
+			.changer-base {
+				ul {
+					li {
+						list-style: none;
+					}
+				}
 			}
 		}
 		
@@ -471,5 +485,16 @@ p.rouge {
 	.liste-message {
 		background-color: $bg-messagerie;
 		min-height: 600px;
+	}
+}
+
+
+
+/*-------------------------------------- CLASSEMENT --------------------------------------*/
+.classement {
+	.ligne {
+		border-bottom: 1px solid $bg-nom-base;
+		padding-bottom: 1rem;
+		padding-top: 1rem;
 	}
 }

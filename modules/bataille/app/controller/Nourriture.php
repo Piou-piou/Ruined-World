@@ -40,7 +40,7 @@
 		private function getLastCheckNourriture() {
 			$dbc= App::getDb();
 			
-			$query = $dbc->select("last_check_nourriture")->from("_bataille_last_connexion")->where("ID_identite", "=", Bataille::getIdIdentite())->get();
+			$query = $dbc->select("last_check_nourriture")->from("_bataille_infos_player")->where("ID_identite", "=", Bataille::getIdIdentite())->get();
 			
 			if ((is_array($query)) && (count($query) == 1)) {
 				$today = Bataille::getToday();
@@ -98,7 +98,7 @@
 		private function setUpdateLastCheckNourriture() {
 			$dbc = App::getDb();
 			
-			$dbc->update("last_check_nourriture", date("Y-m-d H:i:s"))->from("_bataille_last_connexion")->where("ID_identite", "=", Bataille::getIdIdentite())->set();
+			$dbc->update("last_check_nourriture", date("Y-m-d H:i:s"))->from("_bataille_infos_player")->where("ID_identite", "=", Bataille::getIdIdentite())->set();
 		}
 		
 		/**

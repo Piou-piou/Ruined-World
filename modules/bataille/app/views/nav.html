@@ -25,7 +25,7 @@
 							<a href="{{ WEBROOT }}messagerie"><img src="{{MODULEWEBROOT}}bataille/app/views/images/messagerie.png" alt=""></a>
 						</li>
 						<li><a href="{{WEBROOT}}bataille/map"><img src="{{MODULEWEBROOT}}bataille/app/views/images/carte.png" alt=""></a></li>
-						<li><a href=""><img src="{{MODULEWEBROOT}}bataille/app/views/images/classement.png" alt=""></a></li>
+						<li><a href="{{WEBROOT}}bataille/classement"><img src="{{MODULEWEBROOT}}bataille/app/views/images/classement.png" alt=""></a></li>
 					</ul>
 				</ul>
 			</div>
@@ -51,8 +51,20 @@
 						</div>
 					</div>
 					<div class="small-12 large-2 columns nom-base">
-						<h3 class="text-center"><a href="{{ WEBROOT }}bataille">{{bataille.nom_base}}</a></h3>
 						<p>Points de la base :  {{bataille.points}}</p>
+						<h3 class="text-center"><a href="{{ WEBROOT }}bataille">{{bataille.nom_base}}</a></h3>
+						{% if bataille.base_joueur is iterable %}
+							<div class="text-center changer-base">changer de base
+								<ul>
+									{% for i in bataille.base_joueur %}
+										<form action="" method="post">
+											<input type="hidden" name="base" value="{{ i.id_base }}">
+											<li><button class="no-style" type="submit">{{ i.nom_base }}</button></li>
+										</form>
+									{% endfor %}
+								</ul>
+							</div>
+						{% endif %}
 					</div>
 					<div class="small-12 medium-12 large-5 columns">
 						<div class="row droite">
