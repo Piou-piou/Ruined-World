@@ -353,37 +353,6 @@
 				foreach ($query as $obj) return $obj->$param;
 			}
 		}
-		
-		public static function getJoueur($id_identite) {
-			$dbc = App::getDb();
-			
-			$query = $dbc->select("pseudo")->from("identite")->where("ID_identite", "=", $id_identite)->get();
-			
-			if ((is_array($query)) && (count($query) == 1)) {
-				foreach ($query as $obj) {
-					Bataille::setValues(["pseudo" => $obj->pseudo]);
-				}
-				
-				$query = $dbc->select()
-					->from("_bataille_base")
-					->where("ID_identite", "=", $id_identite)
-					->orderBy("ID_base", "DESC")
-					->get();
-				
-				if ((is_array($query)) && (count($query) == 1)) {
-					foreach ($query as $obj) {
-						$une_base[] = [
-							"nom_base" => $obj->nom_base,
-							"points_base" => $obj->points,
-							"posx" => $obj->posx,
-							"posy" => $obj->posy
-						];
-					}
-				}
-				
-				Bataille::setValues(["base_joueur" => $une_base]);
-			}
-		}
 		//-------------------------- END GETTER ----------------------------------------------------------------------------//
 		
 		

@@ -51,8 +51,17 @@
 						</div>
 					</div>
 					<div class="small-12 large-2 columns nom-base">
-						<h3 class="text-center"><a href="{{ WEBROOT }}bataille">{{bataille.nom_base}}</a></h3>
 						<p>Points de la base :  {{bataille.points}}</p>
+						<h3 class="text-center"><a href="{{ WEBROOT }}bataille">{{bataille.nom_base}}</a></h3>
+						{% if bataille.base_joueur is iterable %}
+							<div class="text-center changer-base">changer de base
+								<ul>
+									{% for i in bataille.base_joueur %}
+										<li><a href="{{ WEBROOT }}bataille/index/{{ i.url_base }}">{{ i.nom_base }}</a></li>
+									{% endfor %}
+								</ul>
+							</div>
+						{% endif %}
 					</div>
 					<div class="small-12 medium-12 large-5 columns">
 						<div class="row droite">
