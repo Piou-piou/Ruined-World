@@ -64,6 +64,9 @@
 
 
 		//------------------------------- POUR LA POPUP POUR LE MARCHE ----------------------------------//
+		if ($this->page == "popup/marche/envoyer-ressources") {
+			$this->controller = "bataille/app/controller/initialise/popup/marche_envoi_ressource.php";
+		}
 
 
 		//------------------------------- POUR LA POPUP POUR LA CASERNE ----------------------------------//
