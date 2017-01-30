@@ -3,7 +3,7 @@
 <div class="row classement">
 	{% for i in bataille.classement %}
 		<div class="small-12 large-9 large-centered columns">
-			<a href="#" id-identite="{{ i.id_identite }}">
+			<a href="#" class="open-popup" popup="popup-base" player="{{ i.id_identite }}">
 				<div class="small-2 small-offset-2 columns ligne">{{ i.classement }}</div>
 				<div class="small-4 columns ligne">{{ i.pseudo }}</div>
 				<div class="small-2 end columns ligne">{{ i.points }}</div>
@@ -11,3 +11,5 @@
 		</div>
 	{% endfor %}
 </div>
+
+{{ include("js/joueur.html") }}

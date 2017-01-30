@@ -7,6 +7,7 @@
 		"aide-detail",
 		"map",
 		"popup/map",
+		"popup/joueur",
 		"popup/marche/index",
 		"popup/marche/offre-et-demande",
 		"popup/marche/envoyer-ressources",
@@ -106,6 +107,9 @@
 		//------------------------------- POUR L'AFFICHAGE DU CLASSEMENT ----------------------------------//
 		if ($this->page == "classement") {
 			$this->controller = "bataille/app/controller/initialise/classement.php";
+		}
+		if ($this->page == "popup/joueur") {
+			$this->controller = "bataille/app/controller/initialise/popup/joueur.php";
 		}
 	}
 	else {

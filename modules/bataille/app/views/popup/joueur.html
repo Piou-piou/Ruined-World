@@ -1,0 +1,13 @@
+<h2>{{ bataille.pseudo }}</h2>
+
+<h3>Bases du joueur</h3>
+
+{% for i in bataille.base_joueur %}
+	<h4>{{ i.nom_base }} </h4>
+	<ul>
+		<li>Points {{ i.points }}</li>
+		<li>Posx : {{ i.posx }}</li>
+		<li>PosY : {{ i.posy }}</li>
+	</ul>
+	<hr>
+{% endfor %}
