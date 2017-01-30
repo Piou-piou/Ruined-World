@@ -15,7 +15,7 @@ $clr-ressource: #fff;
 /*pour le body et le bg de la map*/
 $bg-body: #414142;
 $bg-messagerie: #626263;
-$bg-map: #2C626A;
+$bg-map: #2A6BC3;
 
 /*pour la map ou on voit tous les players*/
 $border-map-players: #000;
@@ -141,32 +141,6 @@ button.no-style {
 			color: $clr-nom-base;
 			vertical-align: middle;
 			
-			@media screen and (min-width: 1100px) {
-				/*&::before {
-					background-color: $bg-nom-base;
-					width: 25px;
-					height: 100px;
-					position: absolute;
-					top: 0;
-					left: -15px;
-					transform: skewX(10deg);
-					content: ' ';
-				}
-				
-				&::after {
-					background-color: $bg-nom-base;
-					width: 30px;
-					height: 100px;
-					position: absolute;
-					top: 0;
-					right: -20px;
-					transform: skewX(-10deg);
-					content: ' ';
-					z-index: 1;
-				}*/
-			}
-			
-			
 			h3 {
 				margin-bottom: -5px;
 			}
@@ -178,7 +152,17 @@ button.no-style {
 			}
 			
 			.changer-base {
+				cursor: pointer;
+				
 				ul {
+					display: none;
+					background-color: $bg-nom-base;
+					margin-left: 0;
+					
+					&.active {
+						display: block;
+					}
+					
 					li {
 						list-style: none;
 					}
@@ -306,6 +290,7 @@ button.no-style {
 		max-height: 1200px;
 		overflow: hidden;
 		border: 1px solid $border-map-players;
+		background-color: $bg-map;
 
 		.controls {
 			background: rgba(0, 0, 0, 0.8);
@@ -365,7 +350,7 @@ button.no-style {
 				
 				> div {
 					height: 25px;
-					width: 300px;
+					min-width: 350px;
 					background: $map-bg-hover-base;
 					position: absolute;
 					top: -30px;
