@@ -57,7 +57,7 @@
 							<div class="text-center changer-base">changer de base
 								<ul>
 									{% for i in bataille.base_joueur %}
-										<li><a href="{{ WEBROOT }}bataille/index/{{ i.url_base }}">{{ i.nom_base }}</a></li>
+										<li><a href="{{ WEBROOT }}bataille/?base={{ i.id_base }}">{{ i.nom_base }}</a></li>
 									{% endfor %}
 								</ul>
 							</div>

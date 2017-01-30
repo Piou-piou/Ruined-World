@@ -128,8 +128,8 @@
 				if ((is_array($query)) && (count($query) > 0)) {
 					foreach ($query as $obj) {
 						$une_base[] = [
+							"id_base" => $obj->ID_base,
 							"nom_base" => $obj->nom_base,
-							"url_base" => $obj->url_base,
 							"points_base" => $obj->points,
 							"posx" => $obj->posx,
 							"posy" => $obj->posy
