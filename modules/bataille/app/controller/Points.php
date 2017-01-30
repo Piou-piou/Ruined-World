@@ -12,12 +12,12 @@
 			if ($start === null) $start = 0;
 			
 			$query = $dbc->select("identite.pseudo")
-				->select("_bataille_base.points")
-				->select("_bataille_base.ID_identite")
-				->from("_bataille_base")
+				->select("_bataille_infos_player.points")
+				->select("_bataille_infos_player.ID_identite")
+				->from("_bataille_infos_player")
 				->from("identite")
-				->where("_bataille_base.ID_identite", "=", "identite.ID_identite", "", true)
-				->orderBy("_bataille_base.points", "DESC")
+				->where("_bataille_infos_player.ID_identite", "=", "identite.ID_identite", "", true)
+				->orderBy("_bataille_infos_player.points", "DESC")
 				->limit($start, 50)
 				->get();
 			
