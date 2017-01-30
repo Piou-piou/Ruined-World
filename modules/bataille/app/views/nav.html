@@ -57,7 +57,10 @@
 							<div class="text-center changer-base">changer de base
 								<ul>
 									{% for i in bataille.base_joueur %}
-										<li><a href="{{ WEBROOT }}bataille/?base={{ i.id_base }}">{{ i.nom_base }}</a></li>
+										<form action="" method="post">
+											<input type="hidden" name="base" value="{{ i.id_base }}">
+											<li><button class="no-style" type="submit">{{ i.nom_base }}</button></li>
+										</form>
 									{% endfor %}
 								</ul>
 							</div>
