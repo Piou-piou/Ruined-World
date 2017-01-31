@@ -21,6 +21,10 @@
 		private $nom_batiment_construction;
 		private $date_fin_construction;
 		private $niveau_batiment_construction;
+		
+		//pour la table dans le core qui contient tous les batiments
+		private $all_batiment;
+		private $all_batiment_nom;
 
 		//-------------------------- BUILDER ----------------------------------------------------------------------------//
 		public function __construct() {
@@ -256,51 +260,78 @@
 
 			return 0;
 		}
-
+		
 		/**
-		 * pour récupérer la liste des batiments qu'il est possible de construire
+		 * @return array
+		 * fonction qui renvoi tous les nom sql des batiments construit dans la base
 		 */
-		public function getBatimentAConstruire() {
+		private function getBatimentBase() {
 			$dbc = App::getDb();
-			$dbc1 = Bataille::getDb();
-			$batiment_construit = [];
-			$batiment_construire = [];
-
-			//recuperation des batiments deja construit dans la base
+			
 			$query = $dbc->select("nom_batiment_sql")
 				->select("nom_batiment")
 				->select("niveau")
 				->from("_bataille_batiment")
 				->where("ID_base", "=", Bataille::getIdBase())
 				->get();
-
+			
 			if ((is_array($query)) && (count($query) > 0)) {
 				foreach ($query as $obj) {
 					$batiment_construit[] = $obj->nom_batiment_sql;
 				}
+				
+				return $batiment_construit;
 			}
-
-			//recuperation de la liste complete des batiments
+			
+			return [];
+		}
+		
+		/**
+		 * @return int
+		 * fonction qui renvoi tous les batiments actifs dans liste_batiment dans la bdd core
+		 */
+		private function getAllBatimentGame() {
+			$dbc1 = Bataille::getDb();
+			
 			$query = $dbc1->select("nom_table")->select("nom")->from("liste_batiment")->where("actif", "=", 1)->get();
+			
 			if ((is_array($query)) && (count($query) > 0)) {
 				foreach ($query as $obj) {
 					$all_batiment[] = $obj->nom_table;
 					$all_batiment_nom[] = $obj->nom;
 				}
-
-				$c_all_batiment = count($all_batiment);
+				
+				$this->all_batiment = $all_batiment;
+				$this->all_batiment_nom = $all_batiment_nom;
+				return count($all_batiment);
 			}
+			
+			return 0;
+		}
+
+		/**
+		 * pour récupérer la liste des batiments qu'il est possible de construire
+		 */
+		public function getBatimentAConstruire() {
+			$dbc1 = Bataille::getDb();
+			$batiment_construire = [];
+
+			//recuperation des batiments deja construit dans la base
+			$batiment_construit = $this->getBatimentBase();
+
+			//recuperation de la liste complete des batiments
+			$c_all_batiment  = $this->getAllBatimentGame();
 
 			//boucle qui recupere en tableau le champ pour_construire d'un batiment
 			//et compare la liste des batiments qu'il faut pour construire le batiment
 			//a ceux qui sont deja construit dans la base
 			//si tous les batments qu'il faut son batis on autorise la construction du batiment
 			for ($i = 0 ; $i < $c_all_batiment ; $i++) {
-				if (!in_array($all_batiment[$i], $batiment_construit)) {
+				if (!in_array($this->all_batiment[$i], $batiment_construit)) {
 					$query = $dbc1->select("pour_construire")
 						->select("temps_construction")
-						->from($all_batiment[$i])
-						->where("ID_".$all_batiment[$i], "=", 1)
+						->from($this->all_batiment[$i])
+						->where("ID_".$this->all_batiment[$i], "=", 1)
 						->get();
 					
 					$pour_construire = [];
@@ -311,7 +342,7 @@
 							}
 
 							$temps_construction = gmdate("H:i:s", round($obj->temps_construction-($obj->temps_construction*Bataille::getBatiment()->getNiveauBatiment("centre_commandement")/100)));
-							$taille_batiment = $this->getTailleBatiment($all_batiment[$i]);
+							$taille_batiment = $this->getTailleBatiment($this->all_batiment[$i]);
 						}
 					}
 
@@ -319,11 +350,11 @@
 					if (count($pour_construire) == 1) {
 						if (in_array($pour_construire[0][1], $batiment_construit)) {
 							if ($pour_construire[0][2] <= $this->getNiveauBatiment($pour_construire[0][1])) {
-								$ressource = $this->getRessourceConstruireBatiment($all_batiment[$i], 0);
+								$ressource = $this->getRessourceConstruireBatiment($this->all_batiment[$i], 0);
 
 								$batiment_construire[] = [
-									"nom_batiment_sql" => $all_batiment[$i],
-									"nom_batiment" => $all_batiment_nom[$i],
+									"nom_batiment_sql" => $this->all_batiment[$i],
+									"nom_batiment" => $this->all_batiment_nom[$i],
 									"ressource" => $ressource,
 									"temps_construction" => $temps_construction,
 									"width" => $taille_batiment[0],
@@ -352,11 +383,11 @@
 
 						//si ok on affiche le batiment
 						if ($ok_construction === true) {
-							$ressource = $this->getRessourceConstruireBatiment($all_batiment[$i], 0);
+							$ressource = $this->getRessourceConstruireBatiment($this->all_batiment[$i], 0);
 
 							$batiment_construire[] = [
-								"nom_batiment_sql" => $all_batiment[$i],
-								"nom_batiment" => $all_batiment_nom[$i],
+								"nom_batiment_sql" => $this->all_batiment[$i],
+								"nom_batiment" => $this->all_batiment_nom[$i],
 								"ressource" => $ressource,
 								"temps_construction" => $temps_construction,
 								"width" => $taille_batiment[0],
@@ -365,11 +396,11 @@
 						}
 					}
 					else {
-						$ressource = $this->getRessourceConstruireBatiment($all_batiment[$i], 0);
+						$ressource = $this->getRessourceConstruireBatiment($this->all_batiment[$i], 0);
 
 						$batiment_construire[] = [
-							"nom_batiment_sql" => $all_batiment[$i],
-							"nom_batiment" => $all_batiment_nom[$i],
+							"nom_batiment_sql" => $this->all_batiment[$i],
+							"nom_batiment" => $this->all_batiment_nom[$i],
 							"ressource" => $ressource,
 							"temps_construction" => $temps_construction,
 							"width" => $taille_batiment[0],
