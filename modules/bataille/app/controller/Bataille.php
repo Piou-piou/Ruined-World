@@ -75,15 +75,6 @@
 			return self::$points;
 		}
 
-		//initialisation of Map class
-		public static function getMap() {
-			if (self::$map == null) {
-				self::$map = new Map();
-			}
-
-			return self::$map;
-		}
-
 		//initialisation of Batiment class
 		public static function getUnite() {
 			if (self::$unite == null) {
@@ -109,15 +100,6 @@
 			}
 			
 			return self::$missions_aleatoire;
-		}
-		
-		//initialisation of Nourriture class
-		public static function getNourriture() {
-			if (self::$nourriture == null) {
-				self::$nourriture = new Nourriture();
-			}
-			
-			return self::$nourriture;
 		}
 
 		//initialisation of Database Core connexion
@@ -289,22 +271,6 @@
 
 			if ((is_array($query)) && (count($query) == 1)) {
 				foreach ($query as $obj) return $obj->ID_base;
-			}
-
-			return 0;
-		}
-
-		/**
-		 * @return integer
-		 * fonction qui permet de récupérer le nombre de joueurs sur le serveur
-		 */
-		public static function getNombreJoueur() {
-			$dbc = App::getDb();
-
-			$query = $dbc->select("nombre_joueur")->from("_bataille_nombre_joueur")->where("ID_nombre_joueur", "=", 1)->get();
-
-			if ((is_array($query)) && (count($query) == 1)) {
-				foreach ($query as $obj) return $obj->nombre_joueur;
 			}
 
 			return 0;

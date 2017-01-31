@@ -88,6 +88,22 @@
 
 		//-------------------------- GETTER ----------------------------------------------------------------------------//
 		/**
+		 * @return integer
+		 * fonction qui permet de récupérer le nombre de joueurs sur le serveur
+		 */
+		private function getNombreJoueur() {
+			$dbc = App::getDb();
+			
+			$query = $dbc->select("nombre_joueur")->from("_bataille_nombre_joueur")->where("ID_nombre_joueur", "=", 1)->get();
+			
+			if ((is_array($query)) && (count($query) == 1)) {
+				foreach ($query as $obj) return $obj->nombre_joueur;
+			}
+			
+			return 0;
+		}
+		
+		/**
 		 * fonction qui sert à récupérer les parametres de la map
 		 */
 		private function getParametres() {
@@ -114,7 +130,7 @@
 		public function getPositionNewBase() {
 			$this->getParametres();
 
-			if (Bataille::getNombreJoueur() <= 150) {
+			if ($this->getNombreJoueur() <= 150) {
 				$posx = rand(0, 79);
 				$posy = rand(0, 75);
 			}
