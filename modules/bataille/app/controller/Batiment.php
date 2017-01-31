@@ -335,7 +335,8 @@
 					else if (count($pour_construire) > 1) {
 						$ok_construction = false;
 						//test si tous les batiments sont construits et on le niveau nécéssaire
-						for ($j = 0 ; $j < count($pour_construire) ; $j++) {
+						$count = count($pour_construire);
+						for ($j = 0 ; $j < $count ; $j++) {
 							if (in_array($pour_construire[$j][1], $batiment_construit)) {
 								if ($pour_construire[$j][2] <= $this->getNiveauBatiment($pour_construire[$j][1])) {
 									$ok_construction = true;
@@ -588,84 +589,83 @@
 		public function setCommencerConstruireBatiment($nom_batiment, $nom_batiment_sql, $posx, $posy) {
 			$dbc = App::getDb();
 			$dbc1 = Bataille::getDb();
-
-			if ($this->getConstruction() == 0) {
-				$un_batiment = $this->getUnBatiment($nom_batiment);
-
-				//on test si assez de ressrouce pour construire le batiment
-				if ($un_batiment == 0) {
-					$ressource = $this->getRessourceConstruireBatiment($nom_batiment_sql, 0);
-					$this->nom_batiment_sql = $nom_batiment_sql;
-					$this->niveau_batiment = 0;
-				}
-				else {
-					$ressource = $this->getRessourceConstruireBatiment($this->nom_batiment_sql, $this->niveau_batiment);
-				}
-
-				//si pas assez de ressource
-				if (($ressource["eau"]["class"] || $ressource["electricite"]["class"] ||$ressource["fer"]["class"] || $ressource["fuel"]["class"]) == "rouge") {
-					FlashMessage::setFlash("Pas assez de ressources pour construire ce batiment");
-					return false;
-				}
-				else {
-					//recuperation du temps de construction
-					$query = $dbc1->select("ressource_construire")
-						->select("temps_construction")
-						->from($this->nom_batiment_sql)
-						->where("ID_".$this->nom_batiment_sql, "=", $this->niveau_batiment+1)
-						->get();
-
-					foreach ($query as $obj) {
-						$temps_construction = round($obj->temps_construction-($obj->temps_construction*Bataille::getBatiment()->getNiveauBatiment("centre_commandement")/100));
-						$ressource_construction = explode(", ", $obj->ressource_construire);
-					}
-
-					//on insere la construction dans la table batiment si new batiment
-					if ($un_batiment == 0) {
-						$dbc->insert("niveau", $this->niveau_batiment+1)
-							->insert("nom_batiment", $nom_batiment)
-							->insert("nom_batiment_sql", $this->nom_batiment_sql)
-							->insert("posx", intval($posx))
-							->insert("posy", intval($posy))
-							->insert("construction", 1)
-							->insert("ID_base", Bataille::getIdBase())
-							->into("_bataille_batiment")
-							->set();
-
-						$this->id_batiment = $dbc->lastInsertId();
-					}
-					else {
-						$dbc->update("niveau", $this->niveau_batiment+1)
-							->update("construction", 1)
-							->from("_bataille_batiment")
-							->where("ID_batiment", "=", $this->id_batiment, "AND")
-							->where("ID_base", "=", Bataille::getIdBase())
-							->set();
-					}
-
-
-					//on initialise la construction
-					//recuperation de la date en seconde
-					$today = Bataille::getToday();
-
-					//date de la fin de la construction en seconde
-					$fin_construction = $today+$temps_construction;
-
-					$dbc->insert("date_fin", $fin_construction)
-						->insert("ID_base", Bataille::getIdBase())
-						->insert("ID_batiment", $this->id_batiment)
-						->into("_bataille_construction")
-						->set();
-
-					//on retire les ressources de la base
-					Bataille::getRessource()->setUpdateRessource($ressource_construction[2], $ressource_construction[3], $ressource_construction[0], $ressource_construction[1], 0, "-");
-					echo("ok");
-				}
-			}
-			else {
+			
+			if ($this->getConstruction() == 1) {
 				FlashMessage::setFlash("Un batiment est déjà en construction, vous ne pouvez pas en construire un autre !");
 				return false;
 			}
+			
+			
+			$un_batiment = $this->getUnBatiment($nom_batiment);
+			
+			//on test si assez de ressrouce pour construire le batiment
+			if ($un_batiment == 0) {
+				$ressource = $this->getRessourceConstruireBatiment($nom_batiment_sql, 0);
+				$this->nom_batiment_sql = $nom_batiment_sql;
+				$this->niveau_batiment = 0;
+			}
+			else {
+				$ressource = $this->getRessourceConstruireBatiment($this->nom_batiment_sql, $this->niveau_batiment);
+			}
+			
+			//si pas assez de ressource
+			if (($ressource["eau"]["class"] || $ressource["electricite"]["class"] ||$ressource["fer"]["class"] || $ressource["fuel"]["class"]) == "rouge") {
+				FlashMessage::setFlash("Pas assez de ressources pour construire ce batiment");
+				return false;
+			}
+			
+			//recuperation du temps de construction
+			$query = $dbc1->select("ressource_construire")
+				->select("temps_construction")
+				->from($this->nom_batiment_sql)
+				->where("ID_".$this->nom_batiment_sql, "=", $this->niveau_batiment+1)
+				->get();
+			
+			foreach ($query as $obj) {
+				$temps_construction = round($obj->temps_construction-($obj->temps_construction*Bataille::getBatiment()->getNiveauBatiment("centre_commandement")/100));
+				$ressource_construction = explode(", ", $obj->ressource_construire);
+			}
+			
+			//on insere la construction dans la table batiment si new batiment
+			if ($un_batiment == 0) {
+				$dbc->insert("niveau", $this->niveau_batiment+1)
+					->insert("nom_batiment", $nom_batiment)
+					->insert("nom_batiment_sql", $this->nom_batiment_sql)
+					->insert("posx", intval($posx))
+					->insert("posy", intval($posy))
+					->insert("construction", 1)
+					->insert("ID_base", Bataille::getIdBase())
+					->into("_bataille_batiment")
+					->set();
+				
+				$this->id_batiment = $dbc->lastInsertId();
+			}
+			else {
+				$dbc->update("niveau", $this->niveau_batiment+1)
+					->update("construction", 1)
+					->from("_bataille_batiment")
+					->where("ID_batiment", "=", $this->id_batiment, "AND")
+					->where("ID_base", "=", Bataille::getIdBase())
+					->set();
+			}
+			
+			
+			//on initialise la construction
+			//recuperation de la date en seconde
+			$today = Bataille::getToday();
+			
+			//date de la fin de la construction en seconde
+			$fin_construction = $today+$temps_construction;
+			
+			$dbc->insert("date_fin", $fin_construction)
+				->insert("ID_base", Bataille::getIdBase())
+				->insert("ID_batiment", $this->id_batiment)
+				->into("_bataille_construction")
+				->set();
+			
+			//on retire les ressources de la base
+			Bataille::getRessource()->setUpdateRessource($ressource_construction[2], $ressource_construction[3], $ressource_construction[0], $ressource_construction[1], 0, "-");
+			echo("ok");
 		}
 
 		/**

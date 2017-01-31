@@ -260,21 +260,20 @@
 				FlashMessage::setFlash("Pas assez de ressources pour effectuer cette recherche");
 				return false;
 			}
-			else {
-				//on retire les ressources
-				Bataille::getRessource()->setUpdateRessource($cout["eau"]["ressource"], $cout["electricite"]["ressource"], $cout["fer"]["ressource"], $cout["fuel"]["ressource"], 0, "-");
-
-				$date_fin = Bataille::getToday()+$temps_recherche;
-
-				$dbc->insert("recherche", $recherche)
-					->insert("type", $type)
-					->insert("date_fin", $date_fin)
-					->insert("ID_base", Bataille::getIdBase())
-					->into("_bataille_recherche")
-					->set();
-
-				return true;
-			}
+			
+			//on retire les ressources
+			Bataille::getRessource()->setUpdateRessource($cout["eau"]["ressource"], $cout["electricite"]["ressource"], $cout["fer"]["ressource"], $cout["fuel"]["ressource"], 0, "-");
+			
+			$date_fin = Bataille::getToday()+$temps_recherche;
+			
+			$dbc->insert("recherche", $recherche)
+				->insert("type", $type)
+				->insert("date_fin", $date_fin)
+				->insert("ID_base", Bataille::getIdBase())
+				->into("_bataille_recherche")
+				->set();
+			
+			return true;
 		}
 
 		/**
