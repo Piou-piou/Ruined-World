@@ -2,6 +2,6 @@
 
 	require_once(ROOT."modules/bataille/app/controller/initialise/header.php");
 
-	$map = \modules\bataille\app\controller\Bataille::getMap();
+	$map = new \modules\bataille\app\controller\Map();
 
 	$arr = \modules\bataille\app\controller\Bataille::getValues();

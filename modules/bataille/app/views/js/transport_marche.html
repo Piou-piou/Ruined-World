@@ -1,36 +1,50 @@
 <script>
-    $(".popup #envoyer-ressources").submit(function(e) {
-        e.preventDefault();
-        
-        $.ajax({
-            type:"POST",
-            data: $(this).serialize(),
-            url: $(this).attr("action"),
-            success: function(data){
-                if (data == "ok") {
-                    location.reload();
-                }
-                else {
-                    $("body").prepend(data);
-                }
-            }, error: function(){
-                
-            }
-        });
-    });
+	$(".popup #envoyer-ressources").submit(function(e) {
+		e.preventDefault();
+		
+		$.ajax({
+			type:"POST",
+			data: $(this).serialize(),
+			url: $(this).attr("action"),
+			success: function(data){
+				if (data == "ok") {
+					location.reload();
+				}
+				else {
+					$("body").prepend(data);
+				}
+			}, error: function(){
+				
+			}
+		});
+	});
+	
+	$("#select-base").change(function() {
+	    var posx = "";
+	    var posy = "";
+	    
+		if ($(this).val() != "") {
+            var split = $(this).val().split("-");
+            var posx = split[0];
+            var posy = split[1];
+		}
+		
+		$(this).parent().find("#posx").val(posx);
+		$(this).parent().find("#posy").val(posy);
+	});
 </script>
 
 {% if i.date_arrivee > 0 %}
 	<script>
-        $(function () {
-            $('#transport-{{ i.id_marche_transport }}').countdown({
-                until: {{i.date_arrivee}},
-                onExpiry: testFinTransport{{ i.id_marche_transport }}
-            });
-        });
-
-        function testFinTransport{{ i.id_marche_transport }}() {
-	        $('#transport-{{ i.id_marche_transport }}').parent().remove();
-        }
+		$(function () {
+			$('#transport-{{ i.id_marche_transport }}').countdown({
+				until: {{i.date_arrivee}},
+				onExpiry: testFinTransport{{ i.id_marche_transport }}
+			});
+		});
+		
+		function testFinTransport{{ i.id_marche_transport }}() {
+			$('#transport-{{ i.id_marche_transport }}').parent().remove();
+		}
 	</script>
 {% endif %}

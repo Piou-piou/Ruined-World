@@ -4,8 +4,18 @@
 	<input type="text" name="fer" placeholder="Fer" autocomplete="off">
 	<input type="text" name="fuel" placeholder="Fuel" autocomplete="off">
 	<input type="text" name="nourriture" placeholder="Nourriture" autocomplete="off">
-	<input type="text" name="posx" placeholder="Posx" autocomplete="off">
-	<input type="text" name="posy" placeholder="Posy" autocomplete="off">
+	
+	{% if bataille.base_joueur is iterable %}
+		<select id="select-base">
+			<option value="">Selectionner une de vos bases pour y envoyer des ressources</option>
+			{% for i in bataille.base_joueur %}
+				<option value="{{ i.posx }}-{{ i.posy }}">{{ i.nom_base }}</option>
+			{% endfor %}
+		</select>
+	{% endif %}
+	
+	<input type="text" id="posx" name="posx" placeholder="Posx" autocomplete="off">
+	<input type="text" id="posy" name="posy" placeholder="Posy" autocomplete="off">
 	<button type="submit">Envoyer</button>
 </form>
 

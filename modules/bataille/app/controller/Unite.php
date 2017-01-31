@@ -143,7 +143,9 @@
 				$unites = array_merge($unites, $type_unite);
 			}
 			
-			Bataille::setValues(["unites" => $unites]);
+			if (count($unites) > 0) {
+				Bataille::setValues(["unites" => $unites]);
+			}
 		}
 
 		/**

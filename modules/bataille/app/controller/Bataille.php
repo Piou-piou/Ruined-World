@@ -75,15 +75,6 @@
 			return self::$points;
 		}
 
-		//initialisation of Map class
-		public static function getMap() {
-			if (self::$map == null) {
-				self::$map = new Map();
-			}
-
-			return self::$map;
-		}
-
 		//initialisation of Batiment class
 		public static function getUnite() {
 			if (self::$unite == null) {
@@ -109,15 +100,6 @@
 			}
 			
 			return self::$missions_aleatoire;
-		}
-		
-		//initialisation of Nourriture class
-		public static function getNourriture() {
-			if (self::$nourriture == null) {
-				self::$nourriture = new Nourriture();
-			}
-			
-			return self::$nourriture;
 		}
 
 		//initialisation of Database Core connexion
@@ -202,34 +184,6 @@
 		public static function getToday() {
 			$today = new \DateTime();
 			return $today->getTimestamp();
-		}
-
-		/**
-		 * @param null $id_base -> sert si definit a recuperer l'id identite de la abse en question
-		 * @return string|null
-		 * recupere la date de la derniere connexion
-		 */
-		public static function getLastConnexion($id_base = null) {
-			$dbc = App::getDb();
-
-			if ($id_base === null) {
-				$query = $dbc->select()->from("_bataille_infos_player")->where("ID_identite", "=", self::getIdIdentite())->get();
-			}
-			else {
-				$query = $dbc->select("_bataille_infos_player.last_connexion")->from("_bataille_base")
-					->from("_bataille_infos_player")
-					->from("identite")
-					->where("_bataille_base.ID_base", "=", $id_base, "AND")
-					->where("_bataille_base.ID_identite", "=", "identite.ID_identite", "AND", true)
-					->where("identite.ID_identite", "=", "_bataille_infos_player.ID_identite", "", true)
-					->get();
-			}
-
-			if ((is_array($query)) && (count($query) > 0)) {
-				foreach ($query as $obj) {
-					return $obj->last_connexion;
-				}
-			}
 		}
 
 		/**
@@ -323,22 +277,6 @@
 		}
 
 		/**
-		 * @return integer
-		 * fonction qui permet de récupérer le nombre de joueurs sur le serveur
-		 */
-		public static function getNombreJoueur() {
-			$dbc = App::getDb();
-
-			$query = $dbc->select("nombre_joueur")->from("_bataille_nombre_joueur")->where("ID_nombre_joueur", "=", 1)->get();
-
-			if ((is_array($query)) && (count($query) == 1)) {
-				foreach ($query as $obj) return $obj->nombre_joueur;
-			}
-
-			return 0;
-		}
-
-		/**
 		 * @param string $param
 		 * @return mixed
 		 * fonction qui sert à récupérer un parametre spécifique pour un batiment
@@ -358,26 +296,6 @@
 		
 		
 		//-------------------------- SETTER ----------------------------------------------------------------------------//
-		/**
-		 * set la date de derniere connexion a now
-		 */
-		public static function setLastConnexion($id_base = null) {
-			$dbc = App::getDb();
-			
-			$id_identite = self::getIdIdentite();
-			
-			if ($id_base !== null) {
-				$query = $dbc->select("ID_identite")->from("_bataille_base")->where("ID_base", "=", $id_base)->get();
-
-				foreach ($query as $obj) $id_identite = $obj->ID_identite;
-			}
-
-			$dbc->update("last_connexion", date("Y-m-d H:i:s"))
-				->from("_bataille_infos_player")
-				->where("ID_identite", "=", $id_identite)
-				->set();
-		}
-
 		/**
 		 * @param $values
 		 * can set values while keep older infos
