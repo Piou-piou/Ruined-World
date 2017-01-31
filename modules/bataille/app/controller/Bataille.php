@@ -7,12 +7,9 @@
 		private static $ressource;
 		private static $base;
 		private static $batiment;
-		private static $points;
 		private static $unite;
 		private static $centre_recherche;
 		private static $missions_aleatoire;
-		private static $nourriture;
-		private static $map;
 		private static $database;
 		private static $nation;
 
@@ -64,15 +61,6 @@
 			}
 
 			return self::$batiment;
-		}
-
-		//initialisation of Points class
-		public static function getPoints($points = null) {
-			if (self::$points == null) {
-				self::$points = new Points($points);
-			}
-
-			return self::$points;
 		}
 
 		//initialisation of Batiment class
