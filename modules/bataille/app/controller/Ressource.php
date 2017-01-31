@@ -87,17 +87,50 @@
 				return "rouge";
 			}
 		}
+		
+		/**
+		 * @param null $id_base -> sert si definit a recuperer l'id identite de la abse en question
+		 * recupere la date de la derniere connexion
+		 */
+		private function getLastConnexion() {
+			$dbc = App::getDb();
+			
+			$query = $dbc->select("last_connexion")->from("_bataille_base")
+				->where("ID_base", "=", $this->id_base, "AND")
+				->where("ID_identite", "=", Bataille::getIdIdentite())
+				->get();
+			
+			
+			if ((is_array($query)) && (count($query) > 0)) {
+				foreach ($query as $obj) {
+					return $obj->last_connexion;
+				}
+			}
+		}
 		//-------------------------- END GETTER ----------------------------------------------------------------------------//
 
 
 
 		//-------------------------- SETTER ----------------------------------------------------------------------------//
 		/**
+		 * set la date de derniere connexion a now
+		 */
+		private function setLastConnexion() {
+			$dbc = App::getDb();
+			
+			$dbc->update("last_connexion", date("Y-m-d H:i:s"))
+				->from("_bataille_base")
+				->where("ID_identite", "=", Bataille::getIdIdentite(), "AND")
+				->where("ID_base", "=", $this->id_base)
+				->set();
+		}
+		
+		/**
 		 * fonction qui au chargement de la base regardera la derniere co du joueur
 		 * si elle est supérieur à 30sec on recalculera les ressources des bases du joueur
 		 */
 		public function setActualiserRessource() {
-			$last_co = Bataille::getLastConnexion($this->id_base);
+			$last_co = $this->getLastConnexion();
 
 			$today = Bataille::getToday();
 
@@ -140,7 +173,7 @@
 
 			$this->$nom_ressource = $ressource;
 
-			Bataille::setLastConnexion($this->id_base);
+			$this->setLastConnexion();
 		}
 
 		/**
