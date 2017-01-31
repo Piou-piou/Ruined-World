@@ -335,7 +335,8 @@
 					else if (count($pour_construire) > 1) {
 						$ok_construction = false;
 						//test si tous les batiments sont construits et on le niveau nécéssaire
-						for ($j = 0 ; $j < count($pour_construire) ; $j++) {
+						$count = count($pour_construire);
+						for ($j = 0 ; $j < $count ; $j++) {
 							if (in_array($pour_construire[$j][1], $batiment_construit)) {
 								if ($pour_construire[$j][2] <= $this->getNiveauBatiment($pour_construire[$j][1])) {
 									$ok_construction = true;
