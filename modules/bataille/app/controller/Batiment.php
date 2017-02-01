@@ -560,41 +560,8 @@
 				}
 
 				//récupération des éléments particulier à un batiment
-				$xml = simplexml_load_file(MODULEROOT.'bataille/data/batiment.xml');
-				$nom_batiment_sql = $this->nom_batiment_sql;
-				$champ = $xml->$nom_batiment_sql->champ;
-
-				if (!empty($champ)) {
-					//récupération de la phrase pour le niveau actuel
-					$query = $dbc1->select($xml->$nom_batiment_sql->champ)
-						->from($this->nom_batiment_sql)
-						->where("ID_".$this->nom_batiment_sql, "=", $this->niveau_batiment)
-						->get();
-
-					if ((is_array($query)) && (count($query) > 0)) {
-						foreach ($query as $obj) {
-							$this->info_batiment = $xml->$nom_batiment_sql->phrase.$obj->$champ.$xml->$nom_batiment_sql->complement;
-						}
-					}
-
-					//récupération de la phrase pour le niveau suivant
-					$query = $dbc1->select($xml->$nom_batiment_sql->champ)
-						->from($this->nom_batiment_sql)
-						->where("ID_".$this->nom_batiment_sql, "=", $this->niveau_batiment+1)
-						->get();
-
-					if ((is_array($query)) && (count($query) > 0)){
-						foreach ($query as $obj) {
-							$this->info_batiment_next = $xml->$nom_batiment_sql->phrase_suivant.$obj->$champ.$xml->$nom_batiment_sql->complement;
-						}
-					}
-				}
-				else {
-					$this->info_batiment = "";
-					$this->info_batiment_next = "";
-				}
-
-
+				$this->getTexteBatiment();
+				
 				Bataille::setValues([
 					"ressource" => $this->ressource_construire,
 					"temps_construction" => DateHeure::Secondeenheure($this->temps_construction),
@@ -606,6 +573,47 @@
 			}
 
 			return "max_level";
+		}
+		
+		/**
+		 * fonction qui récupère le contenu du xml en fonction du batiment
+		 */
+		private function getTexteBatiment() {
+			$dbc1 = Bataille::getDb();
+			
+			//récupération des éléments particulier à un batiment
+			$xml = simplexml_load_file(MODULEROOT.'bataille/data/batiment.xml');
+			$nom_batiment_sql = $this->nom_batiment_sql;
+			$champ = $xml->$nom_batiment_sql->champ;
+			
+			$this->info_batiment = "";
+			$this->info_batiment_next = "";
+			
+			if (!empty($champ)) {
+				//récupération de la phrase pour le niveau actuel
+				$query = $dbc1->select($xml->$nom_batiment_sql->champ)
+					->from($this->nom_batiment_sql)
+					->where("ID_".$this->nom_batiment_sql, "=", $this->niveau_batiment)
+					->get();
+				
+				if ((is_array($query)) && (count($query) > 0)) {
+					foreach ($query as $obj) {
+						$this->info_batiment = $xml->$nom_batiment_sql->phrase.$obj->$champ.$xml->$nom_batiment_sql->complement;
+					}
+				}
+				
+				//récupération de la phrase pour le niveau suivant
+				$query = $dbc1->select($xml->$nom_batiment_sql->champ)
+					->from($this->nom_batiment_sql)
+					->where("ID_".$this->nom_batiment_sql, "=", $this->niveau_batiment+1)
+					->get();
+				
+				if ((is_array($query)) && (count($query) > 0)){
+					foreach ($query as $obj) {
+						$this->info_batiment_next = $xml->$nom_batiment_sql->phrase_suivant.$obj->$champ.$xml->$nom_batiment_sql->complement;
+					}
+				}
+			}
 		}
 		//-------------------------- END GETTER ----------------------------------------------------------------------------//
 
