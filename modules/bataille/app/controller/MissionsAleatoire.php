@@ -277,9 +277,6 @@
 					if ($infos_missions["type"] == "nourriture") {
 						Bataille::getRessource()->setUpdateRessource(0, 0, 0, 0, $infos_missions["ressource_gagnee"]*$unite_revenu, "+");
 					}
-					else {
-						//Bataille::getRessource()->setUpdateRessource(0, 0, 0, 0, $obj->ressource_gagnee, "+");
-					}
 					
 					$points_base = Points::getPointsBase(Bataille::getIdBase());
 					$points_base_new = Points::setAjouterPoints(Bataille::getIdBase(), "missions", $infos_missions["points_gagne"]);
