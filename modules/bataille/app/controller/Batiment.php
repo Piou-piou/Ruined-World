@@ -347,23 +347,7 @@
 					}
 
 
-					if (count($pour_construire) == 1) {
-						if (in_array($pour_construire[0][1], $batiment_construit)) {
-							if ($pour_construire[0][2] <= $this->getNiveauBatiment($pour_construire[0][1])) {
-								$ressource = $this->getRessourceConstruireBatiment($this->all_batiment[$i], 0);
-
-								$batiment_construire[] = [
-									"nom_batiment_sql" => $this->all_batiment[$i],
-									"nom_batiment" => $this->all_batiment_nom[$i],
-									"ressource" => $ressource,
-									"temps_construction" => $temps_construction,
-									"width" => $taille_batiment[0],
-									"height" => $taille_batiment[1]
-								];
-							}
-						}
-					}
-					else if (count($pour_construire) > 1) {
+					if (count($pour_construire) >= 1) {
 						$ok_construction = false;
 						//test si tous les batiments sont construits et on le niveau nécéssaire
 						$count = count($pour_construire);
@@ -380,11 +364,11 @@
 								$ok_construction = false;
 							}
 						}
-
+						
 						//si ok on affiche le batiment
 						if ($ok_construction === true) {
 							$ressource = $this->getRessourceConstruireBatiment($this->all_batiment[$i], 0);
-
+							
 							$batiment_construire[] = [
 								"nom_batiment_sql" => $this->all_batiment[$i],
 								"nom_batiment" => $this->all_batiment_nom[$i],
