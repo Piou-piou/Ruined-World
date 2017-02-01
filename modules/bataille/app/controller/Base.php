@@ -126,6 +126,7 @@
 					->get();
 				
 				if ((is_array($query)) && (count($query) > 0)) {
+					$une_base = [];
 					foreach ($query as $obj) {
 						$une_base[] = [
 							"id_base" => $obj->ID_base,
