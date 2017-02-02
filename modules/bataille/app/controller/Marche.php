@@ -18,6 +18,7 @@
 		//-------------------------- BUILDER ----------------------------------------------------------------------------//
 		public function __construct() {
 			$dbc = App::getDb();
+			$marche = [];
 
 			//récupération des trajets en cours d'envoi
 			$query = $dbc->select()->from("_bataille_marche_transport")

@@ -347,23 +347,7 @@
 					}
 
 
-					if (count($pour_construire) == 1) {
-						if (in_array($pour_construire[0][1], $batiment_construit)) {
-							if ($pour_construire[0][2] <= $this->getNiveauBatiment($pour_construire[0][1])) {
-								$ressource = $this->getRessourceConstruireBatiment($this->all_batiment[$i], 0);
-
-								$batiment_construire[] = [
-									"nom_batiment_sql" => $this->all_batiment[$i],
-									"nom_batiment" => $this->all_batiment_nom[$i],
-									"ressource" => $ressource,
-									"temps_construction" => $temps_construction,
-									"width" => $taille_batiment[0],
-									"height" => $taille_batiment[1]
-								];
-							}
-						}
-					}
-					else if (count($pour_construire) > 1) {
+					if (count($pour_construire) >= 1) {
 						$ok_construction = false;
 						//test si tous les batiments sont construits et on le niveau nécéssaire
 						$count = count($pour_construire);
@@ -380,11 +364,11 @@
 								$ok_construction = false;
 							}
 						}
-
+						
 						//si ok on affiche le batiment
 						if ($ok_construction === true) {
 							$ressource = $this->getRessourceConstruireBatiment($this->all_batiment[$i], 0);
-
+							
 							$batiment_construire[] = [
 								"nom_batiment_sql" => $this->all_batiment[$i],
 								"nom_batiment" => $this->all_batiment_nom[$i],
@@ -551,7 +535,7 @@
 
 			//récupération du temps et des ressources pour construire
 			$query = $dbc1->select()->from($this->nom_batiment_sql)->where("ID_".$this->nom_batiment_sql, "=", $this->niveau_batiment+1)->get();
-			echo("gfdg".$this->nom_batiment_sql);
+			
 			//si on a quelque chose cela veut dire qu'on est pas encore au lvl max du batiment
 			if ((is_array($query)) && (count($query) > 0)) {
 				foreach ($query as $obj) {
@@ -560,41 +544,8 @@
 				}
 
 				//récupération des éléments particulier à un batiment
-				$xml = simplexml_load_file(MODULEROOT.'bataille/data/batiment.xml');
-				$nom_batiment_sql = $this->nom_batiment_sql;
-				$champ = $xml->$nom_batiment_sql->champ;
-
-				if (!empty($champ)) {
-					//récupération de la phrase pour le niveau actuel
-					$query = $dbc1->select($xml->$nom_batiment_sql->champ)
-						->from($this->nom_batiment_sql)
-						->where("ID_".$this->nom_batiment_sql, "=", $this->niveau_batiment)
-						->get();
-
-					if ((is_array($query)) && (count($query) > 0)) {
-						foreach ($query as $obj) {
-							$this->info_batiment = $xml->$nom_batiment_sql->phrase.$obj->$champ.$xml->$nom_batiment_sql->complement;
-						}
-					}
-
-					//récupération de la phrase pour le niveau suivant
-					$query = $dbc1->select($xml->$nom_batiment_sql->champ)
-						->from($this->nom_batiment_sql)
-						->where("ID_".$this->nom_batiment_sql, "=", $this->niveau_batiment+1)
-						->get();
-
-					if ((is_array($query)) && (count($query) > 0)){
-						foreach ($query as $obj) {
-							$this->info_batiment_next = $xml->$nom_batiment_sql->phrase_suivant.$obj->$champ.$xml->$nom_batiment_sql->complement;
-						}
-					}
-				}
-				else {
-					$this->info_batiment = "";
-					$this->info_batiment_next = "";
-				}
-
-
+				$this->getTexteBatiment();
+				
 				Bataille::setValues([
 					"ressource" => $this->ressource_construire,
 					"temps_construction" => DateHeure::Secondeenheure($this->temps_construction),
@@ -606,6 +557,47 @@
 			}
 
 			return "max_level";
+		}
+		
+		/**
+		 * fonction qui récupère le contenu du xml en fonction du batiment
+		 */
+		private function getTexteBatiment() {
+			$dbc1 = Bataille::getDb();
+			
+			//récupération des éléments particulier à un batiment
+			$xml = simplexml_load_file(MODULEROOT.'bataille/data/batiment.xml');
+			$nom_batiment_sql = $this->nom_batiment_sql;
+			$champ = $xml->$nom_batiment_sql->champ;
+			
+			$this->info_batiment = "";
+			$this->info_batiment_next = "";
+			
+			if (!empty($champ)) {
+				//récupération de la phrase pour le niveau actuel
+				$query = $dbc1->select($xml->$nom_batiment_sql->champ)
+					->from($this->nom_batiment_sql)
+					->where("ID_".$this->nom_batiment_sql, "=", $this->niveau_batiment)
+					->get();
+				
+				if ((is_array($query)) && (count($query) > 0)) {
+					foreach ($query as $obj) {
+						$this->info_batiment = $xml->$nom_batiment_sql->phrase.$obj->$champ.$xml->$nom_batiment_sql->complement;
+					}
+				}
+				
+				//récupération de la phrase pour le niveau suivant
+				$query = $dbc1->select($xml->$nom_batiment_sql->champ)
+					->from($this->nom_batiment_sql)
+					->where("ID_".$this->nom_batiment_sql, "=", $this->niveau_batiment+1)
+					->get();
+				
+				if ((is_array($query)) && (count($query) > 0)){
+					foreach ($query as $obj) {
+						$this->info_batiment_next = $xml->$nom_batiment_sql->phrase_suivant.$obj->$champ.$xml->$nom_batiment_sql->complement;
+					}
+				}
+			}
 		}
 		//-------------------------- END GETTER ----------------------------------------------------------------------------//
 
@@ -677,7 +669,7 @@
 				->set();
 			
 			//on retire les ressources de la base
-			Bataille::getRessource()->setUpdateRessource($this->ressource_construire["eau"], $this->ressource_construire["electricite"], $this->ressource_construire["fer"], $this->ressource_construire["fuel"], 0, "-");
+			Bataille::getRessource()->setUpdateRessource($this->ressource_construire["eau"]["ressource"], $this->ressource_construire["electricite"]["ressource"], $this->ressource_construire["fer"]["ressource"], $this->ressource_construire["fuel"]["ressource"], 0, "-");
 			echo("ok");
 		}
 

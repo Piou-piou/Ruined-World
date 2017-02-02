@@ -190,11 +190,11 @@
 
 			//soit on enelve ou on ajoute
 			if ($signe == "-") {
-				$eau = $this->getEau()-$eau;
-				$electricite = $this->getElectricite()-$electricite;
-				$fer = $this->getFer()-$fer;
-				$fuel = $this->getFuel()-$fuel;
-				$nourriture = $this->getNourriture()-$nourriture;
+				$eau = $this->eau - $eau;
+				$electricite = $this->electricite - $electricite;
+				$fer = $this->fer - $fer;
+				$fuel = $this->fuel - $fuel;
+				$nourriture = $this->nourriture - $nourriture;
 				
 				if ($eau < 0) $eau = 0;
 				if ($electricite < 0) $electricite = 0;
