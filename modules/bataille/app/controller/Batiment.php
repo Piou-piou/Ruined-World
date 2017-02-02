@@ -117,16 +117,13 @@
 
 			if ($niveau > 0) {
 				$query = $dbc1->select("production")->from("$nom_batiment")->where("ID_".$nom_batiment, "=", $niveau)->get();
-
-				if ((is_array($query)) && (count($query) > 0)) {
-					foreach ($query as $obj) {
-						return $obj->production;
-					}
+				
+				foreach ($query as $obj) {
+					return $obj->production;
 				}
 			}
-			else {
-				return 20;
-			}
+			
+			return 20;
 		}
 
 		/**
@@ -200,15 +197,7 @@
 			}
 
 			//permet de savoir si le batiment produit bien des ressoures
-			$batiment_production = [];
-
-			$query = $dbc1->select("nom")->from("liste_batiment")->where("type", "=", "ressource")->get();
-
-			if ((is_array($query)) && (count($query) > 0)) {
-				foreach ($query as $obj) {
-					$batiment_production[] = $obj->nom;
-				}
-			}
+			$batiment_production = $this->getListebatimentProduction();
 
 			Bataille::setValues([
 				"nom_batiment_sql" => $this->nom_batiment_sql,
@@ -219,6 +208,25 @@
 			]);
 
 			return $max_level;
+		}
+		
+		/**
+		 * fonction qui renvoi tous les batiments de type ressource
+		 */
+		private function getListebatimentProduction() {
+			$dbc1 = Bataille::getDb();
+			
+			$batiment_production = [];
+			
+			$query = $dbc1->select("nom")->from("liste_batiment")->where("type", "=", "ressource")->get();
+			
+			if ((is_array($query)) && (count($query) > 0)) {
+				foreach ($query as $obj) {
+					$batiment_production[] = $obj->nom;
+				}
+			}
+			
+			return $batiment_production;
 		}
 
 		/**
@@ -345,8 +353,7 @@
 							$taille_batiment = $this->getTailleBatiment($this->all_batiment[$i]);
 						}
 					}
-
-
+					
 					if (count($pour_construire) >= 1) {
 						$ok_construction = false;
 						//test si tous les batiments sont construits et on le niveau nécéssaire
@@ -573,30 +580,26 @@
 			$this->info_batiment = "";
 			$this->info_batiment_next = "";
 			
-			if (!empty($champ)) {
-				//récupération de la phrase pour le niveau actuel
-				$query = $dbc1->select($xml->$nom_batiment_sql->champ)
-					->from($this->nom_batiment_sql)
-					->where("ID_".$this->nom_batiment_sql, "=", $this->niveau_batiment)
-					->get();
-				
-				if ((is_array($query)) && (count($query) > 0)) {
-					foreach ($query as $obj) {
-						$this->info_batiment = $xml->$nom_batiment_sql->phrase.$obj->$champ.$xml->$nom_batiment_sql->complement;
-					}
-				}
-				
-				//récupération de la phrase pour le niveau suivant
-				$query = $dbc1->select($xml->$nom_batiment_sql->champ)
-					->from($this->nom_batiment_sql)
-					->where("ID_".$this->nom_batiment_sql, "=", $this->niveau_batiment+1)
-					->get();
-				
-				if ((is_array($query)) && (count($query) > 0)){
-					foreach ($query as $obj) {
-						$this->info_batiment_next = $xml->$nom_batiment_sql->phrase_suivant.$obj->$champ.$xml->$nom_batiment_sql->complement;
-					}
-				}
+			if (empty($champ)) return false;
+			
+			//récupération de la phrase pour le niveau actuel
+			$query = $dbc1->select($xml->$nom_batiment_sql->champ)
+				->from($this->nom_batiment_sql)
+				->where("ID_".$this->nom_batiment_sql, "=", $this->niveau_batiment)
+				->get();
+			
+			foreach ($query as $obj) {
+				$this->info_batiment = $xml->$nom_batiment_sql->phrase.$obj->$champ.$xml->$nom_batiment_sql->complement;
+			}
+			
+			//récupération de la phrase pour le niveau suivant
+			$query = $dbc1->select($xml->$nom_batiment_sql->champ)
+				->from($this->nom_batiment_sql)
+				->where("ID_".$this->nom_batiment_sql, "=", $this->niveau_batiment+1)
+				->get();
+			
+			foreach ($query as $obj) {
+				$this->info_batiment_next = $xml->$nom_batiment_sql->phrase_suivant.$obj->$champ.$xml->$nom_batiment_sql->complement;
 			}
 		}
 		//-------------------------- END GETTER ----------------------------------------------------------------------------//
