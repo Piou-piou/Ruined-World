@@ -669,7 +669,7 @@
 				->set();
 			
 			//on retire les ressources de la base
-			Bataille::getRessource()->setUpdateRessource($this->ressource_construire["eau"], $this->ressource_construire["electricite"], $this->ressource_construire["fer"], $this->ressource_construire["fuel"], 0, "-");
+			Bataille::getRessource()->setUpdateRessource($this->ressource_construire["eau"]["ressource"], $this->ressource_construire["electricite"]["ressource"], $this->ressource_construire["fer"]["ressource"], $this->ressource_construire["fuel"]["ressource"], 0, "-");
 			echo("ok");
 		}
 
