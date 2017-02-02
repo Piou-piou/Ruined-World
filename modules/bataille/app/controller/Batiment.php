@@ -535,7 +535,7 @@
 
 			//récupération du temps et des ressources pour construire
 			$query = $dbc1->select()->from($this->nom_batiment_sql)->where("ID_".$this->nom_batiment_sql, "=", $this->niveau_batiment+1)->get();
-			echo("gfdg".$this->nom_batiment_sql);
+			
 			//si on a quelque chose cela veut dire qu'on est pas encore au lvl max du batiment
 			if ((is_array($query)) && (count($query) > 0)) {
 				foreach ($query as $obj) {
