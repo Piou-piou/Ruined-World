@@ -9,7 +9,8 @@
 
 	class Unite {
 		private $coef_unite;
-
+		private $pour_recruter;
+		private $temps_recrutement;
 
 		
 		//-------------------------- BUILDER ----------------------------------------------------------------------------//
@@ -237,6 +238,29 @@
 			
 			return count($query);
 		}
+		
+		/**
+		 * @param $type
+		 * @param $nom
+		 * récupération du temmp de recrutement + les ressources nécéssaires
+		 */
+		private function getInfosRecrutementUnite($type, $nom) {
+			$dbc1 = Bataille::getDb();
+			
+			$query = $dbc1->select("temps_recrutement")
+				->select("pour_recruter")
+				->from("unites")
+				->where("nom", "=", $nom, "AND")
+				->where("type", "=", $type, "")
+				->get();
+			
+			if ((is_array($query)) && (count($query) == 1)) {
+				foreach ($query as $obj) {
+					$this->pour_recruter = unserialize($obj->pour_recruter);
+					$this->temps_recrutement = round($obj->temps_recrutement-($obj->temps_recrutement*Bataille::getBatiment()->getNiveauBatiment("caserne")/100));
+				}
+			}
+		}
 		//-------------------------- END GETTER ----------------------------------------------------------------------------//
 		
 		
@@ -248,29 +272,16 @@
 		 * fonction qui permet d'initialiser le début du recrutement d'unités
 		 */
 		public function setCommencerRecruter($nom, $type, $nombre) {
-			$dbc1 = Bataille::getDb();
 			$dbc = App::getDb();
 
-			$query = $dbc1->select("temps_recrutement")
-				->select("pour_recruter")
-				->from("unites")
-				->where("nom", "=", $nom, "AND")
-				->where("type", "=", $type, "")
-				->get();
-
-			if ((is_array($query)) && (count($query) == 1)) {
-				foreach ($query as $obj) {
-					$pour_recruter = unserialize($obj->pour_recruter);
-					$temps_recrutement = round($obj->temps_recrutement-($obj->temps_recrutement*Bataille::getBatiment()->getNiveauBatiment("caserne")/100));
-				}
-			}
+			$this->getInfosRecrutementUnite($type, $nom);
 
 			//on test si on a assez de ressource pour recruter les unites
 			//on test si assez de ressources dans la base
-			$retirer_eau = intval($pour_recruter["eau"])*$nombre;
-			$retirer_electricite = intval($pour_recruter["electricite"])*$nombre;
-			$retirer_fer = intval($pour_recruter["fer"])*$nombre;
-			$retirer_fuel = intval($pour_recruter["fuel"])*$nombre;
+			$retirer_eau = intval($this->pour_recruter["eau"])*$nombre;
+			$retirer_electricite = intval($this->pour_recruter["electricite"])*$nombre;
+			$retirer_fer = intval($this->pour_recruter["fer"])*$nombre;
+			$retirer_fuel = intval($this->pour_recruter["fuel"])*$nombre;
 			$eau = Bataille::getTestAssezRessourceBase("eau", $retirer_eau);
 			$electricite = Bataille::getTestAssezRessourceBase("electricite", $retirer_electricite);
 			$fer = Bataille::getTestAssezRessourceBase("fer", $retirer_fer);
@@ -285,7 +296,7 @@
 				//on retire les ressources
 				Bataille::getRessource()->setUpdateRessource($retirer_eau, $retirer_electricite, $retirer_fer, $retirer_fuel, 0, "-");
 
-				$date_fin = Bataille::getToday()+($temps_recrutement*$nombre);
+				$date_fin = Bataille::getToday()+($this->temps_recrutement *$nombre);
 
 				$dbc->insert("nom", $nom)
 					->insert("type", $type)
