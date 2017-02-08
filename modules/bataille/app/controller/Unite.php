@@ -146,7 +146,9 @@
 			}
 			
 			if (count($unites) > 0) {
-				Bataille::setValues(["unites" => $unites]);
+				if ($id_groupe == null) {
+					Bataille::setValues(["unites" => $unites]);
+				}
 				
 				return $unites;
 			}
