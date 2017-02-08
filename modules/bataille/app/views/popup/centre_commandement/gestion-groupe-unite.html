@@ -1,0 +1,16 @@
+<h3>Listes des groupes</h3>
+
+{% if bataille.groupe_unites is iterable %}
+	{% for i in bataille.groupe_unites %}
+		<div class="small-12 large-2 columns end">
+			{{ i.nom_groue}}
+			
+			{% for key,x in i.unites %}
+				<h6>{{ key }}</h6>
+				{% for j in x %}
+					<p>{{ j.nombre }} unités {{ j.nom }}</p>
+				{% endfor %}
+			{% endfor %}
+		</div>
+	{% endfor %}
+{% endif %}
