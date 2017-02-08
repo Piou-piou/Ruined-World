@@ -125,12 +125,13 @@
 				Bataille::setValues(["recrutement" => $recrutement]);
 			}
 		}
-
+		
 		/**
 		 * @param null $id_base
+		 * @param null $id_groupe
 		 * fonction qui récupère toutes les unités qui sont dans la base
 		 */
-		public function getAllUnites($id_base = null) {
+		public function getAllUnites($id_base = null, $id_groupe = null) {
 
 			if ($id_base == null) $id_base = Bataille::getIdBase();
 
@@ -139,29 +140,38 @@
 			$unites = [];
 
 			for ($i=0 ; $i<$count_type ; $i++) {
-				$type_unite = $this->getAllUniteType($types[$i], $id_base);
+				$type_unite = $this->getAllUniteType($types[$i], $id_base, $id_groupe);
 
 				$unites = array_merge($unites, $type_unite);
 			}
 			
 			if (count($unites) > 0) {
 				Bataille::setValues(["unites" => $unites]);
+				
+				return $unites;
 			}
 		}
-
+		
 		/**
 		 * @param $type
 		 * @param $id_base
-		 * @return mixed
+		 * @param null $id_groupe
+		 * @return array
 		 * fonction qui récupère toutes les unités en fonction d'un type précis
 		 */
-		private function getAllUniteType($type, $id_base) {
+		private function getAllUniteType($type, $id_base, $id_groupe = null) {
 			$dbc = App::getDb();
+			
+			$groupe = "(ID_groupe IS NULL OR ID_groupe = 0)";
+			
+			if ($id_groupe != null) {
+				$groupe = "ID_groupe = ".$id_groupe;
+			}
 
 			$query = $dbc->select("nom")->from("_bataille_unite")
 				->where("type", "=", $type, "AND")
 				->where("ID_base", "=", $id_base, "AND")
-				->where("(ID_groupe IS NULL OR ID_groupe = 0)", "", "", "AND", true)
+				->where($groupe, "", "", "AND", true)
 				->where("(ID_mission IS NULL OR ID_mission = 0)", "", "", "", true)
 				->orderBy("nom")
 				->get();
