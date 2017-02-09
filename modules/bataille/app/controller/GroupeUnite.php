@@ -19,7 +19,8 @@
 		public function getAllGroupeUnite() {
 			$dbc = App::getDb();
 			
-			$query = $dbc->select()->from("_bataille_groupe_unite")->get();
+			$query = $dbc->select()->from("_bataille_groupe_unite")
+				->where("(ID_mission IS NULL OR ID_mission = 0)", "", "", "", true)->get();
 			
 			if ((is_array($query)) && (count($query))) {
 				$groupe = [];
