@@ -205,7 +205,7 @@
 		 * renvoi le nombre d'unite en fonction d'un type et d'un nom qui ne sont ni dans un groupe ni
 		 * en mission
 		 */
-		private function getNombreUniteNom($type, $nom) {
+		protected function getNombreUniteNom($type, $nom) {
 			$dbc = App::getDb();
 			
 			$query = $dbc->select("nom")->from("_bataille_unite")
