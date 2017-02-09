@@ -8,6 +8,7 @@
 		private static $base;
 		private static $batiment;
 		private static $unite;
+		private static $groupe_unite;
 		private static $centre_recherche;
 		private static $missions_aleatoire;
 		private static $database;
@@ -63,13 +64,22 @@
 			return self::$batiment;
 		}
 
-		//initialisation of Batiment class
+		//initialisation of Unite class
 		public static function getUnite() {
 			if (self::$unite == null) {
 				self::$unite = new Unite();
 			}
 
 			return self::$unite;
+		}
+		
+		//initialisation of GroupeUnite class
+		public static function getGoupeUnite() {
+			if (self::$groupe_unite == null) {
+				self::$groupe_unite = new GroupeUnite();
+			}
+			
+			return self::$groupe_unite;
 		}
 
 		//initialisation of CentreRecherche class

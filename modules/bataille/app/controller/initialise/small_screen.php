@@ -16,3 +16,5 @@
 	Bataille::getMissionsAleatoire();
 	
 	$arr = Bataille::getValues();
+	
+	require_once(MODULEROOT."bataille/app/controller/unites/initialise_groupe.php");

@@ -17,6 +17,7 @@
 		"popup/centre_recherche/index",
 		"popup/centre_recherche/liste-recherche",
 		"popup/centre_commandement/liste-missions",
+		"popup/centre_commandement/gestion-groupe-unite",
 		"login",
 		"map-game/large-screen",
 		"map-game/small-screen",
@@ -82,6 +83,9 @@
 		//------------------------------- POUR LA POPUP POUR LE CENTRE DE COMMANDEMENT ----------------------------------//
 		if ($this->page == "popup/centre_commandement/liste-missions") {
 			$this->controller = "bataille/app/controller/missions/get_all_missions.php";
+		}
+		if ($this->page == "popup/centre_commandement/gestion-groupe-unite") {
+			$this->controller = "bataille/app/controller/unites/initialise_groupe.php";
 		}
 		
 		//------------------------------- POUR L'AFFICHAGE DE LA BASE ----------------------------------//

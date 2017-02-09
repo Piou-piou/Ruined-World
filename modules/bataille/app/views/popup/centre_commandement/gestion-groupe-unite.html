@@ -1,0 +1,58 @@
+<div class="row next-lvl">
+	<h3>Listes des groupes</h3>
+	{% if bataille.groupe_unites is iterable %}
+		{% for i in bataille.groupe_unites %}
+			<div class="small-12 large-2 columns end">
+				{{ i.nom_groue}}
+				
+				{% for key,x in i.unites %}
+					<h6>{{ key }}</h6>
+					{% for j in x %}
+						<p>{{ j.nombre }} unités {{ j.nom }}</p>
+					{% endfor %}
+				{% endfor %}
+			</div>
+		{% endfor %}
+	{% endif %}
+</div>
+
+
+<div class="row next-lvl">
+	<h3>Créer un groupe</h3>
+	<form action="{{ WEBROOT }}controller/modules/bataille/unites/creer_groupe" method="post">
+		<input type="text" name="nom_groupe" placeholder="Nom de votre groupe">
+		
+		{% for key,j in bataille.unites %}
+			<h5>{{ key }}</h5>
+			
+			{% for x in j %}
+				<div class="row">
+					<div class="small-12 medium-6 large-3 columns">
+						<label for="nombre_unite">Nombre d'unités {{ x.nom }}</label>
+					</div>
+					<div class="small-12 medium-6 large-3 columns">
+						<input type="range" class="range" name="nombre_unite[]" value="0" min="0" step="1" max="{{ x.nombre }}">
+						<input type="hidden" name="nom_unite[]" value="{{ x.nom }}">
+						<input type="hidden" name="type_unite[]" value="{{ key }}">
+					</div>
+					<div class="small-12 medium-6 large-5 columns end">
+						<span class="total-envoi">0</span> {{ x.nom }} seront ajoutées
+					</div>
+				</div>
+			{% endfor %}
+		{% endfor %}
+		
+		<button type="submit">Créer ce groupe</button>
+	</form>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $(".range").on("change", function() {
+            val = $(this).val();
+            $row = $(this).parent().parent();
+            
+            $row.find(".total-envoi").html(val);
+        });
+    });
+</script>
