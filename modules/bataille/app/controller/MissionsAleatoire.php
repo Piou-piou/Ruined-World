@@ -293,6 +293,8 @@
 						->where("ID_mission", "=", $obj->ID_mission)
 						->del();
 					
+					Bataille::getGoupeUnite()->setTerminerExpedition($obj->ID_missions_cours);
+					
 					//génération du rapport de mission
 					$titre = "Rapport de la mission ".$infos_missions["nom_mission"];
 					$infos = [
