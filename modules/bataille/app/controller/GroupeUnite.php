@@ -121,5 +121,17 @@
 			
 			return true;
 		}
+		
+		public function setCommencerExpedition($id_groupe, $id_mission) {
+			$dbc = App::getDb();
+			
+			$dbc->update("ID_mission", $id_mission)
+				->from("_bataille_unite")
+				->where("ID_groupe", "=", $id_groupe, "AND")
+				->where("ID_base", "=", Bataille::getIdBase())
+				->set();
+			
+			return true;
+		}
 		//-------------------------- END SETTER ----------------------------------------------------------------------------//    
 	}
