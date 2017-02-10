@@ -67,6 +67,30 @@
 				}
 			}
 		}
+		
+		/**
+		 * fonction qui récupère les membres d'un faction
+		 */
+		public function getMembreFaction() {
+			$dbc = App::getDb();
+			
+			$query = $dbc->select()
+				->from("_bataille_infos_player")
+				->from("identite")
+				->where("_bataille_infos_player.ID_faction", "=", $this->id_faction)
+				->where("_bataille_infos_player.ID_identite", "=", "identite.ID_identite", "", true)
+				->get();
+			
+			$membre = [];
+			foreach ($query as $obj) {
+				$memebre[] = [
+					"pseudo" => $obj->pseudo,
+					"points" => $obj->points
+				];
+			}
+			
+			Bataille::setValues(["faction" => $membre]);
+		}
 		//-------------------------- END GETTER ----------------------------------------------------------------------------//
 		
 		
