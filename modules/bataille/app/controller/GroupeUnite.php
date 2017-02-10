@@ -93,7 +93,7 @@
 		public function setCreerGroupe($nombre_unite, $nom_unite, $type_unite, $nom_groupe) {
 			$dbc = App::getDb();
 			
-			if ($this->testNomGroupe($nom_groupe) == false) {
+			if ($this->testNomGroupe($nom_groupe) === false) {
 				return false;
 			}
 			

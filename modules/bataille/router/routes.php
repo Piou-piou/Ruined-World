@@ -12,6 +12,11 @@
 		"popup/marche/offre-et-demande",
 		"popup/marche/envoyer-ressources",
 		"popup/ambassade/index",
+		"popup/ambassade/ma-faction",
+		"popup/ambassade/forum-faction",
+		"popup/ambassade/membre-faction",
+		"popup/ambassade/inviter-membre-faction",
+		"popup/ambassade/gestion-membre-faction",
 		"popup/caserne/index",
 		"popup/caserne/recruter-troupe",
 		"popup/centre_recherche/index",
@@ -86,6 +91,23 @@
 		}
 		if ($this->page == "popup/centre_commandement/gestion-groupe-unite") {
 			$this->controller = "bataille/app/controller/unites/initialise_groupe.php";
+		}
+		
+		//------------------------------- POUR LA POPUP POUR L'AMBASSADE ----------------------------------//
+		if ($this->page == "popup/ambassade/ma-faction") {
+			$this->controller = "bataille/app/controller/faction/get_faction.php";
+		}
+		if ($this->page == "popup/ambassade/forum-faction") {
+			$this->controller = "bataille/app/controller/faction/get_faction.php";
+		}
+		if ($this->page == "popup/ambassade/membre-faction") {
+			$this->controller = "bataille/app/controller/faction/get_faction.php";
+		}
+		if ($this->page == "popup/ambassade/inviter-membre-faction") {
+			$this->controller = "bataille/app/controller/faction/get_faction.php";
+		}
+		if ($this->page == "popup/ambassade/gestion-membre-faction") {
+			$this->controller = "bataille/app/controller/faction/get_faction.php";
 		}
 		
 		//------------------------------- POUR L'AFFICHAGE DE LA BASE ----------------------------------//
