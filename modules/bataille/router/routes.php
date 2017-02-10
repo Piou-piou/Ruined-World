@@ -12,6 +12,7 @@
 		"popup/marche/offre-et-demande",
 		"popup/marche/envoyer-ressources",
 		"popup/ambassade/index",
+		"popup/ambassade/ma-faction",
 		"popup/caserne/index",
 		"popup/caserne/recruter-troupe",
 		"popup/centre_recherche/index",
