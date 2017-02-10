@@ -1,0 +1,23 @@
+<script>
+    $(document).ready(function() {
+        $(".creer-groupe").submit(function(e) {
+            e.preventDefault();
+            
+            $.ajax({
+                type:"POST",
+                data: $(this).serialize(),
+                url:"{{WEBROOT}}controller/modules/bataille/unites/creer_groupe",
+                success: function(data){
+                    if (data == "ok") {
+                        location.reload();
+                    }
+                    else {
+                        $("body").prepend(data);
+                    }
+                }, error: function(){
+            
+                }
+            });
+        })
+    });
+</script>
