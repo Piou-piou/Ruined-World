@@ -42,7 +42,9 @@
 		public function getInfosFaction($id_faction = null) {
 			$dbc = App::getDb();
 			
-			$id_faction = $this->id_faction;
+			if ($id_faction === null) {
+				$id_faction = $this->id_faction;
+			}
 			
 			$query = $dbc->select("identite.pseudo")
 				->select("_bataille_faction.nom_faction")
