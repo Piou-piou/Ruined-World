@@ -54,6 +54,25 @@
 						{% endif %}
 					{% endfor %}
 				{% endfor %}
+				
+				<h3>Listes des groupes</h3>
+				{% if bataille.groupe_unites is iterable %}
+					<div class="row">
+						{% for i in bataille.groupe_unites %}
+							<div class="small-12 large-2 columns end">
+								{{ i.nom_groue}}
+								
+								{% for key,x in i.unites %}
+									<h6>{{ key }}</h6>
+									{% for j in x %}
+										<p>{{ j.nombre }} unités {{ j.nom }}</p>
+									{% endfor %}
+								{% endfor %}
+								<input type="checkbox" name="id_groupe[]" value="{{ i.id_groupe }}">
+							</div>
+						{% endfor %}
+					</div>
+				{% endif %}
 
 				<input type="hidden" name="id_mission" value="{{ i.id_mission }}">
 				<button type="submit">Envoyer</button>

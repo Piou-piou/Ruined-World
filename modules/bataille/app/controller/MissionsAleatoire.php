@@ -227,12 +227,14 @@
 		 * @param $nombre_unite
 		 * @param $nom_unite
 		 * @param $type_unite
+		 * @param null $id_groupe
+		 * @return bool
 		 * fonction sert a lancer une mission
 		 */
-		public function setCommencerMission($id_mission, $nombre_unite, $nom_unite, $type_unite) {
+		public function setCommencerMission($id_mission, $nombre_unite, $nom_unite, $type_unite, $id_groupe = null) {
 			$dbc = App::getDb();
 			
-			if ($nombre_unite == 0) {
+			if ((array_sum($nombre_unite) == 0) && (array_sum($id_groupe) == 0)) {
 				FlashMessage::setFlash("Pas assez d'unité pour effectuer cette missions");
 				return false;
 			}
@@ -247,9 +249,14 @@
 			
 			$count = count($nombre_unite);
 			
-			
 			for ($i=0 ; $i<$count ; $i++) {
 				Bataille::getUnite()->setCommencerExpedition($nombre_unite[$i], $nom_unite[$i], $type_unite[$i], $id_missions_cours);
+			}
+			
+			$count = count($id_groupe);
+			
+			for ($i=0 ; $i<$count ; $i++) {
+				Bataille::getGoupeUnite()->setCommencerExpedition($id_groupe[$i], $id_missions_cours);
 			}
 			
 			$this->setDeleteMission($id_mission);
@@ -285,6 +292,8 @@
 						->where("ID_base", "=", Bataille::getIdBase(), "AND")
 						->where("ID_mission", "=", $obj->ID_mission)
 						->del();
+					
+					Bataille::getGoupeUnite()->setTerminerExpedition($obj->ID_missions_cours);
 					
 					//génération du rapport de mission
 					$titre = "Rapport de la mission ".$infos_missions["nom_mission"];

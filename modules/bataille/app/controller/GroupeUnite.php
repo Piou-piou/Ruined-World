@@ -19,7 +19,9 @@
 		public function getAllGroupeUnite() {
 			$dbc = App::getDb();
 			
-			$query = $dbc->select()->from("_bataille_groupe_unite")->get();
+			$query = $dbc->select()->from("_bataille_groupe_unite")
+				->where("ID_base", "=", Bataille::getIdBase(), "AND")
+				->where("(ID_mission IS NULL OR ID_mission = 0)", "", "", "", true)->get();
 			
 			if ((is_array($query)) && (count($query))) {
 				$groupe = [];
@@ -119,6 +121,40 @@
 				->set();
 			
 			return true;
+		}
+		
+		/**
+		 * @param $id_groupe
+		 * @param $id_mission
+		 * @return bool
+		 * fonction qui sert à envoyer toutes les troupes d'un groupe en mission
+		 */
+		public function setCommencerExpedition($id_groupe, $id_mission) {
+			$dbc = App::getDb();
+			
+			$dbc->update("ID_mission", $id_mission)
+				->from("_bataille_unite")
+				->where("ID_groupe", "=", $id_groupe, "AND")
+				->where("ID_base", "=", Bataille::getIdBase())
+				->set();
+			
+			$dbc->update("ID_mission", $id_mission)
+				->from("_bataille_groupe_unite")
+				->where("ID_groupe", "=", $id_groupe, "AND")
+				->where("ID_base", "=", Bataille::getIdBase())
+				->set();
+			
+			return true;
+		}
+		
+		/**
+		 * @param $id_mission
+		 * fonction qui termine la mission pour tous les groupes qui y ont été assignés
+		 */
+		public function setTerminerExpedition($id_mission) {
+			$dbc = App::getDb();
+			
+			$dbc->update("ID_mission", 0)->from("_bataille_groupe_unite")->where("ID_base", "=", Bataille::getIdBase())->set();
 		}
 		//-------------------------- END SETTER ----------------------------------------------------------------------------//    
 	}
