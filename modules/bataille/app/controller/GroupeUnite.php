@@ -3,6 +3,7 @@
 	
 	
 	use core\App;
+	use core\functions\ChaineCaractere;
 	use core\HTML\flashmessage\FlashMessage;
 	
 	class GroupeUnite extends Unite {
@@ -73,8 +74,18 @@
 		public function setCreerGroupe($nombre_unite, $nom_unite, $type_unite, $nom_groupe) {
 			$dbc = App::getDb();
 			
+			if (ChaineCaractere::testMinLenght($nom_groupe) == false) {
+				FlashMessage::setFlash("Le nom du groupe ne peut pas être vide !");
+				return false;
+			}
+			
 			if ($this->getTestGroupExist($nom_groupe) == false) {
 				FlashMessage::setFlash("Un groupe portant ce nom existe déjà, merci d'en choisir un autre !");
+				return false;
+			}
+			
+			if (array_sum($nombre_unite) == 0) {
+				FlashMessage::setFlash("Vous ne pouvez pas créer un groupe vide !");
 				return false;
 			}
 			
@@ -140,7 +151,7 @@
 			
 			$dbc->update("ID_mission", $id_mission)
 				->from("_bataille_groupe_unite")
-				->where("ID_groupe", "=", $id_groupe, "AND")
+				->where("ID_groupe_unite", "=", $id_groupe, "AND")
 				->where("ID_base", "=", Bataille::getIdBase())
 				->set();
 			
