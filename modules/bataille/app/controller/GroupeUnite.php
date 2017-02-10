@@ -64,6 +64,25 @@
 		
 		//-------------------------- SETTER ----------------------------------------------------------------------------//
 		/**
+		 * @param $nom_groupe
+		 * @return bool
+		 * permet de tester le nom d'un groupe si > a 0 caractere et qu'il soit libre
+		 */
+		private function testNomGroupe($nom_groupe) {
+			if (ChaineCaractere::testMinLenght($nom_groupe) == false) {
+				FlashMessage::setFlash("Le nom du groupe ne peut pas être vide !");
+				return false;
+			}
+			
+			if ($this->getTestGroupExist($nom_groupe) == false) {
+				FlashMessage::setFlash("Un groupe portant ce nom existe déjà, merci d'en choisir un autre !");
+				return false;
+			}
+			
+			return true;
+		}
+		
+		/**
 		 * @param $nombre_unite
 		 * @param $nom_unite
 		 * @param $type_unite
@@ -74,13 +93,7 @@
 		public function setCreerGroupe($nombre_unite, $nom_unite, $type_unite, $nom_groupe) {
 			$dbc = App::getDb();
 			
-			if (ChaineCaractere::testMinLenght($nom_groupe) == false) {
-				FlashMessage::setFlash("Le nom du groupe ne peut pas être vide !");
-				return false;
-			}
-			
-			if ($this->getTestGroupExist($nom_groupe) == false) {
-				FlashMessage::setFlash("Un groupe portant ce nom existe déjà, merci d'en choisir un autre !");
+			if ($this->testNomGroupe($nom_groupe) == false) {
 				return false;
 			}
 			
@@ -102,6 +115,8 @@
 			for ($i=0 ; $i<$count ; $i++) {
 				$this->setAjouterUniteGroupe($nombre_unite[$i], $nom_unite[$i], $type_unite[$i], $id_groupe);
 			}
+			
+			return true;
 		}
 		
 		/**
