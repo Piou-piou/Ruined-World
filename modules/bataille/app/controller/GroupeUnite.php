@@ -151,7 +151,7 @@
 			
 			$dbc->update("ID_mission", $id_mission)
 				->from("_bataille_groupe_unite")
-				->where("ID_groupe", "=", $id_groupe, "AND")
+				->where("ID_groupe_unite", "=", $id_groupe, "AND")
 				->where("ID_base", "=", Bataille::getIdBase())
 				->set();
 			
