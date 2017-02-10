@@ -1,4 +1,9 @@
 <?php
-	\modules\bataille\app\controller\Bataille::getGoupeUnite()->setCreerGroupe($_POST['nombre_unite'], $_POST['nom_unite'], $_POST['type_unite'], $_POST['nom_groupe']);
+	use \modules\bataille\app\controller\Bataille;
 	
-	header("location:".WEBROOT."bataille");
+	if (Bataille::getGoupeUnite()->setCreerGroupe($_POST['nombre_unite'], $_POST['nom_unite'], $_POST['type_unite'], $_POST['nom_groupe']) == true) {
+		echo("ok");
+	}
+	else {
+		\core\HTML\flashmessage\FlashMessage::getFlash();
+	}

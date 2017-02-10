@@ -19,7 +19,7 @@
 
 <div class="row next-lvl">
 	<h3>Créer un groupe</h3>
-	<form action="{{ WEBROOT }}controller/modules/bataille/unites/creer_groupe" method="post">
+	<form action="{{ WEBROOT }}controller/modules/bataille/unites/creer_groupe" class="creer-groupe" method="post">
 		<input type="text" name="nom_groupe" placeholder="Nom de votre groupe">
 		
 		{% for key,j in bataille.unites %}
@@ -45,7 +45,7 @@
 		<button type="submit">Créer ce groupe</button>
 	</form>
 </div>
-
+{{include("js/groupe_unite.html")}}
 <script>
     $(document).ready(function () {
         $(".range").on("change", function() {
