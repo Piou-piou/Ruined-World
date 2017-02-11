@@ -87,6 +87,7 @@
 			$membre = [];
 			foreach ($query as $obj) {
 				$membre[] = [
+					"id_identite" => $obj->ID_identite,
 					"pseudo" => $obj->pseudo,
 					"points" => $obj->points,
 					"rang_faction" => $obj->rang_faction
