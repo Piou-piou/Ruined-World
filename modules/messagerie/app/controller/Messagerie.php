@@ -3,7 +3,8 @@
 
 	use core\App;
 	use core\functions\ChaineCaractere;
-
+	use modules\bataille\app\controller\Bataille;
+	
 	class Messagerie {
 		public static $url_message;
 
@@ -286,9 +287,10 @@
 		public function setArchiverMessage($id_message) {
 			$dbc = App::getDb();
 
-			$dbc->update("supprimer", 1)->from("_messagerie_boite_reception")
+			$dbc->update("supprimer", 1)
+				->from("_messagerie_boite_reception")
 				->where("ID_message", "=", $id_message, "AND")
-				->where("ID_identite", "=", 1)
+				->where("ID_identite", "=", $_SESSION['idlogin'.CLEF_SITE])
 				->set();
 		}
 
@@ -300,7 +302,7 @@
 
 			$dbc->delete()->from("_messagerie_boite_reception")
 				->where("ID_message", "=", $id_message, "AND")
-				->where("ID_identite", "=", $_SESSION['idlongin'])
+				->where("ID_identite", "=", $_SESSION['idlogin'.CLEF_SITE])
 				->del();
 		}
 
@@ -348,7 +350,7 @@
 			if (count($destinataires) > 0) {
 				$dbc->insert("message", $message)
 					->insert("objet", $objet)
-					->insert("url", ChaineCaractere::setUrl($objet))
+					->insert("url", ChaineCaractere::setUrl($objet."-".date("Y-m-d H:i:s")))
 					->insert("date", date("Y-m-d H:i:s"))
 					->insert("ID_expediteur", $expediteur)
 					->into("_messagerie_message")
