@@ -16,6 +16,35 @@
 		
 		//-------------------------- GETTER ----------------------------------------------------------------------------//
 		/**
+		 * @param $id_faction
+		 * @return bool
+		 * permet de tester si le joueur est dans la faction affichée
+		 */
+		private function getTestFactionPlayer($id_faction) {
+			$dbc = App::getDb();
+			$id_ma_faction = 0;
+			
+			$query = $dbc->select("ID_faction")->from("_bataille_infos_player")
+				->where("ID_identite", "=", Bataille::getIdIdentite())
+				->get();
+			
+			if ((count($query) > 0)) {
+				foreach ($query as $obj) {
+					$id_ma_faction = $obj->ID_faction;
+				}
+			}
+			
+			echo("$id_ma_faction == $id_faction");
+			
+			if ($id_ma_faction == $id_faction) {
+				Bataille::setValues(["ma_faction" => true]);
+				return true;
+			}
+			
+			return false;
+		}
+		
+		/**
 		 * @return mixed
 		 * fonction qui renvoi l'ID de la faction du joueur
 		 */
@@ -49,6 +78,8 @@
 			if ($id_faction === null) {
 				$id_faction = $this->id_faction;
 			}
+			
+			$this->getTestFactionPlayer($id_faction);
 			
 			$query = $dbc->select("identite.pseudo")
 				->select("_bataille_faction.ID_faction")

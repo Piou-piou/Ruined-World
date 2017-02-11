@@ -1,16 +1,18 @@
 <nav class="batiment-speciaux">
-    <ul>
-	    {% if bataille.faction is iterable %}
-		    <li><a href="ma-faction">Ma faction</a></li>
-		    <li><a href="forum-faction">Forum</a></li>
-		    <li><a href="membre-faction">Membres</a></li>
-		    <li><a href="inviter-membre-faction">Inviter des membres</a></li>
-		    <li><a href="gestion-membre-faction">Gestion des membres</a></li>
-	    {% else %}
-		    <li>Créer ma faction</li>
-		    <li>Mes invitations à rejoindre une faction</li>
-	    {% endif %}
-    </ul>
+	<ul>
+		{% if bataille.faction is iterable and bataille.ma_faction == true %}
+			<li><a href="faction">Ma faction</a></li>
+			<li><a href="forum-faction">Forum</a></li>
+			<li><a href="membre-faction">Membres</a></li>
+			<li><a href="inviter-membre-faction">Inviter des membres</a></li>
+			<li><a href="gestion-membre-faction">Gestion des membres</a></li>
+		{% elseif bataille.faction is iterable %}
+			
+		{% else %}
+			<li>Créer ma faction</li>
+			<li>Mes invitations à rejoindre une faction</li>
+		{% endif %}
+	</ul>
 	
 	<input type="hidden" id="nom_batiment" value="{{ nom_batiment }}">
 	<input type="hidden" id="nom_batiment_sql" value="{{ nom_batiment_sql }}">

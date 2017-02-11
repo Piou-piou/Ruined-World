@@ -1,0 +1,21 @@
+<script>
+	$(document).ready(function() {
+	    console.log("gdfg");
+        var nom_batiment = $("nav.batiment-speciaux input#nom_batiment").val();
+        var nom_batiment_sql = $("nav.batiment-speciaux input#nom_batiment_sql").val();
+        
+        var url_page = nom_batiment_sql+"/faction";
+        $div_vider = $("#popup-base #ajax .next-lvl");
+        
+        $.ajax({
+            type:"POST",
+            data: "loaded_ajax=true&nom_batiment="+nom_batiment+"&nom_batiment_sql="+nom_batiment_sql+"&id_faction={{ id_faction }}",
+            url: "{{WEBROOT}}bataille/popup/"+url_page,
+            success: function(data){
+                $div_vider.empty();
+                $div_vider.append(data);
+            }, error: function(){
+            }
+        });
+	});
+</script>
