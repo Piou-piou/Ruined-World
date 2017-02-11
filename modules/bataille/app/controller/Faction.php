@@ -24,17 +24,11 @@
 			$dbc = App::getDb();
 			$id_ma_faction = 0;
 			
-			$query = $dbc->select("ID_faction")->from("_bataille_infos_player")
-				->where("ID_identite", "=", Bataille::getIdIdentite())
-				->get();
+			$query = $dbc->select("ID_faction")->from("_bataille_infos_player")->where("ID_identite", "=", Bataille::getIdIdentite())->get();
 			
-			if (count($query) > 0) {
-				foreach ($query as $obj) {
-					$id_ma_faction = $obj->ID_faction;
-				}
+			foreach ($query as $obj) {
+				$id_ma_faction = $obj->ID_faction;
 			}
-			
-			echo("$id_ma_faction == $id_faction");
 			
 			if ($id_ma_faction == $id_faction) {
 				Bataille::setValues(["ma_faction" => true]);
