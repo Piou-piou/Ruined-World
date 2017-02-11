@@ -28,7 +28,7 @@
 				->where("ID_identite", "=", Bataille::getIdIdentite())
 				->get();
 			
-			if ((count($query) > 0)) {
+			if (count($query) > 0) {
 				foreach ($query as $obj) {
 					$id_ma_faction = $obj->ID_faction;
 				}
@@ -60,7 +60,7 @@
 				->where("ID_faction", ">", 0)
 				->get();
 			
-			if ((count($query) > 0)) {
+			if (count($query) > 0) {
 				foreach ($query as $obj) {
 					$this->id_faction = $obj->ID_faction;
 					$this->getInfosFaction();
