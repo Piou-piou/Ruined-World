@@ -1,4 +1,26 @@
 <div class="row ambassade">
 	{% include("popup/ambassade/nav-ambassade.html")  %}
-    Page pour gérer les membres de la faction
+	
+	
+	{% for i in bataille.membres_faction %}
+        <div class="row">
+            <div class="small-12 medium-1 columns">
+                <a href=""  class="player" player="{{ i.id_identite }}">{{ i.pseudo }}</a>
+            </div>
+            <div class="small-12 medium-1 columns">
+				{{ i.rang_faction }}
+            </div>
+            <div class="small-12 medium-1 columns end">
+				{{ i.points }}
+            </div>
+            {% for x,key in i.permissions %}
+	            <div class="small-12 medium-1 columns end">
+		            <input type="checkbox" name="permission" {{ key }}>
+		            {{ x }}
+	            </div>
+	        {% endfor %}
+        </div>
+	{% endfor %}
 </div>
+
+{% include("js/joueur.html") %}

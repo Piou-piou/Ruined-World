@@ -4,7 +4,7 @@
 	
 	use core\App;
 	
-	class Faction {
+	class Faction extends PermissionsFaction {
 		private $id_faction;
 		
 		//-------------------------- BUILDER ----------------------------------------------------------------------------//
@@ -24,17 +24,11 @@
 			$dbc = App::getDb();
 			$id_ma_faction = 0;
 			
-			$query = $dbc->select("ID_faction")->from("_bataille_infos_player")
-				->where("ID_identite", "=", Bataille::getIdIdentite())
-				->get();
+			$query = $dbc->select("ID_faction")->from("_bataille_infos_player")->where("ID_identite", "=", Bataille::getIdIdentite())->get();
 			
-			if ((count($query) > 0)) {
-				foreach ($query as $obj) {
-					$id_ma_faction = $obj->ID_faction;
-				}
+			foreach ($query as $obj) {
+				$id_ma_faction = $obj->ID_faction;
 			}
-			
-			echo("$id_ma_faction == $id_faction");
 			
 			if ($id_ma_faction == $id_faction) {
 				Bataille::setValues(["ma_faction" => true]);
@@ -60,7 +54,7 @@
 				->where("ID_faction", ">", 0)
 				->get();
 			
-			if ((count($query) > 0)) {
+			if (count($query) > 0) {
 				foreach ($query as $obj) {
 					$this->id_faction = $obj->ID_faction;
 					$this->getInfosFaction();
@@ -127,7 +121,8 @@
 					"id_identite" => $obj->ID_identite,
 					"pseudo" => $obj->pseudo,
 					"points" => $obj->points,
-					"rang_faction" => $obj->rang_faction
+					"rang_faction" => $obj->rang_faction,
+					"permissions" => $this->getMembrePermissions($obj->ID_identite, $this->id_faction)
 				];
 			}
 			
