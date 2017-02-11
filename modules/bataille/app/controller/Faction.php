@@ -4,7 +4,7 @@
 	
 	use core\App;
 	
-	class Faction {
+	class Faction extends PermissionsFaction {
 		private $id_faction;
 		
 		//-------------------------- BUILDER ----------------------------------------------------------------------------//
@@ -121,7 +121,8 @@
 					"id_identite" => $obj->ID_identite,
 					"pseudo" => $obj->pseudo,
 					"points" => $obj->points,
-					"rang_faction" => $obj->rang_faction
+					"rang_faction" => $obj->rang_faction,
+					"permissions" => $this->getMembrePermissions($obj->ID_identite, $this->id_faction)
 				];
 			}
 			

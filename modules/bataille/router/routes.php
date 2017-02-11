@@ -107,7 +107,7 @@
 			$this->controller = "bataille/app/controller/faction/get_faction.php";
 		}
 		if ($this->page == "popup/ambassade/gestion-membre-faction") {
-			$this->controller = "bataille/app/controller/faction/get_faction.php";
+			$this->controller = "bataille/app/controller/faction/get_membres.php";
 		}
 		
 		//------------------------------- POUR L'AFFICHAGE DE LA BASE ----------------------------------//
