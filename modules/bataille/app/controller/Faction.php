@@ -19,11 +19,15 @@
 		 * @return mixed
 		 * fonction qui renvoi l'ID de la faction du joueur
 		 */
-		public function getFactionPlayer() {
+		public function getFactionPlayer($id_identite = null) {
 			$dbc = App::getDb();
 			
+			if ($id_identite === null) {
+				$id_identite = Bataille::getIdIdentite();
+			}
+			
 			$query = $dbc->select("ID_faction")->from("_bataille_infos_player")
-				->where("ID_identite", "=", Bataille::getIdIdentite(), "AND")
+				->where("ID_identite", "=", $id_identite, "AND")
 				->where("ID_faction", ">", 0)
 				->get();
 			
@@ -47,6 +51,7 @@
 			}
 			
 			$query = $dbc->select("identite.pseudo")
+				->select("_bataille_faction.ID_faction")
 				->select("_bataille_faction.nom_faction")
 				->select("_bataille_faction.points_faction")
 				->select("_bataille_faction.img_profil")
@@ -60,6 +65,7 @@
 			if ((count($query) == 1)) {
 				foreach ($query as $obj) {
 					Bataille::setValues(["faction" => [
+						"id_faction" => $obj->ID_faction,
 						"nom" => $obj->nom_faction,
 						"points_faction" => $obj->points_faction,
 						"description" => $obj->description,

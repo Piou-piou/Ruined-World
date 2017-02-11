@@ -1,4 +1,8 @@
 <h2>{{ bataille.pseudo }}</h2>
+{% if bataille.faction is iterable %}
+	<p>Faction : {{ bataille.faction.nom }}</p>
+{% endif %}
+
 
 <h3>Bases du joueur</h3>
 
