@@ -101,7 +101,7 @@
 			$this->controller = "bataille/app/controller/faction/get_faction.php";
 		}
 		if ($this->page == "popup/ambassade/membre-faction") {
-			$this->controller = "bataille/app/controller/faction/get_faction.php";
+			$this->controller = "bataille/app/controller/faction/get_membres.php";
 		}
 		if ($this->page == "popup/ambassade/inviter-membre-faction") {
 			$this->controller = "bataille/app/controller/faction/get_faction.php";

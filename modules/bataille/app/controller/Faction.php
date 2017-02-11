@@ -79,19 +79,21 @@
 			$query = $dbc->select()
 				->from("_bataille_infos_player")
 				->from("identite")
-				->where("_bataille_infos_player.ID_faction", "=", $this->id_faction)
+				->where("_bataille_infos_player.ID_faction", "=", $this->id_faction, "AND")
 				->where("_bataille_infos_player.ID_identite", "=", "identite.ID_identite", "", true)
+				->orderBy("_bataille_infos_player.points", "DESC")
 				->get();
 			
 			$membre = [];
 			foreach ($query as $obj) {
-				$memebre[] = [
+				$membre[] = [
 					"pseudo" => $obj->pseudo,
-					"points" => $obj->points
+					"points" => $obj->points,
+					"rang_faction" => $obj->rang_faction
 				];
 			}
 			
-			Bataille::setValues(["faction" => $membre]);
+			Bataille::setValues(["membres_faction" => $membre]);
 		}
 		//-------------------------- END GETTER ----------------------------------------------------------------------------//
 		
