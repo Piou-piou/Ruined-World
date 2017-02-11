@@ -12,7 +12,7 @@
 		"popup/marche/offre-et-demande",
 		"popup/marche/envoyer-ressources",
 		"popup/ambassade/index",
-		"popup/ambassade/ma-faction",
+		"popup/ambassade/faction",
 		"popup/ambassade/forum-faction",
 		"popup/ambassade/membre-faction",
 		"popup/ambassade/inviter-membre-faction",
@@ -94,14 +94,14 @@
 		}
 		
 		//------------------------------- POUR LA POPUP POUR L'AMBASSADE ----------------------------------//
-		if ($this->page == "popup/ambassade/ma-faction") {
+		if ($this->page == "popup/ambassade/faction") {
 			$this->controller = "bataille/app/controller/faction/get_faction.php";
 		}
 		if ($this->page == "popup/ambassade/forum-faction") {
 			$this->controller = "bataille/app/controller/faction/get_faction.php";
 		}
 		if ($this->page == "popup/ambassade/membre-faction") {
-			$this->controller = "bataille/app/controller/faction/get_faction.php";
+			$this->controller = "bataille/app/controller/faction/get_membres.php";
 		}
 		if ($this->page == "popup/ambassade/inviter-membre-faction") {
 			$this->controller = "bataille/app/controller/faction/get_faction.php";

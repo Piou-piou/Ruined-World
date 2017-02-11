@@ -2,21 +2,31 @@
 	$(document).ready(function() {
 		$(".open-popup").click(function() {
 			var id_identite = $(this).attr("player");
-			
-			$.ajax({
-				type:"POST",
-				data: "loaded_ajax=true&id_identite="+id_identite,
-				url:"{{WEBROOT}}bataille/popup/joueur",
-				success: function(data){
-					$("#popup-base #ajax").append(data);
-				}, error: function(){
-					
-				}
-			});
+			loadInfosPlayer(id_identite);
 		});
+        
+        $(".ambassade .player").click(function(e) {
+            e.preventDefault();
+            
+            var id_identite = $(this).attr("player");
+            loadInfosPlayer(id_identite);
+        });
         
         $(".popup .annuler").click(function() {
             $("#popup-base #ajax").empty();
         });
 	});
+	
+	function loadInfosPlayer(id_identite) {
+        $.ajax({
+            type:"POST",
+            data: "loaded_ajax=true&id_identite="+id_identite,
+            url:"{{WEBROOT}}bataille/popup/joueur",
+            success: function(data){
+                $("#popup-base #ajax").html(data);
+            }, error: function(){
+                
+            }
+        });
+	}
 </script>

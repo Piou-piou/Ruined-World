@@ -1,4 +1,8 @@
 {%  set nom_batiment_sql = bataille.nom_batiment_sql %}
+
+{% if id_faction is defined %}
+	{{ include("js/faction/load_faction.html") }}
+{% endif %}
 <div class="popup-batiment">
 	<div class="row">
 		<div class="small-12 large-6 columns">
@@ -80,4 +84,4 @@
 	</div>
 </div>
 
-{{ include("js/construire_batiment.html") }}
+{{ include("js/batiment/construire_batiment.html") }}

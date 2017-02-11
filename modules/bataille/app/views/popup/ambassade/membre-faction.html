@@ -1,4 +1,20 @@
 <div class="row ambassade">
 	{% include("popup/ambassade/nav-ambassade.html")  %}
-    Page des membres de la faction
+	
+	
+	{% for i in bataille.membres_faction %}
+		<div class="row">
+			<div class="small-12 medium-4 columns">
+				<a href=""  class="player" player="{{ i.id_identite }}">{{ i.pseudo }}</a>
+			</div>
+			<div class="small-12 medium-4 columns">
+				{{ i.rang }}
+			</div>
+			<div class="small-12 medium-4 columns">
+				{{ i.points }}
+			</div>
+		</div>
+	{% endfor %}
 </div>
+
+{% include("js/joueur.html") %}

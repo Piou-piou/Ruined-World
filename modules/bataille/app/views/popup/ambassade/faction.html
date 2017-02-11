@@ -3,7 +3,8 @@
 	
 	{% if bataille.faction is iterable %}
 		<h3>{{ bataille.faction.nom }}</h3>
-		<h5>Chef de la faction : {{ bataille.faction.pseudo }}</h5>
+		<h5>Points de la faction : {{ bataille.faction.points_faction }}</h5>
+		<h5>Chef de la faction : {{ bataille.faction.pseudo_chef }}</h5>
 		<article>
 			{{ bataille.faction.description }}
 		</article>
@@ -12,5 +13,4 @@
 		   Vous pouvez également demander à un chef d'une faction de vous y inviter.
 		</p>
 	{% endif %}
-	
 </div>
