@@ -48,6 +48,7 @@
 			
 			$query = $dbc->select("identite.pseudo")
 				->select("_bataille_faction.nom_faction")
+				->select("_bataille_faction.points_faction")
 				->select("_bataille_faction.img_profil")
 				->select("_bataille_faction.description")
 				->from("_bataille_faction")
@@ -60,6 +61,7 @@
 				foreach ($query as $obj) {
 					Bataille::setValues(["faction" => [
 						"nom" => $obj->nom_faction,
+						"points_faction" => $obj->points_faction,
 						"description" => $obj->description,
 						"url_img" => $obj->img_profil,
 						"pseudo_chef" => $obj->pseudo
