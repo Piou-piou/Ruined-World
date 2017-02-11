@@ -1,6 +1,7 @@
 <h2>{{ bataille.pseudo }}</h2>
 {% if bataille.faction is iterable %}
-	<p>Faction : {{ bataille.faction.nom }}</p>
+	<p>Faction : <a href="" class="faction" id_faction="{{ bataille.faction.id_faction }}">{{ bataille.faction.nom }}</a></p>
+	{% include("js/faction/get_unefaction.html") %}
 {% endif %}
 
 
