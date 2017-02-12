@@ -1,6 +1,9 @@
 <div class="row ambassade">
 	{% include("popup/ambassade/nav-ambassade.html")  %}
 	
+	{% if bataille.permission_player != "chef" and "GERER_RANG_MEMBRE" not in bataille.permission_player %}
+		{% set disabled %}disabled{% endset %}
+	{% endif %}
 	
 	{% for i in bataille.membres_faction %}
         <div class="row">
@@ -13,9 +16,12 @@
             <div class="small-12 medium-1 columns end">
 				{{ i.points }}
             </div>
+	        {% if i.chef == 1 and bataille.permission_player != "chef" %}
+		        {% set disabled_chef %}disabled{% endset %}
+	        {% endif %}
             {% for x,key in i.permissions %}
 	            <div class="small-12 medium-1 columns end">
-		            <input type="checkbox" name="permission" {{ key }}>
+		            <input type="checkbox" name="permission" {{ key }} {{ disabled }} {{ disabled_chef }}>
 		            {{ x }}
 	            </div>
 	        {% endfor %}

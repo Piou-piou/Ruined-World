@@ -6,6 +6,7 @@
 	}
 	else {
 		$faction->getFactionPlayer();
+		$faction->getPermissionsMembre($faction->getIdFaction());
 	}
 	
 	$arr = \modules\bataille\app\controller\Bataille::getValues();
