@@ -2,43 +2,45 @@
 	{% include("popup/ambassade/nav-ambassade.html")  %}
 	
 	{% if bataille.permission_player != "chef" and "GERER_RANG_MEMBRE" not in bataille.permission_player %}
-		{% set disabled %}disabled{% endset %}
+		<p>Vous n'avez pas accès à cette fonctionnalité, merci de changer de page</p>
+	{% else %}
+		<h4>Liste des permissions</h4>
+		<ol>
+			{% for i in bataille.liste_permissions %}
+				<li>{{ i }}</li>
+			{% endfor %}
+		</ol>
+		
+		<h4>Membres de la faction</h4>
+		
+		{% for i in bataille.membres_faction %}
+			<div class="row">
+				<div class="small-12 medium-1 columns">
+					<a href=""  class="player" player="{{ i.id_identite }}">{{ i.pseudo }}</a>
+				</div>
+				<div class="small-12 medium-1 columns">
+					{{ i.rang_faction }}
+				</div>
+				<div class="small-12 medium-1 columns end">
+					{{ i.points }}
+				</div>
+				
+				{% set disabled_chef %}{% endset %}
+				{% if i.chef == 1 and bataille.permission_player != "chef" or i.chef == 1 and bataille.permission_player == "chef" %}
+					{% set disabled_chef %}disabled{% endset %}
+				{% endif %}
+				
+				{% for x,key in i.permissions %}
+					<div class="small-12 medium-1 columns end">
+						<input type="checkbox" name="permission" {{ key }} {{ disabled_chef }}>
+						{{ x }}
+					</div>
+				{% endfor %}
+			</div>
+		{% endfor %}
 	{% endif %}
 	
-	<h4>Liste des permissions</h4>
-	<ol>
-		{% for i in bataille.liste_permissions %}
-			<li>{{ i }}</li>
-		{% endfor %}
-	</ol>
 	
-	<h4>Membres de la faction</h4>
-	
-	{% for i in bataille.membres_faction %}
-        <div class="row">
-            <div class="small-12 medium-1 columns">
-                <a href=""  class="player" player="{{ i.id_identite }}">{{ i.pseudo }}</a>
-            </div>
-            <div class="small-12 medium-1 columns">
-				{{ i.rang_faction }}
-            </div>
-            <div class="small-12 medium-1 columns end">
-				{{ i.points }}
-            </div>
-	        
-	        {% set disabled_chef %}{% endset %}
-	        {% if i.chef == 1 and bataille.permission_player != "chef" or i.chef == 1 and bataille.permission_player == "chef" %}
-		        {% set disabled_chef %}disabled{% endset %}
-	        {% endif %}
-	        
-            {% for x,key in i.permissions %}
-	            <div class="small-12 medium-1 columns end">
-		            <input type="checkbox" name="permission" {{ key }} {{ disabled }} {{ disabled_chef }}>
-		            {{ x }}
-	            </div>
-	        {% endfor %}
-        </div>
-	{% endfor %}
 </div>
 
 {% include("js/joueur.html") %}
