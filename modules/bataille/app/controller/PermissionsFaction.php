@@ -3,6 +3,7 @@
 	
 	
 	use core\App;
+	use core\functions\ChaineCaractere;
 	
 	class PermissionsFaction {
 		//-------------------------- BUILDER ----------------------------------------------------------------------------//
@@ -47,7 +48,7 @@
 		 * @return array
 		 * fonction qui liste toutes les permissions
 		 */
-		protected function getListPermissions() {
+		public function getListPermissions() {
 			$dbc = App::getDb();
 			
 			$query = $dbc->select()->from("_bataille_faction_permissions")->get();
@@ -55,12 +56,11 @@
 			$permissions = [];
 			if (count($query) > 0) {
 				foreach ($query as $obj) {
-					$permissions[] = [
-						"permission" => $obj->permission
-					];
+					$permissions[] = str_replace("_", " ", $obj->permission);
 				}
 			}
 			
+			Bataille::setValues(["liste_permissions" => $permissions]);
 			return $permissions;
 		}
 		

@@ -5,6 +5,15 @@
 		{% set disabled %}disabled{% endset %}
 	{% endif %}
 	
+	<h4>Liste des permissions</h4>
+	<ol>
+		{% for i in bataille.liste_permissions %}
+			<li>{{ i }}</li>
+		{% endfor %}
+	</ol>
+	
+	<h4>Membres de la faction</h4>
+	
 	{% for i in bataille.membres_faction %}
         <div class="row">
             <div class="small-12 medium-1 columns">
