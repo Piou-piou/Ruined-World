@@ -11,7 +11,3 @@
 	}
 	
 	$arr = \modules\bataille\app\controller\Bataille::getValues();
-	
-	echo("<pre>");
-	print_r($arr);
-	echo("</pre>");
