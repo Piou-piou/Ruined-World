@@ -63,7 +63,11 @@
 					$this->id_faction = $obj->ID_faction;
 					$this->getInfosFaction();
 				}
+				
+				return true;
 			}
+			
+			return false;
 		}
 		
 		/**

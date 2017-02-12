@@ -5,8 +5,9 @@
 		$faction->getInfosFaction($_POST["id_faction"]);
 	}
 	else {
-		$faction->getFactionPlayer();
-		$faction->getPermissionsMembre($faction->getIdFaction());
+		if ($faction->getFactionPlayer() == true) {
+			$faction->getPermissionsMembre($faction->getIdFaction());
+		}
 	}
 	
 	$arr = \modules\bataille\app\controller\Bataille::getValues();
