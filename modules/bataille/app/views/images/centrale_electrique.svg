@@ -981,7 +981,19 @@ AAAAAAAAAIC/W/w/AQYAJQI/vJv2rOAAAAAASUVORK5CYII=" transform="matrix(0.24 0 0 0.2
 	<polygon fill="#010202" points="79.744,77.427 108.162,77.427 108.162,92.741 107.432,77.943 	"/>
 </g>
 <g id="lumière">
+	<g>
+		<circle fill="#69150D" stroke="#000000" stroke-width="0.2" stroke-miterlimit="10" cx="78" cy="90" r="0.936"/>
+	</g>
+	<g>
 	<circle opacity="0.7" fill="#E52823" cx="78" cy="90" r="2.176"/>
-	<circle fill="#69150D" stroke="#000000" stroke-width="0.2" stroke-miterlimit="10" cx="78" cy="90" r="0.936"/>
+	<animate id="animation1"
+				 attributeName="opacity"
+				 from="0" to="0.7" dur="0.1s"
+				 begin="0s;animation2.end" />
+		<animate id="animation2"
+				 attributeName="opacity"
+				 from="0.7" to="0" dur="1.5s"
+				 begin="animation1.end" />
+	</g>
 </g>
 </svg>
