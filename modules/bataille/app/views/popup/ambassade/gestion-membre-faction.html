@@ -16,10 +16,12 @@
             <div class="small-12 medium-1 columns end">
 				{{ i.points }}
             </div>
+	        
 	        {% set disabled_chef %}{% endset %}
 	        {% if i.chef == 1 and bataille.permission_player != "chef" or i.chef == 1 and bataille.permission_player == "chef" %}
 		        {% set disabled_chef %}disabled{% endset %}
 	        {% endif %}
+	        
             {% for x,key in i.permissions %}
 	            <div class="small-12 medium-1 columns end">
 		            <input type="checkbox" name="permission" {{ key }} {{ disabled }} {{ disabled_chef }}>
