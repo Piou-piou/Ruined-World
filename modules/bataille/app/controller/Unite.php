@@ -373,7 +373,9 @@
 				->from("_bataille_unite")
 				->where("type", "=", $type_unite, "AND")
 				->where("nom", "=", $nom_unite, "AND")
-				->where("ID_base", "=", Bataille::getIdBase())
+				->where("ID_base", "=", Bataille::getIdBase(), "AND")
+				->where("(ID_groupe IS NULL OR ID_groupe = 0)", "", "", "AND", true)
+				->where("(ID_mission IS NULL OR ID_mission = 0)", "", "", "", true)
 				->limit($nombre_unite, "no")
 				->set();
 			
