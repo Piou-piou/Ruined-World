@@ -15,6 +15,10 @@
 		
 		
 		//-------------------------- GETTER ----------------------------------------------------------------------------//
+		public function getIdFaction(){
+		    return $this->id_faction;
+		}
+		
 		/**
 		 * @param $id_faction
 		 * @return bool
@@ -59,7 +63,11 @@
 					$this->id_faction = $obj->ID_faction;
 					$this->getInfosFaction();
 				}
+				
+				return true;
 			}
+			
+			return false;
 		}
 		
 		/**
@@ -122,6 +130,7 @@
 					"pseudo" => $obj->pseudo,
 					"points" => $obj->points,
 					"rang_faction" => $obj->rang_faction,
+					"chef" => $this->getTestChefFaction($obj->ID_identite, $this->id_faction),
 					"permissions" => $this->getMembrePermissions($obj->ID_identite, $this->id_faction)
 				];
 			}

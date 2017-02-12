@@ -1,4 +1,8 @@
 <div class="row ambassade">
 	{% include("popup/ambassade/nav-ambassade.html")  %}
-    Page pour inviter des memebres dans la faction
+	{% if bataille.permission_player != "chef" and "INVITER_MEMBRE" not in bataille.permission_player %}
+        <p>Vous n'avez pas accès à cette fonctionnalité, merci de changer de page</p>
+	{% else %}
+        Page pour inviter des memebres dans la faction
+    {% endif %}
 </div>

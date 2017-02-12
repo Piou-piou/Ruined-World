@@ -3,6 +3,7 @@
 	
 	
 	use core\App;
+	use core\functions\ChaineCaractere;
 	
 	class PermissionsFaction {
 		//-------------------------- BUILDER ----------------------------------------------------------------------------//
@@ -16,7 +17,7 @@
 		 * @return bool
 		 * permet de savoir si le joueur en question est le chef de la faction
 		 */
-		private function getTestChefFaction($id_identite, $id_faction) {
+		protected function getTestChefFaction($id_identite, $id_faction) {
 			$dbc = App::getDb();
 			
 			$query = $dbc->select("ID_identite")->from("_bataille_faction")
@@ -47,7 +48,7 @@
 		 * @return array
 		 * fonction qui liste toutes les permissions
 		 */
-		protected function getListPermissions() {
+		public function getListPermissions() {
 			$dbc = App::getDb();
 			
 			$query = $dbc->select()->from("_bataille_faction_permissions")->get();
@@ -55,12 +56,11 @@
 			$permissions = [];
 			if (count($query) > 0) {
 				foreach ($query as $obj) {
-					$permissions[] = [
-						"permission" => $obj->permission
-					];
+					$permissions[] = str_replace("_", " ", $obj->permission);
 				}
 			}
 			
+			Bataille::setValues(["liste_permissions" => $permissions]);
 			return $permissions;
 		}
 		
@@ -101,6 +101,37 @@
 			
 			
 			return $permissions;
+		}
+		
+		/**
+		 * @param $id_faction
+		 * @return bool
+		 * fonction qui renvoi les permission du membre connecté
+		 */
+		public function getPermissionsMembre($id_faction) {
+			$dbc = App::getDb();
+			
+			if ($this->getTestChefFaction(Bataille::getIdIdentite(), $id_faction) == true) {
+				Bataille::setValues(["permission_player" => "chef"]);
+				return true;
+			}
+			
+			$query = $dbc->select()
+				->from("_bataille_faction_permission_player")
+				->from("_bataille_faction_permissions")
+				->where("ID_identite", "=", Bataille::getIdIdentite(), "AND")
+				->where("ID_faction", "=", $id_faction, "AND")
+				->where("_bataille_faction_permission_player.ID_permission", "=", "_bataille_faction_permissions.ID_permissions", "", true)
+				->get();
+			
+			$permissions = [];
+			if ((count($query) > 0)) {
+				foreach ($query as $obj) {
+					$permissions[] = $obj->permission;
+				}
+			}
+			
+			Bataille::setValues(["permission_player" => $permissions]);
 		}
 		//-------------------------- END GETTER ----------------------------------------------------------------------------//
 		
