@@ -3,7 +3,7 @@
 [![Build Status](https://scrutinizer-ci.com/g/Piou-piou/Ruined-World/badges/build.png?b=master)](https://scrutinizer-ci.com/g/Piou-piou/Ruined-World/build-status/master)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Piou-piou/Ruined-World/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Piou-piou/Ruined-World/?branch=master)
 
-**Ruined world, gestion game is a free game around gestion of a base and an army and ressources producrtion**
+**Ruined world, gestion game is a free game around management of a base and an army and ressources production**
 
 This game is actually under developpment.
 
