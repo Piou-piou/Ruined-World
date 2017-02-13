@@ -523,6 +523,12 @@ p.rouge {
   display: inline-block;
   font-weight: normal; }
 
+/*-------------------------------------- AMBASSADE --------------------------------------*/
+.ambassade .un-forum {
+  background-color: #CCCCCC;
+  margin-bottom: 1rem;
+  padding: 0.5rem 0; }
+
 /*-------------------------------------- MESSAGERIE --------------------------------------*/
 .messagerie nav {
   background-color: #626263; }
