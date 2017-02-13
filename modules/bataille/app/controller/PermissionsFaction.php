@@ -48,7 +48,7 @@
 		 * @return array
 		 * fonction qui liste toutes les permissions
 		 */
-		public function getListPermissions() {
+		public function getListePermissions() {
 			$dbc = App::getDb();
 			
 			$query = $dbc->select()->from("_bataille_faction_permissions")->get();

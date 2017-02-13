@@ -1,4 +1,23 @@
-<div class="row ambassade">
+<div class="ambassade">
 	{% include("popup/ambassade/nav-ambassade.html")  %}
-	Page du forum
+	
+	{% if bataille.forums is iterable and bataille.forums is not empty %}
+		<p>sgd</p>
+	{% else %}
+		<p>Il n'y a encore pas de forum créé actuellement</p>
+	{% endif %}
+	
+	{% if bataille.permission_player == "chef" or "GESTION_FORUM" not in bataille.permission_player %}
+		<h3>Création d'un forum</h3>
+		
+		<form action="" mathod="post">
+			<div class="small-12">
+				<input type="text" name="titre" placeholder="titre">
+			</div>
+			<div class="small-12">
+				<textarea name="texte" id="" cols="30" rows="10" placeholder="Texte du premier message du forum"></textarea>
+			</div>
+			<button type="submit">Créer</button>
+		</form>
+	{% endif %}
 </div>
