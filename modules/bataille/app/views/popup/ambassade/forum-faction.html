@@ -2,7 +2,17 @@
 	{% include("popup/ambassade/nav-ambassade.html")  %}
 	
 	{% if bataille.forums is iterable and bataille.forums is not empty %}
-		<p>sgd</p>
+		{% for i in bataille.forums %}
+			<div class="row">
+				<div class="small-12 medium-3 columns">Pseudo</div>
+				<div class="small-12 medium-3 columns">
+					<h4>{{ i.titre }}</h4>
+					{{ i.texte }}
+				</div>
+				<div class="small-12 medium-3 columns">{{ i.date_creation }}</div>
+				<div class="small-12 medium-3 columns">Supprimer</div>
+			</div>
+		{% endfor %}
 	{% else %}
 		<p>Il n'y a encore pas de forum créé actuellement</p>
 	{% endif %}
@@ -10,7 +20,7 @@
 	{% if bataille.permission_player == "chef" or "GESTION_FORUM" not in bataille.permission_player %}
 		<h3>Création d'un forum</h3>
 		
-		<form action="" mathod="post">
+		<form id="creer-forum" action="{{ WEBROOT }}controller/modules/bataille/faction/creer_forum" method="post">
 			<div class="small-12">
 				<input type="text" name="titre" placeholder="titre">
 			</div>
@@ -21,3 +31,5 @@
 		</form>
 	{% endif %}
 </div>
+
+{% include("js/faction/creer_forum.html") %}
