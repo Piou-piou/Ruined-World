@@ -94,5 +94,15 @@
 			return true;
 		}
 		
+		/**
+		 * @param $url
+		 * fonction qui supprime un forum
+		 */
+		public function setSupprimerForum($id_forum) {
+			$dbc = App::getDb();
+			
+			$dbc->delete()->from("_bataille_faction_forum")->where("ID_faction_forum", "=", $id_forum, "AND")->where("ID_faction", "=", $this->id_faction)->del();
+			$dbc->delete()->from("_bataille_faction_forum_commentaire")->where("ID_faction_forum", "=", $id_forum)->del();
+		}
 		//-------------------------- END SETTER ----------------------------------------------------------------------------//    
 	}
