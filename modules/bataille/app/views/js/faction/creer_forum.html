@@ -1,0 +1,31 @@
+<script>
+	$(document).ready(function() {
+		$("#creer-forum").submit(function(e) {
+		    e.preventDefault();
+            
+            $.ajax({
+                type:"POST",
+                data: $(this).serialize(),
+                url:"{{WEBROOT}}controller/modules/bataille/faction/creer_forum",
+                success: function(data){
+                    if (data == "ok") {
+                        $.ajax({
+                            type:"POST",
+                            url: "{{WEBROOT}}bataille/popup/ambassade/forum-faction",
+                            success: function(data){
+                                $("#popup-base #ajax .next-lvl").empty();
+                                $("#popup-base #ajax .next-lvl").append(data);
+                            }, error: function(){
+                            }
+                        });
+                    }
+                    else {
+                        $("body").prepend(data);
+                    }
+                }, error: function(){
+                    
+                }
+            });
+		});
+	});
+</script>
