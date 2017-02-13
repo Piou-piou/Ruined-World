@@ -5,7 +5,7 @@
 	use core\App;
 	
 	class Faction extends PermissionsFaction {
-		private $id_faction;
+		protected $id_faction;
 		
 		//-------------------------- BUILDER ----------------------------------------------------------------------------//
 		public function __construct() {
