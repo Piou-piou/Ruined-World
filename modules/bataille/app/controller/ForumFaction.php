@@ -22,7 +22,6 @@
 		 */
 		public function getListeForum() {
 			$dbc = App::getDb();
-			echo $this->id_faction."dg";
 			
 			$query = $dbc->select()->from("_bataille_faction_forum")->where("ID_faction", "=", $this->id_faction)->get();
 			
@@ -79,7 +78,7 @@
 				foreach ($query as $obj) {
 					Bataille::setValues([
 						"forum" => [
-							"id_forum" => $obj->ID_forum_faction,
+							"id_forum" => $obj->ID_faction_forum,
 							"titre" => $obj->titre,
 							"texte" => $obj->texte,
 							"date_creation" => $obj->date_creation
