@@ -130,6 +130,9 @@
             });
         });
         
+        /**
+         * pour la gestion des permissions
+         */
         $(".permission").click(function() {
             var checked = "remove";
             if ($(this).prop( "checked") == true) {
@@ -147,6 +150,24 @@
                     $("body").prepend(data);
                 }
             });
-		})
+		});
+        
+        /**
+         * fonction qui permettra de renvoyer un membre d'une faction
+         */
+        $(".renvoyer-membre").click(function(e) {
+            e.preventDefault();
+    
+            var id_identite = $(this).parent().parent().find(".player").attr("player");
+    
+            $.ajax({
+                type:"POST",
+                data: "id_identite="+id_identite,
+                url: "{{WEBROOT}}controller/modules/bataille/faction/renvoyer_membre",
+                success: function(data){
+                    $("body").prepend(data);
+                }
+            });
+		});
 	});
 </script>
