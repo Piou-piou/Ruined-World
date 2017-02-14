@@ -22,7 +22,7 @@
 		<p>Il n'y a encore pas de forum créé actuellement</p>
 	{% endif %}
 	
-	{% if bataille.permission_player == "chef" or "GESTION_FORUM" not in bataille.permission_player %}
+	{% if bataille.permission_player == "chef" or "GESTION_FORUM" in bataille.permission_player %}
 		<h3>Création d'un forum</h3>
 		
 		<form id="creer-forum" action="{{ WEBROOT }}controller/modules/bataille/faction/creer_forum" method="post">
