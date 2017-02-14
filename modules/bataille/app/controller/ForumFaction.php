@@ -7,7 +7,7 @@
 	use core\HTML\flashmessage\FlashMessage;
 	
 	class ForumFaction extends Faction {
-		
+		private $id_forum;
 		
 		//-------------------------- BUILDER ----------------------------------------------------------------------------//
 		public function __construct() {
@@ -60,6 +60,64 @@
 			}
 			
 			return false;
+		}
+		
+		/**
+		 * @param $id_forum
+		 * fonction qui va chercher un forum en particulier
+		 */
+		public function getForum($id_forum) {
+			$dbc = App::getDb();
+			$this->id_forum = $id_forum;
+			
+			$query = $dbc->select()->from("_bataille_faction_forum")
+				->where("ID_faction", "=", $this->id_faction, "AND")
+				->where("ID_faction_forum", "=", $this->id_forum)
+				->get();
+		
+			if (count($query) == 1) {
+				foreach ($query as $obj) {
+					Bataille::setValues([
+						"forum" => [
+							"id_forum" => $obj->ID_forum_faction,
+							"titre" => $obj->titre,
+							"texte" => $obj->texte,
+							"date_creation" => $obj->date_creation
+						]
+					]);
+				}
+				
+				$this->getCommentaireForum();
+			}
+		}
+		
+		/**
+		 * fonction qui récupère les commentaires d'un forum en particulier
+		 */
+		private function getCommentaireForum() {
+			$dbc = App::getDb();
+			
+			$query = $dbc->select()
+				->from("_bataille_faction_forum_commentaire")
+				->from("identite")
+				->where("ID_faction_forum", "=", $this->id_forum, "AND")
+				->where("_bataille_faction_forum_commentaire.ID_identite", "=", "identite.ID_identite", "", true)
+				->get();
+			
+			if (count($query) > 0) {
+				$commentaires = [];
+				
+				foreach ($query as $obj) {
+					$commentaires[] = [
+						"id_commentaire" => $obj->ID_faction_forum_commentaire,
+						"commentaire" => $obj->commentaire,
+						"date_creation" => $obj->date_creation,
+						"pseudo" => $obj->pseudo
+					];
+				}
+				
+				Bataille::setValues(["forum_commentaires" => $commentaires]);
+			}
 		}
 		//-------------------------- END GETTER ----------------------------------------------------------------------------//
 		

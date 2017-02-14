@@ -1,5 +1,18 @@
 <div class="ambassade">
 	{% include("popup/ambassade/nav-ambassade.html")  %}
 	
-	
+	{% if bataille.forum is iterable and bataille.forum is not empty %}
+		<div class="row un-forum">
+			<div class="small-12 medium-3 columns">Pseudo</div>
+			<div class="small-12 medium-3 columns">
+				<h4>{{ bataille.forum.titre }}</h4>
+				{{ bataille.forum.texte }}
+				
+				<a href="forum-faction-detail.html" class="acceder-forum" id_forum="{{ bataille.forum.id_forum }}">Accéder au forum</a>
+			</div>
+			<div class="small-12 medium-3 columns end">{{ bataille.forum.date_creation }}</div>
+		</div>
+    {% else %}
+	    <p>Ce forum n'existe pas ou plus</p>
+    {% endif %}
 </div>

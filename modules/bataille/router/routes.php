@@ -102,7 +102,7 @@
 			$this->controller = "bataille/app/controller/faction/get_forum.php";
 		}
 		if ($this->page == "popup/ambassade/forum-faction-detail") {
-			$this->controller = "bataille/app/controller/faction/get_forum.php";
+			$this->controller = "bataille/app/controller/faction/get_forum_detail.php";
 		}
 		if ($this->page == "popup/ambassade/membre-faction") {
 			$this->controller = "bataille/app/controller/faction/get_membres.php";
