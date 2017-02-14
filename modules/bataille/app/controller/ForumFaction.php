@@ -170,28 +170,6 @@
 		}
 		
 		/**
-		 * @param $id_commentaire
-		 * @return bool
-		 * fonction qui permet de supprimer un commentaire sur un forum
-		 */
-		public function setSupprimerCommentaire($id_commentaire) {
-			$dbc = App::getDb();
-			$permissions_membre = $this->getPermissionsMembre($this->id_faction);
-			
-			if ($permissions_membre == "chef" || in_array("GESTION_FORUM", $permissions_membre)) {
-				$dbc->delete()->from("_bataille_faction_forum_commentaire")
-					->where("ID_faction_forum_commentaire", "=", $id_commentaire, "AND")
-					->where("ID_faction_forum", "=", $this->id_faction)
-					->del();
-				
-				return true;
-			}
-			
-			FlashMessage::setFlash("Vous n'avez pas la permission de supprimer un commentaire");
-			return false;
-		}
-		
-		/**
 		 * @param $commentaire
 		 * @param $id_forum
 		 * @return bool
@@ -213,6 +191,28 @@
 				->set();
 			
 			return true;
+		}
+		
+		/**
+		 * @param $id_commentaire
+		 * @return bool
+		 * fonction qui permet de supprimer un commentaire sur un forum
+		 */
+		public function setSupprimerCommentaire($id_commentaire) {
+			$dbc = App::getDb();
+			$permissions_membre = $this->getPermissionsMembre($this->id_faction);
+			
+			if ($permissions_membre == "chef" || in_array("GERER_POST_FORUM", $permissions_membre)) {
+				$dbc->delete()->from("_bataille_faction_forum_commentaire")
+					->where("ID_faction_forum_commentaire", "=", $id_commentaire, "AND")
+					->where("ID_faction_forum", "=", $this->id_faction)
+					->del();
+				
+				return true;
+			}
+			
+			FlashMessage::setFlash("Vous n'avez pas la permission de supprimer un commentaire");
+			return false;
 		}
 		//-------------------------- END SETTER ----------------------------------------------------------------------------//    
 	}
