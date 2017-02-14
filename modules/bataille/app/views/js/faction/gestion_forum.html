@@ -1,5 +1,8 @@
 <script>
 	$(document).ready(function() {
+        /**
+         * creation d'un forum
+         */
 		$("#creer-forum").submit(function(e) {
 		    e.preventDefault();
             
@@ -26,7 +29,10 @@
                 }
             });
 		});
-
+        
+        /**
+         * suppression d'un forum
+         */
 		$(".supprimer-forum").click(function(e) {
 		    e.preventDefault();
 
@@ -40,6 +46,26 @@
                 success: function(data){
                     $(".to-delete").parent().parent().fadeOut();
                     $(".to-delete").parent().parent().remove();
+                }
+            });
+		});
+        
+        /**
+         * affichage du détail d'un forum
+         */
+		$(".acceder-forum").click(function(e) {
+		    e.preventDefault();
+            
+            var id_forum = $(this).attr("id_forum");
+            
+            $.ajax({
+                type:"POST",
+                data: "loaded_ajax=true&id_forum="+id_forum,
+                url: "{{WEBROOT}}bataille/popup/ambassade/forum-faction-detail",
+                success: function(data){
+                    $("#popup-base #ajax .next-lvl").empty();
+                    $("#popup-base #ajax .next-lvl").append(data);
+                }, error: function(){
                 }
             });
 		});
