@@ -113,7 +113,7 @@
 			
 			if ($this->getTestChefFaction(Bataille::getIdIdentite(), $id_faction) == true) {
 				Bataille::setValues(["permission_player" => "chef"]);
-				return true;
+				return "chef";
 			}
 			
 			$query = $dbc->select()
@@ -132,6 +132,7 @@
 			}
 			
 			Bataille::setValues(["permission_player" => $permissions]);
+			return $permissions;
 		}
 		//-------------------------- END GETTER ----------------------------------------------------------------------------//
 		

@@ -8,9 +8,14 @@
 				<div class="small-12 medium-3 columns">
 					<h4>{{ i.titre }}</h4>
 					{{ i.texte }}
+					
+					<a href="forum-faction-detail.html" class="acceder-forum" id_forum="{{ i.id_forum }}">Accéder au forum</a>
 				</div>
-				<div class="small-12 medium-3 columns">{{ i.date_creation }}</div>
-				<div class="small-12 medium-3 columns"><a href="" class="supprimer-forum" id_forum="{{ i.id_forum }}">Supprimer</a></div>
+				<div class="small-12 medium-3 columns end">{{ i.date_creation }}</div>
+				
+				{% if bataille.permission_player == "chef" or "GESTION_FORUM" in bataille.permission_player %}
+					<div class="small-12 medium-3 columns"><a href="" class="supprimer-forum" id_forum="{{ i.id_forum }}">Supprimer</a></div>
+				{% endif %}
 			</div>
 		{% endfor %}
 	{% else %}

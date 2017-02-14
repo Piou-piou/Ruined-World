@@ -14,6 +14,7 @@
 		"popup/ambassade/index",
 		"popup/ambassade/faction",
 		"popup/ambassade/forum-faction",
+		"popup/ambassade/forum-faction-detail",
 		"popup/ambassade/membre-faction",
 		"popup/ambassade/inviter-membre-faction",
 		"popup/ambassade/gestion-membre-faction",
@@ -99,6 +100,9 @@
 		}
 		if ($this->page == "popup/ambassade/forum-faction") {
 			$this->controller = "bataille/app/controller/faction/get_forum.php";
+		}
+		if ($this->page == "popup/ambassade/forum-faction-detail") {
+			$this->controller = "bataille/app/controller/faction/get_forum_detail.php";
 		}
 		if ($this->page == "popup/ambassade/membre-faction") {
 			$this->controller = "bataille/app/controller/faction/get_membres.php";

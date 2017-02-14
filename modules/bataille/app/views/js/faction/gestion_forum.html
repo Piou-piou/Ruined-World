@@ -1,5 +1,28 @@
 <script>
 	$(document).ready(function() {
+	    /**
+         * affichage du détail d'un forum
+         */
+        $(".acceder-forum").click(function(e) {
+            e.preventDefault();
+            
+            var id_forum = $(this).attr("id_forum");
+            
+            $.ajax({
+                type:"POST",
+                data: "loaded_ajax=true&id_forum="+id_forum,
+                url: "{{WEBROOT}}bataille/popup/ambassade/forum-faction-detail",
+                success: function(data){
+                    $("#popup-base #ajax .next-lvl").empty();
+                    $("#popup-base #ajax .next-lvl").append(data);
+                }, error: function(){
+                }
+            });
+        });
+	    
+        /**
+         * creation d'un forum
+         */
 		$("#creer-forum").submit(function(e) {
 		    e.preventDefault();
             
@@ -26,7 +49,10 @@
                 }
             });
 		});
-
+        
+        /**
+         * suppression d'un forum
+         */
 		$(".supprimer-forum").click(function(e) {
 		    e.preventDefault();
 
@@ -38,10 +64,70 @@
 	            data: "id_forum="+id_forum,
                 url: "{{WEBROOT}}controller/modules/bataille/faction/supprimer_forum",
                 success: function(data){
-                    $(".to-delete").parent().parent().fadeOut();
-                    $(".to-delete").parent().parent().remove();
+                    if (data == "ok") {
+                        $(".to-delete").parent().parent().fadeOut();
+                        $(".to-delete").parent().parent().remove();
+                    }
+                    else {
+                        $("body").prepend(data);
+                    }
                 }
             });
 		});
+        
+        /**
+         * suppression d'un forum
+         */
+        $(".supprimer-commentaire").click(function(e) {
+            e.preventDefault();
+            
+            var id_commentaire = $(this).attr("id_commentaire");
+            $(this).addClass("to-delete");
+            
+            $.ajax({
+                type:"POST",
+                data: "id_commentaire="+id_commentaire,
+                url: "{{WEBROOT}}controller/modules/bataille/faction/supprimer_commentaire",
+                success: function(data){
+                    if (data == "ok") {
+                        $(".to-delete").parent().parent().fadeOut();
+                        $(".to-delete").parent().parent().remove();
+                    }
+                    else {
+                        $("body").prepend(data);
+                    }
+                }
+            });
+        });
+        
+        /**
+         * ajout d'un commentaire
+         */
+        $("#ajouter-commentaire").submit(function(e) {
+            e.preventDefault();
+            
+            $.ajax({
+                type:"POST",
+                data: $(this).serialize(),
+                url:"{{WEBROOT}}controller/modules/bataille/faction/add_commentaire",
+                success: function(data){
+                    if (data == "ok") {
+                        $.ajax({
+                            type:"POST",
+                            data: "loaded_ajax=true&id_forum="+$("#id_forum").val(),
+                            url: "{{WEBROOT}}bataille/popup/ambassade/forum-faction-detail",
+                            success: function(data){
+                                $("#popup-base #ajax .next-lvl").empty();
+                                $("#popup-base #ajax .next-lvl").append(data);
+                            }, error: function(){
+                            }
+                        });
+                    }
+                    else {
+                        $("body").prepend(data);
+                    }
+                }
+            });
+        });
 	});
 </script>

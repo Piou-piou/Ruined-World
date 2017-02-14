@@ -1,0 +1,50 @@
+<div class="ambassade">
+	{% include("popup/ambassade/nav-ambassade.html")  %}
+	
+	{% if bataille.forum is iterable and bataille.forum is not empty %}
+		<div class="row un-forum">
+			<div class="row">
+				<div class="small-12 medium-3 columns">Pseudo</div>
+				<div class="small-12 medium-3 columns">
+					<h4>{{ bataille.forum.titre }}</h4>
+					{{ bataille.forum.texte }}
+				</div>
+				<div class="small-12 medium-3 columns end">{{ bataille.forum.date_creation }}</div>
+			</div>
+			
+			
+			<div class="row">
+				{% if bataille.forum_commentaires is iterable and bataille.forum_commentaires is not empty %}
+					{% for i in bataille.forum_commentaires %}
+						<div class="row commentaire">
+							<div class="small-12 medium-3 columns">{{ i.pseudo }}</div>
+							<div class="small-12 medium-3 columns">
+								{{ i.commentaire }}
+							</div>
+							<div class="small-12 medium-3 columns end">{{ i.date_creation }}</div>
+							{% if login == i.pseudo or bataille.permission_player == "chef" or "GERER_POST_FORUM" in bataille.permission_player %}
+								<div class="small-12 medium-3 columns end"><a href="" class="supprimer-commentaire" id_commentaire="{{ i.id_commentaire }}">Supprimer</a></div>
+							{% endif %}
+						</div>
+					{% endfor %}
+				{% else %}
+					<p>Pas encore de commentaires, postez-en un</p>
+				{% endif %}
+			</div>
+		</div>
+		
+		<h3>Ajouter une réponse</h3>
+		
+		<form id="ajouter-commentaire" action="{{ WEBROOT }}controller/modules/bataille/faction/add_commentaire" method="post">
+			<div class="small-12">
+				<textarea name="commentaire" id="" cols="30" rows="10" placeholder="Votre réponse"></textarea>
+			</div>
+			<input type="hidden" name="id_forum" id="id_forum" value="{{ bataille.forum.id_forum }}">
+			<button type="submit">Créer</button>
+		</form>
+    {% else %}
+	    <p>Ce forum n'existe pas ou plus</p>
+    {% endif %}
+</div>
+
+{% include("js/faction/gestion_forum.html") %}

@@ -2,7 +2,7 @@
 	$forum = new \modules\bataille\app\controller\ForumFaction();
 	$forum->getFactionPlayer();
 	
-	if ($forum->setSupprimerForum($_POST['id_forum']) == true) {
+	if ($forum->setAjouterCommentaire($_POST['commentaire'], $_POST['id_forum']) == true) {
 		echo("ok");
 	}
 	else {
