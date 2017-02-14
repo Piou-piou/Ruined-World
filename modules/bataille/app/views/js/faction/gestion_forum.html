@@ -11,6 +11,7 @@
                     if (data == "ok") {
                         $.ajax({
                             type:"POST",
+	                        data: "loaded_ajax=true",
                             url: "{{WEBROOT}}bataille/popup/ambassade/forum-faction",
                             success: function(data){
                                 $("#popup-base #ajax .next-lvl").empty();
@@ -22,8 +23,23 @@
                     else {
                         $("body").prepend(data);
                     }
-                }, error: function(){
-                    
+                }
+            });
+		});
+
+		$(".supprimer-forum").click(function(e) {
+		    e.preventDefault();
+
+			var id_forum = $(this).attr("id_forum");
+			$(this).addClass("to-delete");
+
+            $.ajax({
+                type:"POST",
+	            data: "id_forum="+id_forum,
+                url: "{{WEBROOT}}controller/modules/bataille/faction/supprimer_forum",
+                success: function(data){
+                    $(".to-delete").parent().parent().fadeOut();
+                    $(".to-delete").parent().parent().remove();
                 }
             });
 		});
