@@ -3,14 +3,31 @@
 	
 	{% if bataille.forum is iterable and bataille.forum is not empty %}
 		<div class="row un-forum">
-			<div class="small-12 medium-3 columns">Pseudo</div>
-			<div class="small-12 medium-3 columns">
-				<h4>{{ bataille.forum.titre }}</h4>
-				{{ bataille.forum.texte }}
-				
-				<a href="forum-faction-detail.html" class="acceder-forum" id_forum="{{ bataille.forum.id_forum }}">Accéder au forum</a>
+			<div class="row">
+				<div class="small-12 medium-3 columns">Pseudo</div>
+				<div class="small-12 medium-3 columns">
+					<h4>{{ bataille.forum.titre }}</h4>
+					{{ bataille.forum.texte }}
+				</div>
+				<div class="small-12 medium-3 columns end">{{ bataille.forum.date_creation }}</div>
 			</div>
-			<div class="small-12 medium-3 columns end">{{ bataille.forum.date_creation }}</div>
+			
+			
+			<div class="row">
+				{% if bataille.forum_commentaires is iterable and bataille.forum_commentaires is not empty %}
+					{% for i in bataille.forum_commentaires %}
+						<div class="row commentaire">
+							<div class="small-12 medium-3 columns">{{ i.pseudo }}</div>
+							<div class="small-12 medium-3 columns">
+								{{ i.commentaire }}
+							</div>
+							<div class="small-12 medium-3 columns end">{{ i.date_creation }}</div>
+						</div>
+					{% endfor %}
+				{% else %}
+					<p>Pas encore de commentaires, postez-en un</p>
+				{% endif %}
+			</div>
 		</div>
     {% else %}
 	    <p>Ce forum n'existe pas ou plus</p>
