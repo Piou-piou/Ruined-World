@@ -149,23 +149,32 @@
 		public function setGererPermission($id_permission, $id_identite, $id_faction, $type) {
 			$dbc = App::getDb();
 			
-			if ($type == "add") {
-				$dbc->insert("ID_permission", $id_permission)
-					->insert("ID_identite", $id_identite)
-					->insert("ID_faction", $id_faction)
-					->into("_bataille_faction_permission_player")
-					->set();
-				FlashMessage::setFlash("La permission a bien été ajoutée", "success");
-			}
-			else {
-				$dbc->delete()->from("_bataille_faction_permission_player")
-					->where("ID_faction", "=", $id_faction, "AND")
-					->where("ID_permission", "=", $id_permission, "AND")
-					->where("ID_identite", "=", $id_identite)
-					->del();
+			$permissions_membre = $this->getPermissionsMembre($this->id_faction);
+			
+			if ($permissions_membre == "chef" || in_array("GERER_RANG_MEMBRE", $permissions_membre)) {
+				if ($type == "add") {
+					$dbc->insert("ID_permission", $id_permission)
+						->insert("ID_identite", $id_identite)
+						->insert("ID_faction", $id_faction)
+						->into("_bataille_faction_permission_player")
+						->set();
+					FlashMessage::setFlash("La permission a bien été ajoutée", "success");
+				}
+				else {
+					$dbc->delete()->from("_bataille_faction_permission_player")
+						->where("ID_faction", "=", $id_faction, "AND")
+						->where("ID_permission", "=", $id_permission, "AND")
+						->where("ID_identite", "=", $id_identite)
+						->del();
+					
+					FlashMessage::setFlash("La permission a bien été supprimée", "success");
+				}
 				
-				FlashMessage::setFlash("La permission a bien été supprimée", "success");
+				return true;
 			}
+			
+			FlashMessage::setFlash("Vous n'avez pas la permission de gérer les permissions des membres");
+			return false;
 		}
 		//-------------------------- END SETTER ----------------------------------------------------------------------------//    
 	}
