@@ -32,10 +32,14 @@
 				
 				{% for x,key in i.permissions %}
 					<div class="small-12 medium-1 columns end">
-						<input type="checkbox" name="permission" {{ key }} {{ disabled_chef }}>
+						<input type="checkbox" name="permission" class="permission" value="{{ x }}" {{ key }} {{ disabled_chef }}>
 						{{ x }}
 					</div>
 				{% endfor %}
+				
+				<div class="small-12 medium-3 columns end">
+					<a href="" class="renvoyer-membre">Renvoyer le membre</a>
+				</div>
 			</div>
 		{% endfor %}
 	{% endif %}
@@ -43,4 +47,5 @@
 	
 </div>
 
+{% include("js/faction/gestion_forum.html") %}
 {% include("js/joueur.html") %}
