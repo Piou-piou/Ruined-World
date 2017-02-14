@@ -159,7 +159,7 @@
 			$dbc = App::getDb();
 			$permissions_membre = $this->getPermissionsMembre($this->id_faction);
 			
-			if ($permissions_membre == "chef" || in_array("GERER_POST_FORUM", $permissions_membre)) {
+			if ($permissions_membre == "chef" || in_array("GESTION_FORUM", $permissions_membre)) {
 				$dbc->delete()->from("_bataille_faction_forum")->where("ID_faction_forum", "=", $id_forum, "AND")->where("ID_faction", "=", $this->id_faction)->del();
 				$dbc->delete()->from("_bataille_faction_forum_commentaire")->where("ID_faction_forum", "=", $id_forum)->del();
 				return true;
