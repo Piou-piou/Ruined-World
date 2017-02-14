@@ -1,5 +1,25 @@
 <script>
 	$(document).ready(function() {
+	    /**
+         * affichage du détail d'un forum
+         */
+        $(".acceder-forum").click(function(e) {
+            e.preventDefault();
+            
+            var id_forum = $(this).attr("id_forum");
+            
+            $.ajax({
+                type:"POST",
+                data: "loaded_ajax=true&id_forum="+id_forum,
+                url: "{{WEBROOT}}bataille/popup/ambassade/forum-faction-detail",
+                success: function(data){
+                    $("#popup-base #ajax .next-lvl").empty();
+                    $("#popup-base #ajax .next-lvl").append(data);
+                }, error: function(){
+                }
+            });
+        });
+	    
         /**
          * creation d'un forum
          */
@@ -44,30 +64,40 @@
 	            data: "id_forum="+id_forum,
                 url: "{{WEBROOT}}controller/modules/bataille/faction/supprimer_forum",
                 success: function(data){
-                    $(".to-delete").parent().parent().fadeOut();
-                    $(".to-delete").parent().parent().remove();
+                    if (data == "ok") {
+                        $(".to-delete").parent().parent().fadeOut();
+                        $(".to-delete").parent().parent().remove();
+                    }
+                    else {
+                        $("body").prepend(data);
+                    }
                 }
             });
 		});
         
         /**
-         * affichage du détail d'un forum
+         * suppression d'un forum
          */
-		$(".acceder-forum").click(function(e) {
-		    e.preventDefault();
+        $(".supprimer-commentaire").click(function(e) {
+            e.preventDefault();
             
-            var id_forum = $(this).attr("id_forum");
+            var id_commentaire = $(this).attr("id_commentaire");
+            $(this).addClass("to-delete");
             
             $.ajax({
                 type:"POST",
-                data: "loaded_ajax=true&id_forum="+id_forum,
-                url: "{{WEBROOT}}bataille/popup/ambassade/forum-faction-detail",
+                data: "id_commentaire="+id_commentaire,
+                url: "{{WEBROOT}}controller/modules/bataille/faction/supprimer_commentaire",
                 success: function(data){
-                    $("#popup-base #ajax .next-lvl").empty();
-                    $("#popup-base #ajax .next-lvl").append(data);
-                }, error: function(){
+                    if (data == "ok") {
+                        $(".to-delete").parent().parent().fadeOut();
+                        $(".to-delete").parent().parent().remove();
+                    }
+                    else {
+                        $("body").prepend(data);
+                    }
                 }
             });
-		});
+        });
 	});
 </script>

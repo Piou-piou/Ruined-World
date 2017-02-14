@@ -22,6 +22,9 @@
 								{{ i.commentaire }}
 							</div>
 							<div class="small-12 medium-3 columns end">{{ i.date_creation }}</div>
+							{% if login == i.pseudo or bataille.permission_player == chef or "GERER_POST_FORUM" in bataille.permission_player %}
+								<div class="small-12 medium-3 columns end"><a href="" class="supprimer-commentaire" id_commentaire="{{ i.id_commentaire }}">Supprimer</a></div>
+							{% endif %}
 						</div>
 					{% endfor %}
 				{% else %}
@@ -33,3 +36,5 @@
 	    <p>Ce forum n'existe pas ou plus</p>
     {% endif %}
 </div>
+
+{% include("js/faction/gestion_forum.html") %}
