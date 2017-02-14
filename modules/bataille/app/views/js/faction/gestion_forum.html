@@ -99,5 +99,35 @@
                 }
             });
         });
+        
+        /**
+         * ajout d'un commentaire
+         */
+        $("#ajouter-commentaire").submit(function(e) {
+            e.preventDefault();
+            
+            $.ajax({
+                type:"POST",
+                data: $(this).serialize(),
+                url:"{{WEBROOT}}controller/modules/bataille/faction/add_commentaire",
+                success: function(data){
+                    if (data == "ok") {
+                        $.ajax({
+                            type:"POST",
+                            data: "loaded_ajax=true&id_forum="+$("#id_forum").val(),
+                            url: "{{WEBROOT}}bataille/popup/ambassade/forum-faction-detail",
+                            success: function(data){
+                                $("#popup-base #ajax .next-lvl").empty();
+                                $("#popup-base #ajax .next-lvl").append(data);
+                            }, error: function(){
+                            }
+                        });
+                    }
+                    else {
+                        $("body").prepend(data);
+                    }
+                }
+            });
+        });
 	});
 </script>

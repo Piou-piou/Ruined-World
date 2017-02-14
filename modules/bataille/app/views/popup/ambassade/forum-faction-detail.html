@@ -32,6 +32,16 @@
 				{% endif %}
 			</div>
 		</div>
+		
+		<h3>Ajouter une réponse</h3>
+		
+		<form id="ajouter-commentaire" action="{{ WEBROOT }}controller/modules/bataille/faction/add_commentaire" method="post">
+			<div class="small-12">
+				<textarea name="commentaire" id="" cols="30" rows="10" placeholder="Votre réponse"></textarea>
+			</div>
+			<input type="hidden" name="id_forum" id="id_forum" value="{{ bataille.forum.id_forum }}">
+			<button type="submit">Créer</button>
+		</form>
     {% else %}
 	    <p>Ce forum n'existe pas ou plus</p>
     {% endif %}

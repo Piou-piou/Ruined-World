@@ -169,6 +169,11 @@
 			return false;
 		}
 		
+		/**
+		 * @param $id_commentaire
+		 * @return bool
+		 * fonction qui permet de supprimer un commentaire sur un forum
+		 */
 		public function setSupprimerCommentaire($id_commentaire) {
 			$dbc = App::getDb();
 			$permissions_membre = $this->getPermissionsMembre($this->id_faction);
@@ -184,6 +189,30 @@
 			
 			FlashMessage::setFlash("Vous n'avez pas la permission de supprimer un commentaire");
 			return false;
+		}
+		
+		/**
+		 * @param $commentaire
+		 * @param $id_forum
+		 * @return bool
+		 * fonction qui permet d'ajouter un commentaire sur un forum
+		 */
+		public function setAjouterCommentaire($commentaire, $id_forum) {
+			$dbc = App::getDb();
+			
+			if (strlen($commentaire) < 2) {
+				FlashMessage::setFlash("Le commentaire faire plus de 1 caractère");
+				return false;
+			}
+			
+			$dbc->insert("commentaire", $commentaire)
+				->insert("date_creation", date("Y-m-d H:i:s"))
+				->insert("ID_faction_forum", $id_forum)
+				->insert("ID_identite", Bataille::getIdIdentite())
+				->into("_bataille_faction_forum_commentaire")
+				->set();
+			
+			return true;
 		}
 		//-------------------------- END SETTER ----------------------------------------------------------------------------//    
 	}
