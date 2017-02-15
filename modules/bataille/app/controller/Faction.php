@@ -3,6 +3,7 @@
 	
 	
 	use core\App;
+	use core\HTML\flashmessage\FlashMessage;
 	
 	class Faction extends PermissionsFaction {
 		protected $id_faction;
@@ -141,5 +142,29 @@
 		
 		
 		//-------------------------- SETTER ----------------------------------------------------------------------------//
+		/**
+		 * @param $id_identite
+		 * @return bool
+		 * fonction qui permet de renvoyer un membre d'un faction
+		 */
+		public function setRenvoyerMembre($id_identite) {
+			$dbc = App::getDb();
+			$permissions_membre = $this->getPermissionsMembre($this->id_faction);
+			
+			if ($permissions_membre == "chef" || in_array("RENVOYER_MEMBRE", $permissions_membre)) {
+				$dbc->update("ID_faction", 0)
+					->update("rang_faction", "")
+					->from("_bataille_infos_player")
+					->where("ID_identite", "=", $id_identite, "AND")
+					->where("ID_faction", "=", $this->id_faction, "", true)
+					->set();
+				echo("dg");
+				FlashMessage::setFlash("Le membre a bien été renvoyé de la faction", "success");
+				return true;
+			}
+			
+			FlashMessage::setFlash("Vous n'avez pas l'autorisation de renvoyer un membre");
+			return false;
+		}
 		//-------------------------- END SETTER ----------------------------------------------------------------------------//    
 	}
