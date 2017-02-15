@@ -165,7 +165,16 @@
                 data: "id_identite="+id_identite,
                 url: "{{WEBROOT}}controller/modules/bataille/faction/renvoyer_membre",
                 success: function(data){
-                    $("body").prepend(data);
+                    $.ajax({
+                        type:"POST",
+                        data: "loaded_ajax=true",
+                        url: "{{WEBROOT}}bataille/popup/ambassade/gestion-membre-faction",
+                        success: function(data){
+                            $("#popup-base #ajax .next-lvl").empty();
+                            $("#popup-base #ajax .next-lvl").append(data);
+                        }, error: function(){
+                        }
+                    });
                 }
             });
 		});
