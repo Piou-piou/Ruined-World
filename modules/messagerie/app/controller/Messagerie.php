@@ -91,6 +91,7 @@
 				->where("_messagerie_boite_reception.supprimer", " IS ", "NULL", "AND", true)
 				->where("_messagerie_boite_reception.ID_message", "=", "_messagerie_message.ID_message", "AND", true)
 				->where("_messagerie_message.ID_expediteur", "=", "identite.ID_identite", "", true)
+				->orderBy("date", "DESC")
 				->get();
 
 			if ((is_array($query)) && (count($query) > 0)) {
@@ -124,6 +125,7 @@
 				->where("_messagerie_message.ID_expediteur", "=", $_SESSION['idlogin'.CLEF_SITE], "AND")
 				->where("_messagerie_boite_reception.ID_message", "=", "_messagerie_message.ID_message", "AND", true)
 				->where("_messagerie_boite_reception.ID_identite", "=", "identite.ID_identite", "", true)
+				->orderBy("date", "DESC")
 				->get();
 
 			if ((is_array($query)) && (count($query) > 0)) {
@@ -158,6 +160,7 @@
 				->where("_messagerie_boite_reception.supprimer", "=", 1, "AND")
 				->where("_messagerie_boite_reception.ID_message", "=", "_messagerie_message.ID_message", "AND", true)
 				->where("_messagerie_message.ID_expediteur", "=", "identite.ID_identite", "", true)
+				->orderBy("date", "DESC")
 				->get();
 
 			if ((is_array($query)) && (count($query) > 0)) {
