@@ -158,7 +158,7 @@
 					->where("ID_identite", "=", $id_identite, "AND")
 					->where("ID_faction", "=", $this->id_faction, "", true)
 					->set();
-				echo("dg");
+				
 				FlashMessage::setFlash("Le membre a bien été renvoyé de la faction", "success");
 				return true;
 			}
