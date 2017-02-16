@@ -36,7 +36,10 @@
 			}
 			
 			if ($id_ma_faction == $id_faction) {
-				Bataille::setValues(["ma_faction" => true]);
+				Bataille::setValues([
+					"ma_faction" => true,
+					"id_identite_player" => Bataille::getIdIdentite()
+				]);
 				return true;
 			}
 			

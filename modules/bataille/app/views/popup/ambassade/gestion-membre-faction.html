@@ -26,7 +26,11 @@
 						{{ i.points }}
 					</div>
 					<div class="small-12 medium-3 columns end">
-						<a href="" class="renvoyer-membre">Renvoyer le membre</a>
+						{% if i.id_identite == bataille.id_identite_player %}
+							<a href="" class="renvoyer-membre">Quitter la faction</a>
+						{% else %}
+							<a href="" class="renvoyer-membre">Renvoyer le membre</a>
+						{% endif %}
 					</div>
 				</div>
 				
