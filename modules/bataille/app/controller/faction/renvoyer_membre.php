@@ -1,3 +1,5 @@
 <?php
-	$forum = new \modules\bataille\app\controller\ForumFaction();
-	$forum->getFactionPlayer();
+	$faction = new \modules\bataille\app\controller\Faction();
+	$faction->getFactionPlayer();
+	
+	$faction->setRenvoyerMembre($_POST['id_identite']);
