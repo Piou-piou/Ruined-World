@@ -1,10 +1,10 @@
 <?php
-	$forum = new \modules\bataille\app\controller\ForumFaction();
+	$relation = new \modules\bataille\app\controller\RelationFaction();
 	
-	if ($forum->getFactionPlayer() == true) {
-		$forum->getPermissionsMembre($forum->getIdFaction());
+	if ($relation->getFactionPlayer() == true) {
+		$relation->getPermissionsMembre($relation->getIdFaction());
 	}
 	
-	$forum->getListeForum();
+	$relation->getListeRelation();
 	
 	$arr = \modules\bataille\app\controller\Bataille::getValues();

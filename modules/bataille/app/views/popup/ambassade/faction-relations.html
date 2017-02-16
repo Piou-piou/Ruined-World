@@ -1,5 +1,25 @@
 <div class="row ambassade">
 	{% include("popup/ambassade/nav-ambassade.html")  %}
-	
-    <h2>Page des relations</h2>
+
+	{% if bataille.permission_player != "chef" and "GERER_RELATIONS" not in bataille.permission_player %}
+		<p>Vous n'avez pas accès à cette fonctionnalité, merci de changer de page</p>
+	{% else %}
+		<h4>Relations de la faction</h4>
+
+		{% if bataille.relations is iterable and bataille.relations is not empty %}
+			{% for i in bataille.relations %}
+				<div class="row">
+					<div class="small-12 medium-2 columns">
+						<a href="">{{ i.nom_autre_faction }}</a>
+					</div>
+					<div class="small-12 medium-2 columns">
+						{{ i.relation }}
+					</div>
+					<div class="small-12 medium-3 columns end">
+						<a href="" class="renvoyer-membre">Supprimer la relation</a>
+					</div>
+				</div>
+			{% endfor %}
+		{% endif %}
+	{% endif %}
 </div>
