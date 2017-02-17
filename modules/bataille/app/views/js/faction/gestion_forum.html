@@ -140,7 +140,7 @@
             }
             
             var id_permission = $(this).val();
-            var id_identite = $(this).parent().parent().find(".player").attr("player");
+            var id_identite = $(this).parent().parent().parent().find(".player").attr("player");
     
             $.ajax({
                 type:"POST",
@@ -158,7 +158,7 @@
         $(".renvoyer-membre").click(function(e) {
             e.preventDefault();
     
-            var id_identite = $(this).parent().parent().find(".player").attr("player");
+            var id_identite = $(this).parent().parent().parent().find(".player").attr("player");
     
             $.ajax({
                 type:"POST",
