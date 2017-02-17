@@ -162,6 +162,8 @@
 					->where("ID_faction", "=", $this->id_faction, "", true)
 					->set();
 				
+				$this->setSupprilerAllPermissions($id_identite);
+				
 				FlashMessage::setFlash("Le membre a bien été renvoyé de la faction", "success");
 				return true;
 			}

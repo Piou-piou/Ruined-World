@@ -176,5 +176,15 @@
 			FlashMessage::setFlash("Vous n'avez pas la permission de gérer les permissions des membres");
 			return false;
 		}
+		
+		/**
+		 * @param $id_identite
+		 * fonction qui va supprimer tous les droits d'accès du user
+		 */
+		protected function setSupprilerAllPermissions($id_identite) {
+			$dbc = App::getDb();
+			
+			$dbc->delete()->from("_bataille_faction_permission_player")->where("ID_identite", "=", $id_identite)->del();
+		}
 		//-------------------------- END SETTER ----------------------------------------------------------------------------//    
 	}
