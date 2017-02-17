@@ -7,7 +7,7 @@
 			{% if bataille.permission_player == "chef" or "INVITER_MEMBRE" in bataille.permission_player %}
 				<li><a href="inviter-membre-faction">Inviter des membres</a></li>
 			{% endif %}
-			{% if bataille.permission_player != "chef" and "GERER_RELATIONS" not in bataille.permission_player %}
+			{% if bataille.permission_player != "chef" and "GERER_RELATIONS" in bataille.permission_player %}
 				<li><a href="faction-relations">Gestion des relations</a></li>
 			{% endif %}
 			{% if bataille.permission_player == "chef" or "GERER_RANG_MEMBRE" in bataille.permission_player %}
