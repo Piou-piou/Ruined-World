@@ -165,10 +165,16 @@
                 data: "id_identite="+id_identite,
                 url: "{{WEBROOT}}controller/modules/bataille/faction/renvoyer_membre",
                 success: function(data){
+                    var url_page = "{{WEBROOT}}bataille/popup/ambassade/gestion-membre-faction";
+                    
+                    if (data == "quitter") {
+                        var url_page = "{{WEBROOT}}bataille/popup/ambassade/faction";
+                    }
+                    
                     $.ajax({
                         type:"POST",
                         data: "loaded_ajax=true",
-                        url: "{{WEBROOT}}bataille/popup/ambassade/gestion-membre-faction",
+                        url: url_page,
                         success: function(data){
                             $("#popup-base #ajax .next-lvl").empty();
                             $("#popup-base #ajax .next-lvl").append(data);
