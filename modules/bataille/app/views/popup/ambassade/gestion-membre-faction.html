@@ -15,30 +15,37 @@
 		
 		{% for i in bataille.membres_faction %}
 			<div class="row">
-				<div class="small-12 medium-1 columns">
-					<a href=""  class="player" player="{{ i.id_identite }}">{{ i.pseudo }}</a>
-				</div>
-				<div class="small-12 medium-1 columns">
-					{{ i.rang_faction }}
-				</div>
-				<div class="small-12 medium-1 columns end">
-					{{ i.points }}
-				</div>
-				
-				{% set disabled_chef %}{% endset %}
-				{% if i.chef == 1 and bataille.permission_player != "chef" or i.chef == 1 and bataille.permission_player == "chef" %}
-					{% set disabled_chef %}disabled{% endset %}
-				{% endif %}
-				
-				{% for x,key in i.permissions %}
-					<div class="small-12 medium-1 columns end">
-						<input type="checkbox" name="permission" class="permission" value="{{ x }}" {{ key }} {{ disabled_chef }}>
-						{{ x }}
+				<div class="row">
+					<div class="small-12 medium-1 columns">
+						<a href=""  class="player" player="{{ i.id_identite }}">{{ i.pseudo }}</a>
 					</div>
-				{% endfor %}
+					<div class="small-12 medium-1 columns">
+						{{ i.rang_faction }}
+					</div>
+					<div class="small-12 medium-1 columns end">
+						{{ i.points }}
+					</div>
+					<div class="small-12 medium-3 columns end">
+						{% if i.id_identite == bataille.id_identite_player %}
+							<a href="" class="renvoyer-membre">Quitter la faction</a>
+						{% else %}
+							<a href="" class="renvoyer-membre">Renvoyer le membre</a>
+						{% endif %}
+					</div>
+				</div>
 				
-				<div class="small-12 medium-3 columns end">
-					<a href="" class="renvoyer-membre">Renvoyer le membre</a>
+				<div class="row">
+					{% set disabled_chef %}{% endset %}
+					{% if i.chef == 1 and bataille.permission_player != "chef" or i.chef == 1 and bataille.permission_player == "chef" %}
+						{% set disabled_chef %}disabled{% endset %}
+					{% endif %}
+					
+					{% for x,key in i.permissions %}
+						<div class="small-12 medium-1 columns end">
+							<input type="checkbox" name="permission" class="permission" value="{{ x }}" {{ key }} {{ disabled_chef }}>
+							{{ x }}
+						</div>
+					{% endfor %}
 				</div>
 			</div>
 		{% endfor %}

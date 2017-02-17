@@ -13,6 +13,7 @@
 		"popup/marche/envoyer-ressources",
 		"popup/ambassade/index",
 		"popup/ambassade/faction",
+		"popup/ambassade/faction-relations",
 		"popup/ambassade/forum-faction",
 		"popup/ambassade/forum-faction-detail",
 		"popup/ambassade/membre-faction",
@@ -97,6 +98,9 @@
 		//------------------------------- POUR LA POPUP POUR L'AMBASSADE ----------------------------------//
 		if ($this->page == "popup/ambassade/faction") {
 			$this->controller = "bataille/app/controller/faction/get_faction.php";
+		}
+		if ($this->page == "popup/ambassade/faction-relations") {
+			$this->controller = "bataille/app/controller/faction/get_relations.php";
 		}
 		if ($this->page == "popup/ambassade/forum-faction") {
 			$this->controller = "bataille/app/controller/faction/get_forum.php";

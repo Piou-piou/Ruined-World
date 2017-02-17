@@ -36,7 +36,10 @@
 			}
 			
 			if ($id_ma_faction == $id_faction) {
-				Bataille::setValues(["ma_faction" => true]);
+				Bataille::setValues([
+					"ma_faction" => true,
+					"id_identite_player" => Bataille::getIdIdentite()
+				]);
 				return true;
 			}
 			
@@ -158,6 +161,8 @@
 					->where("ID_identite", "=", $id_identite, "AND")
 					->where("ID_faction", "=", $this->id_faction, "", true)
 					->set();
+				
+				$this->setSupprilerAllPermissions($id_identite);
 				
 				FlashMessage::setFlash("Le membre a bien été renvoyé de la faction", "success");
 				return true;

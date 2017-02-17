@@ -140,7 +140,7 @@
             }
             
             var id_permission = $(this).val();
-            var id_identite = $(this).parent().parent().find(".player").attr("player");
+            var id_identite = $(this).parent().parent().parent().find(".player").attr("player");
     
             $.ajax({
                 type:"POST",
@@ -158,17 +158,23 @@
         $(".renvoyer-membre").click(function(e) {
             e.preventDefault();
     
-            var id_identite = $(this).parent().parent().find(".player").attr("player");
+            var id_identite = $(this).parent().parent().parent().find(".player").attr("player");
     
             $.ajax({
                 type:"POST",
                 data: "id_identite="+id_identite,
                 url: "{{WEBROOT}}controller/modules/bataille/faction/renvoyer_membre",
                 success: function(data){
+                    var url_page = "{{WEBROOT}}bataille/popup/ambassade/gestion-membre-faction";
+                    
+                    if (data == "quitter") {
+                        url_page = "{{WEBROOT}}bataille/popup/ambassade/faction";
+                    }
+                    
                     $.ajax({
                         type:"POST",
                         data: "loaded_ajax=true",
-                        url: "{{WEBROOT}}bataille/popup/ambassade/gestion-membre-faction",
+                        url: url_page,
                         success: function(data){
                             $("#popup-base #ajax .next-lvl").empty();
                             $("#popup-base #ajax .next-lvl").append(data);
