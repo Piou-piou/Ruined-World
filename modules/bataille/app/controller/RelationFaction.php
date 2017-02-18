@@ -8,7 +8,7 @@
 	class RelationFaction extends Faction {
 		//-------------------------- GETTER ----------------------------------------------------------------------------//
 		/**
-		 * renvoi la liste des relations
+		 * renvoi la liste des relations d'une faction
 		 */
 		public function getListeRelation() {
 			$dbc = App::getDb();
