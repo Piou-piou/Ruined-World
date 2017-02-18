@@ -33,6 +33,26 @@
 			
 			Bataille::setValues(["relations" => $relations]);
 		}
+		
+		/**
+		 * fonction qui récupère la liste des relations qu'il sera possible
+		 * de mettre dans le select
+		 */
+		public function getAllRelationsPossible() {
+			$dbc1 = Bataille::getDb();
+			
+			$query = $dbc1->select()->from("faction_relations");
+			
+			$relations = [];
+			foreach ($query as $obj) {
+				$relations[] = [
+					"relation" => $obj->relation
+				];
+			}
+			
+			Bataille::setValues(["liste_relations" => $relations]);
+			return $relations;
+		}
 		//-------------------------- END GETTER ----------------------------------------------------------------------------//
 		
 		
