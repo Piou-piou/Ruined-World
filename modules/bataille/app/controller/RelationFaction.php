@@ -57,6 +57,12 @@
 		
 		
 		//-------------------------- SETTER ----------------------------------------------------------------------------//
+		/**
+		 * @param $nom_faction
+		 * @param $relation
+		 * @return bool
+		 * fonction qui permet d'ajouter une relation
+		 */
 		public function setAjouterRelation($nom_faction, $relation) {
 			$dbc = App::getDb();
 			
