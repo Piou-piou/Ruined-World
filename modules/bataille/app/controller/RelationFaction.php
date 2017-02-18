@@ -3,9 +3,13 @@
 	
 	
 	use core\App;
+	use core\HTML\flashmessage\FlashMessage;
 	
 	class RelationFaction extends Faction {
 		//-------------------------- GETTER ----------------------------------------------------------------------------//
+		/**
+		 * renvoi la liste des relations
+		 */
 		public function getListeRelation() {
 			$dbc = App::getDb();
 			
@@ -33,5 +37,19 @@
 		
 		
 		//-------------------------- SETTER ----------------------------------------------------------------------------//
+		public function setAjouterRelation($nom_faction, $relation) {
+			$dbc = App::getDb();
+			
+			if ($this->getFactionExist($nom_faction) == false) {
+				FlashMessage::setFlash("Cette faction n'existe pas, vérifiez que vous avez correctement écrit son nom");
+				return false;
+			}
+			
+			$dbc->insert("relation", $relation)
+				->insert("ID_faction", $this->id_faction)
+				->insert("ID_autre_faction", $this->id_autre_faction)
+				->into("_bataille_faction_relation")->set();
+		}
+		
 		//-------------------------- END SETTER ----------------------------------------------------------------------------//    
 	}

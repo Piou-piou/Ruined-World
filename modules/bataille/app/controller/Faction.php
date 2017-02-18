@@ -7,6 +7,7 @@
 	
 	class Faction extends PermissionsFaction {
 		protected $id_faction;
+		protected $id_autre_faction;
 		
 		//-------------------------- BUILDER ----------------------------------------------------------------------------//
 		public function __construct() {
@@ -153,6 +154,10 @@
 			$query = $dbc->select("ID_faction")->from("_bataille_faction")->where("nom_faction", "=", $nom_faction)->get();
 			
 			if (count($query) > 0) {
+				foreach ($query as $obj) {
+					$this->id_autre_faction = $obj->ID_faction;
+				}
+				
 				return true;
 			}
 			
