@@ -3,9 +3,13 @@
 	
 	
 	use core\App;
+	use core\HTML\flashmessage\FlashMessage;
 	
 	class RelationFaction extends Faction {
 		//-------------------------- GETTER ----------------------------------------------------------------------------//
+		/**
+		 * renvoi la liste des relations d'une faction
+		 */
 		public function getListeRelation() {
 			$dbc = App::getDb();
 			
@@ -29,9 +33,49 @@
 			
 			Bataille::setValues(["relations" => $relations]);
 		}
+		
+		/**
+		 * fonction qui récupère la liste des relations qu'il sera possible
+		 * de mettre dans le select
+		 */
+		public function getAllRelationsPossible() {
+			$dbc1 = Bataille::getDb();
+			
+			$query = $dbc1->select()->from("faction_relations");
+			
+			$relations = [];
+			foreach ($query as $obj) {
+				$relations[] = [
+					"relation" => $obj->relation
+				];
+			}
+			
+			Bataille::setValues(["liste_relations" => $relations]);
+			return $relations;
+		}
 		//-------------------------- END GETTER ----------------------------------------------------------------------------//
 		
 		
 		//-------------------------- SETTER ----------------------------------------------------------------------------//
+		/**
+		 * @param $nom_faction
+		 * @param $relation
+		 * @return bool
+		 * fonction qui permet d'ajouter une relation
+		 */
+		public function setAjouterRelation($nom_faction, $relation) {
+			$dbc = App::getDb();
+			
+			if ($this->getFactionExist($nom_faction) == false) {
+				FlashMessage::setFlash("Cette faction n'existe pas, vérifiez que vous avez correctement écrit son nom");
+				return false;
+			}
+			
+			$dbc->insert("relation", $relation)
+				->insert("ID_faction", $this->id_faction)
+				->insert("ID_autre_faction", $this->id_autre_faction)
+				->into("_bataille_faction_relation")->set();
+		}
+		
 		//-------------------------- END SETTER ----------------------------------------------------------------------------//    
 	}

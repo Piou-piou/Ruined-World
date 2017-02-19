@@ -7,6 +7,7 @@
 	
 	class Faction extends PermissionsFaction {
 		protected $id_faction;
+		protected $id_autre_faction;
 		
 		//-------------------------- BUILDER ----------------------------------------------------------------------------//
 		public function __construct() {
@@ -140,6 +141,27 @@
 			}
 			
 			Bataille::setValues(["membres_faction" => $membre]);
+		}
+		
+		/**
+		 * @param $nom_faction
+		 * @return bool
+		 * ajout d'une fonction pour tester si une faction existe ou non renvoi true si elle existe
+		 */
+		protected function getFactionExist($nom_faction) {
+			$dbc = App::getDb();
+			
+			$query = $dbc->select("ID_faction")->from("_bataille_faction")->where("nom_faction", "=", $nom_faction)->get();
+			
+			if (count($query) > 0) {
+				foreach ($query as $obj) {
+					$this->id_autre_faction = $obj->ID_faction;
+				}
+				
+				return true;
+			}
+			
+			return false;
 		}
 		//-------------------------- END GETTER ----------------------------------------------------------------------------//
 		
