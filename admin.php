@@ -85,18 +85,21 @@
 				Connexion::setObgConnecte(WEBROOT."administrator/login");
 			}
 			else {
-				if (\core\functions\ChaineCaractere::FindInString($page, "modules/") == true) {
-					//utilisé pour initialiser les modules
-					$page_module = $page;
+				$router_module = new \core\modules\RouterModule();
+				if ($router_module->getRouteModuleExist($page)) {
+					$page = $router_module->getUrl($page, 1);
 					
-					$explode = explode("/", $page, 3);
+					if ($router_module->getController() != "") {
+						require_once(MODULEROOT.$router_module->getController());
+					}
 					
-					$loader = new Twig_Loader_Filesystem($explode[0]."/".$explode[1]."/admin/views/");
+					$loader = new Twig_Loader_Filesystem('modules/'.$router_module->getModule()."/admin/views");
 					$twig = new Twig_Environment($loader);
 					
-					$page = $explode[2].".html";
+					$page = $router_module->getPage();
 					$twig_page = true;
 				}
+				
 				
 				//pour les pages normales
 				//pour l'acces a la gestion des comptes, si pas activée oin renvoi une erreur
