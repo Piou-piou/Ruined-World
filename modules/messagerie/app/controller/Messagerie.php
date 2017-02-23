@@ -99,6 +99,7 @@
 					$arr = [
 						"id_message" => $obj->ID_message,
 						"objet" => $obj->objet,
+						"lu" => $obj->lu,
 						"date_message" => $obj->date,
 						"id_expediteur" => $obj->ID_expediteur,
 						"pseudo_expediteur" => $obj->pseudo,
