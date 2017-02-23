@@ -91,9 +91,6 @@
 			if ($type == "batiment") {
 				$points = self::getPointsBase($id_base)+self::getPointAjoutBatiment();
 			}
-			else if ($type == "missions") {
-				$points = self::getPointsBase($id_base)+$points;
-			}
 			
 			$dbc->update("points", $points)
 				->from("_bataille_base")
