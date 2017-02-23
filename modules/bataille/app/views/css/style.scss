@@ -75,10 +75,6 @@ button.no-style {
 				display: inline-block;
 				transition: all 0.3s ease;
 				
-				&:hover {
-					transform: scale(1.1);
-				}
-				
 				.message-non-lu {
 					position: absolute;
 					color: #fff;
