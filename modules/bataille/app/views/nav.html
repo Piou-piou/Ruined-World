@@ -87,9 +87,9 @@
 								<div class="texte">
 									<span class="{{ bataille.max_nourriture }}">{{ bataille.nourriture }} / {{ bataille.stockage_grenier }}</span>
 									
-									{% if bataille.nourriture_mort_heure != "" %}
+									{% if bataille.nourriture_mort_heure > 0 %}
 										<p><span>{{ bataille.nourriture_mort_heure }} morts par heure</span></p>
-									{% else %}
+									{% elseif bataille.nourriture_consom_heure > 0 %}
 										<p><span>-{{ bataille.nourriture_consom_heure }} steaks par heure</span></p>
 									{% endif %}
 								</div>
