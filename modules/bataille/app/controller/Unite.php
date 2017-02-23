@@ -152,6 +152,8 @@
 				
 				return $unites;
 			}
+			
+			return 0;
 		}
 		
 		/**
