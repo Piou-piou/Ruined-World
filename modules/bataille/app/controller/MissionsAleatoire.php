@@ -130,7 +130,6 @@
 						"id_mission" => $obj->ID_mission,
 						"nom_mission" => $obj->nom_mission,
 						"description" => $obj->description,
-						"points_gagne" => $obj->points_gagne,
 						"type" => $obj->type,
 						"ressource_gagnee" => $obj->ressource_gagnee,
 						"pourcentage_perte" => $obj->pourcentage_perte,
@@ -285,9 +284,6 @@
 						Bataille::getRessource()->setUpdateRessource(0, 0, 0, 0, $infos_missions["ressource_gagnee"]*$unite_revenu, "+");
 					}
 					
-					$points_base = Points::getPointsBase(Bataille::getIdBase());
-					$points_base_new = Points::setAjouterPoints(Bataille::getIdBase(), "missions", $infos_missions["points_gagne"]);
-					
 					$dbc->delete()->from("_bataille_missions_cours")
 						->where("ID_base", "=", Bataille::getIdBase(), "AND")
 						->where("ID_mission", "=", $obj->ID_mission)
@@ -301,8 +297,6 @@
 						"mission" => $infos_missions,
 						"unites_envoyees" => $unites_envoyees,
 						"unites_revenues" => $unite_revenu,
-						"points_base_avant" => $points_base,
-						"points_base_new" => $points_base_new,
 						"ressource_gagnee" => $infos_missions["ressource_gagnee"]*$unite_revenu
 					];
 					GenerationRapport::setGenererRapport($titre, $infos, "mission");

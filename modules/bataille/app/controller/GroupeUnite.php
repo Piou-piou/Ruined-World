@@ -28,11 +28,18 @@
 				$groupe = [];
 				
 				foreach ($query as $obj) {
-					$groupe[] = [
-						"id_groupe" => $obj->ID_groupe_unite,
-						"nom_groue" => $obj->nom_groupe,
-						"unites" => $this->getAllUnites(Bataille::getIdBase(), $obj->ID_groupe_unite)
-					];
+					$b_unites = $this->getAllUnites(Bataille::getIdBase(), $obj->ID_groupe_unite);
+					
+					if ($b_unites > 0) {
+						$groupe[] = [
+							"id_groupe" => $obj->ID_groupe_unite,
+							"nom_groue" => $obj->nom_groupe,
+							"unites" => $this->getAllUnites(Bataille::getIdBase(), $obj->ID_groupe_unite)
+						];
+					}
+					else {
+						$this->setSupprimerGroupe($obj->ID_groupe_unite);
+					}
 				}
 				
 				Bataille::setValues(["groupe_unites" => $groupe]);
@@ -147,6 +154,17 @@
 				->set();
 			
 			return true;
+		}
+		
+		/**
+		 * @param $id_groupe
+		 * fonction qui permet de supprimer un groupe vide
+		 */
+		private function setSupprimerGroupe($id_groupe) {
+			$dbc = App::getDb();
+			
+			$dbc->delete()->from("_bataille_groupe_unite")->where("ID_groupe_unite", "=", $id_groupe, "AND")
+				->where("ID_base", "=", Bataille::getIdBase())->del();
 		}
 		
 		/**

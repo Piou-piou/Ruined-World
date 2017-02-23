@@ -1,182 +1,189 @@
-<div class="row">
-	<h3>Listes des missions disponibles actuellement</h3>
-	<p>Vous avez actuellement {{ bataille.nb_missions }} missions disponibles. Les missions changent toutes les 3
-	   heures, le prochain changement sera effectué dans <span id="next_check"></span>.
-	</p>
-</div>
-
-<div class="row">
-	<h3>Listes des missions disponibles</h3>
-
-	{% for i in bataille.missions %}
-		<h4>{{ i.nom_mission }}</h4>
-		<p>{{ i.description }}</p>
-
-		<ul>
-			<li>Nombre de points gagné : {{ i.points_gagne }}</li>
-			<li>Ressources gagnées : {{ i.ressource_gagnee }} par unité envoyée</li>
-			<li>Pourcentage de perte possible : de 0% à {{ i.pourcentage_perte }}%</li>
-			<li>Durée de la mission : {{ i.duree }}</li>
-		</ul>
-
-		{% if bataille.unites is iterable %}
-			<form action="{{ WEBRROT }}controller/modules/bataille/missions/lancer_mission" method="post">
-				
-				<div class="hidden" eau="0" electricite="0" fer="0" fuel="0" nourriture="{{ i.ressource_gagnee }}"></div>
-				
-				<h5>Affichage en prévision du nombre d'unités envoyées</h5>
-				<ul class="total">
-					<li class="eau {{bataille.max_eau}}">eau : <span class="total-eau">{{bataille.eau}}</span> / {{ bataille.stockage_entrepot }}</li>
-					<li class="electricite {{bataille.max_electricite}}">éléctricité : <span class="total-electricite">{{bataille.electricite}}</span> / {{ bataille.stockage_entrepot }}</li>
-					<li class="fer {{bataille.max_fer}}">fer : <span class="total-fer">{{bataille.fer}}</span> / {{ bataille.stockage_entrepot }}</li>
-					<li class="fuel {{bataille.max_fuel}}">fuel : <span class="totalfuel">{{bataille.fuel}}</span> / {{ bataille.stockage_entrepot }}</li>
-					<li class="nourriture {{bataille.max_nourriture}}">nourriture : <span class="total-nourriture">{{bataille.nourriture}}</span> / {{ bataille.stockage_grenier }}</li>
-				</ul>
-				
-				{% for key,j in bataille.unites %}
-					<h5>{{ key }}</h5>
-
-					{% for x in j %}
-						{% if x.nom != "défense" %}
-							<div class="row">
-								<div class="small-12 medium-6 large-3 columns">
-									<label for="nombre_unite">Nombre d'unités {{ x.nom }}</label>
+{% if bataille.unites is not iterable or bataille.groupe_unites is not iterable %}
+	<div class="row">
+		<h3>Aucune mission disponible actuellement</h3>
+		<p>Pour avoir accès aux missions, merci de recruter des unités.
+		</p>
+	</div>
+{% else %}
+	<div class="row">
+		<h3>Listes des missions disponibles actuellement</h3>
+		<p>Vous avez actuellement {{ bataille.nb_missions }} missions disponibles. Les missions changent toutes les 3
+		   heures, le prochain changement sera effectué dans <span id="next_check"></span>.
+		</p>
+	</div>
+	
+	<div class="row">
+		<h3>Listes des missions disponibles</h3>
+	
+		{% for i in bataille.missions %}
+			<h4>{{ i.nom_mission }}</h4>
+			<p>{{ i.description }}</p>
+	
+			<ul>
+				<li>Ressources gagnées : {{ i.ressource_gagnee }} par unité envoyée</li>
+				<li>Pourcentage de perte possible : de 0% à {{ i.pourcentage_perte }}%</li>
+				<li>Durée de la mission : {{ i.duree }}</li>
+			</ul>
+	
+			{% if bataille.unites is iterable %}
+				<form action="{{ WEBRROT }}controller/modules/bataille/missions/lancer_mission" method="post">
+					
+					<div class="hidden" eau="0" electricite="0" fer="0" fuel="0" nourriture="{{ i.ressource_gagnee }}"></div>
+					
+					<h5>Affichage en prévision du nombre d'unités envoyées</h5>
+					<ul class="total">
+						<li class="eau {{bataille.max_eau}}">eau : <span class="total-eau">{{bataille.eau}}</span> / {{ bataille.stockage_entrepot }}</li>
+						<li class="electricite {{bataille.max_electricite}}">éléctricité : <span class="total-electricite">{{bataille.electricite}}</span> / {{ bataille.stockage_entrepot }}</li>
+						<li class="fer {{bataille.max_fer}}">fer : <span class="total-fer">{{bataille.fer}}</span> / {{ bataille.stockage_entrepot }}</li>
+						<li class="fuel {{bataille.max_fuel}}">fuel : <span class="totalfuel">{{bataille.fuel}}</span> / {{ bataille.stockage_entrepot }}</li>
+						<li class="nourriture {{bataille.max_nourriture}}">nourriture : <span class="total-nourriture">{{bataille.nourriture}}</span> / {{ bataille.stockage_grenier }}</li>
+					</ul>
+					
+					{% for key,j in bataille.unites %}
+						<h5>{{ key }}</h5>
+	
+						{% for x in j %}
+							{% if x.nom != "défense" %}
+								<div class="row">
+									<div class="small-12 medium-6 large-3 columns">
+										<label for="nombre_unite">Nombre d'unités {{ x.nom }}</label>
+									</div>
+									<div class="small-12 medium-6 large-3 columns">
+										<input type="range" class="range" name="nombre_unite[]" value="0" min="0" step="1" max="{{ x.nombre }}">
+										<input type="hidden" name="nom_unite[]" value="{{ x.nom }}">
+										<input type="hidden" name="type_unite[]" value="{{ key }}">
+									</div>
+									<div class="small-12 medium-6 large-5 columns end">
+										<span class="total-envoi">0</span> {{ x.nom }} seront envoyées
+									</div>
 								</div>
-								<div class="small-12 medium-6 large-3 columns">
-									<input type="range" class="range" name="nombre_unite[]" value="0" min="0" step="1" max="{{ x.nombre }}">
-									<input type="hidden" name="nom_unite[]" value="{{ x.nom }}">
-									<input type="hidden" name="type_unite[]" value="{{ key }}">
-								</div>
-								<div class="small-12 medium-6 large-5 columns end">
-									<span class="total-envoi">0</span> {{ x.nom }} seront envoyées
-								</div>
-							</div>
-						{% endif %}
-					{% endfor %}
-				{% endfor %}
-				
-				<h3>Listes des groupes</h3>
-				{% if bataille.groupe_unites is iterable %}
-					<div class="row">
-						{% for i in bataille.groupe_unites %}
-							<div class="small-12 large-2 columns end">
-								{{ i.nom_groue}}
-								
-								{% for key,x in i.unites %}
-									<h6>{{ key }}</h6>
-									{% for j in x %}
-										<p>{{ j.nombre }} unités {{ j.nom }}</p>
-									{% endfor %}
-								{% endfor %}
-								<input type="checkbox" name="id_groupe[]" value="{{ i.id_groupe }}">
-							</div>
+							{% endif %}
 						{% endfor %}
-					</div>
-				{% endif %}
-
-				<input type="hidden" name="id_mission" value="{{ i.id_mission }}">
-				<button type="submit">Envoyer</button>
-			</form>
-		{% endif %}
-	{% endfor %}
-</div>
-
-
-
-
-<script src="{{MODULEWEBROOT}}bataille/app/views/js/jquery.plugin.min.js"></script>
-<script src="{{MODULEWEBROOT}}bataille/app/views/js/jquery.countdown.js"></script>
-<script>
-    $(function () {
-        $('#next_check').countdown({
-            until: {{bataille.next_check_missions}},
-        });
-    });
-</script>
-
-<script>
-    $(function () {
-        $(".range").on("change", function() {
-            var total_envoi = parseInt($(this).parent().parent().find(".total-envoi").html());
-            val = $(this).val();
-            $row = $(this).parent().parent();
-    
-            $row.find(".total-envoi").html(val);
-            
-            var eau = parseInt($row.parent().find(".total-eau").html());
-            var electricite = parseInt($row.parent().find(".total-electricite").html());
-            var fer = parseInt($row.parent().find(".total-fer").html());
-            var fuel = parseInt($row.parent().find(".total-fuel").html());
-            var nourriture = parseInt($row.parent().find(".total-nourriture").html());
-    
-            var eau_add = $row.parent().find(".hidden").attr("eau");
-            var electricite_add = $row.parent().find(".hidden").attr("electricite");
-            var fer_add = $row.parent().find(".hidden").attr("fer");
-            var fuel_add = $row.parent().find(".hidden").attr("fuel");
-            var nourriture_add = $row.parent().find(".hidden").attr("nourriture");
-    
-            if (val == 0) {
-                var new_eau = {{bataille.eau}};
-                var new_electricite = {{bataille.electricite}};
-                var new_fer = {{bataille.fer}};
-                var new_fuel = {{bataille.fuel}};
-                var new_nourriture = {{bataille.nourriture}};
-            }
-            else if (total_envoi < val) {
-                var new_eau = (val*eau_add)+eau;
-                var new_electricite = (val*electricite_add)+electricite;
-                var new_fer = (val*fer_add)+fer;
-                var new_fuel = (val*fuel_add)+fuel;
-                var new_nourriture = (val*nourriture_add)+nourriture;
-            }
-            else {
-                var new_eau = eau-(val*eau_add);
-                var new_electricite = electricite-(val*electricite_add);
-                var new_fer = fer-(val*fer_add);
-                var new_fuel = fuel-(val*fuel_add);
-                var new_nourriture = nourriture-(val*nourriture_add);
-            }
-    
-            if (new_eau > {{ bataille.stockage_entrepot }}) {
-                $row.parent().find(".total-eau").parent().addClass("rouge");
-            }
-            else {
-                $row.parent().find(".total-eau").parent().removeClass("rouge");
-            }
-            
-            if (new_electricite > {{ bataille.stockage_entrepot }}) {
-                $row.parent().find(".total-electricite").parent().addClass("rouge");
-            }
-            else {
-                $row.parent().find(".total-electricite").parent().removeClass("rouge");
-            }
-            
-            if (new_fer > {{ bataille.stockage_entrepot }}) {
-                $row.parent().find(".total-fer").parent().addClass("rouge");
-            }
-            else {
-                $row.parent().find(".total-fer").parent().removeClass("rouge");
-            }
-            
-            if (new_fuel > {{ bataille.stockage_entrepot }}) {
-                $row.parent().find(".total-fuel").parent().addClass("rouge");
-            }
-            else {
-                $row.parent().find(".total-fuel").parent().removeClass("rouge");
-            }
-            
-            if (new_nourriture > {{ bataille.stockage_grenier }}) {
-                $row.parent().find(".total-nourriture").parent().addClass("rouge");
-            }
-            else {
-                $row.parent().find(".total-nourriture").parent().removeClass("rouge");
-            }
-    
-            $row.parent().find(".total-eau").html(new_eau);
-            $row.parent().find(".total-electricite").html(new_electricite);
-            $row.parent().find(".total-fer").html(new_fer);
-            $row.parent().find(".total-fuel").html(new_fuel);
-            $row.parent().find(".total-nourriture").html(new_nourriture);
-        });
-    });
-</script>
+					{% endfor %}
+					
+					<h3>Listes des groupes</h3>
+					{% if bataille.groupe_unites is iterable %}
+						<div class="row">
+							{% for i in bataille.groupe_unites %}
+								<div class="small-12 large-2 columns end">
+									{{ i.nom_groue}}
+									
+									{% for key,x in i.unites %}
+										<h6>{{ key }}</h6>
+										{% for j in x %}
+											<p>{{ j.nombre }} unités {{ j.nom }}</p>
+										{% endfor %}
+									{% endfor %}
+									<input type="checkbox" name="id_groupe[]" value="{{ i.id_groupe }}">
+								</div>
+							{% endfor %}
+						</div>
+					{% endif %}
+	
+					<input type="hidden" name="id_mission" value="{{ i.id_mission }}">
+					<button type="submit">Envoyer</button>
+				</form>
+			{% endif %}
+		{% endfor %}
+	</div>
+	
+	
+	
+	
+	<script src="{{MODULEWEBROOT}}bataille/app/views/js/jquery.plugin.min.js"></script>
+	<script src="{{MODULEWEBROOT}}bataille/app/views/js/jquery.countdown.js"></script>
+	<script>
+	    $(function () {
+	        $('#next_check').countdown({
+	            until: {{bataille.next_check_missions}},
+	        });
+	    });
+	</script>
+	
+	<script>
+	    $(function () {
+	        $(".range").on("change", function() {
+	            var total_envoi = parseInt($(this).parent().parent().find(".total-envoi").html());
+	            val = $(this).val();
+	            $row = $(this).parent().parent();
+	    
+	            $row.find(".total-envoi").html(val);
+	            
+	            var eau = parseInt($row.parent().find(".total-eau").html());
+	            var electricite = parseInt($row.parent().find(".total-electricite").html());
+	            var fer = parseInt($row.parent().find(".total-fer").html());
+	            var fuel = parseInt($row.parent().find(".total-fuel").html());
+	            var nourriture = parseInt($row.parent().find(".total-nourriture").html());
+	    
+	            var eau_add = $row.parent().find(".hidden").attr("eau");
+	            var electricite_add = $row.parent().find(".hidden").attr("electricite");
+	            var fer_add = $row.parent().find(".hidden").attr("fer");
+	            var fuel_add = $row.parent().find(".hidden").attr("fuel");
+	            var nourriture_add = $row.parent().find(".hidden").attr("nourriture");
+	    
+	            if (val == 0) {
+	                var new_eau = {{bataille.eau}};
+	                var new_electricite = {{bataille.electricite}};
+	                var new_fer = {{bataille.fer}};
+	                var new_fuel = {{bataille.fuel}};
+	                var new_nourriture = {{bataille.nourriture}};
+	            }
+	            else if (total_envoi < val) {
+	                var new_eau = (val*eau_add)+eau;
+	                var new_electricite = (val*electricite_add)+electricite;
+	                var new_fer = (val*fer_add)+fer;
+	                var new_fuel = (val*fuel_add)+fuel;
+	                var new_nourriture = (val*nourriture_add)+nourriture;
+	            }
+	            else {
+	                var new_eau = eau-(val*eau_add);
+	                var new_electricite = electricite-(val*electricite_add);
+	                var new_fer = fer-(val*fer_add);
+	                var new_fuel = fuel-(val*fuel_add);
+	                var new_nourriture = nourriture-(val*nourriture_add);
+	            }
+	    
+	            if (new_eau > {{ bataille.stockage_entrepot }}) {
+	                $row.parent().find(".total-eau").parent().addClass("rouge");
+	            }
+	            else {
+	                $row.parent().find(".total-eau").parent().removeClass("rouge");
+	            }
+	            
+	            if (new_electricite > {{ bataille.stockage_entrepot }}) {
+	                $row.parent().find(".total-electricite").parent().addClass("rouge");
+	            }
+	            else {
+	                $row.parent().find(".total-electricite").parent().removeClass("rouge");
+	            }
+	            
+	            if (new_fer > {{ bataille.stockage_entrepot }}) {
+	                $row.parent().find(".total-fer").parent().addClass("rouge");
+	            }
+	            else {
+	                $row.parent().find(".total-fer").parent().removeClass("rouge");
+	            }
+	            
+	            if (new_fuel > {{ bataille.stockage_entrepot }}) {
+	                $row.parent().find(".total-fuel").parent().addClass("rouge");
+	            }
+	            else {
+	                $row.parent().find(".total-fuel").parent().removeClass("rouge");
+	            }
+	            
+	            if (new_nourriture > {{ bataille.stockage_grenier }}) {
+	                $row.parent().find(".total-nourriture").parent().addClass("rouge");
+	            }
+	            else {
+	                $row.parent().find(".total-nourriture").parent().removeClass("rouge");
+	            }
+	    
+	            $row.parent().find(".total-eau").html(new_eau);
+	            $row.parent().find(".total-electricite").html(new_electricite);
+	            $row.parent().find(".total-fer").html(new_fer);
+	            $row.parent().find(".total-fuel").html(new_fuel);
+	            $row.parent().find(".total-nourriture").html(new_nourriture);
+	        });
+	    });
+	</script>
+{% endif %}

@@ -17,11 +17,4 @@
 		<li>Troupes envoyés : ".$infos["unites_envoyees"]."</li>
 		<li>Troupes revenues : ".$infos["unites_revenues"]."</li>
 	</ul>
-	
-	<h3>Rapport sur les points gagnés</h3>
-	<ul>
-		<li>Points de la base avant la mission : ".$infos["points_base_avant"]."</li>
-		<li>Points gagnés avec cette mission : ".$infos["mission"]["points_gagne"]."</li>
-		<li>Points de la base actuellement : ".$infos["points_base_new"]."</li>
-	</ul>
 	";

@@ -20,9 +20,9 @@
 		//initilisation of all classes of battle
 		//initialisation of Ressource class
 		public static function getRessource() {
-			if (self::$ressource == null) {
+			/*if (self::$ressource == null) {*/
 				self::$ressource = new Ressource();
-			}
+			/*}*/
 			
 			return self::$ressource;
 		}

@@ -78,7 +78,7 @@
 		private function getNombreUniteMortHeure() {
 			$nb_unite = Bataille::getUnite()->getNombreUniteHumaine();
 			
-			return abs(round((0-($nb_unite*$this->getConsommationNourritureUnite()))/100));
+			return abs(round((0-($nb_unite*$this->getConsommationNourritureUnite()))/100))+1;
 		}
 		
 		/**
@@ -122,7 +122,7 @@
 			$nourriture_retirer = $nourriture_base - $nourriture_consommee;
 			
 			if ($nourriture_retirer < 0) {
-				$unite_tuer = abs(round($nourriture_retirer/100));
+				$unite_tuer = (abs(round($nourriture_retirer/100)))+1;
 				
 				Bataille::getUnite()->setTuerUnites($unite_tuer);
 			}
