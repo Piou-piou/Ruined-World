@@ -189,7 +189,7 @@
 				->where("ID_base", "=", $this->id_base)
 				->set();
 			
-			$dbc->update("last_connexion", date("Y-m-d"))->from("_bataille_infos_player")->where("ID_identite", "=", Bataille::getIdIdentite())->set();
+			$dbc->update("last_connexion", date("Y-m-d H:i:s"))->from("_bataille_infos_player")->where("ID_identite", "=", Bataille::getIdIdentite())->set();
 		}
 		
 		/**
