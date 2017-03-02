@@ -230,8 +230,7 @@
 
 			//récupération du cout initial plus temps de recherche initial pour calculer les bon en fonction
 			//du lvl du centre + du niveau actuel de la recherche
-			$query = $dbc1->select("cout")
-				->select("temps_recherche")
+			$query = $dbc1->select()
 				->from("recherche")
 				->where("recherche", "=", $recherche, "AND")
 				->where("type", "=", $type)
@@ -241,7 +240,13 @@
 				foreach ($query as $obj) {
 					$cout = unserialize($obj->cout);
 					$temps_recherche = $obj->temps_recherche;
+					$max_level_recherche = $obj->max_level;
 				}
+			}
+			
+			if ($niveau_recherche >= $max_level_recherche) {
+				FlashMessage::setFlash("Cette unité est déjà au niveau maxium");
+				return false;
 			}
 
 			if ($niveau_recherche > 0) {
