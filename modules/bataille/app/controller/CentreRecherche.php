@@ -142,12 +142,13 @@
 
 						//si niveau == 0 ca veut dire que la recherche n'a pas encore été effectuée dans la base
 						if ($niveau > 0) {
-							$cout = $this->getCoutRecherche($cout, $niveau);
 							$temps_recherche = $this->getTempsRecherche($temps_recherche, $niveau);
 						}
 						else {
 							$niveau_recherche = 1;
 						}
+						
+						$cout = $this->getCoutRecherche($cout, $niveau_recherche);
 						
 						$recherche[] = [
 							"recherche" => $obj->recherche,
