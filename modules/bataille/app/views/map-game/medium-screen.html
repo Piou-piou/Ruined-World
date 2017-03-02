@@ -73,7 +73,7 @@
         <div class="espacement"></div>
 	{% endif %}
 	
-	{% if bataille.unites is iterable %}
+	{% if bataille.unites is iterable or bataille.groupe_unites is iterable %}
         <div class="row">
             <div class="small-12 side-bar">
                 <h3>Unités</h3>

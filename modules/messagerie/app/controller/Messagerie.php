@@ -152,7 +152,7 @@
 		 */
 		private function getMessageSupprimes() {
 			$dbc = App::getDb();
-
+			
 			$query = $dbc->select()
 				->from("_messagerie_boite_reception")
 				->from("_messagerie_message")
@@ -373,6 +373,24 @@
 			}
 
 			return false;
+		}
+		
+		/**
+		 * fonction qui permet de passer tous les messages en lu
+		 */
+		public function setLireAllMessage() {
+			$dbc = App::getDb();
+			
+			$dbc->update("lu", 1)->from("_messagerie_boite_reception")->where("ID_identite", "=", $_SESSION['idlogin'.CLEF_SITE])->set();
+		}
+		
+		/**
+		 * fonction qui permet de supprimer tous les messages
+		 */
+		public function setArchiverAllMessage() {
+			$dbc = App::getDb();
+			
+			$dbc->update("supprimer", 1)->from("_messagerie_boite_reception")->where("ID_identite", "=", $_SESSION['idlogin'.CLEF_SITE])->set();
 		}
 		//-------------------------- END SETTER ----------------------------------------------------------------------------//
 	}

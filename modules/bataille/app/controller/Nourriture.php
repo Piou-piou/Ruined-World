@@ -78,6 +78,10 @@
 		private function getNombreUniteMortHeure() {
 			$nb_unite = Bataille::getUnite()->getNombreUniteHumaine();
 			
+			if ($nb_unite == 0) {
+				return 0;
+			}
+			
 			return abs(round((0-($nb_unite*$this->getConsommationNourritureUnite()))/100))+1;
 		}
 		

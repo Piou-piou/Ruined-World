@@ -9,3 +9,14 @@
 		</ul>
 	</nav>
 </div>
+
+{% if page == "messagerie" %}
+	<div class="row messagerie">
+		<nav class="small-12 large-10 large-centered columns">
+			<ul class="small-12 large-6 large-centered columns">
+				<li><a href="{{WEBROOT}}controller/modules/messagerie/message/lu">Marquer tous les messages commu lu</a></li>
+				<li><a href="{{WEBROOT}}controller/modules/messagerie/message/archiver_all">Archiver tous les messages</a></li>
+			</ul>
+		</nav>
+	</div>
+{% endif %}
