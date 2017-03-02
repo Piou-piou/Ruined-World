@@ -153,6 +153,7 @@
 							"recherche" => $obj->recherche,
 							"type" => $obj->type,
 							"niveau" => $niveau,
+							"max_level_recherche" => $obj->max_level,
 							"cout" => $cout,
 							"temps_recherche" => DateHeure::Secondeenheure($temps_recherche),
 							"special" => Bataille::getUnite()->getCaracteristiqueUnite($obj->recherche, $niveau_recherche, $obj->type),

@@ -30,11 +30,15 @@
 
 			<input type="hidden" class="recherche" value="{{ i.recherche }}">
 			<input type="hidden" class="type" value="{{ i.type }}">
-
-			{% if i.niveau == 0 %}
-				<a class="rechercher">Rechercher</a>
+			
+			{% if i.max_level_recherche < i.niveau %}
+				{% if i.niveau == 0 %}
+					<a class="rechercher">Rechercher</a>
+				{% else %}
+					<a class="rechercher">Améliorer</a>
+				{% endif %}
 			{% else %}
-				<a class="rechercher">Améliorer</a>
+				<p>Cette recherche a attent son niveau maxium</p>
 			{% endif %}
 		</div>
 	{% endfor %}
