@@ -31,7 +31,7 @@
 			<input type="hidden" class="recherche" value="{{ i.recherche }}">
 			<input type="hidden" class="type" value="{{ i.type }}">
 			
-			{% if i.max_level_recherche < i.niveau %}
+			{% if i.max_level_recherche > i.niveau %}
 				{% if i.niveau == 0 %}
 					<a class="rechercher">Rechercher</a>
 				{% else %}
