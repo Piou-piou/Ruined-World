@@ -25,7 +25,7 @@
 				<li>Durée de la mission : {{ i.duree }}</li>
 			</ul>
 	
-			{% if bataille.unites is iterable %}
+			{% if bataille.unites is iterable or bataille.groupe_unites is iterable %}
 				<form action="{{ WEBRROT }}controller/modules/bataille/missions/lancer_mission" method="post">
 					
 					<div class="hidden" eau="0" electricite="0" fer="0" fuel="0" nourriture="{{ i.ressource_gagnee }}"></div>
