@@ -152,7 +152,7 @@
 		 */
 		private function getMessageSupprimes() {
 			$dbc = App::getDb();
-
+			
 			$query = $dbc->select()
 				->from("_messagerie_boite_reception")
 				->from("_messagerie_message")
