@@ -19,7 +19,9 @@
 			<h3>Caractéristiques actuelles</h3>
 			<ul>
 				<li>Niveau : {{ bataille.niveau_batiment }}</li>
-				<li>{{ bataille.info_batiment }}</li>
+				{% if bataille.info_batiment is iterable %}
+					<li>{{ bataille.info_batiment }}</li>
+				{% endif %}
 			</ul>
 
 		</div>
