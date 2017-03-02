@@ -142,17 +142,19 @@
 
 						//si niveau == 0 ca veut dire que la recherche n'a pas encore été effectuée dans la base
 						if ($niveau > 0) {
-							$cout = $this->getCoutRecherche($cout, $niveau);
 							$temps_recherche = $this->getTempsRecherche($temps_recherche, $niveau);
 						}
 						else {
 							$niveau_recherche = 1;
 						}
 						
+						$cout = $this->getCoutRecherche($cout, $niveau_recherche);
+						
 						$recherche[] = [
 							"recherche" => $obj->recherche,
 							"type" => $obj->type,
 							"niveau" => $niveau,
+							"max_level_recherche" => $obj->max_level,
 							"cout" => $cout,
 							"temps_recherche" => DateHeure::Secondeenheure($temps_recherche),
 							"special" => Bataille::getUnite()->getCaracteristiqueUnite($obj->recherche, $niveau_recherche, $obj->type),
@@ -230,8 +232,7 @@
 
 			//récupération du cout initial plus temps de recherche initial pour calculer les bon en fonction
 			//du lvl du centre + du niveau actuel de la recherche
-			$query = $dbc1->select("cout")
-				->select("temps_recherche")
+			$query = $dbc1->select()
 				->from("recherche")
 				->where("recherche", "=", $recherche, "AND")
 				->where("type", "=", $type)
@@ -241,7 +242,13 @@
 				foreach ($query as $obj) {
 					$cout = unserialize($obj->cout);
 					$temps_recherche = $obj->temps_recherche;
+					$max_level_recherche = $obj->max_level;
 				}
+			}
+			
+			if ($niveau_recherche >= $max_level_recherche) {
+				FlashMessage::setFlash("Cette unité est déjà au niveau maxium");
+				return false;
 			}
 
 			if ($niveau_recherche > 0) {
