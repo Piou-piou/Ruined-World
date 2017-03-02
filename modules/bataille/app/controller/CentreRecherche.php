@@ -150,6 +150,10 @@
 						
 						$cout = $this->getCoutRecherche($cout, $niveau_recherche);
 						
+						if ($obj->type == "infanterie") {
+							$special = Bataille::getUnite()->getCaracteristiqueUnite($obj->recherche, $niveau_recherche, $obj->type);
+						}
+						
 						$recherche[] = [
 							"recherche" => $obj->recherche,
 							"type" => $obj->type,
@@ -157,7 +161,7 @@
 							"max_level_recherche" => $obj->max_level,
 							"cout" => $cout,
 							"temps_recherche" => DateHeure::Secondeenheure($temps_recherche),
-							"special" => Bataille::getUnite()->getCaracteristiqueUnite($obj->recherche, $niveau_recherche, $obj->type),
+							"special" => $special,
 							"coef_amelioration" => Bataille::getParam("coef_niveau_unite")
 						];
 					}
