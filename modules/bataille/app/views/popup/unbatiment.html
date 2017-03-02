@@ -25,11 +25,13 @@
 		</div>
 	</div>
 	<div class="row next-lvl">
-		{% if bataille.max_level >=0 and bataille.max_level < 2 %}
+		{% if bataille.max_level >=0 and bataille.max_level < 2 and bataille.max_level != "max_level" %}
 			<h3>Caractéristiques au niveau suivant</h3>
 			<ul>
 				<li>Niveau : {{ bataille.niveau_batiment+1 }}</li>
-				<li>{{ bataille.info_batiment_next }}</li>
+				{% if bataille.info_batiment_next is iterable %}
+					<li>{{ bataille.info_batiment_next }}</li>
+				{% endif %}
 			</ul>
 
 
