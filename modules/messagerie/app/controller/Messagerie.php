@@ -374,5 +374,11 @@
 
 			return false;
 		}
+		
+		public function setLireAllMessage() {
+			$dbc = App::getDb();
+			
+			$dbc->update("lu", 1)->from("_messagerie_boite_reception")->where("ID_identite", "=", $_SESSION['idlogin'.CLEF_SITE])->set();
+		}
 		//-------------------------- END SETTER ----------------------------------------------------------------------------//
 	}
