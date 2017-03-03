@@ -11,6 +11,7 @@
 		private $coef_unite;
 		private $pour_recruter;
 		private $temps_recrutement;
+		private $ameliorations;
 
 		
 		//-------------------------- BUILDER ----------------------------------------------------------------------------//
@@ -21,7 +22,25 @@
 		
 		
 		//-------------------------- GETTER ----------------------------------------------------------------------------//
-
+		/**
+		 * @param $caracteristique
+		 * @param $force
+		 * @param $niveau
+		 * @return float
+		 * fonction qui permet de renvoyer la puissance d'une unité dans un élément spécifique
+		 */
+		private function getAmeliorationUnite($caracteristique, $force, $niveau) {
+			$coef = $this->coef_unite*$niveau;
+			if ($niveau == 1) $coef = 1;
+			
+			if ((in_array($caracteristique, $this->ameliorations)) || ($this->ameliorations == "all")) {
+				return round($force*$coef);
+			}
+			
+			return $force;
+		}
+		
+		
 		/**
 		 * @param $unite
 		 * @param $niveau
@@ -39,21 +58,22 @@
 				->get();
 
 			if ((is_array($query)) && (count($query) == 1)) {
+				$this->ameliorations = "all";
 				foreach ($query as $obj) {
 					$base_carac = unserialize($obj->caracteristique);
 					$ressource = unserialize($obj->pour_recruter);
 					$temps_recrutement = DateHeure::Secondeenheure(round($obj->temps_recrutement-($obj->temps_recrutement*Bataille::getBatiment()->getNiveauBatiment("caserne")/100)));
+					
+					if ($obj->amelioration != "") {
+						$this->ameliorations = explode(",", $obj->amelioration);
+					}
 				}
-
-				$coef = $this->coef_unite*$niveau;
-
-				if ($niveau == 1) $coef = 1;
 
 				return [
 					"caracteristique" => [
-						"attaque" => round($base_carac["attaque"]*$coef),
-						"defense" => round($base_carac["defense"]*$coef),
-						"resistance" => round($base_carac["resistance"]*$coef),
+						"attaque" => $this->getAmeliorationUnite("attaque", $base_carac["attaque"], $niveau),
+						"defense" => $this->getAmeliorationUnite("defense", $base_carac["defense"], $niveau),
+						"resistance" => $this->getAmeliorationUnite("resistance", $base_carac["resistance"], $niveau),
 						"vitesse" => $base_carac["vitesse"]
 					],
 					"cout_recruter" => [
@@ -62,6 +82,7 @@
 						"fer" => $ressource["fer"],
 						"fuel" => $ressource["fuel"],
 					],
+					"amelioration" => $this->ameliorations,
 					"temps_recrutement" => $temps_recrutement
 				];
 			}

@@ -60,10 +60,41 @@
 			}
 			
 			if ((is_array($query)) && (count($query) > 0)) {
+				$faction = Bataille::getRelationFaction();
+				$faction->getFactionPlayer();
+				$id_faction = $faction->getIdFaction();
+				$faction_allie = $faction->getIdFactionRelation("allié");
+				$faction_non_agression = $faction->getIdFactionRelation("pacte non agression");
+				$faction_ennemies = $faction->getIdFactionRelation("ennemi");
+				
 				foreach ($query as $obj) {
 					$ma_base = "";
+					$mes_bases = "";
+					$ma_faction = "";
+					$allie = "";
+					$pacte_non_agression = "";
+					$ennemi = "";
+					
 					if ($obj->ID_base == Bataille::getIdBase()) {
 						$ma_base = "ma-base";
+					}
+					else if ($obj->ID_identite == Bataille::getIdIdentite()) {
+						$mes_bases = "mes-bases";
+					}
+					
+					$faction->getFactionPlayer($obj->ID_identite);
+					if (($id_faction == $faction->getIdFaction()) && ($obj->ID_identite != Bataille::getIdIdentite())) {
+						$ma_faction = "ma-faction";
+					}
+					
+					if (in_array($faction->getIdFaction(), $faction_allie)) {
+						$allie = "faction-allie";
+					}
+					if (in_array($faction->getIdFaction(), $faction_non_agression)) {
+						$pacte_non_agression = "faction-non-agression";
+					}
+					if (in_array($faction->getIdFaction(), $faction_ennemies)) {
+						$ennemi = "faction-ennemi";
 					}
 					
 					$map[] = [
@@ -75,6 +106,11 @@
 						"id_identite" => $obj->ID_identite,
 						"pseudo" => $obj->pseudo,
 						"ma_base" => $ma_base,
+						"mes_bases" => $mes_bases,
+						"ma_faction" => $ma_faction,
+						"faction_allie" => $allie,
+						"faction_pacte_non_agression" => $pacte_non_agression,
+						"faction_ennemies" => $ennemi,
 						"temps_trajet" => $temps_trajet
 					];
 				}

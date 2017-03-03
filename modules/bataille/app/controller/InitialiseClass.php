@@ -11,6 +11,7 @@
 		protected static $groupe_unite;
 		protected static $centre_recherche;
 		protected static $missions_aleatoire;
+		protected static $relation_faction;
 		protected static $database;
 		
 		
@@ -79,6 +80,15 @@
 			}
 			
 			return self::$missions_aleatoire;
+		}
+		
+		//initialisation of Faction class
+		public static function getRelationFaction() {
+			if (self::$relation_faction == null) {
+				self::$relation_faction = new RelationFaction();
+			}
+			
+			return self::$relation_faction;
 		}
 		
 		//initialisation of Database Core connexion

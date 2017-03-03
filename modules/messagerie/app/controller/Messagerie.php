@@ -291,23 +291,11 @@
 		public function setArchiverMessage($id_message) {
 			$dbc = App::getDb();
 
-			$dbc->update("supprimer", 1)
+			$dbc->update("supprimer", 1)->update("lu", 1)
 				->from("_messagerie_boite_reception")
 				->where("ID_message", "=", $id_message, "AND")
 				->where("ID_identite", "=", $_SESSION['idlogin'.CLEF_SITE])
 				->set();
-		}
-
-		/**
-		 * @param $id_message
-		 */
-		public function setSupprimerMessage($id_message) {
-			$dbc = App::getDb();
-
-			$dbc->delete()->from("_messagerie_boite_reception")
-				->where("ID_message", "=", $id_message, "AND")
-				->where("ID_identite", "=", $_SESSION['idlogin'.CLEF_SITE])
-				->del();
 		}
 
 		/**
@@ -390,7 +378,7 @@
 		public function setArchiverAllMessage() {
 			$dbc = App::getDb();
 			
-			$dbc->update("supprimer", 1)->from("_messagerie_boite_reception")->where("ID_identite", "=", $_SESSION['idlogin'.CLEF_SITE])->set();
+			$dbc->update("supprimer", 1)->update("lu", 1)->from("_messagerie_boite_reception")->where("ID_identite", "=", $_SESSION['idlogin'.CLEF_SITE])->set();
 		}
 		//-------------------------- END SETTER ----------------------------------------------------------------------------//
 	}

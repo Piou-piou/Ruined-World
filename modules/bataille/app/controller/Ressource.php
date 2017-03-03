@@ -107,6 +107,71 @@
 				}
 			}
 		}
+		
+		/**
+		 * @param $eau
+		 * @param $electricite
+		 * @param $fer
+		 * @param $fuel
+		 * @param $nourriture
+		 * @return array
+		 * fonction qui gere le calcul d'ajout de setUpdateRessource
+		 */
+		private function getCalcAjoutRessource($eau, $electricite, $fer, $fuel, $nourriture) {
+			$eau = $this->getEau()+$eau;
+			$electricite = $this->getElectricite()+$electricite;
+			$fer = $this->getFer()+$fer;
+			$fuel = $this->getFuel()+$fuel;
+			$nourriture = $this->getNourriture()+$nourriture;
+			
+			$stockage_max = Bataille::getBatiment()->getStockage();
+			$stockage_max_grenier = Bataille::getBatiment()->getStockage("grenier");
+			
+			if ($eau > $stockage_max) $eau = $stockage_max;
+			if ($electricite > $stockage_max) $electricite = $stockage_max;
+			if ($fer > $stockage_max) $fer = $stockage_max;
+			if ($fuel > $stockage_max) $fuel = $stockage_max;
+			if ($nourriture > $stockage_max_grenier) $nourriture = $stockage_max_grenier;
+			
+			return [
+				"eau" => $eau,
+				"electricite" => $electricite,
+				"fer" => $fer,
+				"fuel" => $fuel,
+				"nourriture" => $nourriture
+			];
+		}
+		
+		/**
+		 * @param $eau
+		 * @param $electricite
+		 * @param $fer
+		 * @param $fuel
+		 * @param $nourriture
+		 * @return array
+		 * fonction qui gere le calcul pour retirer de setUpdateRessource
+		 */
+		private function getCalcRetirerRessource($eau, $electricite, $fer, $fuel, $nourriture) {
+			$eau = $this->eau - $eau;
+			$electricite = $this->electricite - $electricite;
+			$fer = $this->fer - $fer;
+			$fuel = $this->fuel - $fuel;
+			$nourriture = $this->nourriture - $nourriture;
+			
+			if ($eau < 0) $eau = 0;
+			if ($electricite < 0) $electricite = 0;
+			if ($fer < 0) $fer = 0;
+			if ($fuel < 0) $fuel = 0;
+			if ($nourriture < 0) $nourriture = 0;
+			
+			return [
+				"eau" => $eau,
+				"electricite" => $electricite,
+				"fer" => $fer,
+				"fuel" => $fuel,
+				"nourriture" => $nourriture
+			];
+		}
 		//-------------------------- END GETTER ----------------------------------------------------------------------------//
 
 
@@ -123,6 +188,8 @@
 				->where("ID_identite", "=", Bataille::getIdIdentite(), "AND")
 				->where("ID_base", "=", $this->id_base)
 				->set();
+			
+			$dbc->update("last_connexion", date("Y-m-d H:i:s"))->from("_bataille_infos_player")->where("ID_identite", "=", Bataille::getIdIdentite())->set();
 		}
 		
 		/**
@@ -218,71 +285,6 @@
 				->from("_bataille_base")
 				->where("ID_base", "=", $this->id_base)
 				->set();
-		}
-		
-		/**
-		 * @param $eau
-		 * @param $electricite
-		 * @param $fer
-		 * @param $fuel
-		 * @param $nourriture
-		 * @return array
-		 * fonction qui gere le calcul d'ajout de setUpdateRessource
-		 */
-		private function getCalcAjoutRessource($eau, $electricite, $fer, $fuel, $nourriture) {
-			$eau = $this->getEau()+$eau;
-			$electricite = $this->getElectricite()+$electricite;
-			$fer = $this->getFer()+$fer;
-			$fuel = $this->getFuel()+$fuel;
-			$nourriture = $this->getNourriture()+$nourriture;
-			
-			$stockage_max = Bataille::getBatiment()->getStockage();
-			$stockage_max_grenier = Bataille::getBatiment()->getStockage("grenier");
-			
-			if ($eau > $stockage_max) $eau = $stockage_max;
-			if ($electricite > $stockage_max) $electricite = $stockage_max;
-			if ($fer > $stockage_max) $fer = $stockage_max;
-			if ($fuel > $stockage_max) $fuel = $stockage_max;
-			if ($nourriture > $stockage_max_grenier) $nourriture = $stockage_max_grenier;
-			
-			return [
-				"eau" => $eau,
-				"electricite" => $electricite,
-				"fer" => $fer,
-				"fuel" => $fuel,
-				"nourriture" => $nourriture
-			];
-		}
-		
-		/**
-		 * @param $eau
-		 * @param $electricite
-		 * @param $fer
-		 * @param $fuel
-		 * @param $nourriture
-		 * @return array
-		 * fonction qui gere le calcul pour retirer de setUpdateRessource
-		 */
-		private function getCalcRetirerRessource($eau, $electricite, $fer, $fuel, $nourriture) {
-			$eau = $this->eau - $eau;
-			$electricite = $this->electricite - $electricite;
-			$fer = $this->fer - $fer;
-			$fuel = $this->fuel - $fuel;
-			$nourriture = $this->nourriture - $nourriture;
-			
-			if ($eau < 0) $eau = 0;
-			if ($electricite < 0) $electricite = 0;
-			if ($fer < 0) $fer = 0;
-			if ($fuel < 0) $fuel = 0;
-			if ($nourriture < 0) $nourriture = 0;
-			
-			return [
-				"eau" => $eau,
-				"electricite" => $electricite,
-				"fer" => $fer,
-				"fuel" => $fuel,
-				"nourriture" => $nourriture
-			];
 		}
 		//-------------------------- END SETTER ----------------------------------------------------------------------------//
 	}

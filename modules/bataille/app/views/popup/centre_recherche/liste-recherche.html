@@ -20,7 +20,7 @@
 			<h6>Caractéristiques</h6>
 			<ul>
 				{% for key,j in i.special.caracteristique %}
-					{% if i.niveau > 0 %}
+					{% if i.niveau > 0 and key in i.special.amelioration or i.special.amelioration == "all" %}
 						<li>{{ key }} :  {{ j }} (+{{ ((j*(i.coef_amelioration))-j)|round }})</li>
 					{% else %}
 						<li>{{ key }} :  {{ j }}</li>
