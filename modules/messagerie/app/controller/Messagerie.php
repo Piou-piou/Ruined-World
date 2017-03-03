@@ -390,7 +390,7 @@
 		public function setArchiverAllMessage() {
 			$dbc = App::getDb();
 			
-			$dbc->update("supprimer", 1)->from("_messagerie_boite_reception")->where("ID_identite", "=", $_SESSION['idlogin'.CLEF_SITE])->set();
+			$dbc->update("supprimer", 1)->update("lu", 1)->from("_messagerie_boite_reception")->where("ID_identite", "=", $_SESSION['idlogin'.CLEF_SITE])->set();
 		}
 		//-------------------------- END SETTER ----------------------------------------------------------------------------//
 	}
