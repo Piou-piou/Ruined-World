@@ -53,6 +53,28 @@
 			Bataille::setValues(["liste_relations" => $relations]);
 			return $relations;
 		}
+		
+		/**
+		 * @param $relation
+		 * @return array
+		 */
+		public function getIdFactionRelation($relation) {
+			$dbc = App::getDb();
+			
+			$query = $dbc->select("ID_autre_faction")->from("_bataille_faction_relation")
+				->where("relation", "=", $relation, "AND")
+				->where("ID_faction", "=", $this->id_faction)
+				->get();
+			
+			$relations = [];
+			if (count($query) > 0) {
+				foreach ($query as $obj) {
+					$relations[] = $obj->ID_autre_faction;
+				}
+			}
+			
+			return $relations;
+		}
 		//-------------------------- END GETTER ----------------------------------------------------------------------------//
 		
 		

@@ -467,6 +467,12 @@ button.no-style {
           background-color: #22569D; }
         .bataille .map-players .map > div.ma-faction {
           background-color: #24AC29; }
+        .bataille .map-players .map > div.faction-allie {
+          background-color: #1E7620; }
+        .bataille .map-players .map > div.faction-non-agression {
+          background-color: #595959; }
+        .bataille .map-players .map > div.faction-ennemi {
+          background-color: #AC0003; }
         .bataille .map-players .map > div > div {
           height: 25px;
           min-width: 350px;

@@ -22,9 +22,9 @@ $border-map-players: #000;
 $map-bg-mabase: #2A6BC3;
 $map-bg-mesbases: #22569D;
 $map-bg-mafaction: #24AC29;
-$map-bg-allie: #1E7620;
-$map-bg-ennemi: #AC0003;
-$map-bg-nonagression: #595959;
+$map-bg-factionallie: #1E7620;
+$map-bg-factionennemi: #AC0003;
+$map-bg-factionnonagression: #595959;
 $map-bg-hover-base: #FFFFFF;
 
 @import "login";
@@ -355,6 +355,18 @@ button.no-style {
 				
 				&.ma-faction {
 					background-color: $map-bg-mafaction;
+				}
+				
+				&.faction-allie {
+					background-color: $map-bg-factionallie;
+				}
+				
+				&.faction-non-agression {
+					background-color: $map-bg-factionnonagression;
+				}
+				
+				&.faction-ennemi {
+					background-color: $map-bg-factionennemi;
 				}
 				
 				> div {

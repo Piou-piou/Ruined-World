@@ -9,7 +9,7 @@
 
 		<div style="width:{{ bataille.largeur_map*15 }}px;height:{{ bataille.hauteur_map*15 }}px;" class="map">
 			{% for i in bataille.map %}
-				<div class="{{ i.ma_base }} {{ i.mes_bases }} {{ i.ma_faction }} open-popup" player="{{ i.id_base }}" popup="popup-base" style="left:{{ i.posx*15}}px;top:{{ i.posy*15 }}px;">
+				<div class="{{ i.ma_base }} {{ i.mes_bases }} {{ i.ma_faction }} {{ i.faction_allie }} {{ i.faction_pacte_non_agression }} {{ i.faction_ennemies }} open-popup" player="{{ i.id_base }}" popup="popup-base" style="left:{{ i.posx*15}}px;top:{{ i.posy*15 }}px;">
 					<div>
 						<p>Base : {{ i.nom_base }} du joueur : {{ i.pseudo }}</p>
 					</div>
