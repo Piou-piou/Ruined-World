@@ -60,10 +60,24 @@
 			}
 			
 			if ((is_array($query)) && (count($query) > 0)) {
+				$faction = Bataille::getFaction();
+				$faction->getFactionPlayer();
+				$id_faction = $faction->getIdFaction();
+				
 				foreach ($query as $obj) {
 					$ma_base = "";
+					$mes_bases = "";
+					$ma_faction = "";
 					if ($obj->ID_base == Bataille::getIdBase()) {
 						$ma_base = "ma-base";
+					}
+					else if ($obj->ID_identite == Bataille::getIdIdentite()) {
+						$mes_bases = "mes-bases";
+					}
+					
+					$faction->getFactionPlayer($obj->ID_identite);
+					if (($id_faction == $faction->getIdFaction()) && ($obj->ID_identite != Bataille::getIdIdentite())) {
+						$ma_faction = "ma-faction";
 					}
 					
 					$map[] = [
@@ -75,6 +89,8 @@
 						"id_identite" => $obj->ID_identite,
 						"pseudo" => $obj->pseudo,
 						"ma_base" => $ma_base,
+						"mes_bases" => $mes_bases,
+						"ma_faction" => $ma_faction,
 						"temps_trajet" => $temps_trajet
 					];
 				}

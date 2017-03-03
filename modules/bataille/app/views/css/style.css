@@ -424,7 +424,7 @@ button.no-style {
     max-height: 1200px;
     overflow: hidden;
     border: 1px solid #000;
-    background-color: #2A6BC3; }
+    background-color: #162B56; }
     .bataille .map-players .controls {
       background: rgba(0, 0, 0, 0.8);
       z-index: 1;
@@ -462,7 +462,11 @@ button.no-style {
           .bataille .map-players .map > div:hover > div {
             display: block; }
         .bataille .map-players .map > div.ma-base {
-          background-color: green; }
+          background-color: #2A6BC3; }
+        .bataille .map-players .map > div.mes-bases {
+          background-color: #22569D; }
+        .bataille .map-players .map > div.ma-faction {
+          background-color: #24AC29; }
         .bataille .map-players .map > div > div {
           height: 25px;
           min-width: 350px;

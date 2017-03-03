@@ -72,6 +72,7 @@
 				return true;
 			}
 			
+			$this->id_faction = "";
 			return false;
 		}
 		

@@ -15,11 +15,16 @@ $clr-ressource: #fff;
 /*pour le body et le bg de la map*/
 $bg-body: #414142;
 $bg-messagerie: #626263;
-$bg-map: #2A6BC3;
+$bg-map: #162B56;
 
 /*pour la map ou on voit tous les players*/
 $border-map-players: #000;
-$map-bg-mabase: green;
+$map-bg-mabase: #2A6BC3;
+$map-bg-mesbases: #22569D;
+$map-bg-mafaction: #24AC29;
+$map-bg-allie: #1E7620;
+$map-bg-ennemi: #AC0003;
+$map-bg-nonagression: #595959;
 $map-bg-hover-base: #FFFFFF;
 
 @import "login";
@@ -342,6 +347,14 @@ button.no-style {
 
 				&.ma-base {
 					background-color: $map-bg-mabase;
+				}
+				
+				&.mes-bases {
+					background-color: $map-bg-mesbases;
+				}
+				
+				&.ma-faction {
+					background-color: $map-bg-mafaction;
 				}
 				
 				> div {
