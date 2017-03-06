@@ -518,3 +518,32 @@ p.rouge {
 		padding-top: 1rem;
 	}
 }
+
+
+
+/*-------------------------------------- GESTION DU PROFIL --------------------------------------*/
+.gestion-profil {
+	color: #fff;
+	
+	.bloc {
+		background-color: $bg-ressource;
+		padding: 10px;
+	}
+	
+	a {
+		padding: 20px;
+		margin-top: 0.5rem;
+		display: inline-block;
+		border: 2px solid $bg-nom-base;
+		transition: all 0.3s ease;
+		background: linear-gradient($bg-nom-base, $bg-nom-base) no-repeat left bottom,
+		linear-gradient($bg-nom-base, $bg-nom-base) no-repeat right top;
+		background-size: 50% 0%, 50% 0%;
+		
+		&:hover {
+			background-size: 50% 100%, 50% 100%;
+			color: #fff;
+			cursor: pointer;
+		}
+	}
+}

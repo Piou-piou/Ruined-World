@@ -28,7 +28,8 @@
 		"login",
 		"map-game/large-screen",
 		"map-game/small-screen",
-		"classement"
+		"classement",
+		"gestion-profil"
 	];
 	
 	if (\core\modules\GestionModule::getModuleActiver("bataille")) {
@@ -47,6 +48,12 @@
 		if ($this->page == "aide-detail") {
 			\modules\bataille\app\controller\Aide::$parametre_router = $this->parametre;
 			$this->controller = "bataille/app/controller/initialise/aide.php";
+		}
+		
+		
+		//------------------------------- POUR LA GESTION DU PROFIL ----------------------------------//
+		if ($this->page == "gestion-profil") {
+			$this->controller = "bataille/app/controller/initialise/header.php";
 		}
 
 
