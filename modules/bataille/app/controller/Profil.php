@@ -16,6 +16,9 @@
 		
 		
 		//-------------------------- SETTER ----------------------------------------------------------------------------//
+		/**
+		 * fonction qui permet d'activer le mode vacances
+		 */
 		public static function setActiverModeVacances() {
 			$dbc = App::getDb();
 			
