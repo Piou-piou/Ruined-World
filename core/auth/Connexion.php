@@ -150,15 +150,15 @@
 		 * @param string $page_retour page sur laquel rediriger le mec qui a clique sur déconnexion
 		 */
 		public static function setDeconnexion($page_retour) {
-			$_SESSION['login'];
-			$_SESSION["idlogin".CLEF_SITE];
+			$_SESSION['login'] = "";
+			$_SESSION["idlogin".CLEF_SITE] = "";
 			unset($_SESSION['login']);
 			unset($_SESSION["idlogin".CLEF_SITE]);
 			session_destroy();
-			setcookie("auth".CLEF_SITE, NULL, -1);
+			unset($_COOKIE["auth".CLEF_SITE]);
+			setcookie("auth".CLEF_SITE, "", -1, "/", "", false, true);
 
 			session_start();
-			FlashMessage::setFlash("Vous avez été déconnecté avec succès", "success");
 
 			header("location:".$page_retour);
 		}
