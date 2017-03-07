@@ -22,7 +22,7 @@
 		public static function setActiverModeVacances() {
 			$dbc = App::getDb();
 			
-			$dbc->update("mode_vacances", 1)->from("_bataille_infos_player")->where("ID_identite", "=", Bataille::getIdIdentite())->set();
+			$dbc->update("mode_vacances", 1)->update("last_connexion", date("Y-m-d H:i:s"))->from("_bataille_infos_player")->where("ID_identite", "=", Bataille::getIdIdentite())->set();
 		}
 		//-------------------------- END SETTER ----------------------------------------------------------------------------//
 	}
