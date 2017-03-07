@@ -13,13 +13,17 @@
 			if ($this->getTestModeVacances() == 1) {
 				if ($this->getDureeVacances() < 2) {
 					FlashMessage::setFlash("Vous ne pouvez pas vous reconnecter sur votre compte car le mode vacances n'est pas actif depuis plus de 48h !");
+					$this->vacances = "<48";
+					return;
 				}
 				
-				$this->vacances = true;
+				$this->vacances = ">48";
+				return;
+				
 			}
-			else {
-				$this->vacances = false;
-			}
+			
+			$this->vacances = false;
+			return;
 		}
 		//-------------------------- END BUILDER ----------------------------------------------------------------------------//
 		

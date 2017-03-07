@@ -12,8 +12,11 @@
 	if ($profil->getVacances() == false) {
 		echo("ok");
 	}
-	else {
+	else if ($profil->getVacances() == "<48") {
 		\core\HTML\flashmessage\FlashMessage::getFlash();
+	}
+	else {
+		echo("popup");
 	}
 	
 	$_SESSION['idlogin'.CLEF_SITE] = "";
