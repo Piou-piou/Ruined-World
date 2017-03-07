@@ -538,10 +538,10 @@ p.rouge {
 		transition: all 0.3s ease;
 		background: linear-gradient($bg-nom-base, $bg-nom-base) no-repeat left bottom,
 		linear-gradient($bg-nom-base, $bg-nom-base) no-repeat right top;
-		background-size: 50% 0%, 50% 0%;
+		background-size: 51% 0%, 51% 0%;
 		
 		&:hover {
-			background-size: 50% 100%, 50% 100%;
+			background-size: 51% 100%, 51% 100%;
 			color: #fff;
 			cursor: pointer;
 		}

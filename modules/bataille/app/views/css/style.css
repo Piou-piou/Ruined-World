@@ -572,9 +572,9 @@ p.rouge {
     border: 2px solid #F24237;
     transition: all 0.3s ease;
     background: linear-gradient(#F24237, #F24237) no-repeat left bottom, linear-gradient(#F24237, #F24237) no-repeat right top;
-    background-size: 50% 0%, 50% 0%; }
+    background-size: 51% 0%, 51% 0%; }
     .gestion-profil a:hover {
-      background-size: 50% 100%, 50% 100%;
+      background-size: 51% 100%, 51% 100%;
       color: #fff;
       cursor: pointer; }
 
