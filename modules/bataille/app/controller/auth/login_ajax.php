@@ -15,3 +15,6 @@
 	else {
 		\core\HTML\flashmessage\FlashMessage::getFlash();
 	}
+	
+	$_SESSION['idlogin'.CLEF_SITE] = "";
+	unset($_SESSION['idlogin'.CLEF_SITE]);
