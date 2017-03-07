@@ -1,0 +1,29 @@
+<script>
+	$(document).ready(function() {
+		$("#login-form").submit(function(e) {
+			e.preventDefault();
+			
+			$.ajax({
+				type:"POST",
+				data: $(this).serialize(),
+				url:"{{WEBROOT}}controller/modules/bataille/auth/login_ajax",
+				success: function(data){
+					if (data == "ok") {
+                        $.ajax({
+                            type:"POST",
+                            data: $(this).serialize(),
+                            url:"{{WEBROOT}}controller/modules/bataille/auth/login",
+	                        success: function(data) {
+                                $("body").append(data);
+                                $("body .login:first-of-type").remove();
+	                        }
+                        });
+					}
+					else {
+						$("body").prepend(data);
+					}
+				}
+			});
+		});
+	});
+</script>

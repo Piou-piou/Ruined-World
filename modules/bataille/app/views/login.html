@@ -2,7 +2,7 @@
 
 <div class="row bataille login">
 	<div class="login-form active" id="login">
-		<form  action="{{ WEBROOT }}controller/modules/bataille/auth/login" method="post">
+		<form id="login-form" action="{{ WEBROOT }}controller/modules/bataille/auth/login" method="post">
 			
 			<h1>Ruined world</h1>
 			<h2>Connexion</h2>
@@ -29,3 +29,4 @@
 </div>
 
 <script src="{{ LIBSWEBROOT }}input_type_admin/js/effet_input.js"></script>
+{% include("js/login.html")   %}
