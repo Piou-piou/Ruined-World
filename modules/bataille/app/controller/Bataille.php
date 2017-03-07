@@ -199,6 +199,24 @@
 				foreach ($query as $obj) return $obj->$param;
 			}
 		}
+		
+		/**
+		 * @return mixed
+		 * fonction qui renvoi la date de dernière connexion d'un joueur
+		 */
+		public static function getLastConnexionPlayer() {
+			$dbc = App::getDb();
+			
+			$query = $dbc->select("last_connexion")->from("_bataille_infos_player")
+				->where("ID_identite", "=", self::getIdIdentite())
+				->get();
+			
+			if ((is_array($query)) && (count($query) > 0)) {
+				foreach ($query as $obj) {
+					return $obj->last_connexion;
+				}
+			}
+		}
 		//-------------------------- END GETTER ----------------------------------------------------------------------------//
 		
 		
