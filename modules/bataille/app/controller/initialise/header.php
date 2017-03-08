@@ -20,7 +20,17 @@
 		
 		$arr = array_merge($arr, $messagerie->getValues());
 	}
-	else {
+	else if (isset($_SESSION["desactiver_vacances"])) {
+		if ($profil->getVacances() == ">48") {
+			$profil->setDesactiverModeVacances();
+			header("location:".WEBROOT."bataille");
+		}
+		else {
+			\core\auth\Connexion::setDeconnexion(WEBROOT."bataille/login");
+			die();
+		}
+	}
+	else {print_r($_SESSION);
 		\core\auth\Connexion::setDeconnexion(WEBROOT."bataille/login");
 		die();
 	}

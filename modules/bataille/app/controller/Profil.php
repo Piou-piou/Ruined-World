@@ -79,5 +79,19 @@
 			
 			$dbc->update("mode_vacances", 1)->update("last_connexion", date("Y-m-d H:i:s"))->from("_bataille_infos_player")->where("ID_identite", "=", Bataille::getIdIdentite())->set();
 		}
+		
+		/**
+		 * fonction qui permet de finir le mode vacances
+		 */
+		public function setDesactiverModeVacances() {
+			$dbc = App::getDb();
+			
+			$dbc->update("mode_vacances", 0)->update("last_connexion", date("Y-m-d H:i:s"))->from("_bataille_infos_player")->where("ID_identite", "=", Bataille::getIdIdentite())->set();
+		
+			$dbc->update("last_connexion", date("Y-m-d- H:i:s"))
+				->update("last_check_nourriture", date("Y-m-d- H:i:s"))
+				->from("_bataille_base")
+				->where("ID_identite", "=", Bataille::getIdIdentite())->set();
+		}
 		//-------------------------- END SETTER ----------------------------------------------------------------------------//
 	}
