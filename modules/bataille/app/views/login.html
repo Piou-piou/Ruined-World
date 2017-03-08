@@ -1,8 +1,10 @@
+<link rel="stylesheet" type="text/css" href="{{LIBSWEBROOT}}popup/css/style.css">
 <link rel="stylesheet" type="text/css" href="{{MODULEWEBROOT}}bataille/app/views/css/style.css">
+<script src="{{LIBSWEBROOT}}popup/js/popup.js"></script>
 
 <div class="row bataille login">
 	<div class="login-form active" id="login">
-		<form  action="{{ WEBROOT }}controller/modules/bataille/auth/login" method="post">
+		<form id="login-form" action="{{ WEBROOT }}controller/modules/bataille/auth/login" method="post">
 			
 			<h1>Ruined world</h1>
 			<h2>Connexion</h2>
@@ -19,6 +21,7 @@
 				</div>
 			</div>
 			
+			<input type="hidden" name="vacances_desactiver" id="vacances" value="">
 			<input type="submit" class="submit-contenu submit-standard no-shadow full-width" value="Connexion">
 		</form>
 		
@@ -28,4 +31,18 @@
 	</div>
 </div>
 
+<div class="popup" id="popup-vacances">
+	<div class="content">
+		<h2>Voulez vous arrêter le mode vacances ?</h2>
+		<p>Dès la désactivation de se mode vous retrouverez votre/vos bases comme vous les avez laissées.
+		
+		<div class="lien">
+			<a class="annuler">Annuler</a>
+			<a href="" class="valider">Valider</a>
+		</div>
+		<div class="clear"></div>
+	</div>
+</div>
+
 <script src="{{ LIBSWEBROOT }}input_type_admin/js/effet_input.js"></script>
+{% include("js/login.html")   %}

@@ -1,0 +1,29 @@
+{{include("nav.html")}}
+
+<div class="row gestion-profil">
+	<div class="small-12 medium-4 columns">
+		<div class="bloc">
+			<h2>Changez votre E-mail</h2>
+		</div>
+	</div>
+	<div class="small-12 medium-4 columns">
+		<div class="bloc">
+			<h2>Changez votre mot de passe</h2>
+		</div>
+	</div>
+	<div class="small-12 medium-4 columns">
+		<div class="bloc">
+			<h2>Mode vacances</h2>
+			
+			<p>Ici tu pourras activer le mode vacances. Ce mode te permet de mettre en pause ton compte de ne pouvoir
+			   subir aucune attaque durant 40 jours maxium.
+			</p>
+			
+			<p>Pour désactiver le mode vacances il te suffira de te reconnecter sur ton compte en cochant l'option te permettant
+			   de désactiver ce mode.
+			</p>
+			
+			<a href="{{ WEBROOT }}controller/modules/bataille/profil/activer_vacances" class="open-popup" popup="popup-vacances">Activer le mode vacances</a>
+		</div>
+	</div>
+</div>

@@ -559,4 +559,23 @@ p.rouge {
   padding-bottom: 1rem;
   padding-top: 1rem; }
 
+/*-------------------------------------- GESTION DU PROFIL --------------------------------------*/
+.gestion-profil {
+  color: #fff; }
+  .gestion-profil .bloc {
+    background-color: #303031;
+    padding: 10px; }
+  .gestion-profil a {
+    padding: 20px;
+    margin-top: 0.5rem;
+    display: inline-block;
+    border: 2px solid #F24237;
+    transition: all 0.3s ease;
+    background: linear-gradient(#F24237, #F24237) no-repeat left bottom, linear-gradient(#F24237, #F24237) no-repeat right top;
+    background-size: 51% 0%, 51% 0%; }
+    .gestion-profil a:hover {
+      background-size: 51% 100%, 51% 100%;
+      color: #fff;
+      cursor: pointer; }
+
 /*# sourceMappingURL=style.css.map */
