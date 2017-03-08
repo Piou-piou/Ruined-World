@@ -1,32 +1,41 @@
 <script>
 	$(document).ready(function() {
 		$("#login-form").submit(function(e) {
-			e.preventDefault();
-			
-			$.ajax({
-				type:"POST",
-				data: $(this).serialize(),
-				url:"{{WEBROOT}}controller/modules/bataille/auth/login_ajax",
-				success: function(data){
-					if (data == "ok") {
-                        $.ajax({
-                            type:"POST",
-                            data: $(this).serialize(),
-                            url:"{{WEBROOT}}controller/modules/bataille/auth/login",
-	                        success: function(data) {
-                                $("body").append(data);
-                                $("body .login:first-of-type").remove();
-	                        }
-                        });
-					}
-					else if (data == "popup") {
-					    //faire pour afficher la popup permettant de désactiver le mode vacances.
-					}
-					else {
-						$("body").prepend(data);
-					}
-				}
-			});
+			if ($("#login-form #vacances").val() != "desactiver") {
+                e.preventDefault();
+                $.ajax({
+                    type:"POST",
+                    data: $(this).serialize(),
+                    url:"{{WEBROOT}}controller/modules/bataille/auth/login_ajax",
+                    success: function(data){
+                        if (data == "ok") {
+                            $.ajax({
+                                type:"POST",
+                                data: $(this).serialize(),
+                                url:"{{WEBROOT}}controller/modules/bataille/auth/login",
+                                success: function(data) {
+                                    $("body").append(data);
+                                    $("body .login:first-of-type").remove();
+                                }
+                            });
+                        }
+                        else if (data == "popup") {
+                            $("#popup-vacances").addClass("visible");
+                        }
+                        else {
+                            $("body").prepend(data);
+                        }
+                    }
+                });
+			}
 		});
+		
+		$(".popup a.valider").click(function(e) {
+		    e.preventDefault();
+            
+            $("#login-form #vacances").val("desactiver");
+            
+            $("#login-form").submit();
+		})
 	});
 </script>
