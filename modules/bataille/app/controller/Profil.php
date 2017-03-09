@@ -93,6 +93,25 @@
 			
 			return 0;
 		}
+		
+		/**
+		 * @return bool
+		 * fonction qui récupère toutes les construction en cours de la base
+		 */
+		public function getAllConstructionBases() {
+			$dbc = App::getDb();
+			
+			$query = $dbc->select()->from("_bataille_base")->from("_bataille_batiment")
+				->where("_bataille_base.ID_identite", "=", Bataille::getIdIdentite(), "AND")
+				->where("_bataille_batiment.construction", "=", 1, "AND")
+				->where("_bataille_base.ID_base", "=", "_bataille_batiment.ID_base", "", true)->get();
+			
+			if (count($query) > 0) {
+				return true;
+			}
+			
+			return false;
+		}
 		//-------------------------- END GETTER ----------------------------------------------------------------------------//
 		
 		
