@@ -78,13 +78,15 @@
 			
 			$query = $dbc->select()->from("_bataille_base")->from("_bataille_infos_player")
 				->where("_bataille_base.ID_base", "=", $id_base, "AND")
-				->where("_bataille_base.ID_identite", "=", "_bataille_infos_player.ID_identite")->get();
+				->where("_bataille_base.ID_identite", "=", "_bataille_infos_player.ID_identite", "", true)->get();
 			
-			if (count($query) == 1) {
+			if (count($query) > 0) {
 				foreach ($query as $obj) {
-					return $obj->mod_vacances;
+					return $obj->mode_vacances;
 				}
 			}
+			
+			return 0;
 		}
 		//-------------------------- END GETTER ----------------------------------------------------------------------------//
 		

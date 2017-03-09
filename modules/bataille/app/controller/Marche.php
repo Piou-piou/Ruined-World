@@ -252,6 +252,11 @@
 					FlashMessage::setFlash("Vous n'avez pas assez de marchans disponibles pour effectuer ce trajet");
 					return false;
 				}
+				
+				if (Profil::getTestVacancesBase($id_base_dest) == 1) {
+					FlashMessage::setFlash("Cette base est en mode vacances, vous ne pouvez pas y envoyer des ressources");
+					return false;
+				}
 
 				//sinon initialise le transport
 				//on recup la date d'arrivee dans la base de destintation
