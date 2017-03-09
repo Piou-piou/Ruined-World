@@ -1,10 +1,9 @@
 <?php
+	require_once("test_connexion.php");
 	use modules\bataille\app\controller\Bataille;
 	$profil = new \modules\bataille\app\controller\Profil();
 	
 	if ($profil->getVacances() == false) {
-		require_once("test_connexion.php");
-		
 		Bataille::getMissionsAleatoire()->setTerminerMissions();
 		
 		$nourriture = new \modules\bataille\app\controller\Nourriture();
