@@ -115,7 +115,7 @@
 		
 		/**
 		 * @return bool
-		 * fonction qui récupère toutes les recherches, recrutement, missions en cours de la base
+		 * fonction qui récupère toutes les recherches, recrutement, missions et offre de marché en cours de la base
 		 */
 		private function getAllThingsBases($table) {
 			$dbc = App::getDb();
