@@ -67,6 +67,25 @@
 			
 			return $interval->format('%a');
 		}
+		
+		/**
+		 * @param $id_base
+		 * @return mixed
+		 * permet de tester si une base est en vacances ou non
+		 */
+		public static function getTestVacancesBase($id_base) {
+			$dbc = App::getDb();
+			
+			$query = $dbc->select()->from("_bataille_base")->from("_bataille_infos_player")
+				->where("_bataille_base.ID_base", "=", $id_base, "AND")
+				->where("_bataille_base.ID_identite", "=", "_bataille_infos_player.ID_identite")->get();
+			
+			if (count($query) == 1) {
+				foreach ($query as $obj) {
+					return $obj->mod_vacances;
+				}
+			}
+		}
 		//-------------------------- END GETTER ----------------------------------------------------------------------------//
 		
 		
