@@ -115,14 +115,33 @@
 		
 		/**
 		 * @return bool
-		 * fonction qui récupère toutes les recherches en cours de la base
+		 * fonction qui récupère toutes les recherches, recrutement, missions en cours de la base
 		 */
-		private function getAllRechercheBases() {
+		private function getAllThingsBases($table) {
 			$dbc = App::getDb();
 			
-			$query = $dbc->select()->from("_bataille_base")->from("_bataille_recherche")
+			$query = $dbc->select()->from("_bataille_base")->from($table)
 				->where("_bataille_base.ID_identite", "=", Bataille::getIdIdentite(), "AND")
-				->where("_bataille_base.ID_base", "=", "_bataille_recherche.ID_base", "", true)->get();
+				->where("_bataille_base.ID_base", "=", $table.".ID_base", "", true)->get();
+			
+			if (count($query) > 0) {
+				return true;
+			}
+			
+			return false;
+		}
+		
+		/**
+		 * @return bool
+		 * fonction qui récupère toutes les transports en cours de la base
+		 */
+		private function getAllMarcheBases() {
+			$dbc = App::getDb();
+			
+			$query = $dbc->select()->from("_bataille_base")->from("_bataille_marche_transport")
+				->where("_bataille_base.ID_identite", "=", Bataille::getIdIdentite(), "AND")
+				->where("_bataille_base.ID_base", "=", "_bataille_marche_transport.ID_base", "OR", true)->get()
+				->where("_bataille_base.ID_base", "=", "_bataille_marche_transport.ID_base_dest", "", true)->get();
 			
 			if (count($query) > 0) {
 				return true;
