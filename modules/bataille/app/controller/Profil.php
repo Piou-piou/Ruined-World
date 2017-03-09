@@ -37,10 +37,15 @@
 		 * @return string
 		 * fonction qui test si le compte est en mode vacances ou pas
 		 */
-		public function getTestModeVacances() {
+		public function getTestModeVacances($id_identite = null) {
 			$dbc = App::getDb();
 			$vacances = 0;
-			$query = $dbc->select("mode_vacances")->from("_bataille_infos_player")->where("ID_identite", "=", Bataille::getIdIdentite())->get();
+			
+			if ($id_identite === null) {
+				$id_identite = Bataille::getIdIdentite();
+			}
+			
+			$query = $dbc->select("mode_vacances")->from("_bataille_infos_player")->where("ID_identite", "=", $id_identite)->get();
 			
 			if (count($query) > 0) {
 				foreach ($query as $obj) {
