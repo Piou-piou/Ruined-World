@@ -117,7 +117,7 @@
 		 * @return bool
 		 * fonction qui récupère toutes les recherches, recrutement, missions et offre de marché en cours de la base
 		 */
-		private function getAllThingsBases($table) {
+		private static function getAllThingsBases($table) {
 			$dbc = App::getDb();
 			
 			$query = $dbc->select()->from("_bataille_base")->from($table)
@@ -135,7 +135,7 @@
 		 * @return bool
 		 * fonction qui récupère toutes les transports en cours de la base
 		 */
-		private function getAllMarcheBases() {
+		private static function getAllMarcheBases() {
 			$dbc = App::getDb();
 			
 			$query = $dbc->select()->from("_bataille_base")->from("_bataille_marche_transport")
@@ -159,7 +159,18 @@
 		public static function setActiverModeVacances() {
 			$dbc = App::getDb();
 			
-			$dbc->update("mode_vacances", 1)->update("last_connexion", date("Y-m-d H:i:s"))->from("_bataille_infos_player")->where("ID_identite", "=", Bataille::getIdIdentite())->set();
+			if ((self::getAllConstructionBases() == false) && (self::getAllMarcheBases() == false) &&
+				(self::getAllThingsBases("_bataille_marche_transport") == false) &&
+				(self::getAllThingsBases("_bataille_marche_recrutement") == false) &&
+				(self::getAllThingsBases("_bataille_marche_recherche") == false)) {
+				
+				$dbc->update("mode_vacances", 1)->update("last_connexion", date("Y-m-d H:i:s"))->from("_bataille_infos_player")->where("ID_identite", "=", Bataille::getIdIdentite())->set();
+				FlashMessage::setFlash("Le mode vacances a bien été activé");
+				return true;
+			}
+			
+			FlashMessage::setFlash("impossible de passer en mode vacances des actions sont encore en cours dans vos bases, merci d'en faire le tour pour vérifier");
+			return false;
 		}
 		
 		/**
