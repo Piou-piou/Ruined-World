@@ -162,6 +162,7 @@
 			if ((self::getAllConstructionBases() == false) && (self::getAllMarcheBases() == false) &&
 				(self::getAllThingsBases("_bataille_marche_transport") == false) &&
 				(self::getAllThingsBases("_bataille_marche_recrutement") == false) &&
+				(self::getAllThingsBases("_bataille_missions_cours") == false) &&
 				(self::getAllThingsBases("_bataille_marche_recherche") == false)) {
 				
 				$dbc->update("mode_vacances", 1)->update("last_connexion", date("Y-m-d H:i:s"))->from("_bataille_infos_player")->where("ID_identite", "=", Bataille::getIdIdentite())->set();
