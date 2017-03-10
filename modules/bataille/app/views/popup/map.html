@@ -1,5 +1,10 @@
 {% for i in bataille.map %}
+	{% set vacances %}{% endset %}
+	{% if i.mode_vacances == 1 %}
+		{% set vacances %}Ce joueurs est en vacances, vous ne pouvez donc pas intéragir avec lui{% endset %}
+	{% endif %}
 	<h2>{{ i.nom_base }}</h2>
+	<p>{{ vacances }}</p>
 	
 	<h3>Pos X : {{ i.posx }} || Pos Y : {{ i.posy }}</h3>
 	

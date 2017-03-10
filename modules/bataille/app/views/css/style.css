@@ -1,7 +1,7 @@
 @charset "UTF-8";
-/*pour la nav tout en haut de la page ou il y a aide d├®connexion...*/
+/*pour la nav tout en haut de la page ou il y a aide déconnexion...*/
 /*pour la nav principaleou il y a le logo de la map...*/
-/*pour le logo et les ressources + les panneaux latt├®raux avec les unit├®s*/
+/*pour le logo et les ressources + les panneaux lattéraux avec les unités*/
 /*pour le body et le bg de la map*/
 /*pour la map ou on voit tous les players*/
 /*----- LINK COLORS -----*/
@@ -256,7 +256,8 @@
           color: #C33632; }
 
 body {
-  background-color: #414142; }
+  background-color: #414142;
+  font-family: Arial; }
 
 button.no-style {
   background-color: inherit;

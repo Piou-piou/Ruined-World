@@ -111,7 +111,8 @@
 						"faction_allie" => $allie,
 						"faction_pacte_non_agression" => $pacte_non_agression,
 						"faction_ennemies" => $ennemi,
-						"temps_trajet" => $temps_trajet
+						"temps_trajet" => $temps_trajet,
+						"mode_vacances" => Profil::getTestVacancesBase($obj->ID_base)
 					];
 				}
 				

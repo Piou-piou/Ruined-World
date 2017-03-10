@@ -1,4 +1,11 @@
 <h2>{{ bataille.pseudo }}</h2>
+
+{% set vacances %}{% endset %}
+{% if bataille.mode_vacances == 1 %}
+	{% set vacances %}Ce joueurs est en vacances, vous ne pouvez donc pas intéragir avec lui{% endset %}
+{% endif %}
+<p>{{ vacances }}</p>
+
 {% if bataille.faction is iterable %}
 	<p>Faction : <a href="" class="faction" id_faction="{{ bataille.faction.id_faction }}">{{ bataille.faction.nom }}</a></p>
 	{% include("js/faction/get_unefaction.html") %}
