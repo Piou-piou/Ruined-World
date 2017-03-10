@@ -521,6 +521,12 @@ p.rouge {
       .popup .content .lien a.annuler:hover {
         background-color: #217ED3;
         color: #FFFFFF; }
+    .popup .content .ambassade button {
+      padding: 0.63rem;
+      margin-top: 1rem;
+      vertical-align: bottom;
+      margin-top: 1.3rem;
+      margin-left: -1.9rem; }
   .popup .rouge {
     color: red; }
   .popup .construire {

@@ -40,12 +40,27 @@
 						{% set disabled_chef %}disabled{% endset %}
 					{% endif %}
 					
-					{% for x,key in i.permissions %}
-						<div class="small-12 medium-1 columns end">
-							<input type="checkbox" name="permission" class="permission" value="{{ x }}" {{ key }} {{ disabled_chef }}>
-							{{ x }}
+					<div class="row">
+						{% for x,key in i.permissions %}
+							<div class="small-12 medium-1 columns end">
+								<input type="checkbox" name="permission" class="permission" value="{{ x }}" {{ key }} {{ disabled_chef }}>
+								{{ x }}
+							</div>
+						{% endfor %}
+					</div>
+					
+					
+					<div class="row">
+						<div class="small-12 medium-6">
+							<div class="small-12 medium-10 columns">
+								<label for="rang">Gérer le rang du membre</label>
+								<input type="text" name="rang" value="{{ i.rang_faction }}">
+							</div>
+							<div class="small-12 medium-2 columns">
+								<button>Valider</button>
+							</div>
 						</div>
-					{% endfor %}
+					</div>
 				</div>
 			</div>
 		{% endfor %}
