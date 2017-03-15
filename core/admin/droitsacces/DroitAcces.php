@@ -1,34 +1,34 @@
 <?php
 	namespace core\admin\droitsacces;
-
+	
 	use core\App;
-
+	
 	class DroitAcces {
 		private $logged;
-
+		
 		//pour la table identite
 		private $id_identite;
 		private $super_admin;
-
+		
 		//pour la table liste_droit_acces
 		private $id_liste_droit_acces;
-
+		
 		//pour des droits pour la gestion des contenus
 		private $modif_seo;
 		private $modif_contenu;
 		private $modif_navigation;
 		private $supprimer_page;
-
-
+		
+		
 		//-------------------------- CONSTRUCTEUR ----------------------------------------------------------------------------//
 		public function __construct() {
 			$dbc = \core\App::getDb();
-
+			
 			$this->id_identite = $_SESSION["idlogin".CLEF_SITE];
-
+			
 			//on test voir si super admin
 			$query = $dbc->select("super_admin")->select("liste_droit")->from("identite")->where("ID_identite", "=", $this->id_identite)->get();
-
+			
 			if ((is_array($query)) && (count($query) > 0)) {
 				foreach ($query as $obj) {
 					$this->super_admin = $obj->super_admin;
@@ -37,9 +37,9 @@
 			}
 		}
 		//-------------------------- FIN CONSTRUCTEUR ----------------------------------------------------------------------------//
-    
-    
-    
+		
+		
+		
 		//-------------------------- GETTER ----------------------------------------------------------------------------//
 		public function getLogged() {
 			return $this->logged;
@@ -62,15 +62,15 @@
 		public function getSupprimerPage() {
 			return $this->supprimer_page;
 		}
-
+		
 		/**
 		 * @return array
 		 */
 		private function getListeDroitAcces() {
 			$dbc = App::getDb();
-
+			
 			$liste_droit_acces = [];
-
+			
 			$query = $dbc->select()->from("droit_acces")
 				->from("liste_droit_acces")
 				->from("liaison_liste_droit")
@@ -78,35 +78,20 @@
 				->where("droit_acces.ID_droit_acces", "=", "liaison_liste_droit.ID_droit_acces", "AND", true)
 				->where("liste_droit_acces.ID_liste_droit_acces", "=", "liaison_liste_droit.ID_liste_droit_acces", "", true)
 				->get();
-
+			
 			if ((is_array($query)) && (count($query) > 0)) {
 				foreach ($query as $obj) $liste_droit_acces[] = $obj->droit_acces;
 			}
-
+			
 			return $liste_droit_acces;
 		}
-
-		/**
-		 * @return array
-		 */
-		private function getListeDroitPage($page) {
-			$dbc = App::getDb();
-			$droit_acces = [];
-
-			$query = $dbc->select("droit_acces")->from("droit_acces")->where("page", " LIKE ", "'%".$page."%'", "", true)->get();
-			if ((is_array($query)) && (count($query) > 0)) {
-				foreach ($query as $obj) $droit_acces = $obj->droit_acces;
-			}
-
-			return $droit_acces;
-		}
-
+		
 		/**
 		 * @param $id_page
 		 */
 		private function getListeDroitModificationContenu($id_page) {
 			$dbc = App::getDb();
-
+			
 			//on check si il a le droit de modifier ou supprimer cette page
 			$query = $dbc->select()->from("droit_acces_page")
 				->from("liste_droit_acces")
@@ -114,7 +99,7 @@
 				->where("liste_droit_acces.ID_liste_droit_acces", "=", $this->id_liste_droit_acces, "AND")
 				->where("droit_acces_page.ID_liste_droit_acces", "=", "liste_droit_acces.ID_liste_droit_acces", "", true)
 				->get();
-
+			
 			//si on a un resultat
 			if ((is_array($query)) && (count($query) > 0)) {
 				foreach ($query as $obj) {
@@ -125,26 +110,7 @@
 				}
 			}
 		}
-
-		//autres getter
-		/**
-		 * pour savoir si en fonction des droits d'accès de l'utilisateur il peu ou non accéder à cete page
-		 * on passe outre les test si on est super admin
-		 * @param string $page
-		 * @return bool
-		 */
-		public function getDroitAccesPage($page) {
-			//page sans droit dans admin
-			$all_access = array("configuration/mon-compte", "index", "contacter-support");
-
-			if (($this->super_admin == 1) || (in_array($this->getListeDroitPage($page), $this->getListeDroitAcces())) || (in_array($page, $all_access))) {
-				return true;
-			}
-			else {
-				return false;
-			}
-		}
-
+		
 		/**
 		 * fonction qui permet de gérer les droits d'accès sur les contenus :
 		 * - creer une page
@@ -157,11 +123,11 @@
 		 */
 		public function getDroitAccesContenu($droit, $id_page) {
 			$liste_droit_acces = $this->getListeDroitAcces();
-
+			
 			$this->getListeDroitModificationContenu($id_page);
-
+			
 			$array_modif = [$this->modif_seo, $this->modif_contenu, $this->modif_navigation];
-
+			
 			//si les trois sont différent de 0 on renvoit true soinon false
 			if (($this->super_admin == 1) || ((in_array($droit, $liste_droit_acces)) && in_array(1, $array_modif))) {
 				return true;
@@ -170,15 +136,15 @@
 				return false;
 			}
 		}
-
+		
 		/**
 		 * pour savoir si un utilisateur à le droit de supprimer, modifier ou ajouter des trucs
 		 * @param $droit_acces
 		 * @return bool
 		 */
-		public function getDroitAccesAction($droit_acces) {
+		public function getDroitAcces($droit_acces) {
 			$liste_droit_acces = $this->getListeDroitAcces();
-
+			
 			if (($this->super_admin == 1) || (in_array($droit_acces, $liste_droit_acces))) {
 				return true;
 			}
@@ -187,10 +153,10 @@
 			}
 		}
 		//-------------------------- FIN GETTER ----------------------------------------------------------------------------//
-    
-    
-    
+		
+		
+		
 		//-------------------------- SETTER ----------------------------------------------------------------------------//
-
+		
 		//-------------------------- FIN SETTER ----------------------------------------------------------------------------//
 	}

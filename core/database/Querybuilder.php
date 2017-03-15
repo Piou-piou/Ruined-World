@@ -12,11 +12,12 @@
 		protected $closure = [];
 		protected $table = [];
 		protected $order_by;
+		protected $group_by;
 		protected $limit;
-
+		
 		abstract public function query();
 		abstract public function prepare();
-
+		
 		
 		//-------------------------- QUERY BUILDER --------------------------------------------//
 		/**
@@ -28,10 +29,10 @@
 		public function select($champs = "*") {
 			$this->req_beginning = "SELECT ";
 			$this->select_champ[] = $champs;
-
+			
 			return $this;
 		}
-
+		
 		/**
 		 * @param $champ
 		 * @param $value
@@ -41,12 +42,12 @@
 		 */
 		public function insert($champ, $value) {
 			$this->add($champ, $value);
-
+			
 			$this->req_beginning = "INSERT INTO ";
-
+			
 			return $this;
 		}
-
+		
 		/**
 		 * @param $champ
 		 * @param $value
@@ -54,12 +55,12 @@
 		 */
 		public function update($champ, $value) {
 			$this->add($champ, $value);
-
+			
 			$this->req_beginning = "UPDATE ";
-
+			
 			return $this;
 		}
-
+		
 		/**
 		 * @return $this
 		 *
@@ -67,10 +68,10 @@
 		 */
 		public function delete() {
 			$this->req_beginning = "DELETE FROM ";
-
+			
 			return $this;
 		}
-
+		
 		/**
 		 * @param string $table
 		 * @return $this
@@ -79,10 +80,10 @@
 		 */
 		public function from($table) {
 			$this->table[] = $table;
-
+			
 			return $this;
 		}
-
+		
 		/**
 		 * @param string $table
 		 *
@@ -90,10 +91,10 @@
 		 */
 		public function into($table) {
 			$this->table[] = $table;
-
+			
 			return $this;
 		}
-
+		
 		/**
 		 * @param $champ
 		 * @param string $cond
@@ -105,7 +106,7 @@
 		 */
 		public function where($champ, $cond, $champ_test, $closure = "", $no_bind = false) {
 			$this->closure[] = $closure;
-
+			
 			if ($no_bind === true) {
 				$this->conditions_table[] = $champ.$cond.$champ_test." ".$closure;
 			}
@@ -113,22 +114,22 @@
 				$this->conditions[] = $cond;
 				$this->addWhere($champ, $champ_test);
 			}
-
+			
 			return $this;
 		}
-
+		
 		/**
 		 * @param string $order
 		 * @param string $type
 		 */
 		public function orderBy($order, $type = null) {
 			if ($type === null) $type = "ASC";
-
+			
 			$this->order_by = " ORDER BY ".$order." ".$type." ";
-
+			
 			return $this;
 		}
-
+		
 		/**
 		 * @param integer $debut
 		 * @param integer $fin
@@ -141,10 +142,16 @@
 				$this->limit = " LIMIT ".$debut.", ".$fin." ";
 			}
 			
-
+			
 			return $this;
 		}
-
+		
+		public function groupBy($name) {
+			$this->group_by = " GROUP BY ".$name." ";
+			
+			return $this;
+		}
+		
 		/**
 		 * @return array
 		 *
@@ -157,15 +164,17 @@
 				$requete .= $this->getWhereConditions()[0];
 				$values = $this->getWhereConditions()[1];
 			}
-
+			
+			$requete .= $this->group_by;
+			
 			$requete .= $this->order_by;
-
+			
 			$requete .= $this->limit;
-
+			
 			$this->unsetQueryBuilder();
 			return $this->prepare($requete, $values);
 		}
-
+		
 		/**
 		 * fonction utlisée pour terminer un insert ou un update dans la base de données
 		 */
@@ -176,45 +185,45 @@
 			for ($i = 0; $i < $count; $i++) {
 				$datas[] = $this->champs[$i]."=:".$this->champs[$i];
 			}
-
+			
 			//si on a des conditions alors on sera dans un insert
 			$requete = $this->req_beginning.implode(",", $this->table)." SET ".implode(", ", $datas);
-
+			
 			if ((!empty($this->conditions)) || (!empty($this->conditions_table))) {
 				$requete .= $this->getWhereConditions()[0];
-
+				
 				$values = array_merge($values, $this->getWhereConditions()[1]);
 			}
 			
 			$requete .= $this->limit;
-
+			
 			$this->prepare($requete, $values);
 			$this->unsetQueryBuilder();
 		}
-
+		
 		/**
 		 * fonction utilisée pour finir un delete
 		 */
 		public function del() {
 			$values = [];
 			$requete = $this->req_beginning.implode(",", $this->table);
-
+			
 			if (!empty($this->conditions)) {
 				$requete .= $this->getWhereConditions()[0];
-
+				
 				$values = array_merge($values, $this->getWhereConditions()[1]);
 			}
 			
 			$requete .= $this->order_by;
 			
 			$requete .= $this->limit;
-
+			
 			$this->prepare($requete, $values);
 			$this->unsetQueryBuilder();
 		}
-
-
-
+		
+		
+		
 		//-------------------------- PRIVATE FUNCTIONS --------------------------------------------//
 		/**
 		 * @param $champ
@@ -229,7 +238,7 @@
 				$this->value[] = $value;
 			}
 		}
-
+		
 		/**
 		 * @param $champ
 		 * @param $value
@@ -243,7 +252,7 @@
 				$this->value_where[] = $value;
 			}
 		}
-
+		
 		/**
 		 * @return array
 		 * crée les tableau et renvoi la clause where
@@ -251,26 +260,26 @@
 		private function getWhereConditions() {
 			$values = [];
 			$datas = [];
-
+			
 			if ((!empty($this->conditions))) {
 				$values = array_combine(str_replace(".", "", $this->champs_where), $this->value_where);
-
+				
 				$count = count($this->champs_where);
-
+				
 				for ($i = 0; $i < $count; $i++) {
 					$datas[] = $this->champs_where[$i]." ".$this->conditions[$i]." :".str_replace(".", "", $this->champs_where[$i])." ".$this->closure[$i]." ";
 				}
 			}
-
+			
 			if ((!empty($this->conditions_table))) {
 				foreach ($this->conditions_table as $cond) {
 					$datas[] = $cond;
 				}
 			}
-
+			
 			return [" WHERE ".implode(" ", $datas), $values];
 		}
-
+		
 		/**
 		 * fonction qui détruit toutes les variables utilisées.
 		 */
@@ -286,6 +295,7 @@
 			$this->closure = [];
 			$this->table = [];
 			$this->order_by = "";
+			$this->group_by = "";
 			$this->limit = "";
 		}
 	}

@@ -2,27 +2,25 @@
 <!DOCTYPE html>
 <html lang="fr">
 	<head>
-		<title><?=$titre_page?></title>
+		<title><?=\core\App::getTitle()?></title>
 		<meta charset="utf-8">
-		<meta name="description" content="<?=$description_page?>">
+		<meta name="description" content="<?=\core\App::getDescription()?>">
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-		<link rel="stylesheet" type="text/css" href="<?=WEBROOT?>libs/font_awesome/css/font-awesome.min.css">
-		<link rel="stylesheet" type="text/css" href="<?=WEBROOT?>libs/font_awesome/css/animate.css">
-		<?php if ($config->getResponsive() == 1){?>
-			<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-			<link rel="stylesheet" type="text/css" href="<?=TPLWEBROOT?>css/foundation.css">
-			<link rel="stylesheet" type="text/css" href="<?=TPLWEBROOT?>css/nav-responsive.css">
-			<script src="<?=TPLWEBROOT?>js/nav-responsive.js"></script>
-		<?php } else {?>
-		<link rel="stylesheet" type="text/css" href="<?=LIBSWEBROOT?>reset_css/reset.css">
-		<?php } ?>
+		<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+		<link rel="stylesheet" type="text/css" href="<?=TPLWEBROOT?>css/foundation.css">
+		<script src="<?=TPLWEBROOT?>js/nav-responsive.js"></script>
 		<link rel="stylesheet" type="text/css" href="<?=TPLWEBROOT?>css/style.css">
 	</head>
 	<body>
 <?php endif;?>
 		<?=\core\HTML\flashmessage\FlashMessage::getFlash();?>
-		<?php //require_once(ROOT."app/views/template/navigation.php");?>
-		<?php //if ($config->getResponsive() == 1) require_once(ROOT."app/views/template/nav_responsive.php");?>
+		<?php
+			if ($config->getDesactiverNavigation() != 1) {
+				require_once(ROOT."app/views/template/navigation.php");
+				require_once(ROOT."app/views/template/nav_responsive.php");
+			}
+		?>
 
 		<?php if ($_SESSION['idlogin'.CLEF_SITE] == 1) :?>
 			<pre>
