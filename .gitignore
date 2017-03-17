@@ -12,4 +12,5 @@ vendor/*
 *.ini
 *.lock
 *.map
+node_modules/*
 *.config.php

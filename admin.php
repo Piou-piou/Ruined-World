@@ -85,6 +85,16 @@
 				Connexion::setObgConnecte(WEBROOT."administrator/login");
 			}
 			else {
+				/*if (\core\functions\ChaineCaractere::FindInString($page, "modules/") == true) {
+					$explode = explode("/", $page, 3);
+					
+					$loader = new Twig_Loader_Filesystem($explode[0]."/".$explode[1]."/admin/views/");
+					$twig = new Twig_Environment($loader);
+					
+					$page = $explode[2];
+					$twig_page = true;
+				}*/
+				
 				$router_module = new \core\modules\RouterModule();
 				if ($router_module->getRouteModuleExist($page)) {
 					$page = $router_module->getUrl($page, 1);
@@ -103,17 +113,12 @@
 				
 				//pour les pages normales
 				//pour l'acces a la gestion des comptes, si pas activée oin renvoi une erreur
-				if (($droit_acces->getDroitAccesPage("gestion-comptes/index") == false) && ($page == "gestion-comptes")) {
+				if (($droit_acces->getDroitAcces("GESTION COMPTES") == false) && ($page == "gestion-comptes")) {
 					FlashMessage::setFlash("L'accès à cette page n'est pas activé, veuillez contacter votre administrateur pour y avoir accès");
 					header("location:".WEBROOT."administrator");
 				}
-				else if (($droit_acces->getDroitAccesPage("gestion-droits-acces/index") == false) && ($page == "gestion-droits-acces")) {
+				else if (($droit_acces->getDroitAcces("GESTION DROIT ACCES") == false) && ($page == "gestion-droits-acces")) {
 					FlashMessage::setFlash("L'accès à cette page n'est pas activé, veuillez contacter votre administrateur pour y avoir accès");
-					header("location:".WEBROOT."administrator");
-				}
-				
-				if (($droit_acces->getDroitAccesPage($page) == false) && (!isset($page_module))) {
-					FlashMessage::setFlash("Vous n'avez pas les droits pour accéder à cette page, contacter votre gérant pour y avoir accès");
 					header("location:".WEBROOT."administrator");
 				}
 				else {
