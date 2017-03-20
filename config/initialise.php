@@ -80,7 +80,7 @@
 	//definit la clef du site, utilisée lors des sessions de connexions
 	define("CLEF_SITE", "65cbdfdd5b9219753f26b98419f52ddc");
 	//-------------------------- FIN AUTRES CONSTANTE ----------------------------------------------------------------------------//
-
+	
 	//CONSTANT FOR TWIG
 	$constant = [
 		'WEBROOT' => str_replace("$page_root", '', $_SERVER['SCRIPT_NAME']),

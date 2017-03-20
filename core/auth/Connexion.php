@@ -127,7 +127,7 @@
 			$dbc = App::getDb();
 
 			//si le user n'a rien mis dans login on lui de pense a se connecter
-			if ((isset($_COOKIE["auth".CLEF_SITE])) && (empty($_SESSION["idlogin".CLEF_SITE]))) {
+			if ((isset($_COOKIE["auth".CLEF_SITE])) && (!empty($_SESSION["idlogin".CLEF_SITE]))) {
 				$auth = $_COOKIE["auth".CLEF_SITE];
 
 				$auth = explode("-----", $auth);
@@ -135,13 +135,6 @@
 				$query = $dbc->select()->from("identite")->where("ID_identite", "=", $auth[0])->get();
 
 				self::setTestConnexion($query, $auth, $page_retour);
-			}
-			else if ((!empty($_SESSION["idlogin".CLEF_SITE])) && (!isset($_COOKIE["auth".CLEF_SITE]))) {
-				$id_identite = $_SESSION["idlogin".CLEF_SITE];
-				$membre = new Membre($id_identite);
-
-				setcookie("auth".CLEF_SITE, NULL, -1);
-				setcookie("auth".CLEF_SITE, $id_identite."-----".sha1($membre->getPseudo().$membre->getMdp()), time() + 3600 * 24 * 3, "/", "", false, true);
 			}
 		}
 
@@ -157,9 +150,9 @@
 			session_destroy();
 			unset($_COOKIE["auth".CLEF_SITE]);
 			setcookie("auth".CLEF_SITE, "", -1, "/", "", false, true);
-
+			
 			session_start();
-
+			
 			header("location:".$page_retour);
 		}
 

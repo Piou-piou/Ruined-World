@@ -9,9 +9,6 @@
 	use \core\modules\RouterModule;
 	use \core\Configuration;
 
-	require("core/Autoloader.class.php");
-	Autoloader::register();
-
 	require("config/initialise.php");
 
 
@@ -39,7 +36,7 @@
 		else {
 			$contenu->getHeadPage(1);
 		}
-		
+
 		\core\App::setTitle($contenu->getBaliseTitle());
 		\core\App::setDescription($contenu->getMetaDescription());
 	}
@@ -112,7 +109,7 @@
 					\core\RedirectError::Redirect(404);
 				}
 			}
-
+			
 			if ($cache->setStart() === false) {
 				require("app/controller/initialise_all.php");
 				require("app/views/template/principal.php");
@@ -121,6 +118,20 @@
 		}
 	}
 	else {
-		header("location:".WEBROOT."bataille");
+		$contenu->getContenuPage();
+		$contenu_page = $contenu->getContenu();
+
+		$loader = new Twig_Loader_Filesystem('app/views');
+		$twig = new Twig_Environment($loader);
+
+		$arr = ["contenu_page" => $contenu_page];
+		$page = "index";
+		
+		$cache = new \core\Cache($page);
+		if ($cache->setStart() === false) {
+			require("app/controller/initialise_all.php");
+			require("app/views/template/principal.php");
+		}
+		$cache->setEnd();
 	}
 	//--------------------------------------------- FIN ROUTING -------------------------------------------------------//

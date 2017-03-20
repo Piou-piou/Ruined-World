@@ -1,8 +1,8 @@
 <?php
 	namespace core;
-	
+
 	use core\database\Database;
-	
+
 	class App {
 		private static $database;
 		private static $nav;
@@ -12,16 +12,16 @@
 		private static $description;
 		
 		private static $values = [];
-		
-		
+    
+    
 		//-------------------------- CONSTRUCTEUR ----------------------------------------------------------------------------//
 		public function __construct() {
-			
+            
 		}
 		//-------------------------- FIN CONSTRUCTEUR ----------------------------------------------------------------------------//
-		
-		
-		
+    
+    
+    
 		//-------------------------- GETTER ----------------------------------------------------------------------------//
 		public static function getErreur() {
 			return self::$erreur;
@@ -34,7 +34,7 @@
 		public static function getValues() {
 			return self::$values;
 		}
-		
+
 		/**
 		 * @return Database
 		 * renvoi une instance de la classe Database
@@ -45,7 +45,7 @@
 			}
 			return self::$database;
 		}
-		
+
 		/**
 		 * @param null $no_module
 		 * @return Navigation
@@ -55,7 +55,7 @@
 			if (self::$nav == null) {
 				self::$nav = new Navigation($no_module);
 			}
-			
+
 			return self::$nav;
 		}
 		
@@ -74,7 +74,7 @@
 		public static function getDescription() {
 			return self::$description;
 		}
-		
+
 		/**
 		 * @param string $url
 		 * fonction qui permet de supprmer un dossier avec toute son abrorescence en fonction d'une URL
@@ -91,7 +91,7 @@
 				rmdir($url);
 			}
 		}
-		
+
 		/**
 		 * @param $from
 		 * @param $to
@@ -104,7 +104,7 @@
 				->addTo($to)
 				->setSubject($sujet)
 				->setHtmlBody($message);
-			
+
 			if (SMTP_HOST != "") {
 				$mailer = new \Nette\Mail\SmtpMailer([
 					'host' => SMTP_HOST,
@@ -117,13 +117,13 @@
 			else {
 				$mailer = new \Nette\Mail\SmtpMailer();
 			}
-			
+
 			$mailer->send($mail);
 		}
 		//-------------------------- FIN GETTER ----------------------------------------------------------------------------//
-		
-		
-		
+    
+    
+    
 		//-------------------------- SETTER ----------------------------------------------------------------------------//
 		/**
 		 * @param $values

@@ -28,28 +28,19 @@
 				</div>
 				<div class="colonne">
 					<div class="bloc">
-						<label for="url_site" class="label"  data-error="L'url de votre site doit être entre 3 et 90 caractères">Url de votre site</label>
-						<input type="text" name="url_site" type-val="string" min="3" max="90" value="<?=$url_site?>">
+						<label for="gerant_site" class="label"  data-error="Le nom du gérant du site doit être entre 3 et 50 caractères">Nom du gérant du site</label>
+						<input type="text" name="gerant_site" type-val="string" min="3" max="50" value="<?=$gerant_site?>">
 					</div>
 				</div>
 			</div>
 
 			<div>
-				<div class="colonne">
-					<div class="bloc">
-						<label for="gerant_site" class="label"  data-error="Le nom du gérant du site doit être entre 3 et 50 caractères">Nom du gérant du site</label>
-						<input type="text" name="gerant_site" type-val="string" min="3" max="50" value="<?=$gerant_site?>">
-					</div>
-				</div>
 				<div class="colonne">
 					<div class="bloc">
 						<label for="mail_site" class="label"  data-error="Le mail du gérant de votre site doit être entre 3 et 90 caractères">Mail du gérant du site</label>
 						<input type="text" name="mail_site" type-val="string" min="3" max="90" value="<?=$mail_site?>">
 					</div>
 				</div>
-			</div>
-
-			<div>
 				<div class="colonne">
 					<div class="bloc">
 						<label for="mail_administrateur" class="label"  data-error="Le mail administrateur doit être entre 3 et 50 caractères">Mail du développeur web  du site </label>
@@ -72,14 +63,6 @@
 			</thead>
 			<tbody>
 				<tr>
-					<td>Responsive</td>
-					<td>
-						<label for="responsive" class="checkbox-perso switched">
-							<input type="checkbox" class="test-check" id="responsive" <?php if ($responsive == 1): ?>checked<?php endif; ?>>
-						</label>
-					</td>
-				</tr>
-				<tr>
 					<td>Contenu dynamique</td>
 					<td>
 						<label for="contenu_dynamique" class="checkbox-perso switched">
@@ -90,8 +73,8 @@
 				<tr>
 					<td>Cache</td>
 					<td>
-						<label for="cache_config" class="checkbox-perso switched">
-							<input type="checkbox" class="test-check" id="cache_config" <?php if ($cache_config == 1): ?>checked<?php endif; ?>>
+						<label for="cache" class="checkbox-perso switched">
+							<input type="checkbox" class="test-check" id="cache" <?php if ($cache_config == 1): ?>checked<?php endif; ?>>
 						</label>
 					</td>
 				</tr>

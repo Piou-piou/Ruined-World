@@ -8,7 +8,7 @@
 		<link rel="stylesheet" type="text/css" href="<?=WEBROOT?>admin/views/template/css/style.css">
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 		<?php require_once(ROOT."admin/views/template/js/menu.php");?>
-		
+
 		<!-- Les librairies utlisées -->
 		<link rel="stylesheet" type="text/css" href="<?=LIBSWEBROOT?>popup/css/style.css">
 		<link rel="stylesheet" type="text/css" href="<?=LIBSWEBROOT?>input_type_admin/css/style.css">
@@ -19,10 +19,10 @@
 	<body>
 		<nav class="menu <?php if (($_SESSION["menu_plie".CLEF_SITE] == "deplie") || (!isset($_SESSION["menu_plie".CLEF_SITE]))):?>active<?php endif;?>">
 			<div class="titre">
-				<h1>Ribs V2.3.5.6</h1>
+				<h1>Ribs V0.1</h1>
 				<i class="fa fa-bars"></i>
 			</div>
-			
+
 			<div class="mon-compte">
 				<div class="colonne">
 					<div class="image">
@@ -54,7 +54,7 @@
 					</div>
 				</div>
 			</div>
-			
+
 			<ul>
 				<div class="principal">
 					<!-- Pour avoir accès à la gestion des autres comptes -->
@@ -67,12 +67,12 @@
 							</ul>
 						</li>
 					<?php endif; ?>
-					
+
 					<!-- Pour avoir accès à la gestion des autres comptes -->
 					<?php if ($droit_acces->getDroitAcces("GESTION DROIT ACCES") == true):?>
 						<li><i class="fa fa-lock"></i><a href="<?=ADMWEBROOT?>gestion-droits-acces/index">Gestion des droits d'accès</a></li>
 					<?php endif; ?>
-					
+
 					<!-- Pour avoir accès à la gestion des contenus -->
 					<?php if ($droit_acces->getDroitAcces("GESTION CONTENUS") == true):?>
 						<li><i class="fa fa-file-text"></i><a href="<?=ADMWEBROOT?>gestion-contenus/index">Gestion des contenus</a>
@@ -83,13 +83,13 @@
 							</ul>
 						</li>
 					<?php endif; ?>
-					
+
 					<!-- Pour avoir accès à la gestion de la navigation -->
 					<?php if ($droit_acces->getDroitAcces("GESTION CONTENUS") == true):?>
 						<li><i class="fa fa-link"></i><a href="<?=ADMWEBROOT?>gestion-navigation/index">Gestion de la navigation</a>
 						</li>
 					<?php endif; ?>
-					
+
 					<!-- pour afficher le menu des modules -->
 					<?php for ($i = 0; $i < count($gestion_module->getUrl()); $i++):?>
 						<?php if (\core\modules\GestionModule::getModuleActiver($gestion_module->getNom()[$i]) == true):?>
@@ -100,14 +100,14 @@
 						<?php endif; ?>
 					<?php endfor; ?>
 				</div>
-				
+
 				<div class="speciaux">
 					<li class="support"><i class="fa fa-envelope"></i><a href="<?=ADMWEBROOT?>contacter-support">Contacter le support</a></li>
 				</div>
 			</ul>
 		</nav>
 		<div class="clear"></div>
-		
+
 		<?php
 			if ($twig_page === true) {
 				if (!isset($arr)) $arr = [];
@@ -117,7 +117,7 @@
 				require("admin/views/".$page.".php");
 			}
 		?>
-		
+
 		<script>(function(e,t,n){var r=e.querySelectorAll("html")[0];r.className=r.className.replace(/(^|\s)no-js(\s|$)/,"$1js$2")})(document,window,0);</script>
 		<script src="<?=WEBROOT?>libs/input_file/js/input_file.js"></script>
 	</body>
