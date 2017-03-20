@@ -118,20 +118,6 @@
 		}
 	}
 	else {
-		$contenu->getContenuPage();
-		$contenu_page = $contenu->getContenu();
-
-		$loader = new Twig_Loader_Filesystem('app/views');
-		$twig = new Twig_Environment($loader);
-
-		$arr = ["contenu_page" => $contenu_page];
-		$page = "index";
-		
-		$cache = new \core\Cache($page);
-		if ($cache->setStart() === false) {
-			require("app/controller/initialise_all.php");
-			require("app/views/template/principal.php");
-		}
-		$cache->setEnd();
+		header("location:bataille");
 	}
 	//--------------------------------------------- FIN ROUTING -------------------------------------------------------//
