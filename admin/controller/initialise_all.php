@@ -96,47 +96,14 @@
 
 	//---------- actif pour la configuration des modules ------------------------------------//
 	if ($page == "configuration/module") {
-		$gestion_module_page = new \core\modules\GestionModule();
-		$gestion_module_page->getListeModule();
+		$gestion_module->getListeModule();
 	}
 	//---------- fin actif pour la configuration des modules ------------------------------------//
 
 
 
-	//---------- actif pour la configuration des infos générales ------------------------------------//
-	if ($page == "configuration/infos-generales") {
-		if (isset($_SESSION['err_modification_infos_config'])) {
-			$nom_site = $_SESSION['nom_site'];
-			$gerant_site = $_SESSION['gerant_site'];
-			$mail_site = $_SESSION['mail_site'];
-			$mail_administrateur = $_SESSION['mail_administrateur'];
-
-			unset($_SESSION['err_modification_infos_config']);
-
-			$config = new \core\Configuration();
-			$contenu_dynamique = $config->getContenusDynamique();
-			$cache_config = $config->getCache();
-		}
-		else {
-			$config = new \core\Configuration();
-			$nom_site = $config->getNomSite();
-			$gerant_site = $config->getGerantSite();
-			$mail_site = $config->getMailSite();
-			$mail_administrateur = $config->getMailAdministrateur();
-
-			$contenu_dynamique = $config->getContenusDynamique();
-			$cache_config = $config->getCache();
-		}
-	}
-	//---------- fin actif pour la configuration des infos générales ------------------------------------//
-
-
-
 	//---------- actif pour la configuration des bases de données ------------------------------------//
 	if ($page == "configuration/base-de-donnees") {
-		$ini_parse1 = new \core\iniparser\IniParser();
-		$ini1 = $ini_parse1->getParse(ROOT."config/config.ini");
-
 		if (isset($_SESSION['err_modification_configini'])) {
 			$db_type_dev = $_SESSION["db_type_dev"];
 			$db_name_dev = $_SESSION["db_name_dev"];
@@ -144,28 +111,11 @@
 			$db_pass_dev = $_SESSION["db_pass_dev"];
 			$db_host_dev = $_SESSION["db_host_dev"];
 
-			$db_type_prod = $_SESSION["db_type_prod"];
-			$db_name_prod = $_SESSION["db_name_prod"];
-			$db_user_prod = $_SESSION["db_user_prod"];
-			$db_pass_prod = $_SESSION["db_pass_prod"];
-			$db_host_prod = $_SESSION["db_host_prod"];
-
 			unset($_SESSION['err_modification_configini']);
 		}
 		else {
-			$developpement = $ini["developpment"];
-
-			$db_type_dev = $ini["dev"]["DB_TYPE"];
-			$db_name_dev = $ini["dev"]["DB_NAME"];
-			$db_user_dev = $ini["dev"]["DB_USER"];
-			$db_pass_dev = $ini["dev"]["DB_PASS"];
-			$db_host_dev = $ini["dev"]["DB_HOST"];
-
-			$db_type_prod = $ini["prod"]["DB_TYPE"];
-			$db_name_prod = $ini["prod"]["DB_NAME"];
-			$db_user_prod = $ini["prod"]["DB_USER"];
-			$db_pass_prod = $ini["prod"]["DB_PASS"];
-			$db_host_prod = $ini["prod"]["DB_HOST"];
+			\core\App::setValues(["bdd" => $ini]);
 		}
 	}
 	//---------- fin actif pour la configuration des bases de données ------------------------------------//
+	$arr = \core\App::getValues();

@@ -110,7 +110,18 @@
 				}
 				else {
 					$admin = new Admin($_SESSION["idlogin".CLEF_SITE]);
-					$twig_ok_page = ["contacter-support"];
+					require(ROOT."admin/controller/initialise_all.php");
+					
+					$twig_ok_page = [
+						"index",
+						"notifications",
+						"contacter-support",
+						"configuration/index",
+						"configuration/module",
+						"configuration/infos-generales",
+						"configuration/mon-compte",
+						"configuration/base-de-donnees"
+					];
 					
 					if (in_array($page, $twig_ok_page)) {
 						$loader = new Twig_Loader_Filesystem("admin/views/");
@@ -118,7 +129,6 @@
 						$twig_page = true;
 					}
 					
-					require(ROOT."admin/controller/initialise_all.php");
 					require(ROOT."admin/views/template/principal.php");
 				}
 			}

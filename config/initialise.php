@@ -50,13 +50,8 @@
 	else {
 		header("location:".WEBROOT."installation");
 	}
-
-	if ($ini["developpment"] == 1) {
-		$tab = "dev";
-	}
-	else {
-		$tab = "prod";
-	}
+	
+	$tab = "dev";
 
 	define('DB_TYPE', $ini[$tab]["DB_TYPE"]);
 	define('DB_NAME', $ini[$tab]["DB_NAME"]);
@@ -80,7 +75,9 @@
 	//definit la clef du site, utilisée lors des sessions de connexions
 	define("CLEF_SITE", "65cbdfdd5b9219753f26b98419f52ddc");
 	//-------------------------- FIN AUTRES CONSTANTE ----------------------------------------------------------------------------//
-	
+
+
+
 	//CONSTANT FOR TWIG
 	$constant = [
 		'WEBROOT' => str_replace("$page_root", '', $_SERVER['SCRIPT_NAME']),
