@@ -39,6 +39,8 @@
 
 				$this->last_ordre = $last_ordre;
 				$this->setNavigation($navigation);
+				
+				App::setValues(["navigation" => $navigation]);
 			}
 		}
 		//-------------------------- END BUILDER ----------------------------------------------------------------------------//
@@ -69,7 +71,18 @@
 
 			if (is_array($query) && (count($query) > 0)) {
 				foreach ($query as $obj) {
-					return [$obj->ID_page, $obj->titre, $this->getLienPage($obj->url), $obj->balise_title, "page", $obj->target, $this->getSousMenu($id_page)];
+					$nav = [
+						"id" => $obj->ID_page,
+						"titre" => $obj->titre,
+						"lien_page" => $this->getLienPage($obj->url),
+						"balise_title" => $obj->balise_title,
+						"sous_menu" => $this->getSousMenu($id_page),
+						"type" => "page",
+						"target" => $obj->target,
+					];
+					
+					//return [$obj->ID_page, $obj->titre, $this->getLienPage($obj->url), $obj->balise_title, "page", $obj->target, $this->getSousMenu($id_page)];
+					return $nav;
 				}
 			}
 		}
@@ -91,7 +104,14 @@
 
 			if (is_array($query) && (count($query) > 0)) {
 				foreach ($query as $obj) {
-					$sous_menu[] = [$obj->ID_page, $obj->titre, $this->getLienPage($obj->url), $obj->balise_title, "page", $obj->target];
+					$sous_menu[] = [
+						"id" => $obj->ID_page,
+						"titre" => $obj->titre,
+						"lien_page" => $this->getLienPage($obj->url),
+						"balise_title" => $obj->balise_title,
+						"type" => "page",
+						"target" => $obj->target,
+					];
 				}
 			}
 
@@ -117,7 +137,17 @@
 
 			if (is_array($query) && (count($query) > 0)) {
 				foreach ($query as $obj) {
-					return [$obj->ID_module, $obj->nom_module, $this->getLienPage($obj->url), $obj->nom_module, "module"];
+					$nav = [
+						"id" => $obj->ID_module,
+						"titre" => $obj->nom_module,
+						"lien_page" => $this->getLienPage($obj->url),
+						"balise_title" => $obj->nom_module,
+						"type" => "module",
+						"target" => $obj->target,
+					];
+					
+					return $nav;
+					//return [$obj->ID_module, $obj->nom_module, $this->getLienPage($obj->url), $obj->nom_module, "module"];
 				}
 			}
 		}
