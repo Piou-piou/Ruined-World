@@ -1,2 +1,2 @@
 <?php
-	header("location:bataille");
+	header("location:bataille/");
