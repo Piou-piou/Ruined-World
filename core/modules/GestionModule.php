@@ -44,11 +44,7 @@
 			$query = $dbc->select()->from("module")->where("activer", "=", 1, "AND")->where("installer", "=", 1)->get();
 
 			if ((is_array($query)) && (count($query) > 0)) {
-				$id_module = [];
-				$url = [];
-				$nom = [];
-				$version = [];
-				$icone = [];
+				$id_module = []; $url = []; $nom = []; $version = []; $icone = [];
 
 				foreach ($query as $obj) {
 					$id_module[] = $obj->ID_module;
@@ -57,7 +53,6 @@
 					$version[] = $obj->version;
 					$icone[] = $obj->icone;
 				}
-
 				$this->setListeModuleActiver($id_module, $url, $version, $nom, $icone);
 			}
 		}
@@ -72,7 +67,6 @@
 
 			if ((is_array($query)) && (count($query) > 0)) {
 				$values = [];
-				
 				foreach ($query as $obj) {
 					$values[] = [
 						"id_module" => $obj->ID_module,
@@ -84,7 +78,6 @@
 						"installer" => $obj->installer
 					];
 				}
-				
 				App::setValues(["active_modules" => $values]);
 			}
 		}
@@ -99,7 +92,7 @@
 
 			$query = $dbc->select("activer")->from("module")->where("nom_module", "=", $dbc->quote($nom_module), "", true)->get();
 
-			if ((is_array($query)) && (count($query) > 0)) {
+			if (count($query) > 0) {
 				foreach ($query as $obj) {
 					if ($obj->activer == 1) {
 						return true;

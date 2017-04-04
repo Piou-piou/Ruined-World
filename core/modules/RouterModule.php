@@ -23,7 +23,7 @@
 		public function getPage() {
 			return $this->page;
 		}
-		public function getModule(){
+		public function getModule() {
 			return $this->module;
 		}
 		public function getController() {
@@ -55,10 +55,11 @@
 		 * Permets de générer l'url pour aller charger la page concernee pour le module blog
 		 * appele également l'actoin à effectur dans la page
 		 */
-		public function getUrl($url, $admin=null) {
+		public function getUrl($url, $admin = "app") {
 			$explode = explode("/", $url);
 			$count = count($explode);
 			$debut_url = "";
+			$centre_url = "";
 			
 			for ($i = 0; $i < $count; $i++) {
 				if (in_array($explode[$i], $this->getAllModules())) {
@@ -69,25 +70,7 @@
 					$centre_url[] = $explode[$i];
 				}
 			}
-			
-			$centre_url = implode("/", $centre_url);
-			$this->page = $centre_url;
-			
-			if (!isset($centre_url) || ($centre_url == "")) {
-				$this->page = "index";
-			}
-			else {
-				$file = ROOT."modules/".$debut_url."/app/views/".$centre_url;
-				
-				if (!file_exists($file.".html")) {
-					$centre_url = explode("/", $file);
-					$this->parametre = array_pop($centre_url);
-					$this->page = end($centre_url);
-					
-					$centre_url = implode("/", $centre_url);
-				}
-			}
-			
+			$centre_url = $this->setPathFile($debut_url, $centre_url, $admin);
 			$this->admin = $admin;
 			$this->setActionPage();
 			
@@ -101,19 +84,19 @@
 		 */
 		public function getRouteModuleExist($url) {
 			$dbc = \core\App::getDb();
-			$query = $dbc->select()->from("module")->get();
+			$query = $dbc->select()->from("module")->where("activer", "=", 1)->get();
 			
-			if ((is_array($query)) && (count($query) > 0)) {
+			if (count($query) > 0) {
 				foreach ($query as $obj) {
 					$test_module = ChaineCaractere::FindInString($url, $obj->url);
-					$test_module1 = ChaineCaractere::FindInString($url, str_replace("/", "", $obj->url));
-					$module_activer = \core\modules\GestionModule::getModuleActiver($obj->nom_module);
 					
-					if ((($test_module === true) || ($test_module1 === true)) && ($module_activer === true)) {
+					if ($test_module === true) {
 						return true;
 					}
 				}
 			}
+			
+			return false;
 		}
 		//-------------------------- FIN GETTER ----------------------------------------------------------------------------//
 		
@@ -121,12 +104,40 @@
 		
 		//-------------------------- SETTER ----------------------------------------------------------------------------//
 		/**
+		 * @param $debut_url
+		 * @param $centre_url
+		 * @param $admin
+		 * @return array|string
+		 */
+		private function setPathFile($debut_url, $centre_url, $admin) {
+			$centre_url = implode("/", $centre_url);
+			$this->page = $centre_url;
+			
+			if ($centre_url == "") {
+				$this->page = "index";
+			}
+			else {
+				$file = ROOT."modules/".$debut_url."/".$admin."/views/".$centre_url;
+				
+				if (!file_exists($file.".html")) {
+					$centre_url = explode("/", $file);
+					$this->parametre = array_pop($centre_url);
+					$this->page = end($centre_url);
+					
+					$centre_url = implode("/", $centre_url);
+				}
+			}
+			
+			return $centre_url;
+		}
+		
+		/**
 		 * Fonction qui va se charger en focntion $this->page et de $this->action d'appeler la fonctoin qui va bien
 		 * fontction appelee dans getUrl()
 		 */
 		private function setActionPage() {
 			//on require le fichier routes.php dans /modules/nom_module/router/routes.php
-			if ($this->admin !== null) {
+			if ($this->admin !== "app") {
 				require_once(MODULEROOT.$this->module."/router/admin_routes.php");
 			}
 			else {

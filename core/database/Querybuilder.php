@@ -11,11 +11,11 @@
 		protected $conditions_table = [];
 		protected $closure = [];
 		protected $table = [];
+		protected $values = [];
 		protected $order_by;
 		protected $group_by;
 		protected $limit;
 		
-		abstract public function query();
 		abstract public function prepare($req, $value);
 		
 		
@@ -123,7 +123,9 @@
 		 * @param string $type
 		 */
 		public function orderBy($order, $type = null) {
-			if ($type === null) $type = "ASC";
+			if ($type === null) {
+				$type = "ASC";
+			}
 			
 			$this->order_by = " ORDER BY ".$order." ".$type." ";
 			
@@ -179,7 +181,7 @@
 		 * fonction utlisée pour terminer un insert ou un update dans la base de données
 		 */
 		public function set() {
-			$values = array_combine($this->champs, $this->value);
+			$this->values = array_combine($this->champs, $this->value);
 			$datas = [];
 			$count = count($this->champs);
 			for ($i = 0; $i < $count; $i++) {
@@ -191,13 +193,12 @@
 			
 			if ((!empty($this->conditions)) || (!empty($this->conditions_table))) {
 				$requete .= $this->getWhereConditions()[0];
-				
-				$values = array_merge($values, $this->getWhereConditions()[1]);
+				$this->setValues();
 			}
 			
 			$requete .= $this->limit;
 			
-			$this->prepare($requete, $values);
+			$this->prepare($requete, $this->values);
 			$this->unsetQueryBuilder();
 		}
 		
@@ -205,20 +206,18 @@
 		 * fonction utilisée pour finir un delete
 		 */
 		public function del() {
-			$values = [];
 			$requete = $this->req_beginning.implode(",", $this->table);
 			
 			if (!empty($this->conditions)) {
 				$requete .= $this->getWhereConditions()[0];
-				
-				$values = array_merge($values, $this->getWhereConditions()[1]);
+				$this->setValues();
 			}
 			
 			$requete .= $this->order_by;
 			
 			$requete .= $this->limit;
 			
-			$this->prepare($requete, $values);
+			$this->prepare($requete, $this->values);
 			$this->unsetQueryBuilder();
 		}
 		
@@ -278,6 +277,13 @@
 			}
 			
 			return [" WHERE ".implode(" ", $datas), $values];
+		}
+		
+		/**
+		 * function that set values for insert update and delete
+		 */
+		private function setValues() {
+			$this->values = array_merge($this->values, $this->getWhereConditions()[1]);
 		}
 		
 		/**

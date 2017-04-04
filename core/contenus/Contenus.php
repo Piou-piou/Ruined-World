@@ -1,6 +1,8 @@
 <?php
 	namespace core\contenus;
 
+	use core\App;
+	use core\functions\ChaineCaractere;
 	use core\RedirectError;
 
 
@@ -17,6 +19,11 @@
 
 
 		//-------------------------- CONSTRUCTEUR ----------------------------------------------------------------------------//
+		public function __construct($url, $admin_contenu = null) {
+			if ($admin_contenu === null) {
+				$this->getPage($url);
+			}
+		}
 		//-------------------------- FIN CONSTRUCTEUR ----------------------------------------------------------------------------//
 
 
@@ -44,56 +51,23 @@
 		public function getParent() {
 			return $this->parent;
 		}
-
-
+		
 		/**
-		 * pour récupérer l'en tete d'une page (balise title ++ meta description)
-		 * @param $id_page
+		 * @param $url
+		 * function that get all content of a page
 		 */
-		public function getHeadPage($id_page, $url = null) {
+		private function getPage($url) {
 			$dbc = \core\App::getDb();
-
-			if ($id_page != 0) {
-				$query = $dbc->select("balise_title")->select("meta_description")->select("ID_page")
-					->from("page")
-					->where("ID_page", "=", $id_page)
-					->get();
-			}
-			else {
-				$query = $dbc->select("balise_title")->select("meta_description")->select("ID_page")
-					->from("page")
-					->where("url", " LIKE ", $url)
-					->get();
-			}
-
+			$query = $dbc->select()->from("page")->where("url", "=", $url)->get();
+			
 			if (RedirectError::testRedirect404($query, $url) === true) {
 				foreach ($query as $obj) {
-					$this->id_page = $obj->ID_page;
-					$this->meta_description = $obj->meta_description;
-					$this->balise_title = $obj->balise_title;
-				}
-			}
-		}
-
-		/**
-		 * pour récupérer une page en particulier
-		 * @param $id_page
-		 */
-		public function getContenuPage($id_page = null) {
-			$dbc = \core\App::getDb();
-
-			if ($id_page == null) {
-				$id_page = $this->id_page;
-			}
-			$query = $dbc->select()->from("page")->where("ID_page", "=", $id_page)->get();
-
-			if ((is_array($query)) && (count($query) > 0)) {
-				foreach ($query as $obj) {
-					$this->id_page = $obj->ID_page;
-					$this->titre = $obj->titre;
-					$this->contenu = $obj->contenu;
-					$this->url = $obj->url;
-					$this->parent = $obj->parent;
+					$redirect = 0;
+					if (ChaineCaractere::FindInString($url, "http://") === true) {
+						$redirect = 1;
+					}
+					
+					$this->setContenu($redirect, $obj);
 				}
 			}
 		}
@@ -102,5 +76,22 @@
 
 
 		//-------------------------- SETTER ----------------------------------------------------------------------------//
+		/**
+		 * @param $redirect
+		 * @param $obj
+		 */
+		private function setContenu($redirect, $obj) {
+			App::setValues(["contenus" => [
+				"id_page" => $this->id_page = $obj->ID_page,
+				"meta_description" => $this->meta_description = $obj->meta_description,
+				"balise_title" => $this->balise_title = $obj->balise_title,
+				"url" => $this->url = $obj->url,
+				"titre" => $this->titre = $obj->titre,
+				"contenu" => $this->contenu = $obj->contenu,
+				"parent" => $this->parent = $obj->parent,
+				"redirect_page" => $redirect,
+				"bloc_editable" => $obj->bloc_editable
+			]]);
+		}
 		//-------------------------- FIN SETTER ----------------------------------------------------------------------------//
 	}

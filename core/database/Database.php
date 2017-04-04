@@ -90,37 +90,19 @@
 			else {
 				$query = $this->getPdo()->query("SELECT COUNT($champ) as nb FROM $table WHERE $champ LIKE '$value' AND $id_table != $id");
 			}
-
-			if (count($query) > 0) {
-				foreach ($query as $obj) {
-					$nb = $obj["nb"];
-				}
-
-				if ((isset($nb)) && ($nb != 0)) return true;
+			
+			$nb = 0;
+			foreach ($query as $obj) {
+				$nb = $obj["nb"];
 			}
-			else {
-				return false;
-			}
-		}
-		//-------------------------- FIN FUNCTION QUI FONT DES REQUETES SUR LA BDD --------------------------------------------//
-
-
-		/**
-		 * tester si une table dans la base donnee existe
-		 * @param string $table definit la table pour laquelle on doit tester l'existance
-		 * @return boolean
-		 */
-		public function TestTableExist($table) {
-			$query = $this->getPdo()->query("SHOW TABLES LIKE '$table'");
-
-			if ($query->rowCount() > 0) {
+			
+			if ($nb > 0) {
 				return true;
 			}
-			else {
-				return false;
-			}
+			
+			return false;
 		}
-
+		//-------------------------- FIN FUNCTION QUI FONT DES REQUETES SUR LA BDD --------------------------------------------//
 		public function quote($quote) {
 			return $this->getPdo()->quote($quote);
 		}
