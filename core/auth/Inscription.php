@@ -107,10 +107,8 @@
 				$this->erreur .= "<li>$erreur_long</li>";
 				return false;
 			}
-			else {
-				$this->$varaible = $value;
-				return true;
-			}
+			$this->$varaible = $value;
+			return true;
 		}
 		//-------------------------- FIN GETTER ----------------------------------------------------------------------------//
 
@@ -191,11 +189,9 @@
 				$this->erreur .= "<li>Le champs E-mail doit être une adresse E-mail valide</li>";
 				return false;
 			}
-			else {
-				$this->mail = $value;
-				return true;
-			}
-
+			
+			$this->mail = $value;
+			return true;
 		}
 		//-------------------------- FIN SETTER ----------------------------------------------------------------------------//
 	}

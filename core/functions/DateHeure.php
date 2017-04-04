@@ -24,9 +24,9 @@
 		 **/
 		public static function Heureenseconde($heure, $minute) {
 			if ((is_numeric($heure)) && (is_numeric($minute))) {
-				$heuresec = $heure * 3600;
-				$minutesec = $minute * 60;
-				$heureseconde = $heuresec + $minutesec;
+				$heuresec = $heure*3600;
+				$minutesec = $minute*60;
+				$heureseconde = $heuresec+$minutesec;
 				return $heureseconde;
 			}
 			else {
@@ -42,9 +42,9 @@
 		 */
 		public static function Secondeenheure($seconde) {
 			if (is_numeric($seconde)) {
-				$heure = intval($seconde / 3600);
-				$minute = intval(($seconde % 3600) / 60);
-				$seconde = intval(($seconde % 3600) % 60);
+				$heure = intval($seconde/3600);
+				$minute = intval(($seconde%3600)/60);
+				$seconde = intval(($seconde%3600)%60);
 
 				$temps = $heure."h".$minute."m".$seconde;
 				return $temps;
@@ -72,43 +72,6 @@
 				FlashMessage::getFlash();
 				die();
 			}
-		}
-
-		/**
-		 * affiche la date du jour au format jeudi 12 janvier
-		 * @param integer $date si NULL on prend la date du jour sinon on prend la date qui est mise
-		 * @return string
-		 */
-		public static function date_fr_texte($date = 0) {
-			$mois = array("Janvier", "Fevrier", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Decembre");
-			$jours = array("Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi");
-
-			if ($date == 0) {
-				return $jours[date("w")]." ".date("j").(date("j") == 1 ? "er" : " ").$mois[date("n") - 1]." ".date("Y");
-			}
-			else if ((strpos($date, "-") > 0) || (strpos($date, "/") > 0)) {
-				$explode = explode("/", $date);
-				$jour_d = $explode[0];
-				$mois_d = $explode[1];
-				$annee_d = $explode[2];
-
-				//si $pos > 0 cela veut dire qu'on est en YYYY-mm-jj
-				$pos = strpos($date, "-");
-				if ($pos > 0) {
-					$explode = explode("-", $date);
-					$jour_d = $explode[2];
-					$mois_d = $explode[1];
-					$annee_d = $explode[0];
-				}
-
-				$jour_semaine = $jours[date("w", mktime(0, 0, 0, $mois_d, $jour_d, $annee_d))];
-
-				return $jour_semaine." ".$jour_d." ".$mois[$mois_d - 1]." ".$annee_d;
-			}
-
-			FlashMessage::setFlash("Format de date passé en paramètre ne correspond pas à YYYY-mm-jj ou jj/mm/YYYY");
-			FlashMessage::getFlash();
-			die();
 		}
 
 		/**

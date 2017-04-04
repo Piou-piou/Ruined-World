@@ -17,9 +17,10 @@
 		<?=\core\HTML\flashmessage\FlashMessage::getFlash();?>
 		<?php
 			if ($config->getDesactiverNavigation() != 1) {
-				require_once(ROOT."app/views/template/navigation.php");
-				require_once(ROOT."app/views/template/nav_responsive.php");
+				echo $twig->render("template/navigation.html", $arr_page);
 			}
+			
+			unset($arr_page["app"]["navigation"]);
 		?>
 
 		<?php if ($_SESSION['idlogin'.CLEF_SITE] == 1) :?>

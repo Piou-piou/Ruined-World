@@ -1,21 +1,21 @@
 <nav class="nav-page">
 	<div class="inner">
 		<ul>
-			<?php foreach (\core\App::getNav(1)->getNavigation() as $nav):?>
-				<li><a href="<?=ADMWEBROOT?>gestion-contenus/modifier-contenu?id=<?=$nav[0]?>" title="<?=$nav[3]?>"><?=$nav[1]?></a>
-					<?php if ((isset($nav[6]) && count($nav[6]) > 0)):?>
+			{% for i in app.navigation %}
+				<li><a href="{{ ADMWEBROOT }}gestion-contenus/modifier-contenu?id={{ i.id }}&url={{ i.url }}">{{ i.titre }}</a>
+					{% if i.sous_menu|length > 0 %}
 						<ul>
-							<?php foreach ($nav[6] as $snav):?>
-								<li><a href="<?=ADMWEBROOT?>gestion-contenus/modifier-contenu?id=<?=$snav[0]?>" title="<?=$snav[3]?>"><?=$snav[1]?></a></li>
-							<?php endforeach; ?>
+							{% for x in i.sous_menu %}
+								<li><a href="{{ ADMWEBROOT }}gestion-contenus/modifier-contenu?id={{ x.id }}&url={{ x.url }}">{{ x.titre }}</a></li>
+							{% endfor %}
 						</ul>
-					<?php endif; ?>
+					{% endif %}
 				</li>
-			<?php endforeach; ?>
+			{% endfor %}
 		</ul>
 	</div>
 </nav>
-<script src="<?=WEBROOT?>admin/views/gestion-contenus/js/contenu.js"></script>
+<script src="{{WEBROOT}}admin/views/gestion-contenus/js/contenu.js"></script>
 
 <div class="popup" id="supprimer-page">
 	<div class="content">

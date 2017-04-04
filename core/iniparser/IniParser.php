@@ -26,21 +26,12 @@
 		
 		//-------------------------- SETTER ----------------------------------------------------------------------------//
 		/**
-		 * @param $developpment
 		 * @param $dev_info
-		 * @param $prod_info
 		 * fonction pour modifier les infos dans config.ini
 		 */
-		public function setModifierConfigIni($developpement, $dev_info, $prod_info) {
-			if ($developpement == "on") {
-				$developpement = 1;
-			}
-			else {
-				$developpement = 0;
-			}
-
+		public function setModifierConfigIni($dev_info) {
 			$value = "installation = 0
-				developpment = $developpement
+				developpment = 1
 
 				[dev]
 				dev[DB_TYPE] = $dev_info[0]
@@ -52,19 +43,7 @@
 				dev[SMTP_USER] =
 				dev[SMTP_PASS] =
 				dev[SMTP_SECURE] =
-				dev[SMTP_PORT] =
-
-				[prod]
-				prod[DB_TYPE] = $prod_info[0]
-				prod[DB_NAME] = $prod_info[1]
-				prod[DB_USER] = $prod_info[2]
-				prod[DB_PASS] = $prod_info[3]
-				prod[DB_HOST] = $prod_info[4]
-				prod[SMTP_HOST] =
-				prod[SMTP_USER] =
-				prod[SMTP_PASS] =
-				prod[SMTP_SECURE] =
-				prod[SMTP_PORT] =";
+				dev[SMTP_PORT] =";
 
 			$value = str_replace("\t", "", $value);
 

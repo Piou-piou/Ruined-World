@@ -1,5 +1,7 @@
 <?php
-	if (!isset($page_root)) $page_root = "index.php";
+	if (!isset($page_root)) {
+		$page_root = "index.php";
+	}
 
 	//-------------------------- CONSTANTE POUR LES ROUTES ----------------------------------------------------------------------------//
 	//definit le chemin vers la racine du projet (depuis racine serveur web
@@ -50,13 +52,8 @@
 	else {
 		header("location:".WEBROOT."installation");
 	}
-
-	if ($ini["developpment"] == 1) {
-		$tab = "dev";
-	}
-	else {
-		$tab = "prod";
-	}
+	
+	$tab = "dev";
 
 	define('DB_TYPE', $ini[$tab]["DB_TYPE"]);
 	define('DB_NAME', $ini[$tab]["DB_NAME"]);
@@ -80,6 +77,8 @@
 	//definit la clef du site, utilisée lors des sessions de connexions
 	define("CLEF_SITE", "65cbdfdd5b9219753f26b98419f52ddc");
 	//-------------------------- FIN AUTRES CONSTANTE ----------------------------------------------------------------------------//
+
+
 
 	//CONSTANT FOR TWIG
 	$constant = [
