@@ -7,6 +7,7 @@
 		"aide-detail",
 		"map",
 		"popup/map",
+		"popup/faction",
 		"popup/joueur",
 		"popup/marche/index",
 		"popup/marche/offre-et-demande",
@@ -123,6 +124,11 @@
 		}
 		if ($this->page == "popup/ambassade/gestion-membre-faction") {
 			$this->controller = "bataille/app/controller/faction/get_membres.php";
+		}
+		
+		//------------------------------- POUR LA POPUP POUR LA FACTION affichage simple ----------------------------------//
+		if ($this->page == "popup/faction") {
+			$this->controller = "bataille/app/controller/faction/get_faction.php";
 		}
 		
 		//------------------------------- POUR L'AFFICHAGE DE LA BASE ----------------------------------//
