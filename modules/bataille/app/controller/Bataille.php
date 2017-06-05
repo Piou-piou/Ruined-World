@@ -228,11 +228,12 @@
 			
 			$pseudo = trim($pseudo);
 			
-			$query = $dbc->select("ID_identite")->from("identite, _bataille_infos_player")
+			$query = $dbc->select("identite.ID_identite")->from("identite, _bataille_infos_player")
 				->where("identite.pseudo", "=", $pseudo, "AND")
+				->where("_bataille_infos_player.abandon", "=", 0, "AND")
 				->where("identite.ID_identite", "=", "_bataille_infos_player.ID_identite", "", true)->get();
 			
-			if ((count($query) == 1) && (is_array($query))) {
+			if (count($query) == 1) {
 				foreach ($query as $obj) {
 					return $obj->ID_identite;
 				}

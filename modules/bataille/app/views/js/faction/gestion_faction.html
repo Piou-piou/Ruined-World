@@ -1,188 +1,208 @@
 <script>
 	$(document).ready(function() {
-	    /**
-         * affichage du détail d'un forum
-         */
-        $(".acceder-forum").click(function(e) {
-            e.preventDefault();
-            
-            var id_forum = $(this).attr("id_forum");
-            
-            $.ajax({
-                type:"POST",
-                data: "loaded_ajax=true&id_forum="+id_forum,
-                url: "{{WEBROOT}}bataille/popup/ambassade/forum-faction-detail",
-                success: function(data){
-                    $("#popup-base #ajax .next-lvl").empty();
-                    $("#popup-base #ajax .next-lvl").append(data);
-                }, error: function(){
-                }
-            });
-        });
-	    
-        /**
-         * creation d'un forum
-         */
-		$("#creer-forum").submit(function(e) {
-		    e.preventDefault();
-            
-            $.ajax({
-                type:"POST",
-                data: $(this).serialize(),
-                url:"{{WEBROOT}}controller/modules/bataille/faction/creer_forum",
-                success: function(data){
-                    if (data == "ok") {
-                        $.ajax({
-                            type:"POST",
-	                        data: "loaded_ajax=true",
-                            url: "{{WEBROOT}}bataille/popup/ambassade/forum-faction",
-                            success: function(data){
-                                $("#popup-base #ajax .next-lvl").empty();
-                                $("#popup-base #ajax .next-lvl").append(data);
-                            }, error: function(){
-                            }
-                        });
-                    }
-                    else {
-                        $("body").prepend(data);
-                    }
-                }
-            });
+		/**
+		 * affichage du détail d'un forum
+		 */
+		$(".acceder-forum").click(function(e) {
+			e.preventDefault();
+			
+			var id_forum = $(this).attr("id_forum");
+			
+			$.ajax({
+				type:"POST",
+				data: "loaded_ajax=true&id_forum="+id_forum,
+				url: "{{WEBROOT}}bataille/popup/ambassade/forum-faction-detail",
+				success: function(data){
+					$("#popup-base #ajax .next-lvl").empty();
+					$("#popup-base #ajax .next-lvl").append(data);
+				}, error: function(){
+				}
+			});
 		});
-        
-        /**
-         * suppression d'un forum
-         */
+		
+		/**
+		 * creation d'un forum
+		 */
+		$("#creer-forum").submit(function(e) {
+			e.preventDefault();
+			
+			$.ajax({
+				type:"POST",
+				data: $(this).serialize(),
+				url:"{{WEBROOT}}controller/modules/bataille/faction/creer_forum",
+				success: function(data){
+					if (data == "ok") {
+						$.ajax({
+							type:"POST",
+							data: "loaded_ajax=true",
+							url: "{{WEBROOT}}bataille/popup/ambassade/forum-faction",
+							success: function(data){
+								$("#popup-base #ajax .next-lvl").empty();
+								$("#popup-base #ajax .next-lvl").append(data);
+							}, error: function(){
+							}
+						});
+					}
+					else {
+						$("body").prepend(data);
+					}
+				}
+			});
+		});
+		
+		/**
+		 * suppression d'un forum
+		 */
 		$(".supprimer-forum").click(function(e) {
-		    e.preventDefault();
+			e.preventDefault();
 
 			var id_forum = $(this).attr("id_forum");
 			$(this).addClass("to-delete");
 
-            $.ajax({
-                type:"POST",
-	            data: "id_forum="+id_forum,
-                url: "{{WEBROOT}}controller/modules/bataille/faction/supprimer_forum",
-                success: function(data){
-                    if (data == "ok") {
-                        $(".to-delete").parent().parent().fadeOut();
-                        $(".to-delete").parent().parent().remove();
-                    }
-                    else {
-                        $("body").prepend(data);
-                    }
-                }
-            });
+			$.ajax({
+				type:"POST",
+				data: "id_forum="+id_forum,
+				url: "{{WEBROOT}}controller/modules/bataille/faction/supprimer_forum",
+				success: function(data){
+					if (data == "ok") {
+						$(".to-delete").parent().parent().fadeOut();
+						$(".to-delete").parent().parent().remove();
+					}
+					else {
+						$("body").prepend(data);
+					}
+				}
+			});
 		});
-        
-        /**
-         * suppression d'un forum
-         */
-        $(".supprimer-commentaire").click(function(e) {
-            e.preventDefault();
-            
-            var id_commentaire = $(this).attr("id_commentaire");
-            $(this).addClass("to-delete");
-            
-            $.ajax({
-                type:"POST",
-                data: "id_commentaire="+id_commentaire,
-                url: "{{WEBROOT}}controller/modules/bataille/faction/supprimer_commentaire",
-                success: function(data){
-                    if (data == "ok") {
-                        $(".to-delete").parent().parent().fadeOut();
-                        $(".to-delete").parent().parent().remove();
-                    }
-                    else {
-                        $("body").prepend(data);
-                    }
-                }
-            });
-        });
-        
-        /**
-         * ajout d'un commentaire
-         */
-        $("#ajouter-commentaire").submit(function(e) {
-            e.preventDefault();
-            
-            $.ajax({
+		
+		/**
+		 * suppression d'un commentaire sur le forum
+		 */
+		$(".supprimer-commentaire").click(function(e) {
+			e.preventDefault();
+			
+			var id_commentaire = $(this).attr("id_commentaire");
+			$(this).addClass("to-delete");
+			
+			$.ajax({
+				type:"POST",
+				data: "id_commentaire="+id_commentaire,
+				url: "{{WEBROOT}}controller/modules/bataille/faction/supprimer_commentaire",
+				success: function(data){
+					if (data == "ok") {
+						$(".to-delete").parent().parent().fadeOut();
+						$(".to-delete").parent().parent().remove();
+					}
+					else {
+						$("body").prepend(data);
+					}
+				}
+			});
+		});
+		
+		/**
+		 * ajout d'un commentaire sur le forum
+		 */
+		$("#ajouter-commentaire").submit(function(e) {
+			e.preventDefault();
+			
+			$.ajax({
+				type:"POST",
+				data: $(this).serialize(),
+				url:"{{WEBROOT}}controller/modules/bataille/faction/add_commentaire",
+				success: function(data){
+					if (data == "ok") {
+						$.ajax({
+							type:"POST",
+							data: "loaded_ajax=true&id_forum="+$("#id_forum").val(),
+							url: "{{WEBROOT}}bataille/popup/ambassade/forum-faction-detail",
+							success: function(data){
+								$("#popup-base #ajax .next-lvl").empty();
+								$("#popup-base #ajax .next-lvl").append(data);
+							}, error: function(){
+							}
+						});
+					}
+					else {
+						$("body").prepend(data);
+					}
+				}
+			});
+		});
+		
+		$("#inviter-membre").submit(function(e) {
+			e.preventDefault();
+			
+			console.log($(this).serialize())
+			
+			$.ajax({
                 type:"POST",
                 data: $(this).serialize(),
-                url:"{{WEBROOT}}controller/modules/bataille/faction/add_commentaire",
-                success: function(data){
+                url:"{{WEBROOT}}controller/modules/bataille/faction/inviter_membre",
+				success: function(data) {
                     if (data == "ok") {
-                        $.ajax({
-                            type:"POST",
-                            data: "loaded_ajax=true&id_forum="+$("#id_forum").val(),
-                            url: "{{WEBROOT}}bataille/popup/ambassade/forum-faction-detail",
-                            success: function(data){
-                                $("#popup-base #ajax .next-lvl").empty();
-                                $("#popup-base #ajax .next-lvl").append(data);
-                            }, error: function(){
-                            }
-                        });
-                    }
-                    else {
+                    
+					}
+					else {
                         $("body").prepend(data);
-                    }
-                }
-            });
-        });
-        
-        /**
-         * pour la gestion des permissions
-         */
-        $(".permission").click(function() {
-            var checked = "remove";
-            if ($(this).prop( "checked") == true) {
-                checked = "add";
-            }
-            
-            var id_permission = $(this).val();
-            var id_identite = $(this).parent().parent().parent().find(".player").attr("player");
-    
-            $.ajax({
-                type:"POST",
-                data: "id_permission="+id_permission+"&type="+checked+"&id_identite="+id_identite,
-                url: "{{WEBROOT}}controller/modules/bataille/faction/gestion_permission",
-                success: function(data){
-                    $("body").prepend(data);
-                }
-            });
+					}
+				}
+			});
 		});
-        
-        /**
-         * fonction qui permettra de renvoyer un membre d'une faction
-         */
-        $(".renvoyer-membre").click(function(e) {
-            e.preventDefault();
-    
-            var id_identite = $(this).parent().parent().parent().find(".player").attr("player");
-    
-            $.ajax({
-                type:"POST",
-                data: "id_identite="+id_identite,
-                url: "{{WEBROOT}}controller/modules/bataille/faction/renvoyer_membre",
-                success: function(data){
-                    var url_page = "{{WEBROOT}}bataille/popup/ambassade/gestion-membre-faction";
-                    
-                    if (data == "quitter") {
-                        url_page = "{{WEBROOT}}bataille/popup/ambassade/faction";
-                    }
-                    
-                    $.ajax({
-                        type:"POST",
-                        data: "loaded_ajax=true",
-                        url: url_page,
-                        success: function(data){
-                            $("#popup-base #ajax .next-lvl").empty();
-                            $("#popup-base #ajax .next-lvl").append(data);
-                        }, error: function(){
-                        }
-                    });
-                }
-            });
+		
+		/**
+		 * pour la gestion des permissions
+		 */
+		$(".permission").click(function() {
+			var checked = "remove";
+			if ($(this).prop( "checked") == true) {
+				checked = "add";
+			}
+			
+			var id_permission = $(this).val();
+			var id_identite = $(this).parent().parent().parent().find(".player").attr("player");
+	
+			$.ajax({
+				type:"POST",
+				data: "id_permission="+id_permission+"&type="+checked+"&id_identite="+id_identite,
+				url: "{{WEBROOT}}controller/modules/bataille/faction/gestion_permission",
+				success: function(data){
+					$("body").prepend(data);
+				}
+			});
+		});
+		
+		/**
+		 * fonction qui permettra de renvoyer un membre d'une faction
+		 */
+		$(".renvoyer-membre").click(function(e) {
+			e.preventDefault();
+	
+			var id_identite = $(this).parent().parent().parent().find(".player").attr("player");
+	
+			$.ajax({
+				type:"POST",
+				data: "id_identite="+id_identite,
+				url: "{{WEBROOT}}controller/modules/bataille/faction/renvoyer_membre",
+				success: function(data){
+					var url_page = "{{WEBROOT}}bataille/popup/ambassade/gestion-membre-faction";
+					
+					if (data == "quitter") {
+						url_page = "{{WEBROOT}}bataille/popup/ambassade/faction";
+					}
+					
+					$.ajax({
+						type:"POST",
+						data: "loaded_ajax=true",
+						url: url_page,
+						success: function(data){
+							$("#popup-base #ajax .next-lvl").empty();
+							$("#popup-base #ajax .next-lvl").append(data);
+						}, error: function(){
+						}
+					});
+				}
+			});
 		});
 	});
 </script>

@@ -1,7 +1,7 @@
 @charset "UTF-8";
-/*pour la nav tout en haut de la page ou il y a aide déconnexion...*/
+/*pour la nav tout en haut de la page ou il y a aide d├®connexion...*/
 /*pour la nav principaleou il y a le logo de la map...*/
-/*pour le logo et les ressources + les panneaux lattéraux avec les unités*/
+/*pour le logo et les ressources + les panneaux latt├®raux avec les unit├®s*/
 /*pour le body et le bg de la map*/
 /*pour la map ou on voit tous les players*/
 /*----- LINK COLORS -----*/
@@ -525,8 +525,9 @@ p.rouge {
       padding: 0.63rem;
       margin-top: 1rem;
       vertical-align: bottom;
-      margin-top: 1.3rem;
-      margin-left: -1.9rem; }
+      margin-top: 1.3rem; }
+      .popup .content .ambassade button.coller {
+        margin-left: -1.9rem; }
   .popup .rouge {
     color: red; }
   .popup .construire {

@@ -4,10 +4,12 @@
 	
 	use core\App;
 	use core\HTML\flashmessage\FlashMessage;
+	use modules\messagerie\app\controller\Messagerie;
 	
 	class Faction extends PermissionsFaction {
 		protected $id_faction;
 		protected $id_autre_faction;
+		protected $nom_faction;
 		
 		//-------------------------- BUILDER ----------------------------------------------------------------------------//
 		public function __construct() {
@@ -111,11 +113,14 @@
 						"url_img" => $obj->img_profil,
 						"pseudo_chef" => $obj->pseudo
 					]]);
+					
+					$this->nom_faction = $obj->nom_faction;
 				}
 			}
 		}
 		
 		/**
+		 * @return array
 		 * fonction qui récupère les membres d'un faction
 		 */
 		public function getMembreFaction() {
@@ -130,6 +135,7 @@
 				->get();
 			
 			$membre = [];
+			$liste_membre = [];
 			foreach ($query as $obj) {
 				$membre[] = [
 					"id_identite" => $obj->ID_identite,
@@ -139,9 +145,13 @@
 					"chef" => $this->getTestChefFaction($obj->ID_identite, $this->id_faction),
 					"permissions" => $this->getMembrePermissions($obj->ID_identite, $this->id_faction)
 				];
+				
+				$liste_membre[] = $obj->pseudo;
 			}
 			
 			Bataille::setValues(["membres_faction" => $membre]);
+			
+			return $liste_membre;
 		}
 		
 		/**
@@ -192,6 +202,43 @@
 			}
 			
 			FlashMessage::setFlash("Vous n'avez pas l'autorisation de renvoyer un membre");
+			return false;
+		}
+		
+		/**
+		 * @param $pseudo
+		 * @return bool
+		 */
+		public function setInviterMembre($pseudo) {
+			$dbc = App::getDb();
+			$permissions_membre = $this->getPermissionsMembre($this->id_faction);
+			
+			if ($permissions_membre == "chef" || in_array("INVITER_MEMBRE", $permissions_membre)) {
+				$id_identite = Bataille::getPlayerExist($pseudo);
+				if ($id_identite== false) {
+					FlashMessage::setFlash("Ce joueur n'existe pas");
+					return false;
+				}
+				if (in_array($pseudo, $this->getMembreFaction())) {
+					FlashMessage::setFlash("Ce joueur est déjà dans votre faction ou est en attente d'invitation, vous ne pouvez pas l'inviter à nouveau");
+					return false;
+				}
+				
+				$infos = [
+					"nom_faction" => $this->nom_faction
+				];
+				
+				require(MODULEROOT."bataille/app/controller/rapports/invitation-faction.php");
+				
+				$messagerie = new Messagerie();
+				$messagerie->setEnvoyerMessage("Invitation rejoindre faction", $id_identite, $message);
+				
+				$dbc->insert("ID_faction", $this->id_faction)->insert("ID_identite", $id_identite)
+					->into("_bataille_faction_invitation")->set();
+				return true;
+			}
+			
+			FlashMessage::setFlash("Vous n'avez pas l'autorisation d'inviter un membre");
 			return false;
 		}
 		//-------------------------- END SETTER ----------------------------------------------------------------------------//    

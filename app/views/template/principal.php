@@ -23,7 +23,7 @@
 			unset($arr_page["app"]["navigation"]);
 		?>
 
-		<?php if ($_SESSION['idlogin'.CLEF_SITE] == 1) :?>
+		<?php if ($_COOKIE['debug'] == "debug_active") :?>
 			<pre>
 				<?php print_r(array_merge(array_merge(array_merge($arr, $constant), $_REQUEST), $_SESSION)); ?>
 			</pre>

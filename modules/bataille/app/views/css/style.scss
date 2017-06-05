@@ -452,7 +452,10 @@ p.rouge {
 				margin-top: 1rem;
 				vertical-align: bottom;
 				margin-top: 1.3rem;
-				margin-left: -1.9rem;
+				
+				&.coller {
+					margin-left: -1.9rem;
+				}
 			}
 		}
 	}
