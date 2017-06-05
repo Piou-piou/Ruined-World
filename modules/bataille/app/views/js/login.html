@@ -1,7 +1,8 @@
 <script>
 	$(document).ready(function() {
 		$("#login-form").submit(function(e) {
-			if ($("#login-form #vacances").val() != "desactiver") {
+		    console.log($("#login-form #standard").val())
+			if ($("#login-form #vacances").val() != "desactiver" && $("#login-form #standard").val() != "true") {
                 e.preventDefault();
                 $.ajax({
                     type:"POST",
@@ -9,15 +10,9 @@
                     url:"{{WEBROOT}}controller/modules/bataille/auth/login_ajax",
                     success: function(data){
                         if (data == "ok") {
-                            $.ajax({
-                                type:"POST",
-                                data: $(this).serialize(),
-                                url:"{{WEBROOT}}controller/modules/bataille/auth/login",
-                                success: function(data) {
-                                    $("body").append(data);
-                                    $("body .login:first-of-type").remove();
-                                }
-                            });
+                            $("#login-form #standard").val("true");
+    
+                            $("#login-form").submit();
                         }
                         else if (data == "popup") {
                             $("#popup-vacances").addClass("visible");
@@ -34,6 +29,7 @@
 		    e.preventDefault();
             
             $("#login-form #vacances").val("desactiver");
+            $("#login-form #standard").val("true");
             
             $("#login-form").submit();
 		})

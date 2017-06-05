@@ -217,6 +217,30 @@
 				}
 			}
 		}
+		
+		/**
+		 * @param $pseudo
+		 * @return bool
+		 * fonction qui renvoi l'ID_identite d'un joueur si il existe
+		 */
+		public static function getPlayerExist($pseudo) {
+			$dbc = App::getDb();
+			
+			$pseudo = trim($pseudo);
+			
+			$query = $dbc->select("identite.ID_identite")->from("identite, _bataille_infos_player")
+				->where("identite.pseudo", "=", $pseudo, "AND")
+				->where("_bataille_infos_player.abandon", "=", 0, "AND")
+				->where("identite.ID_identite", "=", "_bataille_infos_player.ID_identite", "", true)->get();
+			
+			if (count($query) == 1) {
+				foreach ($query as $obj) {
+					return $obj->ID_identite;
+				}
+			}
+			
+			return false;
+		}
 		//-------------------------- END GETTER ----------------------------------------------------------------------------//
 		
 		

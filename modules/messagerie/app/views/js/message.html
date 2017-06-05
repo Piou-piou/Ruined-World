@@ -1,0 +1,23 @@
+<script>
+    $(document).ready(function() {
+        $(document).on("click", ".open-popup", function() {
+            var id_faction = $(this).attr("faction");
+
+
+            $.ajax({
+                type:"POST",
+                data: "loaded_ajax=true&id_faction="+id_faction,
+                url:"{{WEBROOT}}bataille/popup/faction",
+                success: function(data){
+                    $("#popup-base #ajax").append(data);
+                }, error: function(){
+
+                }
+            });
+        });
+
+        $(".popup .annuler").click(function() {
+            $("#popup-base #ajax").empty();
+        });
+    });
+</script>

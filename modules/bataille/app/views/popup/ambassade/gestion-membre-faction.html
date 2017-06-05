@@ -1,4 +1,4 @@
-<div class="row ambassade">
+<div class="ambassade">
 	{% include("popup/ambassade/nav-ambassade.html")  %}
 	
 	{% if bataille.permission_player != "chef" and "GERER_RANG_MEMBRE" not in bataille.permission_player %}
@@ -57,7 +57,7 @@
 								<input type="text" name="rang" value="{{ i.rang_faction }}">
 							</div>
 							<div class="small-12 medium-2 columns">
-								<button>Valider</button>
+								<button class="coller">Valider</button>
 							</div>
 						</div>
 					</div>
@@ -69,5 +69,5 @@
 	
 </div>
 
-{% include("js/faction/gestion_forum.html") %}
+{% include("js/faction/gestion_faction.html") %}
 {% include("js/joueur.html") %}
