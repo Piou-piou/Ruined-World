@@ -8,7 +8,7 @@
             $.ajax({
                 type:"POST",
                 data: "loaded_ajax=true&id_faction="+faction+"&nom_batiment=ambassade",
-                url:"{{WEBROOT}}bataille/popup/unbatiment",
+                url:"{{WEBROOT}}bataille/popup/faction",
                 success: function(data){
                     $("#popup-base #ajax").html(data);
                 }, error: function(){
