@@ -27,7 +27,7 @@
 		</div>
 	</div>
 	<div class="row next-lvl">
-		{% if bataille.max_level >=0 and bataille.max_level < 2 and bataille.max_level != "max_level" %}
+		{% if bataille.max_level >=0 and bataille.max_level < 2 and bataille.max_level == 1 %}
 			<h3>Caractéristiques au niveau suivant</h3>
 			<ul>
 				<li>Niveau : {{ bataille.niveau_batiment+1 }}</li>
@@ -81,13 +81,12 @@
 				   href="">Améliorer le bâtiment
 				</a>
 			{% endif %}
-		{% elseif bataille.max_level == 0 %}
-			<p>Le batiment n'est pas encore construit. Vous ne pouvez donc pas intéragir avec. Si vous ne le voyez pas
-				dans la liste de gauche référez vous à l'aide pour savoir comment le construire.
-			</p>
-		{% else %}
-			<!-- partie quand le batiment est au lvl max -->
+		{% elseif bataille.max_level == "max_level" %}
 			<p>Le batiment a atteint son niveau maxiumum</p>
+		{% else %}
+			<p>Le batiment n'est pas encore construit. Vous ne pouvez donc pas intéragir avec. Si vous ne le voyez pas
+			   dans la liste de gauche référez vous à l'aide pour savoir comment le construire.
+			</p>
 		{% endif %}
 	</div>
 </div>
