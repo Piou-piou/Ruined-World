@@ -225,7 +225,8 @@
 				}
 				
 				$infos = [
-					"nom_faction" => $this->nom_faction
+					"nom_faction" => $this->nom_faction,
+					"id_faction" => $this->id_faction
 				];
 				
 				require(MODULEROOT."bataille/app/controller/rapports/invitation-faction.php");
