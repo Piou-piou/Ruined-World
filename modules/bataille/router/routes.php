@@ -120,7 +120,7 @@
 			$this->controller = "bataille/app/controller/faction/get_membres.php";
 		}
 		if ($this->page == "popup/ambassade/inviter-membre-faction") {
-			$this->controller = "bataille/app/controller/faction/get_faction.php";
+			$this->controller = "bataille/app/controller/faction/get_invitations.php";
 		}
 		if ($this->page == "popup/ambassade/gestion-membre-faction") {
 			$this->controller = "bataille/app/controller/faction/get_membres.php";

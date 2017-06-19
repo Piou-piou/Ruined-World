@@ -14,6 +14,25 @@
 				</div>
 			</div>
 		</form>
+		<div class="clear"></div>
+
+		<h2>Liste des invitations envoyées</h2>
+
+		{% if bataille.invitations is iterable and bataille.invitations is not empty %}
+			{% for i in bataille.invitations %}
+				<div class="small-12 medium-3 columns">{{ i.pseudo }}</div>
+				<div class="small-12 medium-3 columns">{{ i.points }}</div>
+				<div class="small-12 medium-3 columns">
+					{% if i.vacances == 1 %}
+						Le joueur est en vacances
+					{% endif %}
+				</div>
+				<div class="small-12 medium-3 columns">supprimer</div>
+			{% endfor %}
+		{% else %}
+			<p>Aucune invitation en cours</p>
+		{% endif %}
+
 	{% endif %}
 </div>
 

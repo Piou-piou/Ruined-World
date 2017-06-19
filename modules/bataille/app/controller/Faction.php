@@ -174,6 +174,35 @@
 			
 			return false;
 		}
+		
+		/**
+		 * foncitons qui renvoit les informations sur les joueurs invités à rejoindre la faction
+		 */
+		public function getInvitationsEnvoyees() {
+			$dbc = App::getDb();
+			$permissions_membre = $this->getPermissionsMembre($this->id_faction);
+			$invitations = [];
+			
+			if ($permissions_membre == "chef" || in_array("INVITER_MEMBRE", $permissions_membre)) {
+				$query = $dbc->select()->from("_bataille_faction_invitation, identite, _bataille_infos_player")
+					->where("_bataille_faction_invitation.ID_faction", "=", $this->id_faction, "AND")
+					->where("_bataille_faction_invitation.ID_identite", "=", "identite.ID_identite", "AND", true)
+					->where("_bataille_faction_invitation.ID_identite", "=", "_bataille_infos_player.ID_identite", "", true)->get();
+			}
+			
+			if (count($query) > 0) {
+				foreach ($query as $obj) {
+					$invitations[] = [
+						"id_identite" => $obj->ID_identite,
+						"points" => $obj->points,
+						"pseudo" => $obj->pseudo,
+						"vacances" => $obj->mode_vacances
+					];
+				}
+			}
+			
+			Bataille::setValues(["invitations" => $invitations]);
+		}
 		//-------------------------- END GETTER ----------------------------------------------------------------------------//
 		
 		
