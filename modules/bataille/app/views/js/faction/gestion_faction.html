@@ -131,7 +131,7 @@
 		});
 		
 		/**
-		 * permet d'envoyerune invitation à un membre
+		 * permet d'envoyerune invitation à un membre depuis faction
 		 */
 		$("#inviter-membre").submit(function(e) {
 			e.preventDefault();
@@ -161,6 +161,9 @@
 			});
 		});
 		
+		/**
+		 * supprimer invitation depuis la gestion de la faction
+		 */
 		$(".supprimer-invitation").click(function(e) {
 		    e.preventDefault();
 			
@@ -188,6 +191,37 @@
                 }
             });
 		});
+  
+		/**
+		 * pour qu'un joueur puisse supprimer une invitation à rejoindre une faction
+		 */
+        $(".supprimer-invitation-joueur").click(function(e) {
+            e.preventDefault();
+            
+            $.ajax({
+                type:"POST",
+                data: "id_faction="+$(this).attr("data-id"),
+                url:"{{WEBROOT}}controller/modules/bataille/faction/supprimer_invitation_player",
+                success: function(data) {
+                    if (data == "ok") {
+                        $("body").prepend(data);
+                        $.ajax({
+                            type:"POST",
+                            data: "loaded_ajax=true",
+                            url: "{{WEBROOT}}bataille/popup/ambassade/mes-invitations-faction",
+                            success: function(data){
+                                $("#popup-base #ajax .next-lvl").empty();
+                                $("#popup-base #ajax .next-lvl").append(data);
+                            }, error: function(){
+                            }
+                        });
+                    }
+                    else {
+                        $("body").prepend(data);
+                    }
+                }
+            });
+        });
 		
 		/**
 		 * pour la gestion des permissions

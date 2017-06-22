@@ -324,5 +324,20 @@
 			FlashMessage::setFlash("Vous n'avez pas l'autorisation de supprimer une invitation");
 			return false;
 		}
+		
+		/**
+		 * @param $id_faction
+		 * @return bool
+		 * permet à un joueur de supprimer une invitation qu'il a reçu
+		 */
+		public function setSupprimerInvitationPlayer($id_faction) {
+			$dbc = App::getDb();
+			
+			$dbc->delete()->from("_bataille_faction_invitation")->where("ID_faction", "=", $id_faction, "AND")
+				->where("ID_identite", "=", Bataille::getIdIdentite())->del();
+			
+			FlashMessage::setFlash("L'invitation a bien été supprimée", "success");
+			return true;
+		}
 		//-------------------------- END SETTER ----------------------------------------------------------------------------//    
 	}
