@@ -182,6 +182,7 @@
 			$dbc = App::getDb();
 			$permissions_membre = $this->getPermissionsMembre($this->id_faction);
 			$invitations = [];
+			$pseudos = [];
 			
 			if ($permissions_membre == "chef" || in_array("INVITER_MEMBRE", $permissions_membre)) {
 				$query = $dbc->select()->from("_bataille_faction_invitation, identite, _bataille_infos_player")
@@ -198,10 +199,14 @@
 						"pseudo" => $obj->pseudo,
 						"vacances" => $obj->mode_vacances
 					];
+					
+					$pseudos[] = $obj->pseudo;
 				}
 			}
 			
 			Bataille::setValues(["invitations" => $invitations]);
+			
+			return $pseudos;
 		}
 		//-------------------------- END GETTER ----------------------------------------------------------------------------//
 		
@@ -250,6 +255,10 @@
 					return false;
 				}
 				if (in_array($pseudo, $this->getMembreFaction())) {
+					FlashMessage::setFlash("Ce joueur est déjà dans votre faction ou est en attente d'invitation, vous ne pouvez pas l'inviter à nouveau");
+					return false;
+				}
+				if (in_array($pseudo, $this->getInvitationsEnvoyees())) {
 					FlashMessage::setFlash("Ce joueur est déjà dans votre faction ou est en attente d'invitation, vous ne pouvez pas l'inviter à nouveau");
 					return false;
 				}
