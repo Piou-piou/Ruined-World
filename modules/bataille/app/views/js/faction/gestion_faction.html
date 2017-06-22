@@ -192,6 +192,9 @@
             });
 		});
 		
+		/**
+		 * permet à un joueur de rejoindre une faction
+		 */
 		$(".accepter-invitation").click(function(e) {
 		    e.preventDefault();
             
@@ -237,6 +240,36 @@
                             type:"POST",
                             data: "loaded_ajax=true",
                             url: "{{WEBROOT}}bataille/popup/ambassade/mes-invitations-faction",
+                            success: function(data){
+                                $("#popup-base #ajax .next-lvl").empty();
+                                $("#popup-base #ajax .next-lvl").append(data);
+                            }, error: function(){
+                            }
+                        });
+                    }
+                    else {
+                        $("body").prepend(data);
+                    }
+                }
+            });
+        });
+        
+        /**
+         * permet à un joueur de rejoindre une faction
+         */
+        $(".quitter-faction").click(function(e) {
+            e.preventDefault();
+            
+            $.ajax({
+                type:"POST",
+                url:"{{WEBROOT}}controller/modules/bataille/faction/quitter_faction",
+                success: function(data) {
+                    if (data == "ok") {
+                        $("body").prepend(data);
+                        $.ajax({
+                            type:"POST",
+                            data: "loaded_ajax=true",
+                            url: "{{WEBROOT}}bataille/popup/ambassade/faction",
                             success: function(data){
                                 $("#popup-base #ajax .next-lvl").empty();
                                 $("#popup-base #ajax .next-lvl").append(data);

@@ -326,6 +326,26 @@
 		}
 		
 		/**
+		 * @return bool
+		 * fonction qui permet à un joueur de quitter sa faction
+		 */
+		public function setQuitterFaction() {
+			$dbc = App::getDb();
+			$permissions_membre = $this->getPermissionsMembre($this->id_faction);
+			
+			if ($permissions_membre == "chef") {
+			
+			}
+			else {
+				$dbc->update("ID_faction", 0)
+					->update("rang_faction", "")->from("_bataille_infos_player")->where("ID_identite", "=", Bataille::getIdIdentite())->set();
+				
+				FlashMessage::setFlash("Vous avez quitter votre faction", "success");
+				return true;
+			}
+		}
+		
+		/**
 		 * @param $id_faction
 		 * @return bool
 		 * fonction qui permet à un joueur de rejoindre une faction
