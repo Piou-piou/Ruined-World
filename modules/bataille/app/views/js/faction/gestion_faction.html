@@ -130,10 +130,11 @@
 			});
 		});
 		
+		/**
+		 * permet d'envoyerune invitation à un membre
+		 */
 		$("#inviter-membre").submit(function(e) {
 			e.preventDefault();
-			
-			console.log($(this).serialize())
 			
 			$.ajax({
                 type:"POST",
@@ -141,13 +142,51 @@
                 url:"{{WEBROOT}}controller/modules/bataille/faction/inviter_membre",
 				success: function(data) {
                     if (data == "ok") {
-                    
+                        $("body").prepend(data);
+                        $.ajax({
+                            type:"POST",
+                            data: "loaded_ajax=true",
+                            url: "{{WEBROOT}}bataille/popup/ambassade/inviter-membre-faction",
+                            success: function(data){
+                                $("#popup-base #ajax .next-lvl").empty();
+                                $("#popup-base #ajax .next-lvl").append(data);
+                            }, error: function(){
+                            }
+                        });
 					}
 					else {
                         $("body").prepend(data);
 					}
 				}
 			});
+		});
+		
+		$(".supprimer-invitation").click(function(e) {
+		    e.preventDefault();
+			
+            $.ajax({
+                type:"POST",
+                data: "id_identite="+$(this).attr("data-id"),
+                url:"{{WEBROOT}}controller/modules/bataille/faction/supprimer_invitation",
+                success: function(data) {
+                    if (data == "ok") {
+                        $("body").prepend(data);
+                        $.ajax({
+                            type:"POST",
+                            data: "loaded_ajax=true",
+                            url: "{{WEBROOT}}bataille/popup/ambassade/inviter-membre-faction",
+                            success: function(data){
+                                $("#popup-base #ajax .next-lvl").empty();
+                                $("#popup-base #ajax .next-lvl").append(data);
+                            }, error: function(){
+                            }
+                        });
+                    }
+                    else {
+                        $("body").prepend(data);
+                    }
+                }
+            });
 		});
 		
 		/**

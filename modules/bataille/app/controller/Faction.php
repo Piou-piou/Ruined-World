@@ -237,6 +237,7 @@
 		/**
 		 * @param $pseudo
 		 * @return bool
+		 * fonction qui permet d'inviter un membre à rejoindre la faction
 		 */
 		public function setInviterMembre($pseudo) {
 			$dbc = App::getDb();
@@ -265,10 +266,32 @@
 				
 				$dbc->insert("ID_faction", $this->id_faction)->insert("ID_identite", $id_identite)
 					->into("_bataille_faction_invitation")->set();
+				FlashMessage::setFlash("L'invitation a bien été envoyée", "success");
 				return true;
 			}
 			
 			FlashMessage::setFlash("Vous n'avez pas l'autorisation d'inviter un membre");
+			return false;
+		}
+		
+		/**
+		 * @param $id_identite
+		 * @return bool
+		 * fonction qui permet de supprimer une invitation a rejoindre la faction
+		 */
+		public function setSupprimerInvitation($id_identite) {
+			$dbc = App::getDb();
+			$permissions_membre = $this->getPermissionsMembre($this->id_faction);
+			
+			if ($permissions_membre == "chef" || in_array("INVITER_MEMBRE", $permissions_membre)) {
+				$dbc->delete()->from("_bataille_faction_invitation")->where("ID_faction", "=", $this->id_faction, "AND")
+					->where("ID_identite", "=", $id_identite)->del();
+				
+				FlashMessage::setFlash("L'invitation a bien été supprimée", "success");
+				return true;
+			}
+			
+			FlashMessage::setFlash("Vous n'avez pas l'autorisation de supprimer une invitation");
 			return false;
 		}
 		//-------------------------- END SETTER ----------------------------------------------------------------------------//    
