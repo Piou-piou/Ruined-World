@@ -334,7 +334,8 @@
 			$permissions_membre = $this->getPermissionsMembre($this->id_faction);
 			
 			if ($permissions_membre == "chef") {
-			
+				FlashMessage::setFlash("Merci de définir un nouveau chef avant de quitter votre faction");
+				return false;
 			}
 			else {
 				$dbc->update("ID_faction", 0)
