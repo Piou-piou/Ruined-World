@@ -176,6 +176,7 @@
 		}
 		
 		/**
+		 * @return array
 		 * foncitons qui renvoit les informations sur les joueurs invités à rejoindre la faction
 		 */
 		public function getInvitationsEnvoyees() {
@@ -207,6 +208,26 @@
 			Bataille::setValues(["invitations" => $invitations]);
 			
 			return $pseudos;
+		}
+		
+		public function getInvitationsMembre() {
+			$dbc = App::getDb();
+			
+			$query = $dbc->select()->from("_bataille_faction_invitation, _bataille_faction")
+				->where("_bataille_faction_invitation.ID_identite", "=", Bataille::getIdIdentite(), "AND")
+				->where("_bataille_faction_invitation.ID_faction", "=", "_bataille_faction.ID_faction", "", true)->get();
+			
+			if (count($query) > 0) {
+				foreach ($query as $obj) {
+					$invitations[] = [
+						"id_faction" => $obj->ID_faction,
+						"nom_faction" => $obj->nom_faction,
+						"points_faction" => $obj->points_faction,
+					];
+					
+					Bataille::setValues(["invitations" => $invitations]);
+				}
+			}
 		}
 		//-------------------------- END GETTER ----------------------------------------------------------------------------//
 		
