@@ -328,6 +328,23 @@
 		/**
 		 * @param $id_faction
 		 * @return bool
+		 * fonction qui permet à un joueur de rejoindre une faction
+		 */
+		public function setAccepterInvitationPlayer($id_faction) {
+			$dbc = App::getDb();
+			
+			$dbc->update("ID_faction", $id_faction)
+				->update("rang_faction", "")->from("_bataille_infos_player")->where("ID_identite", "=", Bataille::getIdIdentite())->set();
+			
+			$this->setSupprimerInvitationPlayer($id_faction);
+			
+			FlashMessage::setFlash("Vous avez rejoint une faction", "success");
+			return true;
+		}
+		
+		/**
+		 * @param $id_faction
+		 * @return bool
 		 * permet à un joueur de supprimer une invitation qu'il a reçu
 		 */
 		public function setSupprimerInvitationPlayer($id_faction) {

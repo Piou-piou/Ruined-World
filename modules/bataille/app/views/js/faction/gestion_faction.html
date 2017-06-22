@@ -191,6 +191,34 @@
                 }
             });
 		});
+		
+		$(".accepter-invitation").click(function(e) {
+		    e.preventDefault();
+            
+            $.ajax({
+                type:"POST",
+                data: "id_faction="+$(this).attr("data-id"),
+                url:"{{WEBROOT}}controller/modules/bataille/faction/accepter_invitation_player",
+                success: function(data) {
+                    if (data == "ok") {
+                        $("body").prepend(data);
+                        $.ajax({
+                            type:"POST",
+                            data: "loaded_ajax=true",
+                            url: "{{WEBROOT}}bataille/popup/ambassade/faction",
+                            success: function(data){
+                                $("#popup-base #ajax .next-lvl").empty();
+                                $("#popup-base #ajax .next-lvl").append(data);
+                            }, error: function(){
+                            }
+                        });
+                    }
+                    else {
+                        $("body").prepend(data);
+                    }
+                }
+            });
+		});
   
 		/**
 		 * pour qu'un joueur puisse supprimer une invitation à rejoindre une faction
