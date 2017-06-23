@@ -191,6 +191,37 @@
                 }
             });
 		});
+        
+        /**
+         * changer le chef de la faction
+         */
+        $(".definir-chef").click(function(e) {
+            e.preventDefault();
+            
+            $.ajax({
+                type:"POST",
+                data: "id_identite="+$(this).attr("data-id"),
+                url:"{{WEBROOT}}controller/modules/bataille/faction/definir_chef",
+                success: function(data) {
+                    if (data == "ok") {
+                        $("body").prepend(data);
+                        $.ajax({
+                            type:"POST",
+                            data: "loaded_ajax=true",
+                            url: "{{WEBROOT}}bataille/popup/ambassade/faction",
+                            success: function(data){
+                                $("#popup-base #ajax .next-lvl").empty();
+                                $("#popup-base #ajax .next-lvl").append(data);
+                            }, error: function(){
+                            }
+                        });
+                    }
+                    else {
+                        $("body").prepend(data);
+                    }
+                }
+            });
+        });
 		
 		/**
 		 * permet à un joueur de rejoindre une faction

@@ -306,6 +306,26 @@
 		
 		/**
 		 * @param $id_identite
+		 */
+		public function setChangerChef($id_identite) {
+			$dbc = App::getDb();
+			$permissions_membre = $this->getPermissionsMembre($this->id_faction);
+			
+			if ($permissions_membre == "chef") {
+				$dbc->update("ID_identite", $id_identite)->from("_bataille_faction")
+					->where("ID_faction", "=", $this->id_faction)->set();
+				
+				FlashMessage::setFlash("Le chef de la faction a bien été changé", "success");
+				
+				return true;
+			}
+			
+			FlashMessage::setFlash("Vous n'êtes pas le chef de la faction vous ne pouvez donc pas le changer");
+			return false;
+		}
+		
+		/**
+		 * @param $id_identite
 		 * @return bool
 		 * fonction qui permet de supprimer une invitation a rejoindre la faction
 		 */
