@@ -4,9 +4,10 @@
 		<p>Vous n'avez pas accès à cette fonctionnalité, merci de changer de page</p>
 	{% else %}
 		<form id="inviter-membre" action="{{ WEBROOT }}controller/modules/bataille/faction/inviter-membre" method="post">
-			<div class="small-12 medium-6">
+			<div class="small-12 medium-12">
 				<div class="small-12 medium-10 columns">
-					<label for="pseudo">Entrez le pseudo du membre que vous voulez inviter</label>
+					<label for="pseudo">Entrez le pseudo du membre que vous voulez inviter
+										(encore {{ bataille.invitations.nb_invitation_possible }} invitation(s) possible)</label>
 					<input type="text" name="pseudo">
 				</div>
 				<div class="small-12 medium-2 columns">
@@ -18,7 +19,7 @@
 
 		<h2>Liste des invitations envoyées</h2>
 
-		{% if bataille.invitations is iterable and bataille.invitations is not empty %}
+		{% if bataille.invitations is iterable and bataille.invitations|length > 1 %}
 			{% for i in bataille.invitations %}
 				<div class="small-12 medium-3 columns">{{ i.pseudo }}</div>
 				<div class="small-12 medium-3 columns">{{ i.points }}</div>

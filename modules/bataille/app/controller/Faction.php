@@ -176,6 +176,29 @@
 		}
 		
 		/**
+		 * @return int
+		 * fonciton qui renvoi le nombre d'invitations possible
+		 * sachant que dès le niveau 3 on peut en envoyer 5 et ensuite une seule par niveau jusqu'au niveau 30
+		 */
+		private function getNbInvitationPossible() {
+			$dbc = App::getDb();
+			$nb_inv = 5;
+			
+			$nb_inv = (Bataille::getBatiment()->getNiveauBatiment("ambassade")+$nb_inv)-3;
+			
+			$query = $dbc->select("ID_identite")->from("_bataille_faction_invitation")->where("ID_faction", "=", $this->id_faction)->get();
+			$nb_invitation_envoyees = count($query);
+			
+			$nb_inv = $nb_inv-$nb_invitation_envoyees-count($this->getMembreFaction());
+			
+			if ($nb_inv < 0) {
+				return 0;
+			}
+			
+			return $nb_inv;
+		}
+		
+		/**
 		 * @return array
 		 * foncitons qui renvoit les informations sur les joueurs invités à rejoindre la faction
 		 */
@@ -198,18 +221,22 @@
 						"id_identite" => $obj->ID_identite,
 						"points" => $obj->points,
 						"pseudo" => $obj->pseudo,
-						"vacances" => $obj->mode_vacances
+						"vacances" => $obj->mode_vacances,
 					];
 					
 					$pseudos[] = $obj->pseudo;
 				}
 			}
+			$invitations["nb_invitation_possible"] = $this->getNbInvitationPossible();
 			
 			Bataille::setValues(["invitations" => $invitations]);
 			
 			return $pseudos;
 		}
 		
+		/**
+		 * fonction qui renvoi les invitations recues par un joueur
+		 */
 		public function getInvitationsMembre() {
 			$dbc = App::getDb();
 			
@@ -281,6 +308,10 @@
 				}
 				if (in_array($pseudo, $this->getInvitationsEnvoyees())) {
 					FlashMessage::setFlash("Ce joueur est déjà dans votre faction ou est en attente d'invitation, vous ne pouvez pas l'inviter à nouveau");
+					return false;
+				}
+				if ($this->getNbInvitationPossible() < 1) {
+					FlashMessage::setFlash("Plus d'invitations possible, votre leader doit augmenter son ambassade");
 					return false;
 				}
 				
