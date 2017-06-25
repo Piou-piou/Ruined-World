@@ -3,12 +3,12 @@
 	
 	
 	{% for i in bataille.membres_faction %}
-		<div class="row">
+		<div class="row liste-membres">
 			<div class="small-12 medium-3 columns">
 				<a href=""  class="player" player="{{ i.id_identite }}">{{ i.pseudo }}</a>
 			</div>
 			<div class="small-12 medium-3 columns">
-				{{ i.rang_faction }}
+				{{ i.rang_faction }}&nbsp;
 			</div>
 			<div class="small-12 medium-3 columns">
 				{{ i.points }}

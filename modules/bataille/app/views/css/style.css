@@ -528,6 +528,8 @@ p.rouge {
       margin-top: 1.3rem; }
       .popup .content .ambassade button.coller {
         margin-left: -1.9rem; }
+    .popup .content .ambassade .liste-membres div {
+      margin-bottom: 10px; }
   .popup .rouge {
     color: red; }
   .popup .construire {
