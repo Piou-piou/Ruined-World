@@ -17,9 +17,6 @@
 				{% if bataille.id_identite_player == i.id_identite and bataille.permission_player != "chef" %}
 					<a href="#" class="quitter-faction">Quitter la faction</a>
 				{% endif %}
-				{% if bataille.permission_player == "chef" and bataille.id_identite_player != i.id_identite %}
-					<a href="#" class="definir-chef" data-id="{{ i.id_identite }}">Définir chef</a>
-				{% endif %}
 			</div>
 		</div>
 	{% endfor %}

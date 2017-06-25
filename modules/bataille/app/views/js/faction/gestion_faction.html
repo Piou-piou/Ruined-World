@@ -369,5 +369,39 @@
 				}
 			});
 		});
+        
+        /**
+         * permet de définir le nom du rang du membre
+         */
+        $(".set-rang").click(function(e) {
+            e.preventDefault();
+            
+            var id_identite = $(this).parent().parent().find(".rang").attr("data-id");
+            var rang = $(this).parent().parent().find(".rang").val();
+            
+            $.ajax({
+                type:"POST",
+                data: "id_identite="+id_identite+"&rang="+rang,
+                url:"{{WEBROOT}}controller/modules/bataille/faction/set_rang",
+                success: function(data) {
+                    if (data == "ok") {
+                        $("body").prepend(data);
+                        $.ajax({
+                            type:"POST",
+                            data: "loaded_ajax=true",
+                            url: "{{WEBROOT}}bataille/popup/ambassade/gestion-membre-faction",
+                            success: function(data){
+                                $("#popup-base #ajax .next-lvl").empty();
+                                $("#popup-base #ajax .next-lvl").append(data);
+                            }, error: function(){
+                            }
+                        });
+                    }
+                    else {
+                        $("body").prepend(data);
+                    }
+                }
+            });
+        });
 	});
 </script>

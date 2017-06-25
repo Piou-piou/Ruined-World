@@ -388,13 +388,14 @@
 				FlashMessage::setFlash("Merci de définir un nouveau chef avant de quitter votre faction");
 				return false;
 			}
-			else {
-				$dbc->update("ID_faction", 0)
-					->update("rang_faction", "")->from("_bataille_infos_player")->where("ID_identite", "=", Bataille::getIdIdentite())->set();
-				
-				FlashMessage::setFlash("Vous avez quitter votre faction", "success");
-				return true;
-			}
+			
+			$dbc->update("ID_faction", 0)
+				->update("rang_faction", "")->from("_bataille_infos_player")->where("ID_identite", "=", Bataille::getIdIdentite())->set();
+			
+			$this->setSupprilerAllPermissions(Bataille::getIdIdentite());
+			
+			FlashMessage::setFlash("Vous avez quitter votre faction", "success");
+			return true;
 		}
 		
 		/**
@@ -427,6 +428,28 @@
 			
 			FlashMessage::setFlash("L'invitation a bien été supprimée", "success");
 			return true;
+		}
+		
+		/**
+		 * @param $id_identite
+		 * @param $rang
+		 * @return bool
+		 * permet de definir le rang d'un joueur au sein de la faction (juste le nom pas les permissions
+		 */
+		public function setRang($id_identite, $rang) {
+			$dbc = App::getDb();
+			$permissions_membre = $this->getPermissionsMembre($this->id_faction);
+			
+			if ($permissions_membre == "chef" || in_array("GERER_RANG_MEMBRE", $permissions_membre)) {
+				$dbc->update("rang_faction", $rang)->from("_bataille_infos_player")->where("ID_identite", "=", $id_identite, "AND")
+					->where("ID_faction", "=", $this->id_faction)->set();
+				
+				FlashMessage::setFlash("Le rang du joueur a bien été mis à jour", "success");
+				return true;
+			}
+			
+			FlashMessage::setFlash("Vous n'avez pas l'autorisation de définir le rang des joueurs");
+			return false;
 		}
 		//-------------------------- END SETTER ----------------------------------------------------------------------------//    
 	}
