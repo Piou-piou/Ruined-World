@@ -412,7 +412,7 @@ button.no-style {
       position: absolute; }
     .bataille .map-game .cases {
       visibility: hidden; }
-      .bataille .map-game .cases.visible {
+      .bataille .map-game .cases.showed {
         visibility: visible; }
     .bataille .map-game .case {
       width: 20px;

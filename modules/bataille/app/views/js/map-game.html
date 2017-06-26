@@ -10,9 +10,9 @@
         $(".bataille #afficher-grille").click(function(e) {
             e.preventDefault();
 
-            $(".bataille .map-game .cases").toggleClass("visible");
+            $(".bataille .map-game .cases").toggleClass("showed");
 
-            if ($(".bataille .map-game .cases").hasClass("visible")) {
+            if ($(".bataille .map-game .cases").hasClass("showed")) {
                 $(this).html("Masquer la grille");
             }
             else {
@@ -29,10 +29,10 @@
             start: function(event, ui) {
                 nom_batiment = $(this).find("a").attr("nom_batiment");
 				nom_batiment_sql = $(this).find("a").attr("nom_batiment_sql");
-				$(".bataille .map-game .case").toggleClass("visible");
+				$(".bataille .map-game .cases").toggleClass("showed");
             },
             stop: function() {
-                $(".bataille .map-game .case").toggleClass("visible");
+                $(".bataille .map-game .cases").toggleClass("showed");
             }
         });
 
