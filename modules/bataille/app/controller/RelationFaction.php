@@ -87,16 +87,22 @@
 		 */
 		public function setAjouterRelation($nom_faction, $relation) {
 			$dbc = App::getDb();
+			$permissions_membre = $this->getPermissionsMembre($this->id_faction);
 			
-			if ($this->getFactionExist($nom_faction) == false) {
-				FlashMessage::setFlash("Cette faction n'existe pas, vérifiez que vous avez correctement écrit son nom");
-				return false;
+			if ($permissions_membre == "chef" || in_array("GERER_RELATIONS", $permissions_membre)) {
+				if ($this->getFactionExist($nom_faction) == false) {
+					FlashMessage::setFlash("Cette faction n'existe pas, vérifiez que vous avez correctement écrit son nom");
+					return false;
+				}
+				
+				$dbc->insert("relation", $relation)
+					->insert("ID_faction", $this->id_faction)
+					->insert("ID_autre_faction", $this->id_autre_faction)
+					->into("_bataille_faction_relation")->set();
 			}
 			
-			$dbc->insert("relation", $relation)
-				->insert("ID_faction", $this->id_faction)
-				->insert("ID_autre_faction", $this->id_autre_faction)
-				->into("_bataille_faction_relation")->set();
+			FlashMessage::setFlash("Vous n'avez pas l'autorisation de gérer les relations de votre faction");
+			return false;
 		}
 		
 		//-------------------------- END SETTER ----------------------------------------------------------------------------//    
