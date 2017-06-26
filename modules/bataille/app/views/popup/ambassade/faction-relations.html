@@ -23,9 +23,9 @@
 		{% endif %}
 		
 		<h4>Ajouter une nouvelle relation</h4>
-		<form action="{{ WEBROOT }}controller/modules/bataille/faction/gestion-relation" method="post">
+		<form action="{{ WEBROOT }}controller/modules/bataille/faction/ajouter_relation" method="post" id="relation">
 			<input type="text" name="nom_faction" placeholder="Entrezle nom de la faction">
-			<select name="relation" id="relation">
+			<select name="relation">
 				<option value="">Choisissez une relation</option>
 				<option value="allié">Allié</option>
 				<option value="ennemi">Ennemi</option>
@@ -35,3 +35,5 @@
 		</form>
 	{% endif %}
 </div>
+
+{% include("js/faction/gestion_faction.html") %}
