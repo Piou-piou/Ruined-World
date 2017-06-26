@@ -426,5 +426,35 @@
                 }
             });
         });
+
+        /**
+         * permet de supprimer une relation
+         */
+        $(".supprimer-relation").click(function(e) {
+            e.preventDefault();
+
+            $.ajax({
+                type:"POST",
+                data: "id_relation="+$(this).attr("data-id"),
+                url: "{{WEBROOT}}controller/modules/bataille/faction/supprimer_relation",
+                success: function(data) {
+                    if (data == "ok") {
+                        $.ajax({
+                            type:"POST",
+                            data: "loaded_ajax=true",
+                            url: "{{WEBROOT}}bataille/popup/ambassade/faction-relations",
+                            success: function(data){
+                                $("#popup-base #ajax .next-lvl").empty();
+                                $("#popup-base #ajax .next-lvl").append(data);
+                            }, error: function(){
+                            }
+                        });
+                    }
+                    else {
+                        $("body").prepend(data);
+                    }
+                }
+            });
+        });
 	});
 </script>
