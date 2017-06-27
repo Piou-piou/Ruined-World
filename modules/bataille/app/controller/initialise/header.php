@@ -29,7 +29,7 @@
 			die();
 		}
 	}
-	else {print_r($_SESSION);
+	else {
 		\core\auth\Connexion::setDeconnexion(WEBROOT."bataille/login");
 		die();
 	}
