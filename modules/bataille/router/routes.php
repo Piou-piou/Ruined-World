@@ -13,6 +13,7 @@
 		"popup/marche/offre-et-demande",
 		"popup/marche/envoyer-ressources",
 		"popup/ambassade/index",
+		"popup/ambassade/creer-faction",
 		"popup/ambassade/faction",
 		"popup/ambassade/faction-relations",
 		"popup/ambassade/forum-faction",
@@ -105,6 +106,9 @@
 		}
 		
 		//------------------------------- POUR LA POPUP POUR L'AMBASSADE ----------------------------------//
+		if ($this->page == "popup/ambassade/creer-faction") {
+		
+		}
 		if ($this->page == "popup/ambassade/faction") {
 			$this->controller = "bataille/app/controller/faction/get_faction.php";
 		}

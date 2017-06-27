@@ -67,6 +67,29 @@
 		}
 		
 		/**
+		 * @param null $id_identite
+		 * @return int
+		 * renvoi les points totaux d'un joueur
+		 */
+		public static function getPointsJoueur($id_identite=null) {
+			$dbc = App::getDb();
+			
+			if ($id_identite === null) {
+				$id_identite = Bataille::getIdIdentite();
+			}
+			
+			$query = $dbc->select("points")->from("_bataille_infos_player")->where("ID_identite", "=", $id_identite)->get();
+			
+			if (count($query) == 1) {
+				foreach ($query as $obj) {
+					return $obj->points;
+				}
+			}
+			
+			return 0;
+		}
+		
+		/**
 		 * @return mixed
 		 * fonction qui renvoi le nombre de points à ajouter à la base lorsqu'on update un batiment
 		 */

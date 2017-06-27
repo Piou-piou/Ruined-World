@@ -261,6 +261,43 @@
 		
 		//-------------------------- SETTER ----------------------------------------------------------------------------//
 		/**
+		 * @param $nom_faction
+		 * @param $description
+		 * @return bool
+		 * fonction qui permet de créer une faction quand l'ambassade est au lvl 3
+		 */
+		public function setCreerFaction($nom_faction, $description) {
+			$dbc = App::getDb();
+			
+			if (Bataille::getBatiment()->getNiveauBatiment("ambassade") >= 3) {
+				if ($this->getFactionExist($nom_faction) == true) {
+					FlashMessage::setFlash("Une faction");
+					return false;
+				}
+				if (strlen($nom_faction) < 2) {
+					FlashMessage::setFlash("Le nom de votre faction est trop court");
+					return false;
+				}
+				
+				$points_chef = Points::getPointsJoueur();
+				
+				$dbc->insert("nom_faction", $nom_faction)->insert("description", $description)
+					->insert("ID_identite", Bataille::getIdIdentite())->insert("points_faction", $points_chef)
+					->into("_bataille_faction")->set();
+				
+				$id = $dbc->lastInsertId();
+				
+				$dbc->update("ID_faction", $id)->from("_bataille_infos_player")->where("ID_identite", "=", Bataille::getIdIdentite())->set();
+				
+				FlashMessage::setFlash("Votre faction a bien été créée", "success");
+				return true;
+			}
+			
+			FlashMessage::setFlash("Votre ambassade n'est pas au niveau 3");
+			return false;
+		}
+		
+		/**
 		 * @param $id_identite
 		 * @return bool
 		 * fonction qui permet de renvoyer un membre d'un faction

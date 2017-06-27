@@ -1,5 +1,39 @@
 <script>
 	$(document).ready(function() {
+        /**
+         * creation d'une faction
+         */
+        $("#creer-faction").submit(function(e) {
+            e.preventDefault();
+    
+            for (instance in CKEDITOR.instances) {
+                CKEDITOR.instances[instance].updateElement();
+            }
+			
+            $.ajax({
+                type:"POST",
+                data: $(this).serialize(),
+                url:"{{WEBROOT}}controller/modules/bataille/faction/creer_faction",
+                success: function(data){
+                    if (data == "ok") {
+                        $.ajax({
+                            type:"POST",
+                            data: "loaded_ajax=true",
+                            url: "{{WEBROOT}}bataille/popup/ambassade/faction",
+                            success: function(data){
+                                $("#popup-base #ajax .next-lvl").empty();
+                                $("#popup-base #ajax .next-lvl").append(data);
+                            }, error: function(){
+                            }
+                        });
+                    }
+                    else {
+                        $("body").prepend(data);
+                    }
+                }
+            });
+        });
+	    
 		/**
 		 * affichage du détail d'un forum
 		 */
