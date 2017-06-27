@@ -10,7 +10,7 @@
 		</div>
 		<div class="small-12 large-6 columns">
 			<h2>{{ nom_batiment }}</h2>
-			
+
 			{% if nom_batiment in ["marché", "ambassade","centre de recherche","caserne","centre de commandement"] %}
 				{%  set url%}popup/{{ bataille.nom_batiment_sql }}/nav.html{% endset %}
 				{% include(url)%}
@@ -70,7 +70,7 @@
 					</div>
 				</li>
 			</ul>
-			
+
 			<div class="clear"></div>
 
 			{% if bataille.niveau_batiment > 0 %}
@@ -87,6 +87,43 @@
 			<p>Le batiment n'est pas encore construit. Vous ne pouvez donc pas intéragir avec. Si vous ne le voyez pas
 			   dans la liste de gauche référez vous à l'aide pour savoir comment le construire.
 			</p>
+			<p>POur le construire il vous suffit de le glisser déposer sur la map</p>
+
+
+			<h3>Cout pour le prochain niveau</h3>
+			<ul class="ressources">
+				<li>
+					<div class="left"><img src="{{ MODULEWEBROOT }}bataille/app/views/images/eau.png" alt=""></div>
+					<div class="texte">
+						eau : <span class="{{bataille.ressource.eau.class}}">{{bataille.ressource.eau.ressource}}</span>
+					</div>
+				</li>
+				<li>
+					<div class="left"><img src="{{ MODULEWEBROOT }}bataille/app/views/images/electricite.png" alt=""></div>
+					<div class="texte">
+						électricité : <span class="{{bataille.ressource.electricite.class}}">{{bataille.ressource.electricite.ressource}}</span>
+					</div>
+				</li>
+				<li>
+					<div class="left"><img src="{{ MODULEWEBROOT }}bataille/app/views/images/fer.png" alt=""></div>
+					<div class="texte">
+						fer : <span class="{{bataille.ressource.fer.class}}">{{bataille.ressource.fer.ressource}}</span>
+					</div>
+				</li>
+				<li>
+					<div class="left"><img src="{{ MODULEWEBROOT }}bataille/app/views/images/fuel.png" alt=""></div>
+					<div class="texte">
+						fuel : <span class="{{bataille.ressource.fuel.class}}">{{bataille.ressource.fuel.ressource}}</span>
+					</div>
+				</li>
+				<li>
+					<div class="left"><img src="{{ MODULEWEBROOT }}bataille/app/views/images/temps.png" alt=""></div>
+					<div class="texte">
+						Temps de construction : {{bataille.temps_construction}}
+					</div>
+				</li>
+			</ul>
+			<div class="clear"></div>
 		{% endif %}
 	</div>
 </div>
