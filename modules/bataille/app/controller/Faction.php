@@ -427,6 +427,8 @@
 				return false;
 			}
 			
+			Points::setRejoindreQuitterFaction("del");
+			
 			$dbc->update("ID_faction", 0)
 				->update("rang_faction", "")->from("_bataille_infos_player")->where("ID_identite", "=", Bataille::getIdIdentite())->set();
 			
@@ -449,7 +451,7 @@
 			
 			$this->setSupprimerInvitationPlayer($id_faction);
 			
-			Points::setAjouterPointsFaction();
+			Points::setRejoindreQuitterFaction();
 			
 			FlashMessage::setFlash("Vous avez rejoint une faction", "success");
 			return true;
