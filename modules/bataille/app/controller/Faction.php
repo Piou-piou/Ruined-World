@@ -191,7 +191,7 @@
 			
 			$nb_inv = $nb_inv-$nb_invitation_envoyees-count($this->getMembreFaction());
 			
-			if ($nb_inv < 0) {
+			if ($nb_inv <= 0) {
 				return 0;
 			}
 			
@@ -227,9 +227,8 @@
 					$pseudos[] = $obj->pseudo;
 				}
 			}
-			$invitations["nb_invitation_possible"] = $this->getNbInvitationPossible();
 			
-			Bataille::setValues(["invitations" => $invitations]);
+			Bataille::setValues(["invitations" => $invitations, "nb_invitation_possible" => $this->getNbInvitationPossible()]);
 			
 			return $pseudos;
 		}

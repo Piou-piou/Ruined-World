@@ -7,7 +7,7 @@
 			<div class="small-12 medium-12">
 				<div class="small-12 medium-10 columns">
 					<label for="pseudo">Entrez le pseudo du membre que vous voulez inviter
-										(encore {{ bataille.invitations.nb_invitation_possible }} invitation(s) possible)</label>
+										(encore {{ bataille.nb_invitation_possible }} invitation(s) possible)</label>
 					<input type="text" name="pseudo">
 				</div>
 				<div class="small-12 medium-2 columns">
@@ -19,7 +19,7 @@
 
 		<h2>Liste des invitations envoyées</h2>
 
-		{% if bataille.invitations is iterable and bataille.invitations|length > 1 %}
+		{% if bataille.invitations is iterable and bataille.invitations|length > 0 %}
 			{% for i in bataille.invitations %}
 				<div class="small-12 medium-3 columns">{{ i.pseudo }}</div>
 				<div class="small-12 medium-3 columns">{{ i.points }}</div>
