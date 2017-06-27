@@ -4,12 +4,14 @@
 	
 	use core\App;
 	use core\HTML\flashmessage\FlashMessage;
+	use Intervention\Image\Point;
 	use modules\messagerie\app\controller\Messagerie;
 	
 	class Faction extends PermissionsFaction {
 		protected $id_faction;
 		protected $id_autre_faction;
 		protected $nom_faction;
+		protected $points_faction;
 		
 		//-------------------------- BUILDER ----------------------------------------------------------------------------//
 		public function __construct() {
@@ -446,6 +448,8 @@
 				->update("rang_faction", "")->from("_bataille_infos_player")->where("ID_identite", "=", Bataille::getIdIdentite())->set();
 			
 			$this->setSupprimerInvitationPlayer($id_faction);
+			
+			Points::setAjouterPointsFaction();
 			
 			FlashMessage::setFlash("Vous avez rejoint une faction", "success");
 			return true;

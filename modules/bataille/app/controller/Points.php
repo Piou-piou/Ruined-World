@@ -2,6 +2,7 @@
 	namespace modules\bataille\app\controller;
 
 	use core\App;
+	use core\HTML\flashmessage\FlashMessage;
 	
 	
 	class Points {
@@ -121,6 +122,7 @@
 				->set();
 			
 			self::setAjouterPointsTotaux();
+			self::setAjouterPointsFaction();
 			
 			return $points;
 		}
@@ -141,6 +143,30 @@
 				}
 				
 				$dbc->update("points", $points)->from("_bataille_infos_player")->where("ID_identite", "=", Bataille::getIdIdentite())->set();
+			}
+		}
+		
+		/**
+		 * fonction qui permet d'ajouter tous les points du joueur aux points de la faction
+		 */
+		public static function setAjouterPointsFaction() {
+			$dbc = App::getDb();
+			
+			$query = $dbc->select("_bataille_faction.points_faction, _bataille_faction.ID_faction")
+				->from("_bataille_faction,_bataille_infos_player")
+				->where("_bataille_infos_player.ID_identite", "=", Bataille::getIdIdentite(), "AND")
+				->where("_bataille_faction.ID_faction", "=", "_bataille_infos_player.ID_faction", "", true)
+				->get();
+			
+			if (count($query) > 0) {
+				foreach ($query as $obj) {
+					$point_joueur = Points::getPointsJoueur();
+					
+					$dbc->update("points_faction", $point_joueur+$obj->points_faction)
+						->from("_bataille_faction")
+						->where("ID_faction", "=", $obj->ID_faction)
+						->set();
+				}
 			}
 		}
 		//-------------------------- END SETTER ----------------------------------------------------------------------------//
