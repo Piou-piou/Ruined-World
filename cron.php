@@ -9,3 +9,5 @@
 	
 	//récupération de chaque fichier cron
 	require("modules/messagerie/app/cron/delete_message.php");
+	require("modules/bataille/app/cron/desactier_vacances.php");
+	require("modules/bataille/app/cron/delete_compte.php");

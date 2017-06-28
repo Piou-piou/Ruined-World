@@ -17,6 +17,7 @@
 				->select("_bataille_infos_player.ID_identite")
 				->from("_bataille_infos_player")
 				->from("identite")
+				->where("abandon", "!=", 1, "AND")
 				->where("_bataille_infos_player.ID_identite", "=", "identite.ID_identite", "", true)
 				->orderBy("_bataille_infos_player.points", "DESC")
 				->limit($start, 50)
