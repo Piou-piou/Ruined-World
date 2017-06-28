@@ -1,6 +1,7 @@
 <?php
 	/**
-	 * ce script permet de passer un compte en inactif si pas de connexion pendant 15 jours
+	 * ce script permet de désactiver le mode vacances après 40 jours si le joueur ne s'est pas
+	 * reconnecté avant
 	 */
 	$today = new DateTime();
 	$today->sub(new DateInterval("P40D"));
