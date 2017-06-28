@@ -9,7 +9,7 @@
 	$query = $dbc->select()->from("_bataille_infos_player")
 		->where("last_connexion", "<=", $date_supprimer, "AND")
 		->where("mode_vacances", "!=", 1, "AND")
-		->where("abandon", "!=", 1, "AND")
+		->where("abandon", "!=", 1)
 		->get();
 	
 	if (count($query) > 0) {
@@ -94,5 +94,7 @@
 				->update("mdp_params", "deserteur-".$deserteur)
 				->from("identite")
 				->where("ID_identite", "=", $obj->ID_identite)->set();
+			
+			echo($obj->ID_identite);
 		}
 	}
