@@ -380,7 +380,9 @@ button.no-style {
     margin-top: -0.5rem; }
   .bataille .side-bar {
     background-color: #303031;
-    color: #fff; }
+    color: #fff;
+    max-height: 545px;
+    overflow-y: auto; }
   .bataille .un-batiment {
     background-color: #6D6E71;
     position: relative; }
@@ -412,7 +414,7 @@ button.no-style {
       position: absolute; }
     .bataille .map-game .cases {
       visibility: hidden; }
-      .bataille .map-game .cases.visible {
+      .bataille .map-game .cases.showed {
         visibility: visible; }
     .bataille .map-game .case {
       width: 20px;
@@ -528,6 +530,8 @@ p.rouge {
       margin-top: 1.3rem; }
       .popup .content .ambassade button.coller {
         margin-left: -1.9rem; }
+    .popup .content .ambassade .liste-membres div {
+      margin-bottom: 10px; }
   .popup .rouge {
     color: red; }
   .popup .construire {

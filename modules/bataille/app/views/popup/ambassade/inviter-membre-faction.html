@@ -4,9 +4,10 @@
 		<p>Vous n'avez pas accès à cette fonctionnalité, merci de changer de page</p>
 	{% else %}
 		<form id="inviter-membre" action="{{ WEBROOT }}controller/modules/bataille/faction/inviter-membre" method="post">
-			<div class="small-12 medium-6">
+			<div class="small-12 medium-12">
 				<div class="small-12 medium-10 columns">
-					<label for="pseudo">Entrez le pseudo du membre que vous voulez inviter</label>
+					<label for="pseudo">Entrez le pseudo du membre que vous voulez inviter
+										(encore {{ bataille.nb_invitation_possible }} invitation(s) possible)</label>
 					<input type="text" name="pseudo">
 				</div>
 				<div class="small-12 medium-2 columns">
@@ -14,6 +15,25 @@
 				</div>
 			</div>
 		</form>
+		<div class="clear"></div>
+
+		<h2>Liste des invitations envoyées</h2>
+
+		{% if bataille.invitations is iterable and bataille.invitations|length > 0 %}
+			{% for i in bataille.invitations %}
+				<div class="small-12 medium-3 columns">{{ i.pseudo }}</div>
+				<div class="small-12 medium-3 columns">{{ i.points }}</div>
+				<div class="small-12 medium-3 columns">
+					{% if i.vacances == 1 %}
+						Le joueur est en vacances
+					{% endif %}
+				</div>
+				<div class="small-12 medium-3 columns"><a href="#" class="supprimer-invitation" data-id="{{ i.id_identite }}">supprimer</a></div>
+			{% endfor %}
+		{% else %}
+			<p>Aucune invitation en cours</p>
+		{% endif %}
+
 	{% endif %}
 </div>
 

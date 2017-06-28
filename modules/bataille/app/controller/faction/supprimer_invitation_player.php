@@ -1,8 +1,7 @@
 <?php
 	$faction = new \modules\bataille\app\controller\Faction();
-	$faction->getFactionPlayer();
 	
-	if ($faction->setInviterMembre($_POST['pseudo']) == true) {
+	if ($faction->setSupprimerInvitationPlayer($_POST['id_faction']) == true) {
 		echo("ok");
 	}
 	else {

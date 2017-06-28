@@ -1,16 +1,22 @@
 {% for i in bataille.map %}
+	<h2>{{ i.pseudo }}</h2>
+	
 	{% set vacances %}{% endset %}
-	{% if i.mode_vacances == 1 %}
+	{% if bataille.mode_vacances == 1 %}
 		{% set vacances %}Ce joueurs est en vacances, vous ne pouvez donc pas intéragir avec lui{% endset %}
 	{% endif %}
-	<h2>{{ i.nom_base }}</h2>
 	<p>{{ vacances }}</p>
+	
+	{% if bataille.faction is iterable %}
+		<p>Faction : <a href="" class="faction" id_faction="{{ bataille.faction.id_faction }}">{{ bataille.faction.nom }}</a></p>
+		{% include("js/faction/get_unefaction.html") %}
+	{% endif %}
+	
+	<h2>{{ i.nom_base }}</h2>
 	
 	<h3>Pos X : {{ i.posx }} || Pos Y : {{ i.posy }}</h3>
 	
 	<h3>Points de cette base : {{ i.points }}</h3>
 	
 	<h3>Durée du trajet jusqu'à cette base : {{ i.temps_trajet }}</h3>
-	
-	<h3>Nom du joueur : {{ i.pseudo }}</h3>
 {% endfor %}

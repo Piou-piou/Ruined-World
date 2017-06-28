@@ -2,12 +2,23 @@
     $(document).ready(function() {
         $(document).on("click", ".open-popup", function() {
             var id_faction = $(this).attr("faction");
+            var nom_batiment = $(this).attr("nom_batiment");
+            var data = "";
+            var url = "";
 
+            if (nom_batiment != undefined) {console.log("dfg");
+                data = "loaded_ajax=true&nom_batiment="+nom_batiment;
+                url = "{{WEBROOT}}bataille/popup/unbatiment";
+            }
+			else {
+                data = "loaded_ajax=true&id_faction="+id_faction;
+                url = "{{WEBROOT}}bataille/popup/faction";
+            }
 
             $.ajax({
                 type:"POST",
-                data: "loaded_ajax=true&id_faction="+id_faction,
-                url:"{{WEBROOT}}bataille/popup/faction",
+                data: data,
+                url:url,
                 success: function(data){
                     $("#popup-base #ajax").append(data);
                 }, error: function(){

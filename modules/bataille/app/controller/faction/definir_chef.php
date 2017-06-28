@@ -2,7 +2,7 @@
 	$faction = new \modules\bataille\app\controller\Faction();
 	$faction->getFactionPlayer();
 	
-	if ($faction->setInviterMembre($_POST['pseudo']) == true) {
+	if ($faction->setChangerChef($_POST['id_identite']) == true) {
 		echo("ok");
 	}
 	else {

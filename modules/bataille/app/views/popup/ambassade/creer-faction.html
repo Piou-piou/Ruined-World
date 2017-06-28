@@ -1,0 +1,20 @@
+<div class="ambassade">
+	{% include("popup/ambassade/nav-ambassade.html")  %}
+	<h2>Créer une faction</h2>
+	
+	<form action="{{ WEBROOT }}controller/modules/bataille/faction/ceer_faction" method="post" id="creer-faction">
+		<input type="text" name="nom_faction" id="nom_faction" placeholder="Entrezle nom de la faction">
+		<textarea name="description" id="description" cols="30" rows="10"></textarea>
+		<button type="submit">Ajouter</button>
+	</form>
+	
+	<script src="{{ LIBSWEBROOT }}ckeditor/ckeditor.js"></script>
+	<script src="{{ LIBSWEBROOT }}ckfinder/ckfinder.js"></script>
+	<script>
+        $(document).ready(function() {
+            CKEDITOR.replace("description", { customConfig: "{{ MODULEWEBROOT}}bataille/app/views/js/ckeditor.js" });
+        })
+	</script>
+</div>
+
+{% include("js/faction/gestion_faction.html") %}

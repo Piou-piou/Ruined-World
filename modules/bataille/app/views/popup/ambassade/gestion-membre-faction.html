@@ -26,10 +26,11 @@
 						{{ i.points }}
 					</div>
 					<div class="small-12 medium-3 columns end">
-						{% if i.id_identite == bataille.id_identite_player %}
+						{% if bataille.id_identite_player == i.id_identite and bataille.permission_player != "chef" %}
 							<a href="" class="renvoyer-membre">Quitter la faction</a>
-						{% else %}
-							<a href="" class="renvoyer-membre">Renvoyer le membre</a>
+						{% endif %}
+						{% if bataille.permission_player == "chef" and bataille.id_identite_player != i.id_identite %}
+							<a href="#" class="definir-chef" data-id="{{ i.id_identite }}">Définir chef</a>
 						{% endif %}
 					</div>
 				</div>
@@ -54,10 +55,10 @@
 						<div class="small-12 medium-6">
 							<div class="small-12 medium-10 columns">
 								<label for="rang">Gérer le rang du membre</label>
-								<input type="text" name="rang" value="{{ i.rang_faction }}">
+								<input type="text" name="rang" class="rang" data-id="{{ i.id_identite }}" value="{{ i.rang_faction }}">
 							</div>
 							<div class="small-12 medium-2 columns">
-								<button class="coller">Valider</button>
+								<button class="coller set-rang">Valider</button>
 							</div>
 						</div>
 					</div>

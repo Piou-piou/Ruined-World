@@ -1,5 +1,39 @@
 <script>
 	$(document).ready(function() {
+        /**
+         * creation d'une faction
+         */
+        $("#creer-faction").submit(function(e) {
+            e.preventDefault();
+    
+            for (instance in CKEDITOR.instances) {
+                CKEDITOR.instances[instance].updateElement();
+            }
+			
+            $.ajax({
+                type:"POST",
+                data: $(this).serialize(),
+                url:"{{WEBROOT}}controller/modules/bataille/faction/creer_faction",
+                success: function(data){
+                    if (data == "ok") {
+                        $.ajax({
+                            type:"POST",
+                            data: "loaded_ajax=true",
+                            url: "{{WEBROOT}}bataille/popup/ambassade/faction",
+                            success: function(data){
+                                $("#popup-base #ajax .next-lvl").empty();
+                                $("#popup-base #ajax .next-lvl").append(data);
+                            }, error: function(){
+                            }
+                        });
+                    }
+                    else {
+                        $("body").prepend(data);
+                    }
+                }
+            });
+        });
+	    
 		/**
 		 * affichage du détail d'un forum
 		 */
@@ -130,10 +164,11 @@
 			});
 		});
 		
+		/**
+		 * permet d'envoyerune invitation à un membre depuis faction
+		 */
 		$("#inviter-membre").submit(function(e) {
 			e.preventDefault();
-			
-			console.log($(this).serialize())
 			
 			$.ajax({
                 type:"POST",
@@ -141,7 +176,16 @@
                 url:"{{WEBROOT}}controller/modules/bataille/faction/inviter_membre",
 				success: function(data) {
                     if (data == "ok") {
-                    
+                        $.ajax({
+                            type:"POST",
+                            data: "loaded_ajax=true",
+                            url: "{{WEBROOT}}bataille/popup/ambassade/inviter-membre-faction",
+                            success: function(data){
+                                $("#popup-base #ajax .next-lvl").empty();
+                                $("#popup-base #ajax .next-lvl").append(data);
+                            }, error: function(){
+                            }
+                        });
 					}
 					else {
                         $("body").prepend(data);
@@ -149,6 +193,155 @@
 				}
 			});
 		});
+		
+		/**
+		 * supprimer invitation depuis la gestion de la faction
+		 */
+		$(".supprimer-invitation").click(function(e) {
+		    e.preventDefault();
+			
+            $.ajax({
+                type:"POST",
+                data: "id_identite="+$(this).attr("data-id"),
+                url:"{{WEBROOT}}controller/modules/bataille/faction/supprimer_invitation",
+                success: function(data) {
+                    if (data == "ok") {
+                        $.ajax({
+                            type:"POST",
+                            data: "loaded_ajax=true",
+                            url: "{{WEBROOT}}bataille/popup/ambassade/inviter-membre-faction",
+                            success: function(data){
+                                $("#popup-base #ajax .next-lvl").empty();
+                                $("#popup-base #ajax .next-lvl").append(data);
+                            }, error: function(){
+                            }
+                        });
+                    }
+                    else {
+                        $("body").prepend(data);
+                    }
+                }
+            });
+		});
+        
+        /**
+         * changer le chef de la faction
+         */
+        $(".definir-chef").click(function(e) {
+            e.preventDefault();
+            
+            $.ajax({
+                type:"POST",
+                data: "id_identite="+$(this).attr("data-id"),
+                url:"{{WEBROOT}}controller/modules/bataille/faction/definir_chef",
+                success: function(data) {
+                    if (data == "ok") {
+                        $.ajax({
+                            type:"POST",
+                            data: "loaded_ajax=true",
+                            url: "{{WEBROOT}}bataille/popup/ambassade/faction",
+                            success: function(data){
+                                $("#popup-base #ajax .next-lvl").empty();
+                                $("#popup-base #ajax .next-lvl").append(data);
+                            }, error: function(){
+                            }
+                        });
+                    }
+                    else {
+                        $("body").prepend(data);
+                    }
+                }
+            });
+        });
+		
+		/**
+		 * permet à un joueur de rejoindre une faction
+		 */
+		$(".accepter-invitation").click(function(e) {
+		    e.preventDefault();
+            
+            $.ajax({
+                type:"POST",
+                data: "id_faction="+$(this).attr("data-id"),
+                url:"{{WEBROOT}}controller/modules/bataille/faction/accepter_invitation_player",
+                success: function(data) {
+                    if (data == "ok") {
+                        $.ajax({
+                            type:"POST",
+                            data: "loaded_ajax=true",
+                            url: "{{WEBROOT}}bataille/popup/ambassade/faction",
+                            success: function(data){
+                                $("#popup-base #ajax .next-lvl").empty();
+                                $("#popup-base #ajax .next-lvl").append(data);
+                            }, error: function(){
+                            }
+                        });
+                    }
+                    else {
+                        $("body").prepend(data);
+                    }
+                }
+            });
+		});
+  
+		/**
+		 * pour qu'un joueur puisse supprimer une invitation à rejoindre une faction
+		 */
+        $(".supprimer-invitation-joueur").click(function(e) {
+            e.preventDefault();
+            
+            $.ajax({
+                type:"POST",
+                data: "id_faction="+$(this).attr("data-id"),
+                url:"{{WEBROOT}}controller/modules/bataille/faction/supprimer_invitation_player",
+                success: function(data) {
+                    if (data == "ok") {
+                        $.ajax({
+                            type:"POST",
+                            data: "loaded_ajax=true",
+                            url: "{{WEBROOT}}bataille/popup/ambassade/mes-invitations-faction",
+                            success: function(data){
+                                $("#popup-base #ajax .next-lvl").empty();
+                                $("#popup-base #ajax .next-lvl").append(data);
+                            }, error: function(){
+                            }
+                        });
+                    }
+                    else {
+                        $("body").prepend(data);
+                    }
+                }
+            });
+        });
+        
+        /**
+         * permet à un joueur de rejoindre une faction
+         */
+        $(".quitter-faction").click(function(e) {
+            e.preventDefault();
+            
+            $.ajax({
+                type:"POST",
+                url:"{{WEBROOT}}controller/modules/bataille/faction/quitter_faction",
+                success: function(data) {
+                    if (data == "ok") {
+                        $.ajax({
+                            type:"POST",
+                            data: "loaded_ajax=true",
+                            url: "{{WEBROOT}}bataille/popup/ambassade/faction",
+                            success: function(data){
+                                $("#popup-base #ajax .next-lvl").empty();
+                                $("#popup-base #ajax .next-lvl").append(data);
+                            }, error: function(){
+                            }
+                        });
+                    }
+                    else {
+                        $("body").prepend(data);
+                    }
+                }
+            });
+        });
 		
 		/**
 		 * pour la gestion des permissions
@@ -204,5 +397,98 @@
 				}
 			});
 		});
+        
+        /**
+         * permet de définir le nom du rang du membre
+         */
+        $(".set-rang").click(function(e) {
+            e.preventDefault();
+            
+            var id_identite = $(this).parent().parent().find(".rang").attr("data-id");
+            var rang = $(this).parent().parent().find(".rang").val();
+            
+            $.ajax({
+                type:"POST",
+                data: "id_identite="+id_identite+"&rang="+rang,
+                url:"{{WEBROOT}}controller/modules/bataille/faction/set_rang",
+                success: function(data) {
+                    if (data == "ok") {
+                        $.ajax({
+                            type:"POST",
+                            data: "loaded_ajax=true",
+                            url: "{{WEBROOT}}bataille/popup/ambassade/gestion-membre-faction",
+                            success: function(data){
+                                $("#popup-base #ajax .next-lvl").empty();
+                                $("#popup-base #ajax .next-lvl").append(data);
+                            }, error: function(){
+                            }
+                        });
+                    }
+                    else {
+                        $("body").prepend(data);
+                    }
+                }
+            });
+        });
+
+        /**
+         * permet de définir le nom du rang du membre
+         */
+        $("#relation").submit(function(e) {
+            e.preventDefault();
+
+            $.ajax({
+                type:"POST",
+                data: $(this).serialize(),
+                url:$(this).attr("action"),
+                success: function(data) {
+                    if (data == "ok") {
+                        $.ajax({
+                            type:"POST",
+                            data: "loaded_ajax=true",
+                            url: "{{WEBROOT}}bataille/popup/ambassade/faction-relations",
+                            success: function(data){
+                                $("#popup-base #ajax .next-lvl").empty();
+                                $("#popup-base #ajax .next-lvl").append(data);
+                            }, error: function(){
+                            }
+                        });
+                    }
+                    else {
+                        $("body").prepend(data);
+                    }
+                }
+            });
+        });
+
+        /**
+         * permet de supprimer une relation
+         */
+        $(".supprimer-relation").click(function(e) {
+            e.preventDefault();
+
+            $.ajax({
+                type:"POST",
+                data: "id_relation="+$(this).attr("data-id"),
+                url: "{{WEBROOT}}controller/modules/bataille/faction/supprimer_relation",
+                success: function(data) {
+                    if (data == "ok") {
+                        $.ajax({
+                            type:"POST",
+                            data: "loaded_ajax=true",
+                            url: "{{WEBROOT}}bataille/popup/ambassade/faction-relations",
+                            success: function(data){
+                                $("#popup-base #ajax .next-lvl").empty();
+                                $("#popup-base #ajax .next-lvl").append(data);
+                            }, error: function(){
+                            }
+                        });
+                    }
+                    else {
+                        $("body").prepend(data);
+                    }
+                }
+            });
+        });
 	});
 </script>

@@ -20,6 +20,7 @@
 				->get();
 			
 			$relations = [];
+			$id_faction = [];
 			if (count($query) > 0) {
 				foreach ($query as $obj) {
 					$relations[] = [
@@ -28,30 +29,14 @@
 						"id_autre_faction" => $obj->ID_autre_faction,
 						"nom_autre_faction" => $obj->nom_faction
 					];
+					
+					$id_faction[] = $obj->ID_autre_faction;
 				}
 			}
 			
 			Bataille::setValues(["relations" => $relations]);
-		}
-		
-		/**
-		 * fonction qui récupère la liste des relations qu'il sera possible
-		 * de mettre dans le select
-		 */
-		public function getAllRelationsPossible() {
-			$dbc1 = Bataille::getDb();
 			
-			$query = $dbc1->select()->from("faction_relations");
-			
-			$relations = [];
-			foreach ($query as $obj) {
-				$relations[] = [
-					"relation" => $obj->relation
-				];
-			}
-			
-			Bataille::setValues(["liste_relations" => $relations]);
-			return $relations;
+			return $id_faction;
 		}
 		
 		/**
@@ -87,16 +72,55 @@
 		 */
 		public function setAjouterRelation($nom_faction, $relation) {
 			$dbc = App::getDb();
+			$permissions_membre = $this->getPermissionsMembre($this->id_faction);
 			
-			if ($this->getFactionExist($nom_faction) == false) {
-				FlashMessage::setFlash("Cette faction n'existe pas, vérifiez que vous avez correctement écrit son nom");
-				return false;
+			if ($permissions_membre == "chef" || in_array("GERER_RELATIONS", $permissions_membre)) {
+				if ($this->getFactionExist($nom_faction) == false) {
+					FlashMessage::setFlash("Cette faction n'existe pas, vérifiez que vous avez correctement écrit son nom");
+					return false;
+				}
+				if (in_array($this->id_autre_faction, $this->getListeRelation())) {
+					FlashMessage::setFlash("Vous avez déjà une relation avec cette faction");
+					return false;
+				}
+				if ($this->id_autre_faction == $this->id_faction) {
+					FlashMessage::setFlash("Vous ne pouvez pas avoir de relations avec votre propre faction");
+					return false;
+				}
+				
+				$dbc->insert("relation", $relation)
+					->insert("ID_faction", $this->id_faction)
+					->insert("ID_autre_faction", $this->id_autre_faction)
+					->into("_bataille_faction_relation")->set();
+				
+				FlashMessage::setFlash("La relation a été ajoutée avec succès", "success");
+				return true;
 			}
 			
-			$dbc->insert("relation", $relation)
-				->insert("ID_faction", $this->id_faction)
-				->insert("ID_autre_faction", $this->id_autre_faction)
-				->into("_bataille_faction_relation")->set();
+			FlashMessage::setFlash("Vous n'avez pas l'autorisation de gérer les relations de votre faction");
+			return false;
+		}
+		
+		/**
+		 * @param $id_relation
+		 * @return bool
+		 * fonction qui permet de supprimer une relation
+		 */
+		public function setSupprimerRelation($id_relation) {
+			$dbc = App::getDb();
+			$permissions_membre = $this->getPermissionsMembre($this->id_faction);
+			
+			if ($permissions_membre == "chef" || in_array("GERER_RELATIONS", $permissions_membre)) {
+				$dbc->delete()->from("_bataille_faction_relation")
+					->where("ID_faction_relation", "=", $id_relation, "AND")
+					->where("ID_faction", "=", $this->id_faction)->del();
+				
+				FlashMessage::setFlash("La relation a été supprimée avec succès".$id_relation, "success");
+				return true;
+			}
+			
+			FlashMessage::setFlash("Vous n'avez pas l'autorisation de gérer les relations de votre faction");
+			return false;
 		}
 		
 		//-------------------------- END SETTER ----------------------------------------------------------------------------//    

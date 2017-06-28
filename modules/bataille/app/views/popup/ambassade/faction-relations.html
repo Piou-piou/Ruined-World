@@ -16,18 +16,24 @@
 						{{ i.relation }}
 					</div>
 					<div class="small-12 medium-3 columns end">
-						<a href="" class="renvoyer-membre">Supprimer la relation</a>
+						<a href="" class="supprimer-relation" data-id="{{ i.id_relation }}">Supprimer la relation</a>
 					</div>
 				</div>
 			{% endfor %}
 		{% endif %}
 		
 		<h4>Ajouter une nouvelle relation</h4>
-		<form action="">
-			<input type="text" name="nom_faction", placeholder="Entrezle nom de la faction">
-			<select name="relation" id="">
-				
+		<form action="{{ WEBROOT }}controller/modules/bataille/faction/ajouter_relation" method="post" id="relation">
+			<input type="text" name="nom_faction" placeholder="Entrezle nom de la faction">
+			<select name="relation">
+				<option value="">Choisissez une relation</option>
+				<option value="allié">Allié</option>
+				<option value="ennemi">Ennemi</option>
+				<option value="pacte non agression">Pacte de non-agression</option>
 			</select>
+			<button type="submit">Ajouter</button>
 		</form>
 	{% endif %}
 </div>
+
+{% include("js/faction/gestion_faction.html") %}

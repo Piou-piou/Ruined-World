@@ -1,8 +1,7 @@
 <?php
 	$faction = new \modules\bataille\app\controller\Faction();
-	$faction->getFactionPlayer();
 	
-	if ($faction->setInviterMembre($_POST['pseudo']) == true) {
+	if ($faction->setCreerFaction($_POST['nom_faction'], $_POST['description']) == true) {
 		echo("ok");
 	}
 	else {

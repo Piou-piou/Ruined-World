@@ -4,12 +4,14 @@
 	
 	use core\App;
 	use core\HTML\flashmessage\FlashMessage;
+	use Intervention\Image\Point;
 	use modules\messagerie\app\controller\Messagerie;
 	
 	class Faction extends PermissionsFaction {
 		protected $id_faction;
 		protected $id_autre_faction;
 		protected $nom_faction;
+		protected $points_faction;
 		
 		//-------------------------- BUILDER ----------------------------------------------------------------------------//
 		public function __construct() {
@@ -174,10 +176,128 @@
 			
 			return false;
 		}
+		
+		/**
+		 * @return int
+		 * fonciton qui renvoi le nombre d'invitations possible
+		 * sachant que dès le niveau 3 on peut en envoyer 5 et ensuite une seule par niveau jusqu'au niveau 30
+		 */
+		private function getNbInvitationPossible() {
+			$dbc = App::getDb();
+			$nb_inv = 5;
+			
+			$nb_inv = (Bataille::getBatiment()->getNiveauBatiment("ambassade")+$nb_inv)-3;
+			
+			$query = $dbc->select("ID_identite")->from("_bataille_faction_invitation")->where("ID_faction", "=", $this->id_faction)->get();
+			$nb_invitation_envoyees = count($query);
+			
+			$nb_inv = $nb_inv-$nb_invitation_envoyees-count($this->getMembreFaction());
+			
+			if ($nb_inv <= 0) {
+				return 0;
+			}
+			
+			return $nb_inv;
+		}
+		
+		/**
+		 * @return array
+		 * foncitons qui renvoit les informations sur les joueurs invités à rejoindre la faction
+		 */
+		public function getInvitationsEnvoyees() {
+			$dbc = App::getDb();
+			$permissions_membre = $this->getPermissionsMembre($this->id_faction);
+			$invitations = [];
+			$pseudos = [];
+			
+			if ($permissions_membre == "chef" || in_array("INVITER_MEMBRE", $permissions_membre)) {
+				$query = $dbc->select()->from("_bataille_faction_invitation, identite, _bataille_infos_player")
+					->where("_bataille_faction_invitation.ID_faction", "=", $this->id_faction, "AND")
+					->where("_bataille_faction_invitation.ID_identite", "=", "identite.ID_identite", "AND", true)
+					->where("_bataille_faction_invitation.ID_identite", "=", "_bataille_infos_player.ID_identite", "", true)->get();
+			}
+			
+			if (count($query) > 0) {
+				foreach ($query as $obj) {
+					$invitations[] = [
+						"id_identite" => $obj->ID_identite,
+						"points" => $obj->points,
+						"pseudo" => $obj->pseudo,
+						"vacances" => $obj->mode_vacances,
+					];
+					
+					$pseudos[] = $obj->pseudo;
+				}
+			}
+			
+			Bataille::setValues(["invitations" => $invitations, "nb_invitation_possible" => $this->getNbInvitationPossible()]);
+			
+			return $pseudos;
+		}
+		
+		/**
+		 * fonction qui renvoi les invitations recues par un joueur
+		 */
+		public function getInvitationsMembre() {
+			$dbc = App::getDb();
+			
+			$query = $dbc->select()->from("_bataille_faction_invitation, _bataille_faction")
+				->where("_bataille_faction_invitation.ID_identite", "=", Bataille::getIdIdentite(), "AND")
+				->where("_bataille_faction_invitation.ID_faction", "=", "_bataille_faction.ID_faction", "", true)->get();
+			
+			if (count($query) > 0) {
+				foreach ($query as $obj) {
+					$invitations[] = [
+						"id_faction" => $obj->ID_faction,
+						"nom_faction" => $obj->nom_faction,
+						"points_faction" => $obj->points_faction,
+					];
+					
+					Bataille::setValues(["invitations" => $invitations]);
+				}
+			}
+		}
 		//-------------------------- END GETTER ----------------------------------------------------------------------------//
 		
 		
 		//-------------------------- SETTER ----------------------------------------------------------------------------//
+		/**
+		 * @param $nom_faction
+		 * @param $description
+		 * @return bool
+		 * fonction qui permet de créer une faction quand l'ambassade est au lvl 3
+		 */
+		public function setCreerFaction($nom_faction, $description) {
+			$dbc = App::getDb();
+			
+			if (Bataille::getBatiment()->getNiveauBatiment("ambassade") >= 3) {
+				if ($this->getFactionExist($nom_faction) == true) {
+					FlashMessage::setFlash("Une faction");
+					return false;
+				}
+				if (strlen($nom_faction) < 2) {
+					FlashMessage::setFlash("Le nom de votre faction est trop court");
+					return false;
+				}
+				
+				$points_chef = Points::getPointsJoueur();
+				
+				$dbc->insert("nom_faction", $nom_faction)->insert("description", $description)
+					->insert("ID_identite", Bataille::getIdIdentite())->insert("points_faction", $points_chef)
+					->into("_bataille_faction")->set();
+				
+				$id = $dbc->lastInsertId();
+				
+				$dbc->update("ID_faction", $id)->from("_bataille_infos_player")->where("ID_identite", "=", Bataille::getIdIdentite())->set();
+				
+				FlashMessage::setFlash("Votre faction a bien été créée", "success");
+				return true;
+			}
+			
+			FlashMessage::setFlash("Votre ambassade n'est pas au niveau 3");
+			return false;
+		}
+		
 		/**
 		 * @param $id_identite
 		 * @return bool
@@ -208,6 +328,7 @@
 		/**
 		 * @param $pseudo
 		 * @return bool
+		 * fonction qui permet d'inviter un membre à rejoindre la faction
 		 */
 		public function setInviterMembre($pseudo) {
 			$dbc = App::getDb();
@@ -223,9 +344,18 @@
 					FlashMessage::setFlash("Ce joueur est déjà dans votre faction ou est en attente d'invitation, vous ne pouvez pas l'inviter à nouveau");
 					return false;
 				}
+				if (in_array($pseudo, $this->getInvitationsEnvoyees())) {
+					FlashMessage::setFlash("Ce joueur est déjà dans votre faction ou est en attente d'invitation, vous ne pouvez pas l'inviter à nouveau");
+					return false;
+				}
+				if ($this->getNbInvitationPossible() < 1) {
+					FlashMessage::setFlash("Plus d'invitations possible, votre leader doit augmenter son ambassade");
+					return false;
+				}
 				
 				$infos = [
-					"nom_faction" => $this->nom_faction
+					"nom_faction" => $this->nom_faction,
+					"id_faction" => $this->id_faction
 				];
 				
 				require(MODULEROOT."bataille/app/controller/rapports/invitation-faction.php");
@@ -235,10 +365,132 @@
 				
 				$dbc->insert("ID_faction", $this->id_faction)->insert("ID_identite", $id_identite)
 					->into("_bataille_faction_invitation")->set();
+				FlashMessage::setFlash("L'invitation a bien été envoyée", "success");
 				return true;
 			}
 			
 			FlashMessage::setFlash("Vous n'avez pas l'autorisation d'inviter un membre");
+			return false;
+		}
+		
+		/**
+		 * @param $id_identite
+		 */
+		public function setChangerChef($id_identite) {
+			$dbc = App::getDb();
+			$permissions_membre = $this->getPermissionsMembre($this->id_faction);
+			
+			if ($permissions_membre == "chef") {
+				$dbc->update("ID_identite", $id_identite)->from("_bataille_faction")
+					->where("ID_faction", "=", $this->id_faction)->set();
+				
+				FlashMessage::setFlash("Le chef de la faction a bien été changé", "success");
+				
+				return true;
+			}
+			
+			FlashMessage::setFlash("Vous n'êtes pas le chef de la faction vous ne pouvez donc pas le changer");
+			return false;
+		}
+		
+		/**
+		 * @param $id_identite
+		 * @return bool
+		 * fonction qui permet de supprimer une invitation a rejoindre la faction
+		 */
+		public function setSupprimerInvitation($id_identite) {
+			$dbc = App::getDb();
+			$permissions_membre = $this->getPermissionsMembre($this->id_faction);
+			
+			if ($permissions_membre == "chef" || in_array("INVITER_MEMBRE", $permissions_membre)) {
+				$dbc->delete()->from("_bataille_faction_invitation")->where("ID_faction", "=", $this->id_faction, "AND")
+					->where("ID_identite", "=", $id_identite)->del();
+				
+				FlashMessage::setFlash("L'invitation a bien été supprimée", "success");
+				return true;
+			}
+			
+			FlashMessage::setFlash("Vous n'avez pas l'autorisation de supprimer une invitation");
+			return false;
+		}
+		
+		/**
+		 * @return bool
+		 * fonction qui permet à un joueur de quitter sa faction
+		 */
+		public function setQuitterFaction() {
+			$dbc = App::getDb();
+			$permissions_membre = $this->getPermissionsMembre($this->id_faction);
+			
+			if ($permissions_membre == "chef") {
+				FlashMessage::setFlash("Merci de définir un nouveau chef avant de quitter votre faction");
+				return false;
+			}
+			
+			Points::setRejoindreQuitterFaction("del");
+			
+			$dbc->update("ID_faction", 0)
+				->update("rang_faction", "")->from("_bataille_infos_player")->where("ID_identite", "=", Bataille::getIdIdentite())->set();
+			
+			$this->setSupprilerAllPermissions(Bataille::getIdIdentite());
+			
+			FlashMessage::setFlash("Vous avez quitter votre faction", "success");
+			return true;
+		}
+		
+		/**
+		 * @param $id_faction
+		 * @return bool
+		 * fonction qui permet à un joueur de rejoindre une faction
+		 */
+		public function setAccepterInvitationPlayer($id_faction) {
+			$dbc = App::getDb();
+			
+			$dbc->update("ID_faction", $id_faction)
+				->update("rang_faction", "")->from("_bataille_infos_player")->where("ID_identite", "=", Bataille::getIdIdentite())->set();
+			
+			$this->setSupprimerInvitationPlayer($id_faction);
+			
+			Points::setRejoindreQuitterFaction();
+			
+			FlashMessage::setFlash("Vous avez rejoint une faction", "success");
+			return true;
+		}
+		
+		/**
+		 * @param $id_faction
+		 * @return bool
+		 * permet à un joueur de supprimer une invitation qu'il a reçu
+		 */
+		public function setSupprimerInvitationPlayer($id_faction) {
+			$dbc = App::getDb();
+			
+			$dbc->delete()->from("_bataille_faction_invitation")->where("ID_faction", "=", $id_faction, "AND")
+				->where("ID_identite", "=", Bataille::getIdIdentite())->del();
+			
+			FlashMessage::setFlash("L'invitation a bien été supprimée", "success");
+			return true;
+		}
+		
+		/**
+		 * @param $id_identite
+		 * @param $rang
+		 * @return bool
+		 * permet de definir le rang d'un joueur au sein de la faction (juste le nom pas les permissions
+		 */
+		public function setRang($id_identite, $rang) {
+			$dbc = App::getDb();
+			$permissions_membre = $this->getPermissionsMembre($this->id_faction);
+			
+			if ($permissions_membre == "chef" || in_array("GERER_RANG_MEMBRE", $permissions_membre)) {
+				$dbc->update("rang_faction", $rang)->from("_bataille_infos_player")->where("ID_identite", "=", $id_identite, "AND")
+					->where("ID_faction", "=", $this->id_faction)->set();
+				
+				FlashMessage::setFlash("Le rang du joueur a bien été mis à jour", "success");
+				return true;
+			}
+			
+			FlashMessage::setFlash("Vous n'avez pas l'autorisation de définir le rang des joueurs");
 			return false;
 		}
 		//-------------------------- END SETTER ----------------------------------------------------------------------------//    

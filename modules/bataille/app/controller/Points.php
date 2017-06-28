@@ -2,6 +2,7 @@
 	namespace modules\bataille\app\controller;
 
 	use core\App;
+	use core\HTML\flashmessage\FlashMessage;
 	
 	
 	class Points {
@@ -67,6 +68,29 @@
 		}
 		
 		/**
+		 * @param null $id_identite
+		 * @return int
+		 * renvoi les points totaux d'un joueur
+		 */
+		public static function getPointsJoueur($id_identite=null) {
+			$dbc = App::getDb();
+			
+			if ($id_identite === null) {
+				$id_identite = Bataille::getIdIdentite();
+			}
+			
+			$query = $dbc->select("points")->from("_bataille_infos_player")->where("ID_identite", "=", $id_identite)->get();
+			
+			if (count($query) == 1) {
+				foreach ($query as $obj) {
+					return $obj->points;
+				}
+			}
+			
+			return 0;
+		}
+		
+		/**
 		 * @return mixed
 		 * fonction qui renvoi le nombre de points à ajouter à la base lorsqu'on update un batiment
 		 */
@@ -89,6 +113,7 @@
 			$dbc = App::getDb();
 
 			if ($type == "batiment") {
+				$points_faction = self::getPointAjoutBatiment();
 				$points = self::getPointsBase($id_base)+self::getPointAjoutBatiment();
 			}
 			
@@ -98,6 +123,7 @@
 				->set();
 			
 			self::setAjouterPointsTotaux();
+			self::setAjouterPointsFaction($points_faction);
 			
 			return $points;
 		}
@@ -118,6 +144,58 @@
 				}
 				
 				$dbc->update("points", $points)->from("_bataille_infos_player")->where("ID_identite", "=", Bataille::getIdIdentite())->set();
+			}
+		}
+		
+		/**
+		 * fonction qui permet d'ajouter tous les points du joueur aux points de la faction
+		 */
+		public static function setRejoindreQuitterFaction($del = null) {
+			$dbc = App::getDb();
+			
+			$query = $dbc->select("_bataille_faction.points_faction, _bataille_faction.ID_faction")
+				->from("_bataille_faction,_bataille_infos_player")
+				->where("_bataille_infos_player.ID_identite", "=", Bataille::getIdIdentite(), "AND")
+				->where("_bataille_faction.ID_faction", "=", "_bataille_infos_player.ID_faction", "", true)
+				->get();
+			
+			if (count($query) > 0) {
+				foreach ($query as $obj) {
+					$point_joueur = Points::getPointsJoueur();
+					$calc = $obj->points_faction - $point_joueur;
+					
+					if ($del === null) {
+						$calc = $point_joueur+$obj->points_faction;
+					}
+					
+					$dbc->update("points_faction", $calc)
+						->from("_bataille_faction")
+						->where("ID_faction", "=", $obj->ID_faction)
+						->set();
+				}
+			}
+		}
+		
+		/**
+		 * @param $points
+		 * permet d'ajouter des points à la faction
+		 */
+		public static function setAjouterPointsFaction($points) {
+			$dbc = App::getDb();
+			
+			$query = $dbc->select("_bataille_faction.points_faction, _bataille_faction.ID_faction")
+				->from("_bataille_faction,_bataille_infos_player")
+				->where("_bataille_infos_player.ID_identite", "=", Bataille::getIdIdentite(), "AND")
+				->where("_bataille_faction.ID_faction", "=", "_bataille_infos_player.ID_faction", "", true)
+				->get();
+			
+			if (count($query) > 0) {
+				foreach ($query as $obj) {
+					$dbc->update("points_faction", $points+$obj->points_faction)
+						->from("_bataille_faction")
+						->where("ID_faction", "=", $obj->ID_faction)
+						->set();
+				}
 			}
 		}
 		//-------------------------- END SETTER ----------------------------------------------------------------------------//

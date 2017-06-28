@@ -215,6 +215,8 @@ button.no-style {
 	.side-bar {
 		background-color: $bg-ressource;
 		color: $clr-ressource;
+		max-height: 545px;
+		overflow-y: auto;
 	}
 
 
@@ -270,7 +272,7 @@ button.no-style {
 		.cases {
 			visibility: hidden;
 			
-			&.visible {
+			&.showed {
 				visibility: visible;
 			}
 		}
@@ -456,6 +458,10 @@ p.rouge {
 				&.coller {
 					margin-left: -1.9rem;
 				}
+			}
+			
+			.liste-membres div {
+				margin-bottom: 10px;
 			}
 		}
 	}

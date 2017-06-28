@@ -193,7 +193,7 @@
 
 				$this->niveau_batiment = 0;
 				$this->getInfoUpgradeBatiment();
-				$max_level = 0;
+				$max_level = "pas construit";
 			}
 
 			//permet de savoir si le batiment produit bien des ressoures

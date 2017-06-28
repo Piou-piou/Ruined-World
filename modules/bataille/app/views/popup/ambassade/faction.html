@@ -1,4 +1,4 @@
-<div class="row ambassade">
+<div class="ambassade">
 	{% include("popup/ambassade/nav-ambassade.html")  %}
 	
 	{% if bataille.faction is iterable %}
@@ -6,7 +6,7 @@
 		<h5>Points de la faction : {{ bataille.faction.points_faction }}</h5>
 		<h5>Chef de la faction : {{ bataille.faction.pseudo_chef }}</h5>
 		<article>
-			{{ bataille.faction.description }}
+			{{ bataille.faction.description|raw }}
 		</article>
 	{% else %}
 		<p>Vous n'êtes actuellement dans aucune faction, pour créer la votre votre ambassade doit être au niveau 3.

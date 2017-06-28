@@ -13,12 +13,14 @@
 		"popup/marche/offre-et-demande",
 		"popup/marche/envoyer-ressources",
 		"popup/ambassade/index",
+		"popup/ambassade/creer-faction",
 		"popup/ambassade/faction",
 		"popup/ambassade/faction-relations",
 		"popup/ambassade/forum-faction",
 		"popup/ambassade/forum-faction-detail",
 		"popup/ambassade/membre-faction",
 		"popup/ambassade/inviter-membre-faction",
+		"popup/ambassade/mes-invitations-faction",
 		"popup/ambassade/gestion-membre-faction",
 		"popup/caserne/index",
 		"popup/caserne/recruter-troupe",
@@ -36,7 +38,7 @@
 	if (\core\modules\GestionModule::getModuleActiver("bataille")) {
 		if (!in_array($this->page, $pages_bataille)) {
 			\core\HTML\flashmessage\FlashMessage::setFlash("Cette page n'existe pas ou plus");
-			header("location:".WEBROOT."bataille");
+			header("location:".WEBROOT."404");
 		}
 
 		//pour l'index -> on récupere les derniers articles
@@ -104,6 +106,9 @@
 		}
 		
 		//------------------------------- POUR LA POPUP POUR L'AMBASSADE ----------------------------------//
+		if ($this->page == "popup/ambassade/creer-faction") {
+		
+		}
 		if ($this->page == "popup/ambassade/faction") {
 			$this->controller = "bataille/app/controller/faction/get_faction.php";
 		}
@@ -120,7 +125,10 @@
 			$this->controller = "bataille/app/controller/faction/get_membres.php";
 		}
 		if ($this->page == "popup/ambassade/inviter-membre-faction") {
-			$this->controller = "bataille/app/controller/faction/get_faction.php";
+			$this->controller = "bataille/app/controller/faction/get_invitations.php";
+		}
+		if ($this->page == "popup/ambassade/mes-invitations-faction") {
+			$this->controller = "bataille/app/controller/faction/get_invitations_player.php";
 		}
 		if ($this->page == "popup/ambassade/gestion-membre-faction") {
 			$this->controller = "bataille/app/controller/faction/get_membres.php";
