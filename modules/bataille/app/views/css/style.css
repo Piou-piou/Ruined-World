@@ -380,7 +380,9 @@ button.no-style {
     margin-top: -0.5rem; }
   .bataille .side-bar {
     background-color: #303031;
-    color: #fff; }
+    color: #fff;
+    max-height: 545px;
+    overflow-y: auto; }
   .bataille .un-batiment {
     background-color: #6D6E71;
     position: relative; }
