@@ -14,6 +14,7 @@
 							//location.reload();
 							$.ajax({
 								type:"POST",
+                                data: "loaded_ajax=true",
 								url: "{{WEBROOT}}bataille/popup/centre_recherche/liste-recherche",
 								success: function(data){
 									$("#popup-base #ajax").empty();
