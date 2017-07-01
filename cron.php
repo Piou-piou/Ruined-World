@@ -15,4 +15,5 @@
 	require("modules/bataille/app/cron/terminer_recherche.php");
 	require("modules/bataille/app/cron/terminer_mission.php");
 	require("modules/bataille/app/cron/actualiser_ressources.php");
+	require("modules/bataille/app/cron/actualiser_nourriture.php");
 	require("modules/bataille/app/cron/delete_compte.php");

@@ -5,8 +5,6 @@
 	class Bataille extends InitialiseClass {
 		private static $nation;
 
-		private static $id_base;
-
 		public static $values = [];
 
 		
@@ -33,13 +31,7 @@
 		 * renvoi l'id_base du joueur
 		 */
 		public static function getIdBase() {
-			if (self::$id_base == null) {
-				self::$id_base = $_SESSION['id_base'];
-
-				return self::$id_base;
-			}
-
-			return self::$id_base;
+			return $_SESSION['id_base'];
 		}
 
 		/**
