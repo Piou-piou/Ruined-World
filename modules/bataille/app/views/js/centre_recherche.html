@@ -17,8 +17,8 @@
                                 data: "loaded_ajax=true",
 								url: "{{WEBROOT}}bataille/popup/centre_recherche/liste-recherche",
 								success: function(data){
-									$("#popup-base #ajax").empty();
-									$("#popup-base #ajax").append(data);
+									$("#popup-base #ajax .next-lvl").empty();
+									$("#popup-base #ajax .next-lvl").append(data);
 								}, error: function(){
 								}
 							});
@@ -54,8 +54,8 @@
 						data: "loaded_ajax=true",
 						url: "{{WEBROOT}}bataille/popup/centre_recherche/liste-recherche",
 						success: function(data){
-							$("#popup-base #ajax").empty();
-							$("#popup-base #ajax").append(data);
+							$("#popup-base #ajax .next-lvl").empty();
+							$("#popup-base #ajax .next-lvl").append(data);
 							$(".decompte-recherche").remove();
 						}, error: function(){
 						}
