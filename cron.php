@@ -11,4 +11,7 @@
 	require("modules/messagerie/app/cron/delete_message.php");
 	require("modules/bataille/app/cron/desactier_vacances.php");
 	require("modules/bataille/app/cron/terminer_marche_transport.php");
+	require("modules/bataille/app/cron/terminer_recrutement.php");
+	require("modules/bataille/app/cron/terminer_recherche.php");
+	require("modules/bataille/app/cron/terminer_mission.php");
 	require("modules/bataille/app/cron/delete_compte.php");
