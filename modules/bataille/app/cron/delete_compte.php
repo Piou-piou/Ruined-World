@@ -41,6 +41,10 @@
 				//on arrete toutes les recherches + recrutement
 				$dbc->delete()->from("_bataille_recherche")->where("ID_base", "=", $obj1->ID_base)->del();
 				$dbc->delete()->from("_bataille_recrutement")->where("ID_base", "=", $obj1->ID_base)->del();
+			
+			
+				//on renome la base
+				$dbc->update("nom_base", "Désertée")->from("_bataille_base")->where("ID_base", "=", $obj1->ID_base)->set();
 			}
 			
 			
@@ -94,7 +98,5 @@
 				->update("mdp_params", "deserteur-".$deserteur)
 				->from("identite")
 				->where("ID_identite", "=", $obj->ID_identite)->set();
-			
-			echo($obj->ID_identite);
 		}
 	}
