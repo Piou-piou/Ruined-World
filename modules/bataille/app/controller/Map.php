@@ -104,6 +104,7 @@
 						"posy" => $obj->posy,
 						"id_base" => $obj->ID_base,
 						"id_identite" => $obj->ID_identite,
+						"faction_joueur" => $faction->getInfosFaction($faction->getIdFaction()),
 						"pseudo" => $obj->pseudo,
 						"ma_base" => $ma_base,
 						"mes_bases" => $mes_bases,

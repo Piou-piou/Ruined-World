@@ -117,6 +117,15 @@
 					]]);
 					
 					$this->nom_faction = $obj->nom_faction;
+					
+					return [
+						"id_faction" => $obj->ID_faction,
+						"nom" => $obj->nom_faction,
+						"points_faction" => $obj->points_faction,
+						"description" => $obj->description,
+						"url_img" => $obj->img_profil,
+						"pseudo_chef" => $obj->pseudo
+					];
 				}
 			}
 		}

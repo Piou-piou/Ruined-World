@@ -7,8 +7,8 @@
 	{% endif %}
 	<p>{{ vacances }}</p>
 	
-	{% if bataille.faction is iterable %}
-		<p>Faction : <a href="" class="faction" id_faction="{{ bataille.faction.id_faction }}">{{ bataille.faction.nom }}</a></p>
+	{% if i.faction_joueur is iterable %}
+		<p>Faction : <a href="" class="faction" id_faction="{{ i.faction_joueur.id_faction }}">{{ i.faction_joueur.nom }}</a></p>
 		{% include("js/faction/get_unefaction.html") %}
 	{% endif %}
 	
