@@ -252,7 +252,9 @@
 			
 			$query = $dbc->select("ID_unite")->from("_bataille_unite")
 				->where("type", "=", "infanterie", "AND")
-				->where("ID_base", "=", Bataille::getIdBase())
+				->where("ID_base", "=", Bataille::getIdBase(), "AND")
+				->where("(ID_mission IS NULL OR ID_mission = 0)", "", "", "AND", true)
+				->where("(ID_autre_base IS NULL OR ID_autre_base = 0)", "", "", "", true)
 				->get();
 			
 			return count($query);
@@ -457,7 +459,8 @@
 				$dbc->delete()->from("_bataille_unite")
 					->where("ID_base", "=", Bataille::getIdBase(), "AND")
 					->where("type", "=", "infanterie", "AND")
-					->where("(ID_mission IS NULL OR ID_mission = 0)", "", "", "", true)
+					->where("(ID_mission IS NULL OR ID_mission = 0)", "", "", "AND", true)
+					->where("(ID_autre_base IS NULL OR ID_autre_base = 0)", "", "", "", true)
 					->orderBy("RAND() ")
 					->limit($nombre)
 					->del();
