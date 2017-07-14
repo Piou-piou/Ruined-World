@@ -549,7 +549,7 @@
 					$this->ressource_construire = $this->getRessourceConstruireBatiment($this->nom_batiment_sql, $this->niveau_batiment);
 					$this->temps_construction = round($obj->temps_construction-($obj->temps_construction*Bataille::getBatiment()->getNiveauBatiment("centre_commandement")/100));
 				}
-
+				
 				//récupération des éléments particulier à un batiment
 				$this->getTexteBatiment();
 				
@@ -562,7 +562,10 @@
 
 				return 1;
 			}
-
+			
+			//récupération des éléments particulier à un batiment
+			$this->getTexteBatiment();
+			Bataille::setValues(["info_batiment" => $this->info_batiment]);
 			return "max_level";
 		}
 		
